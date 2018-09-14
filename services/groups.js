@@ -35,8 +35,35 @@ export const groups = [{
     id: 'objects',
     title: 'Objects',
     question: {
-        assessML: `[code1]`,
-        javaScript: `answer = true;`
+        assessML: `
+            <p>Create an object named monkey with three properties.</p>
+            <p>One property should have a key called type with its value the string chimp.</p>
+            <p>One property should have a key called numBananas with its value the number 50.</p>
+            <p>One property should have a key called ageInYears with its value the number 4.</p>
+            <p><br></p>
+            <p>[code1]</p>
+            <p><br></p>
+
+            [solution1]
+                <p>
+                    const monkey = {
+                        type: 'chimp',
+                        numBananas: 50,
+                        ageInYears: 4
+                    };
+                </p>
+                <p><br></p>
+            [solution1]
+        `,
+        javaScript: `
+
+            if (code1) {
+                eval(code1 + 'answer = monkey.type === \\'chimp\\' && monkey.numBananas === 50 && monkey.ageInYears === 4');
+            }
+            else {
+                answer = false;
+            }
+        `
     }
 }, {
     id: 'functions',
