@@ -2,7 +2,16 @@ export const groups = [{
     id: 'basic-data-types',
     title: 'Basic data types',
     question: {
-        assessML: 'Create a function named add that returns the sum of its two parameters [code1]',
+        assessML: `
+            Create a function named add that returns the sum of its two parameters
+            [code1]
+
+            [solution1]
+                function add(x, y) {
+                    return x + y;
+                }
+            [solution1]
+        `,
         javaScript: `
             eval(code1);
             answer = code1 ? add(1, 1) === 2 : false;
