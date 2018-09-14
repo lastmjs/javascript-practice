@@ -19,10 +19,13 @@
     "prendus-question-elements": "git+https://github.com/Prendus/prendus-question-elements.git#new-stuff",
     "zwitterion": "^0.27.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bower": "^1.8.4"
+  },
   "scripts": {
     "start": "zwitterion",
-    "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,secure-eval,redux/es"
+    "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,secure-eval,redux/es",
+    "install": "bower install"
   },
   "repository": {
     "type": "git",

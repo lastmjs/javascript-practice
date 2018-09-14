@@ -11,9 +11,12 @@ class JPGroup extends HTMLElement {
     connectedCallback() {
         this.render();
 
-        this.querySelector('#prendus-view-question').question = {
-            assessML: 'This will be a question',
-            javaScript: 'answer = true'
+        this.querySelector(`#${this.title.toLowerCase().replace(/\s/g, '-')}`).question = {
+            assessML: 'This will be a question [code1]',
+            javaScript: `
+                eval(code1);
+                answer = code1 ? add(1, 1) === 2 : false;
+            `
         };
     }
 
@@ -30,7 +33,7 @@ class JPGroup extends HTMLElement {
             <paper-card class="question-container" heading="${this.title}">
                 <div class="card-actions">
                     <div style="padding: 25px">
-                    <prendus-view-question id="prendus-view-question"></prendus-view-question>
+                    <prendus-view-question id="${this.title.toLowerCase().replace(/\s/g, '-')}"></prendus-view-question>
                     </div>
                 </div>
 
