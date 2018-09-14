@@ -3,13 +3,17 @@ export const groups = [{
     title: 'Basic data types',
     question: {
         assessML: `
-            Create a function named add that returns the sum of its two parameters
-            [code1]
+            <p>Create a function named add that returns the sum of its two parameters</p>
+            <p></p>
+            <p>[code1]</p>
 
             [solution1]
-                function add(x, y) {
-                    return x + y;
-                }
+                <p>
+                    function add(x, y) {
+                        return x + y;
+                    }
+                </p>
+                <p></p>
             [solution1]
         `,
         javaScript: `
