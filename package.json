@@ -1,0 +1,22 @@
+{
+  "name": "javascript-practice",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "zwitterion": "^0.27.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "zwitterion"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lastmjs/javascript-practice.git"
+  },
+  "author": "Jordan Last <jordan.michael.last@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lastmjs/javascript-practice/issues"
+  },
+  "homepage": "https://github.com/lastmjs/javascript-practice#readme"
+}
