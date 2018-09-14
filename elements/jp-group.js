@@ -12,8 +12,8 @@ class JPGroup extends HTMLElement {
         this.render();
 
         this.querySelector('#prendus-view-question').question = {
-            assessML: '[input1]',
-            javaScript: 'answer = input1 == 5'
+            assessML: 'This will be a question',
+            javaScript: 'answer = true'
         };
     }
 
