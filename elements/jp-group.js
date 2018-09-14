@@ -1,23 +1,19 @@
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-button/paper-button.js';
 import 'prendus-question-elements/prendus-view-question.ts';
-
-interface Monkey {
-
-}
+import {groups} from '../services/groups.js';
 
 class JPGroup extends HTMLElement {
 
     connectedCallback() {
         this.render();
 
-        this.querySelector(`#${this.title.toLowerCase().replace(/\s/g, '-')}`).question = {
-            assessML: 'This will be a question [code1]',
-            javaScript: `
-                eval(code1);
-                answer = code1 ? add(1, 1) === 2 : false;
-            `
-        };
+        //TODO this is very imperative, use lit-html to pass the question property down from jp-app
+        const group = groups.find((item) => {
+            return item.id === this.id;
+        });
+
+        this.querySelector(`#${group.id}`).question = group.question;
     }
 
     render() {
@@ -33,7 +29,7 @@ class JPGroup extends HTMLElement {
             <paper-card class="question-container" heading="${this.title}">
                 <div class="card-actions">
                     <div style="padding: 25px">
-                    <prendus-view-question id="${this.title.toLowerCase().replace(/\s/g, '-')}"></prendus-view-question>
+                    <prendus-view-question id="${this.id}"></prendus-view-question>
                     </div>
                 </div>
 
