@@ -45,6 +45,9 @@ export const groups = [{
             <p><br></p>
 
             [solution1]
+                <p>The simplest way to create a <a href="https://www.quora.com/What-is-a-plainObject-in-JavaScript" target="_blank">plain data object</a> in JavaScript is to use the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals" target="_blank">object literal</a> syntax.</p>
+                <p>Plain data objects only have properties with primitive key value pairs, meaning the keys and values are primitive data types.</p>
+                <p>The following is the best practice solution to this problem:</p>
                 <p>
                     const monkey = {
                         type: 'chimp',
