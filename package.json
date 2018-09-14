@@ -22,7 +22,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "zwitterion",
-    "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,secure-eval"
+    "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,secure-eval,redux"
   },
   "repository": {
     "type": "git",
