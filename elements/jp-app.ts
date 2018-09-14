@@ -1,4 +1,4 @@
-import './jp-group.js';
+import './jp-group.ts';
 
 class JPApp extends HTMLElement {
     connectedCallback() {

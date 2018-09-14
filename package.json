@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
+    "@polymer/paper-card": "^3.0.1",
     "zwitterion": "^0.27.0"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "zwitterion"
+    "start": "zwitterion",
+    "build": "zwitterion --build-static --exclude node_modules"
   },
   "repository": {
     "type": "git",

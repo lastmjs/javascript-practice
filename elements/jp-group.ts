@@ -1,5 +1,9 @@
 import '@polymer/paper-card/paper-card.js';
 
+interface Monkey {
+    
+}
+
 class JPGroup extends HTMLElement {
 
     connectedCallback() {
