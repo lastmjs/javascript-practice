@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    background-color: black;
+    /* background-color: black; */
+    /* background-image: url('astronomy-constellation-dark.jpg'); */
+    /* background-size: 100vw 100vh; */
+    /* background-repeat: no-repeat; */
+    /* animation: animatedBackground 500s linear infinite; */
+}
+
+h1 {
+    color: white;
+    font-size: 4em;
+    font-family: monospace;
+}
+
+h2 {
+    color: white;
+    font-size: 2em;
+    font-family: monospace;
+}
+
+.header-container {
+    margin-top: 20vh;
+    text-align: center;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.plan-container {
+    text-align: center;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.subtitle-container {
+    color: white;
+    font-size: 1.5em;
+    font-family: monospace;
+}
+
+.key-points-container {
+    color: white;
+    text-align: center;
+    font-family: monospace;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 20vh;
+}
+
+.key-point-description {
+    font-size: 1.5em;
+}
+
+.action-button {
+    padding: 1em;
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+    font-size: 2em;
+    border-radius: 5px;
+    font-family: monospace;
+    transition: background-color .5s ease;
+}
+
+.action-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.javascript-logo {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    padding: 5px;
+    box-shadow: 0px 0px 1px white;
+}
+
+.foreground {
+    position: relative;
+    overflow: hidden;
+}
+
+.background {
+    background: url('astronomy-constellation-dark.jpg') 0 0 repeat;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    width: 1000%;
+    bottom: 0;
+    animation: animatedBackground 3000s linear infinite;
+}
+
+.plans-modal {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    color: white;
+}
+
+@keyframes animatedBackground {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.email-input {
+    width: 25vw;
+    height: 5vh;
+    border: 1px solid white;
+    font-size: 1.5em;
+    padding: .5em;
+    color: white;
+    background-color: black;
+    font-family: monospace;
+}
