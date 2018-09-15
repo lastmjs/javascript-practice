@@ -8,7 +8,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "zwitterion",
-    "build": "zwitterion --build-static"
+    "build": "zwitterion --build-static --exclude node_modules"
   },
   "repository": {
     "type": "git",
