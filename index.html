@@ -4,109 +4,10 @@
   <head>
       <title>JavaScript Practice</title>
       <link rel="icon" href="javascript-logo.png">
+      <link rel="stylesheet" href="styles.css">
   </head>
 
   <body>
-      <style>
-        body {
-            margin: 0;
-            /* background-color: black; */
-            /* background-image: url('astronomy-constellation-dark.jpg'); */
-            /* background-size: 100vw 100vh; */
-            /* background-repeat: no-repeat; */
-            /* animation: animatedBackground 500s linear infinite; */
-        }
-
-        h1 {
-            color: white;
-            font-size: 4em;
-            font-family: monospace;
-        }
-
-        h2 {
-            color: white;
-            font-size: 2em;
-            font-family: monospace;
-        }
-
-        .header-container {
-            margin-top: 20vh;
-            text-align: center;
-            margin-left: 5vw;
-            margin-right: 5vw;
-        }
-
-        .subtitle-container {
-            color: white;
-            font-size: 1.5em;
-            font-family: monospace;
-        }
-
-        .key-points-container {
-            color: white;
-            text-align: center;
-            font-family: monospace;
-            margin-left: 5vw;
-            margin-right: 5vw;
-            margin-bottom: 20vh;
-        }
-
-        .key-point-description {
-            font-size: 1.5em;
-        }
-
-        .action-button {
-            padding: 1em;
-            border: 1px solid white;
-            color: white;
-            background-color: black;
-            cursor: pointer;
-            font-size: 2em;
-            border-radius: 5px;
-            font-family: monospace;
-            transition: background-color .5s ease;
-        }
-
-        .action-button:hover {
-            background-color: white;
-            color: black;
-        }
-
-        .javascript-logo {
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            width: 50px;
-            padding: 5px;
-            box-shadow: 0px 0px 1px white;
-        }
-
-        .foreground {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .background {
-            background: url('astronomy-constellation-dark.jpg') 0 0 repeat;
-            position: absolute;
-            z-index: -1;
-            top: 0;
-            width: 1000%;
-            bottom: 0;
-            animation: animatedBackground 3000s linear infinite;
-        }
-
-        @keyframes animatedBackground {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-        }
-      </style>
-
       <div class="foreground">
           <div class="background">
           </div>
@@ -120,7 +21,9 @@
               <br>
               <br>
               <br>
-              <button class="action-button" onclick="fakeClick()">Get started</button>
+              <a href="plans-and-pricing.html">
+                <button class="action-button">Get started</button>
+              </a>
           </div>
 
           <br>
@@ -153,11 +56,5 @@
       </div>
 
       <img src="javascript-logo.png" class="javascript-logo">
-
-      <script>
-        function fakeClick() {
-            alert('A credit card transaction of $500 has just been initiated on your card. This cannot be undone.')
-        }
-      </script>
   </body>
 </html>
