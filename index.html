@@ -2,16 +2,130 @@
 
 <html>
   <head>
-    <title>JavaScript Practice</title>
-    <link rel="icon" href="javascript-logo.png">
-    <script src="process-polyfill.js"></script>
-    <link rel="import" href="bower_components/juicy-ace-editor/juicy-ace-editor.html">
-    <script type="module" src="elements/jp-app.js"></script>
+      <title>JavaScript Practice</title>
+      <link rel="icon" href="javascript-logo.png">
   </head>
 
   <body>
-    <h1>JavaScript practice problems, exercises, and questions, with solutions.</h1>
+      <style>
+        body {
+            margin: 0;
+            background-color: black;
+        }
 
-    <jp-app></jp-app>
+        h1 {
+            color: white;
+            font-size: 4em;
+            font-family: monospace;
+        }
+
+        h2 {
+            color: white;
+            font-size: 2em;
+            font-family: monospace;
+        }
+
+        .header-container {
+            margin-top: 20vh;
+            text-align: center;
+            margin-left: 5vw;
+            margin-right: 5vw;
+        }
+
+        .subtitle-container {
+            color: white;
+            font-size: 1.5em;
+            font-family: monospace;
+        }
+
+        .key-points-container {
+            color: white;
+            text-align: center;
+            font-family: monospace;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            margin-bottom: 20vh;
+        }
+
+        .key-point-description {
+            font-size: 1.5em;
+        }
+
+        .action-button {
+            padding: 1em;
+            border: 1px solid white;
+            color: white;
+            background-color: black;
+            cursor: pointer;
+            font-size: 2em;
+            border-radius: 5px;
+            font-family: monospace;
+            transition: background-color .5s ease;
+        }
+
+        .action-button:hover {
+            background-color: white;
+            color: black;
+        }
+      </style>
+
+      <div class="header-container">
+          <h1>Unlimited JavaScript Practice Problems</h1>
+          <p class="subtitle-container">
+              We are building the largest collection of JavaScript practice exercises in existence
+          </p>
+          <br>
+          <br>
+          <button class="action-button">Get started</button>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <hr style="width: 50vw">
+
+      <br>
+      <br>
+
+      <div class="key-points-container">
+          <h2>Comprehensive</h2>
+          <div class="key-point-description">
+              Exercises for any subject of the core JavaScript language imaginable
+          </div>
+
+          <h2>Limitless</h2>
+          <div class="key-point-description">
+              If the exercise you need does not exist, request it
+          </div>
+
+          <h2>Instant</h2>
+          <div class="key-point-description">
+              Get instant feedback and solutions
+          </div>
+      </div>
+
+      <!-- <div class="key-points">
+          <div class="key-point-container">
+              <h2>
+                  Comprehensive
+              </h2>
+              <hr>
+              <div class="key-point-text">
+                  Exercises for any subject of the core JavaScript language imaginable
+              </div>
+          </div>
+
+          <div class="key-point-container">
+              <h2>
+                  Limitless
+              </h2>
+              <hr>
+              <div class="key-point-text">
+                  If the exercise you need does not exist, request it
+              </div>
+          </div>
+      </div> -->
   </body>
 </html>
