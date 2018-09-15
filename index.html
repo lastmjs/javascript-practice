@@ -19,8 +19,14 @@
             font-family: monospace;
         }
 
+        h2 {
+            color: white;
+            font-size: 2em;
+            font-family: monospace;
+        }
+
         .header-container {
-            padding-top: 25vh;
+            margin-top: 20vh;
             text-align: center;
             margin-left: 5vw;
             margin-right: 5vw;
@@ -32,14 +38,20 @@
             font-family: monospace;
         }
 
-        .key-points {
-            /* color: white; */
-            display: flex;
-            justify-content: center;
+        .key-points-container {
+            color: white;
+            text-align: center;
+            font-family: monospace;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            margin-bottom: 20vh;
+        }
+
+        .key-point-description {
+            font-size: 1.5em;
         }
 
         .action-button {
-            /* position: absolute; */
             padding: 1em;
             border: 1px solid white;
             color: white;
@@ -55,21 +67,6 @@
             background-color: white;
             color: black;
         }
-
-        .key-point-container {
-            display: inline-block;
-            /* width: 10vw; */
-            color: black;
-            background-color: white;
-            padding: 1em;
-            border-radius: 5px;
-            margin-left: 5vw;
-            text-align: center;
-        }
-
-        .key-point-text {
-            width: 15em;
-        }
       </style>
 
       <div class="header-container">
@@ -80,6 +77,33 @@
           <br>
           <br>
           <button class="action-button">Get started</button>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <hr style="width: 50vw">
+
+      <br>
+      <br>
+
+      <div class="key-points-container">
+          <h2>Comprehensive</h2>
+          <div class="key-point-description">
+              Exercises for any subject of the core JavaScript language imaginable
+          </div>
+
+          <h2>Limitless</h2>
+          <div class="key-point-description">
+              If the exercise you need does not exist, request it
+          </div>
+
+          <h2>Instant</h2>
+          <div class="key-point-description">
+              Get instant feedback and solutions
+          </div>
       </div>
 
       <!-- <div class="key-points">
