@@ -9,6 +9,7 @@
   <body>
       <style>
         body {
+            margin: 0;
             background-color: black;
         }
 
@@ -19,7 +20,7 @@
         }
 
         .header-container {
-            margin-top: 25vh;
+            padding-top: 25vh;
             text-align: center;
             margin-left: 5vw;
             margin-right: 5vw;
@@ -32,10 +33,13 @@
         }
 
         .key-points {
-            color: white;
+            /* color: white; */
+            display: flex;
+            justify-content: center;
         }
 
         .action-button {
+            /* position: absolute; */
             padding: 1em;
             border: 1px solid white;
             color: white;
@@ -51,6 +55,21 @@
             background-color: white;
             color: black;
         }
+
+        .key-point-container {
+            display: inline-block;
+            /* width: 10vw; */
+            color: black;
+            background-color: white;
+            padding: 1em;
+            border-radius: 5px;
+            margin-left: 5vw;
+            text-align: center;
+        }
+
+        .key-point-text {
+            width: 15em;
+        }
       </style>
 
       <div class="header-container">
@@ -63,13 +82,26 @@
           <button class="action-button">Get started</button>
       </div>
 
-      <div class="key-points">
-          <ul>
-              <li>Limitless Potential - If the exercise you need does not exist, request it</li>
-              <li>Targeted to You - Exercises for any subject of the core JavaScript language imaginable</li>
-              <li>Another point - </li>
-              <li>Another point - </li>
-          </ul>
-      </div>
+      <!-- <div class="key-points">
+          <div class="key-point-container">
+              <h2>
+                  Comprehensive
+              </h2>
+              <hr>
+              <div class="key-point-text">
+                  Exercises for any subject of the core JavaScript language imaginable
+              </div>
+          </div>
+
+          <div class="key-point-container">
+              <h2>
+                  Limitless
+              </h2>
+              <hr>
+              <div class="key-point-text">
+                  If the exercise you need does not exist, request it
+              </div>
+          </div>
+      </div> -->
   </body>
 </html>
