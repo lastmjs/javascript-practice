@@ -14,10 +14,10 @@
 
         <div class="question-container">
             <div class="question-wrapper">
-                <prendus-view-question id="prendus-view-question" onquestionloaded="test()"></prendus-view-question>
+                <prendus-view-question id="prendus-view-question" onquestionloaded="test()">Loading...</prendus-view-question>
             </div>
         </div>
-        
+
         <br>
         <br>
 
@@ -51,7 +51,16 @@
                             <p><br></p>
                         [solution1]
                     `,
-                    javaScript: 'answer = true'
+                    javaScript: `
+                        const solutionString = input1.toLowerCase() + input2.toLowerCase() + input3.toLowerCase() + input4.toLowerCase() + input5.toLowerCase() + input6.toLowerCase();
+                        answer =
+                            solutionString.includes('boolean') &&
+                            solutionString.includes('null') &&
+                            solutionString.includes('undefined') &&
+                            solutionString.includes('number') &&
+                            solutionString.includes('string') &&
+                            solutionString.includes('symbol');
+                    `
                 };
             });
         </script>
