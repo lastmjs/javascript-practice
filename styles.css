@@ -133,3 +133,25 @@ h2 {
     color: white;
     outline: 1px solid white;
 }
+
+/* This is just to hack the input boxes temporarily */
+span {
+    min-width: 100px !important;
+}
+
+.question-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.question-wrapper {
+    background-color: white;
+    width: 50em;
+    padding: 2em;
+}
+
+.question-header {
+    margin-left: 1em;
+}
