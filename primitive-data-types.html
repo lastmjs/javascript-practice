@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Primitive data types</title>
+        <link rel="icon" href="javascript-logo.png">
+        <link rel="stylesheet" href="styles.css">
+        <script src="process-polyfill.js"></script>
+        <script type="module" src="node_modules/prendus-question-elements/prendus-view-question.ts"></script>
+    </head>
+
+    <body>
+        <div style="background-color: white; width: 50em">
+            <prendus-view-question id="prendus-view-question" onquestionloaded="test()"></prendus-view-question>
+        </div>
+
+        <script>
+            setTimeout(() => {
+                document.querySelector('#prendus-view-question').question = {
+                    assessML: 'hello',
+                    javaScript: 'answer = true'
+                };
+            }, 1000);
+        </script>
+    </body>
+</html>
