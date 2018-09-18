@@ -21,7 +21,7 @@ h2 {
 }
 
 .header-container {
-    margin-top: 20vh;
+    margin-top: 10vh;
     text-align: center;
     margin-left: 5vw;
     margin-right: 5vw;
@@ -119,4 +119,17 @@ h2 {
     color: white;
     background-color: black;
     font-family: monospace;
+}
+
+.topic-select {
+    border: none;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    font-size: 2em;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    outline: 1px solid white;
 }
