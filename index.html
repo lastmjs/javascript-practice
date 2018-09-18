@@ -13,16 +13,36 @@
           </div>
 
           <div class="header-container">
-              <h1>Unlimited JavaScript Practice Problems</h1>
+              <h1>Fundamental JavaScript Practice</h1>
               <p class="subtitle-container">
-                  We are building the largest collection of JavaScript practice exercises in existence
+                  Master the fundamentals with the largest collection of core JavaScript practice exercises in existence
               </p>
               <br>
+              <h2>Select a fundamental:</h2>
+              <select class="fundamental-select" onchange="selectChange(event)">
+                  <option value="primitive-data-types" class="fundamental-option">Primitive data types</option>
+                  <option value="objects">Objects</option>
+                  <option value="functions">Functions</option>
+                  <option value="arrays">Arrays</option>
+                  <option value="classes">Classes</option>
+                  <option value="modules">Modules</option>
+                  <option value="operators">Operators</option>
+                  <option value="control-flow">Control flow</option>
+                  <option value="variables">Variables</option>
+                  <option value="promises">Promises</option>
+                  <option value="async-await">async/await</option>
+                  <option value="generators">Generators</option>
+                  <option value="scope">Scope</option>
+                  <option value="closures">Closures</option>
+                  <option value="callbacks">Callbacks</option>
+                  <option value="proxies">Proxies</option>
+              </select>
               <br>
               <br>
               <br>
-              <a href="plans-and-pricing.html">
-                <button class="action-button">Get started</button>
+              <br>
+              <a id="start-practicing-anchor" href="primitive-data-types.html">
+                <button class="action-button">Start practicing</button>
               </a>
           </div>
 
@@ -39,7 +59,7 @@
           <div class="key-points-container">
               <h2>Comprehensive</h2>
               <div class="key-point-description">
-                  Exercises for any topic of the core JavaScript language imaginable
+                  Exercises for absolutely every topic of the core JavaScript language
               </div>
 
               <h2>Limitless</h2>
@@ -49,12 +69,19 @@
 
               <h2>Instant</h2>
               <div class="key-point-description">
-                  Get instant feedback and solutions
+                  Instant answer feedback and access to solutions
               </div>
           </div>
 
       </div>
 
       <img src="javascript-logo.png" class="javascript-logo">
+
+      <script>
+            function selectChange(e) {
+                const selectValue = e.target.value;
+                document.querySelector(`#start-practicing-anchor`).href = `${selectValue}.html`;
+            }
+      </script>
   </body>
 </html>
