@@ -3,6 +3,17 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
+    "@polymer/app-layout": "3.0.1",
+    "@polymer/app-route": "3.0.2",
+    "@polymer/iron-ajax": "3.0.1",
+    "@polymer/iron-validator-behavior": "3.0.1",
+    "@polymer/paper-button": "3.0.1",
+    "@polymer/paper-card": "3.0.1",
+    "@polymer/paper-checkbox": "3.0.1",
+    "@polymer/paper-fab": "3.0.1",
+    "@polymer/paper-input": "3.0.1",
+    "@polymer/paper-spinner": "3.0.1",
+    "@polymer/paper-tabs": "3.0.1",
     "deep-equal-es-module": "0.0.0",
     "jsverify-es-module": "0.0.2",
     "juicy-ace-editor": "^2.0.5",
@@ -12,7 +23,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "zwitterion",
-    "build": "zwitterion --build-static --exclude node_modules --include prendus-question-elements"
+    "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,secure-eval,redux/es"
   },
   "repository": {
     "type": "git",
