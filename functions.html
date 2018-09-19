@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Objects</title>
+        <title>Functions</title>
         <meta charset="utf-8">
         <link rel="icon" href="javascript-logo.png">
         <link rel="stylesheet" href="styles.css">
@@ -13,7 +13,7 @@
     </head>
 
     <body>
-        <h1 class="question-header">Objects</h1>
+        <h1 class="question-header">Functions</h1>
 
         <div class="question-container">
             <div class="question-wrapper">
@@ -40,22 +40,29 @@
             prendusViewQuestion.addEventListener('ready', () => {
                 prendusViewQuestion.question = {
                     assessML: `
-                        <p>Create an object named monkey with three properties.</p>
-                        <p>One property should have a key called type with its value the string chimp.</p>
-                        <p>One property should have a key called numBananas with its value the number 50.</p>
-                        <p>One property should have a key called ageInYears with its value the number 4.</p>
+                        <p>Create a function named basicNumber that returns the number 10.</p>
                         <p><br></p>
                         <p>[code1]</p>
                         <p><br></p>
                         [solution1]
-                            <p>The simplest way to create a <a href="https://www.quora.com/What-is-a-plainObject-in-JavaScript" target="_blank">plain data object</a> in JavaScript is to use the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals" target="_blank">object literal</a> syntax.</p>
-                            <p>Plain data objects only have properties with primitive key value pairs, meaning the keys and values are primitive data types.</p>
-                            <p>The following is the best practice solution to this problem:</p>
+                            <p>There are many ways to create a function in JavaScript.</p>
+                            <p>These are some of the most common ways:</p>
+                            <p><br></p>
                             <p>
-                                const monkey = {
-                                    type: 'chimp',
-                                    numBananas: 50,
-                                    ageInYears: 4
+                                function basicNumber() {
+                                    return 10;
+                                }
+                            </p>
+                            <p><br></p>
+                            <p>
+                                const basicNumber = function() {
+                                    return 10;
+                                };
+                            </p>
+                            <p><br></p>
+                            <p>
+                                const basicNumber = () => {
+                                    return 10;
                                 };
                             </p>
                             <p><br></p>
@@ -63,7 +70,7 @@
                     `,
                     javaScript: `
                         if (code1) {
-                            eval(code1 + 'answer = monkey.type === \\'chimp\\' && monkey.numBananas === 50 && monkey.ageInYears === 4');
+                            eval(code1 + 'answer = basicNumber() === 10');
                         }
                         else {
                             answer = false;
