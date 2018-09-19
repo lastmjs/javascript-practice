@@ -47,22 +47,24 @@
                         <p>[code1]</p>
                         <p><br></p>
                         [solution1]
-                            <p>
-                                const bank = {
-                                    balance: 100
-                                };
+                            <code-sample>
+                                <template>
+                                    const bank = {
+                                        balance: 100
+                                    };
 
-                                const betterBank = new Proxy(bank, {
-                                    get: (target, prop, receiver) => {
-                                        if (prop === 'balance') {
-                                            return target[prop] + 100;
+                                    const betterBank = new Proxy(bank, {
+                                        get: (target, prop, receiver) => {
+                                            if (prop === 'balance') {
+                                                return target[prop] + 100;
+                                            }
+                                            else {
+                                                return target[prop];
+                                            }
                                         }
-                                        else {
-                                            return target[prop];
-                                        }
-                                    }
-                                });
-                            </p>
+                                    });
+                                </template>
+                            </code-sample>
                             <p><br></p>
                         [solution1]
                     `,
