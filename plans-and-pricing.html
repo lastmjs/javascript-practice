@@ -22,7 +22,7 @@
             <div class="background">
             </div>
 
-            <div class="plan-container" style="margin-top: 10vh; margin-bottom: 10vh">
+            <div class="plan-container" style="margin-top: 10vh">
                 <h1>Basic Plan - Free</h1>
                 <p class="subtitle-container">
                     Access up to 3 practice exercises per day
@@ -32,7 +32,7 @@
                 </p>
                 <br>
                 <br>
-                <input class="email-input" type="text" placeholder="Enter your email address">
+                <iframe src="signup-form-basic-plan-free.html" onload="resizeIframe(this)" frameborder="0"></iframe>
             </div>
 
             <hr style="width: 50vw">
@@ -47,7 +47,7 @@
                 </p>
                 <br>
                 <br>
-                <input class="email-input" type="text" placeholder="Enter your email address">
+                <iframe src="signup-form-unlimited-plan-50-per-month.html" onload="resizeIframe(this)" frameborder="0"></iframe>
             </div>
 
             <a class="privacy-anchor" href="privacy.html">Privacy</a>
@@ -55,6 +55,13 @@
         </div>
 
         <img src="javascript-logo.png" class="javascript-logo">
+
+        <script>
+            function resizeIframe(iframe) {
+                iframe.style.height = '25em';
+                iframe.style.width = '50em';
+            }
+        </script>
 
     </body>
 </html>
