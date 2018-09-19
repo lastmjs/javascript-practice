@@ -154,3 +154,10 @@ span {
 .question-header {
     margin-left: 1em;
 }
+
+.privacy-anchor {
+    color: white;
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+}
