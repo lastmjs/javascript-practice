@@ -52,6 +52,7 @@ class JPApp extends HTMLElement {
                     background-color: white;
                     padding: 5em;
                     position: relative;
+                    box-shadow: 0px 0px 1px black;
                 }
 
                 .next-question-button {
@@ -65,10 +66,20 @@ class JPApp extends HTMLElement {
                     font-family: monospace;
                     transition: background-color .5s ease;
                     color: black;
+                    box-shadow: 0px 0px 1px black;
                 }
 
                 .next-question-button:hover {
                     background-color: rgba(1, 1, 1, .05);
+                }
+
+                .javascript-logo {
+                    position: fixed;
+                    bottom: 0;
+                    right: 0;
+                    width: 50px;
+                    padding: 5px;
+                    box-shadow: 0px 0px 5px black;
                 }
             </style>
 
@@ -82,6 +93,10 @@ class JPApp extends HTMLElement {
                     </div>
                 </div>
             </div>
+
+            <a href="app.html">
+                <img src="javascript-logo.png" class="javascript-logo">
+            </a>
         `;
     }
 }
