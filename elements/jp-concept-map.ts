@@ -1,5 +1,6 @@
 import {html, render} from 'lit-html';
 import './jp-concept-item';
+import {Store} from '../services/store';
 
 class JPConceptMap extends HTMLElement {
     selectedConcept: string;
@@ -17,6 +18,12 @@ class JPConceptMap extends HTMLElement {
     conceptItemClicked(e) {
         this.selectedConcept = e.target.id;
         this.render();
+
+        Store.dispatch({
+            type: 'SET_NEW_CURRENT_QUESTION',
+            level1ID: this.selectedConcept,
+            level2ID: 1
+        });
     }
 
     render() {
