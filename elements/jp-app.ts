@@ -5,13 +5,9 @@ import {Store} from '../services/store';
 
 class JPApp extends HTMLElement {
 
-    constructor() {
-        super();
-
-        Store.subscribe(() => render(this.render(Store.getState()), this));
-    }
-
     connectedCallback() {
+        Store.subscribe(() => render(this.render(Store.getState()), this));
+
         Store.dispatch({
             type: 'DEFAULT_ACTION'
         });
@@ -23,6 +19,13 @@ class JPApp extends HTMLElement {
 
     nextQuestionClick() {
         alert('There are going to be SO MANY QUESTIONS');
+    }
+
+    questionResponse(e) {
+        Store.dispatch({
+            type: 'UPDATE_NUM_USER_COMPLETED_QUESTIONS',
+            correct: e.detail.checkAnswerResponse === 'Correct'
+        });
     }
 
     render(state) {
@@ -80,7 +83,7 @@ class JPApp extends HTMLElement {
 
                 <div class="question-container">
                     <div class="question-wrapper">
-                        <prendus-view-question .question=${state.currentQuestion}>Loading...</prendus-view-question>
+                        <prendus-view-question .question=${state.currentQuestion} @question-response=${(e) => this.questionResponse(e)}>Loading...</prendus-view-question>
                         <button class="next-question-button" @click=${(e) => this.nextQuestionClick()}>Next question</button>
                     </div>
                 </div>
