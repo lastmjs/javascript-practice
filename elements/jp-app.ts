@@ -21,14 +21,14 @@ class JPApp extends HTMLElement {
         window.location.href = 'plans-and-pricing.html';
     }
 
-    questionResponse(e) {
+    questionResponse(e: any) {
         Store.dispatch({
             type: 'UPDATE_NUM_USER_COMPLETED_QUESTIONS',
             correct: e.detail.checkAnswerResponse === 'Correct'
         });
     }
 
-    render(state) {
+    render(state: any) {
         return html`
             <style>
                 /* This is just to hack the input boxes temporarily */
@@ -88,8 +88,8 @@ class JPApp extends HTMLElement {
 
                 <div class="question-container">
                     <div class="question-wrapper">
-                        <prendus-view-question .question=${state.currentQuestion} @question-response=${(e) => this.questionResponse(e)}>Loading...</prendus-view-question>
-                        <button class="next-question-button" @click=${(e) => this.nextQuestionClick()}>Next question</button>
+                        <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
+                        <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick()}>Next question</button>
                     </div>
                 </div>
             </div>
