@@ -2,19 +2,6 @@ import {html, render} from 'lit-html';
 import {Store} from '../services/store';
 
 class JPConceptItem extends HTMLElement {
-    _selectedConcept: string;
-
-    set selectedConcept(val) {
-        this._selectedConcept = val;
-
-        // Store.dispatch({
-        //     type: 'DEFAULT_ACTION'
-        // });
-    }
-
-    get selectedConcept() {
-        return this._selectedConcept;
-    }
 
     get id() {
         return `${this.title.toLowerCase().replace(/\s/g, '-')}-concept-item`;
@@ -63,7 +50,7 @@ class JPConceptItem extends HTMLElement {
                 }
             </style>
 
-            <div id=${this.id} class="concept${this.selectedConcept === this.id ? ' concept-focused' : ''}">
+            <div id=${this.id} class="concept${state.currentConceptItem === this.id ? ' concept-focused' : ''}">
                 ${this.title}
                 <div class="concept-overlay" style="width: ${percentage}%">
                 </div>
