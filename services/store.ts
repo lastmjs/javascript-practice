@@ -1,15 +1,16 @@
 import {createStore} from 'redux';
-import {questions} from './questions';
+import {conceptItems} from './concept-items';
 
 const InitialState = {
-    currentQuestion: questions['primitive-data-types-concept-item']['1'];
+    currentQuestion: conceptItems['primitive-data-types-concept-item'].questions['1'],
+    conceptItems
 };
 
 const RootReducer = (state=InitialState, action) => {
     if (action.type === 'SET_NEW_CURRENT_QUESTION') {
         return {
             ...state,
-            currentQuestion: questions[action.level1ID][action.level2ID]
+            currentQuestion: state.conceptItems[action.level1ID].questions[action.level2ID]
         };
     }
 

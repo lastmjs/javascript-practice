@@ -5,13 +5,9 @@ import {Store} from '../services/store';
 
 class JPApp extends HTMLElement {
 
-    constructor() {
-        super();
-
-        Store.subscribe(() => render(this.render(Store.getState()), this));
-    }
-
     connectedCallback() {
+        Store.subscribe(() => render(this.render(Store.getState()), this));
+
         Store.dispatch({
             type: 'DEFAULT_ACTION'
         });

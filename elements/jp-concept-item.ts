@@ -1,11 +1,15 @@
 import {html, render} from 'lit-html';
+import {Store} from '../services/store';
 
 class JPConceptItem extends HTMLElement {
     _selectedConcept: string;
 
     set selectedConcept(val) {
         this._selectedConcept = val;
-        this.render();
+
+        // Store.dispatch({
+        //     type: 'DEFAULT_ACTION'
+        // });
     }
 
     get selectedConcept() {
@@ -17,11 +21,21 @@ class JPConceptItem extends HTMLElement {
     }
 
     connectedCallback() {
-        this.render();
+        Store.subscribe(() => render(this.render(Store.getState()), this));
+        //
+        // setTimeout(() => {
+        //     Store.dispatch({
+        //         type: 'TRIGGER_RENDER'
+        //     });
+        // });
     }
 
-    render() {
-        render(html`
+    render(state) {
+        const numTotalQuestions = Object.values(state.conceptItems[this.id].questions).length;
+        const numUserCompletedQuestions = state.conceptItems[this.id].numUserCompletedQuestions;
+        const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
+
+        return html`
             <style>
                 .concept {
                     position: relative;
@@ -42,7 +56,7 @@ class JPConceptItem extends HTMLElement {
                 .concept-overlay {
                     position: absolute;
                     height: 100%;
-                    width: 100%;
+                    width: ${percentage}%;
                     background-color: rgba(6, 150, 14, .5);
                     top: 0;
                     left: 0;
@@ -55,7 +69,7 @@ class JPConceptItem extends HTMLElement {
                 <div class="concept-overlay">
                 </div>
             </div>
-        `, this);
+        `;
     }
 }
 

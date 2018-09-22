@@ -5,20 +5,20 @@ import {Store} from '../services/store';
 class JPConceptMap extends HTMLElement {
     selectedConcept: string;
 
-    constructor() {
-        super();
-
-        this.selectedConcept = `primitive-data-types-concept-item`;
-    }
-
     connectedCallback() {
-        this.render();
+        this.selectedConcept = `primitive-data-types-concept-item`;
+
+        Store.subscribe(() => render(this.render(Store.getState()), this));
+
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'TRIGGER_RENDER'
+            });
+        });
     }
 
     conceptItemClicked(e) {
         this.selectedConcept = e.target.id;
-        this.render();
-
         Store.dispatch({
             type: 'SET_NEW_CURRENT_QUESTION',
             level1ID: this.selectedConcept,
@@ -26,8 +26,8 @@ class JPConceptMap extends HTMLElement {
         });
     }
 
-    render() {
-        render(html`
+    render(state) {
+        return html`
             <style>
                 .concepts-container {
                     display: flex;
@@ -118,7 +118,7 @@ class JPConceptMap extends HTMLElement {
                     .selectedConcept=${this.selectedConcept}
                 ></jp-concept-item>
             </div>
-        `, this);
+        `;
     }
 }
 
