@@ -30,6 +30,7 @@ class JPConceptItem extends HTMLElement {
                     padding: 2em;
                     cursor: pointer;
                     transition: background-color .5s ease;
+                    font-weight: bold;
                 }
 
                 .concept:hover {
