@@ -18,7 +18,7 @@ class JPApp extends HTMLElement {
     }
 
     nextQuestionClick() {
-        alert('There are going to be SO MANY QUESTIONS');
+        window.location.href = 'plans-and-pricing.html';
     }
 
     questionResponse(e) {
