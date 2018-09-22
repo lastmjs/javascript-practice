@@ -67,6 +67,7 @@ class JPApp extends HTMLElement {
                     cursor: pointer;
                     font-family: monospace;
                     transition: background-color .5s ease;
+                    color: black;
                 }
 
                 .next-question-button:hover {
