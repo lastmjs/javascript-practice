@@ -46,7 +46,7 @@ export const questions = {
                         <code-sample>
                             <template>
                                 const monkey = {
-                                    type: 'chimp'
+                                    type: 'chimp',
                                     numBananas: 50,
                                     ageInYears: 4
                                 };
