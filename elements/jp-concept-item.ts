@@ -25,8 +25,7 @@ class JPConceptItem extends HTMLElement {
             <style>
                 .concept {
                     flex-grow: 1;
-                    padding: 1em;
-                    border: 1px solid black;
+                    padding: 2em;
                     cursor: pointer;
                 }
 
