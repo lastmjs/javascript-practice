@@ -56,7 +56,6 @@ class JPConceptItem extends HTMLElement {
                 .concept-overlay {
                     position: absolute;
                     height: 100%;
-                    width: ${percentage}%;
                     background-color: rgba(6, 150, 14, .5);
                     top: 0;
                     left: 0;
@@ -66,7 +65,7 @@ class JPConceptItem extends HTMLElement {
 
             <div id=${this.id} class="concept${this.selectedConcept === this.id ? ' concept-focused' : ''}">
                 ${this.title}
-                <div class="concept-overlay">
+                <div class="concept-overlay" style="width: ${percentage}%">
                 </div>
             </div>
         `;

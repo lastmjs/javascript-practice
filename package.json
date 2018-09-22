@@ -16,10 +16,10 @@
     "@polymer/paper-tabs": "3.0.1",
     "deep-equal-es-module": "0.0.0",
     "jsverify-es-module": "0.0.2",
-    "lit-html": "^0.11.4",
+    "lit-html": "0.11.4",
     "prendus-question-elements": "git+https://github.com/Prendus/prendus-question-elements.git#new-stuff",
-    "redux": "^4.0.0",
-    "zwitterion": "^0.27.3"
+    "redux": "4.0.0",
+    "zwitterion": "0.27.3"
   },
   "devDependencies": {},
   "scripts": {
