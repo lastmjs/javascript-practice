@@ -31,12 +31,6 @@ class JPApp extends HTMLElement {
     render(state) {
         return html`
             <style>
-                body {
-                    margin: 0;
-                    background-color: rgba(1, 1, 1, .1);
-                    font-family: monospace;
-                }
-
                 /* This is just to hack the input boxes temporarily */
                 span {
                     min-width: 100px !important;
