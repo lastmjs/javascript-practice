@@ -21,6 +21,10 @@ class JPApp extends HTMLElement {
         });
     }
 
+    nextQuestionClick() {
+        alert('There are going to be SO MANY QUESTIONS');
+    }
+
     render(state) {
         return html`
             <style>
@@ -50,6 +54,23 @@ class JPApp extends HTMLElement {
                 .question-wrapper {
                     background-color: white;
                     padding: 5em;
+                    position: relative;
+                }
+
+                .next-question-button {
+                    position: absolute;
+                    right: 0;
+                    bottom: -75px;
+                    border: none;
+                    background-color: white;
+                    padding: 1.5em;
+                    cursor: pointer;
+                    font-family: monospace;
+                    transition: background-color .5s ease;
+                }
+
+                .next-question-button:hover {
+                    background-color: rgba(1, 1, 1, .05);
                 }
             </style>
 
@@ -59,6 +80,7 @@ class JPApp extends HTMLElement {
                 <div class="question-container">
                     <div class="question-wrapper">
                         <prendus-view-question .question=${state.currentQuestion}>Loading...</prendus-view-question>
+                        <button class="next-question-button" @click=${(e) => this.nextQuestionClick()}>Next question</button>
                     </div>
                 </div>
             </div>
