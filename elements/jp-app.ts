@@ -94,7 +94,7 @@ class JPApp extends HTMLElement {
                 </div>
             </div>
 
-            <a href="app.html">
+            <a href="/">
                 <img src="javascript-logo.png" class="javascript-logo">
             </a>
         `;
