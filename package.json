@@ -3,28 +3,19 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "@polymer/app-layout": "3.0.1",
-    "@polymer/app-route": "3.0.2",
-    "@polymer/iron-ajax": "3.0.1",
-    "@polymer/iron-validator-behavior": "3.0.1",
-    "@polymer/paper-button": "3.0.1",
-    "@polymer/paper-card": "3.0.1",
-    "@polymer/paper-checkbox": "3.0.1",
-    "@polymer/paper-fab": "3.0.1",
-    "@polymer/paper-input": "3.0.1",
-    "@polymer/paper-spinner": "3.0.1",
-    "@polymer/paper-tabs": "3.0.1",
-    "deep-equal-es-module": "0.0.0",
-    "jsverify-es-module": "0.0.2",
+    "@webcomponents/webcomponentsjs": "^2.1.3",
     "lit-html": "0.11.4",
     "prendus-question-elements": "git+https://github.com/Prendus/prendus-question-elements.git#new-stuff",
-    "redux": "4.0.0",
-    "zwitterion": "0.27.3"
+    "redux": "4.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "deep-equal-es-module": "0.0.0",
+    "jsverify-es-module": "0.0.2",
+    "zwitterion": "^0.27.3"
+  },
   "scripts": {
     "start": "zwitterion",
-    "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,secure-eval,redux/es,@kuscamara"
+    "build": "zwitterion --build-static --exclude node_modules --include prendus-question-elements,assessml,prendus-shared,redux/es,@kuscamara"
   },
   "repository": {
     "type": "git",

@@ -22,10 +22,40 @@ class JPApp extends HTMLElement {
     }
 
     questionResponse(e: any) {
+        const checkAnswerResponse = e.detail.checkAnswerResponse;
+        
         Store.dispatch({
             type: 'UPDATE_NUM_USER_COMPLETED_QUESTIONS',
-            correct: e.detail.checkAnswerResponse === 'Correct'
+            correct: checkAnswerResponse === 'Correct'
         });
+
+        //TODO the below code is obviously disgusting and evil and must be changed...but not yet
+        if (checkAnswerResponse === 'Correct') {
+            this.querySelector('#question-wrapper').style.backgroundColor = 'rgba(0, 255, 0, .5)';
+            
+            setTimeout(() => {
+                
+                this.querySelector('#question-wrapper').style.transition = 'background-color .5s linear';
+                this.querySelector('#question-wrapper').style.backgroundColor = 'white';
+    
+                setTimeout(() => {
+                    this.querySelector('#question-wrapper').style.transition = '';
+                }, 1000);
+            });
+        }
+        else {
+            this.querySelector('#question-wrapper').style.backgroundColor = 'rgba(255, 0, 0, .5)';
+            
+            setTimeout(() => {
+                
+                this.querySelector('#question-wrapper').style.transition = 'background-color .5s linear';
+                this.querySelector('#question-wrapper').style.backgroundColor = 'white';
+    
+                setTimeout(() => {
+                    this.querySelector('#question-wrapper').style.transition = '';
+                }, 1000);
+            });
+        }
     }
 
     render(state: any) {
@@ -94,7 +124,7 @@ class JPApp extends HTMLElement {
                 <jp-concept-map></jp-concept-map>
 
                 <div class="question-container">
-                    <div class="question-wrapper">
+                    <div id="question-wrapper" class="question-wrapper">
                         <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                         <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick()}>Next question</button>
                     </div>
