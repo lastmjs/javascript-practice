@@ -75,11 +75,18 @@ class JPApp extends HTMLElement {
 
                 .javascript-logo {
                     position: fixed;
-                    bottom: 0;
+                    top: 0;
                     right: 0;
                     width: 50px;
                     padding: 5px;
                     box-shadow: 0px 0px 5px black;
+                }
+
+                .privacy-anchor {
+                    color: black;
+                    position: fixed;
+                    bottom: 1em;
+                    right: 1em;
                 }
             </style>
 
@@ -94,9 +101,11 @@ class JPApp extends HTMLElement {
                 </div>
             </div>
 
-            <a href="app.html">
+            <a href="/">
                 <img src="javascript-logo.png" class="javascript-logo">
             </a>
+
+            <a class="privacy-anchor" href="privacy.html">Privacy</a>
         `;
     }
 }
