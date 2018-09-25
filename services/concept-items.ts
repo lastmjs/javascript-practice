@@ -489,6 +489,32 @@ export const conceptItems = {
         questions: {
             1: {
                 assessML: `
+                    <p>Create an empty function named nothing.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function nothing() {}
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = nothing() === undefined;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
+                assessML: `
                     <p>Create a function named basicNumber that returns the number 10.</p>
                     <p><br></p>
                     <p>[code1]</p>
@@ -522,6 +548,115 @@ export const conceptItems = {
                 javaScript: `
                     if (code1) {
                         eval(code1 + 'answer = basicNumber() === 10');
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            3: {
+                assessML: `
+                    <p>Create a function named hello that returns the string 'mundo!'.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function hello() {
+                                    return 'mundo!';
+                                }
+
+                                // or
+
+                                const hello = function() {
+                                    return 'mundo!';
+                                }
+
+                                // or
+
+                                const hello = () => {
+                                    return 'mundo!';
+                                };
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = hello() === 'mundo!';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create a function named higherOrder that returns an empty function</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function higherOrder() {
+                                    return function() {};
+                                }
+
+                                // or
+
+                                function higherOrder() {
+                                    return () => {};
+                                }
+
+                                // or
+
+                                const higherOrder = () => {
+                                    return function() {};
+                                };
+
+                                // or
+
+                                const higherOrder = () => {
+                                    return () => {};
+                                };
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = higherOrder()() === undefined;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>There is a function available to your editor called countCats.</p>
+                    <p>Invoke the function countCats and store it in a variable called numCats.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                `,
+                javaScript: `
+                    if (code1) {
+                        function countCats() {
+                            return 14535;
+                        }
+
+                        eval(code1 + \`
+                            answer = numCats === countCats();
+                        \`);
                     }
                     else {
                         answer = false;
