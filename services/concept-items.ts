@@ -4,7 +4,16 @@ export const conceptItems = {
             1: {
                 assessML: `
                     <p>Create a variable named foo that has the boolean value true.</p>
+                    <p><br></p>
                     <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = true;
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
                 `,
                 javaScript: `
                     if (code1) {
@@ -15,12 +24,22 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             },
             2: {
                 assessML: `
                     <p>Create a variable named foo that has the boolean value false.</p>
+                    <p><br></p>
                     <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = false;
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
                 `,
                 javaScript: `
                     if (code1) {
@@ -31,7 +50,8 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             },
             3: {
                 assessML: `
@@ -47,10 +67,14 @@ export const conceptItems = {
                     <p>
                         [radio1]true[radio1]<br><br>[radio2]false[radio2]
                     </p>
+                    [solution1]
+                        <p>false</p>
+                    [solution1]
                 `,
                 javaScript: `
                     answer = radio1 === false && radio2 === true;
-                `
+                `,
+                userCompleted: false
             },
             4: {
                 assessML: `
@@ -66,10 +90,14 @@ export const conceptItems = {
                     <p>
                         [radio1]true[radio1]<br><br>[radio2]false[radio2]
                     </p>
+                    [solution1]
+                        <p>true</p>
+                    [solution1]
                 `,
                 javaScript: `
                     answer = radio1 === true && radio2 === false;
-                `
+                `,
+                userCompleted: false
             },
             5: {
                 assessML: `
@@ -96,14 +124,69 @@ export const conceptItems = {
                         solutionString.includes('number') &&
                         solutionString.includes('string') &&
                         solutionString.includes('symbol');
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'objects-concept-item': {
         questions: {
             1: {
+                assessML: `
+                    <p>Create an empty object and store it in the variable foo.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {};
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = JSON.stringify(foo) === '{}';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
+                assessML: `
+                    <p>Create an object named foo with one property.</p>
+                    <p>The property's key should be hello and its value the string 'there'.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {
+                                    hello: 'there'
+                                };
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = foo.hello === 'there';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            3: {
                 assessML: `
                     <p>Create an object named monkey with three properties.</p>
                     <p>One property should have a key called type with its value the string chimp.</p>
@@ -137,14 +220,101 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create an object named foo with one property.</p>
+                    <p>The property's key should be child and its value an empty object.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {
+                                    child: {}
+                                };
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = JSON.stringify(foo.child) === '{}';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>Create an object named foo with one property.</p>
+                    <p>The property's key should be child and its value an object with one property.</p>
+                    <p>That property's key should be grandchild and its value an empty object.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {
+                                    child: {}
+                                };
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = JSON.stringify(foo.child.grandchild) === '{}';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'arrays-concept-item': {
         questions: {
             1: {
+                assessML: `
+                    <p>Create an empty array named foo.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = [];
+
+                                // or
+
+                                const foo = new Array();
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = Array.isArray(foo) && foo.length === 0;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
                 assessML: `
                     <p>Create an array named numbers with five elements, each element being of type number.</p>
                     <p><br></p>
@@ -168,10 +338,131 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
+            },
+            3: {
+                assessML: `
+                    <p>Create an array named twoD with one element.</p>
+                    <p>The one element should be an empty array.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const twoD = [[]];
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = twoD.length === 1 && twoD[0].length === 0;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create an array named fiveByFive.</p>
+                    <p>Each element in the array should be an array with five elements of any type.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const fiveByFive = [
+                                    [1, 2, 3, 4, 5], 
+                                    [1, 2, 3, 4, 5],
+                                    [1, 2, 3, 4, 5],
+                                    [1, 2, 3, 4, 5],
+                                    [1, 2, 3, 4, 5]
+                                ];
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = 
+                                    fiveByFive.length === 5 &&
+                                    fiveByFive.reduce((result, outerItem) => {
+                                        if (outerItem.length !== 5) {
+                                            return false;
+                                        }
+                                        
+                                        return result;
+                                    }, true)
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>Create an array called threeByThreeByThree.</p>
+                    <p>Each element in the array should be an array with three elements.</p>
+                    <p>Each of those elements should be an array with three elements of any type.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const threeByThreeByThree = [
+                                    [
+                                        [1, 2, 3],
+                                        [1, 2, 3],
+                                        [1, 2, 3]
+                                    ],
+                                    [
+                                        [1, 2, 3],
+                                        [1, 2, 3],
+                                        [1, 2, 3]
+                                    ],
+                                    [
+                                        [1, 2, 3],
+                                        [1, 2, 3],
+                                        [1, 2, 3]
+                                    ]
+                                ];
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = 
+                                    threeByThreeByThree.length === 3 &&
+                                    threeByThreeByThree.reduce((result, level1) => {
+                                        return result && level1.reduce((result, level2) => {
+                                            if (level2.length !== 3) {
+                                                return false;
+                                            }
+
+                                            return result;
+                                        }, true);
+                                    }, true);
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'async/await-concept-item': {
         questions: {
@@ -199,10 +490,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'callbacks-concept-item': {
         questions: {
@@ -230,10 +521,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'classes-concept-item': {
         questions: {
@@ -268,10 +559,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'closures-concept-item': {
         questions: {
@@ -302,10 +593,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'control-flow-concept-item': {
         questions: {
@@ -340,14 +631,40 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'functions-concept-item': {
         questions: {
             1: {
+                assessML: `
+                    <p>Create an empty function named nothing.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function nothing() {}
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = nothing() === undefined;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
                 assessML: `
                     <p>Create a function named basicNumber that returns the number 10.</p>
                     <p><br></p>
@@ -386,10 +703,127 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
+            },
+            3: {
+                assessML: `
+                    <p>Create a function named hello that returns the string 'mundo!'.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function hello() {
+                                    return 'mundo!';
+                                }
+
+                                // or
+
+                                const hello = function() {
+                                    return 'mundo!';
+                                }
+
+                                // or
+
+                                const hello = () => {
+                                    return 'mundo!';
+                                };
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = hello() === 'mundo!';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create a function named higherOrder that returns an empty function</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function higherOrder() {
+                                    return function() {};
+                                }
+
+                                // or
+
+                                function higherOrder() {
+                                    return () => {};
+                                }
+
+                                // or
+
+                                const higherOrder = () => {
+                                    return function() {};
+                                };
+
+                                // or
+
+                                const higherOrder = () => {
+                                    return () => {};
+                                };
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = higherOrder()() === undefined;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>There is a function available to your editor called countCats.</p>
+                    <p>Invoke the function countCats and store it in a variable called numCats.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const numCats = countCats();
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        function countCats() {
+                            return 14535;
+                        }
+
+                        eval(code1 + \`
+                            answer = numCats === countCats();
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'generators-concept-item': {
         questions: {
@@ -423,10 +857,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'modules-concept-item': {
         questions: {
@@ -443,10 +877,10 @@ export const conceptItems = {
                 `,
                 javaScript: `
                     answer = input1 === 'module';
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'operators-concept-item': {
         questions: {
@@ -478,10 +912,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'promises-concept-item': {
         questions: {
@@ -542,10 +976,10 @@ export const conceptItems = {
                             answer: false
                         });
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'proxies-concept-item': {
         questions: {
@@ -588,10 +1022,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'scope-concept-item': {
         questions: {
@@ -606,10 +1040,10 @@ export const conceptItems = {
                 `,
                 javaScript: `
                     answer = input1.toLowerCase() === 'hoisting';
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'variables-concept-item': {
         questions: {
@@ -644,9 +1078,9 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     }
 };

@@ -37,7 +37,7 @@ class JPApp extends HTMLElement {
         const checkAnswerResponse = e.detail.checkAnswerResponse;
         
         Store.dispatch({
-            type: 'UPDATE_NUM_USER_COMPLETED_QUESTIONS',
+            type: 'SET_USER_COMPLETED',
             correct: checkAnswerResponse === 'Correct'
         });
 
@@ -103,6 +103,10 @@ class JPApp extends HTMLElement {
                     padding: 5em;
                     position: relative;
                     box-shadow: 0px 0px 1px black;
+                }
+
+                .question-wrapper-user-completed {
+                    box-shadow: 0px 0px 5px green;
                 }
 
                 .previous-question-button {
@@ -200,7 +204,7 @@ class JPApp extends HTMLElement {
                     </div>
 
                     <div class="question-container">
-                        <div id="question-wrapper" class="question-wrapper">
+                        <div id="question-wrapper" class="question-wrapper${state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
                             <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                             <button ?hidden=${state.currentQuestionId === 1} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
                             <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick()}>Next question</button>
