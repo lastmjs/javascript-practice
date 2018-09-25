@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    background-color: black;
+    background-color: rgba(1, 1, 1, .1);
+    /* background-color: black; */
     /* background-color: black; */
     /* background-image: url('astronomy-constellation-dark.jpg'); */
     /* background-size: 100vw 100vh; */
@@ -9,13 +10,13 @@ body {
 }
 
 h1 {
-    color: white;
+    color: black;
     font-size: 4em;
     font-family: monospace;
 }
 
 h2 {
-    color: white;
+    color: black;
     font-size: 2em;
     font-family: monospace;
 }
@@ -34,7 +35,7 @@ h2 {
 }
 
 .subtitle-container {
-    color: white;
+    color: black;
     font-size: 1.5em;
     font-family: monospace;
 }
