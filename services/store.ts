@@ -54,7 +54,8 @@ const RootReducer = (state=InitialState, action) => {
         return {
             ...state,
             currentConceptItem: action.conceptItem,
-            currentQuestion: state.conceptItems[action.conceptItem].questions['1']
+            currentQuestion: state.conceptItems[action.conceptItem].questions['1'],
+            currentQuestionId: 1
         };
     }
 
