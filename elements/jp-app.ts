@@ -21,10 +21,15 @@ class JPApp extends HTMLElement {
         });
     }
 
-    nextQuestionClick() {
-        Store.dispatch({
-            type: 'NEXT_QUESTION'
-        });
+    nextQuestionClick(state) {
+        if (Object.values(state.conceptItems[state.currentConceptItem].questions).length === state.currentQuestionId) {
+            window.location.href = 'plans-and-pricing.html';
+        }
+        else {
+            Store.dispatch({
+                type: 'NEXT_QUESTION'
+            });
+        }
     }
 
     previousQuestionClick() {
@@ -207,7 +212,7 @@ class JPApp extends HTMLElement {
                         <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
                             <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                             <button ?hidden=${state.currentQuestionId === 1} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
-                            <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick()}>Next question</button>
+                            <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
                         </div>
                     </div>
                 </div>
