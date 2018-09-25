@@ -462,6 +462,103 @@ export const conceptItems = {
                     }
                 `,
                 userCompleted: false
+            },
+            6: {
+                assessML: `
+                    <p>You have an array that looks as follows:</p>
+                    <p>
+                        <code-sample>
+                            <template>
+                                const fruits = [
+                                    {
+                                        name: 'apple',
+                                        color: 'red'
+                                    },
+                                    {
+                                        name: 'orange',
+                                        color: 'orange'
+                                    },
+                                    {
+                                        name: 'banana',
+                                        color: 'yellow'
+                                    },
+                                    {
+                                        name: 'strawberry',
+                                        color: 'red'
+                                    },
+                                    {
+                                        name: 'blueberry',
+                                        color: 'blue'
+                                    },
+                                    {
+                                        name: 'lemon',
+                                        color: 'yellow'
+                                    }
+                                ];
+                            </template>
+                        </code-sample>
+                    </p>
+                    <p>Write a function named sortByColor that takes an array like fruits and returns an object.</p>
+                    <p>The keys of the object's properties are all the possible fruit colors in the array.</p>
+                    <p>The values of the object's properties are the number of fruits of that color in the array.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function sortByColor(fruits) {
+                                    return fruits.reduce((result, outerFruit) => {
+                                        return {
+                                            ...result,
+                                            [outerFruit.color]: fruits.filter((innerFruit) => {
+                                                return outerFruit.color === innerFruit.color;
+                                            }).length
+                                        };
+                                    }, {});
+                                }
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        const fruits = [
+                            {
+                                name: 'apple',
+                                color: 'red'
+                            },
+                            {
+                                name: 'orange',
+                                color: 'orange'
+                            },
+                            {
+                                name: 'banana',
+                                color: 'yellow'
+                            },
+                            {
+                                name: 'strawberry',
+                                color: 'red'
+                            },
+                            {
+                                name: 'blueberry',
+                                color: 'blue'
+                            },
+                            {
+                                name: 'lemon',
+                                color: 'yellow'
+                            }
+                        ];
+
+                        eval(code1 + \`
+                            const sortedByColor = sortByColor(fruits);
+                            answer = sortedByColor.red === 2 && sortedByColor.orange === 1 && sortedByColor.yellow === 2 && sortedByColor.blue === 1;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
             }
         }
     },
