@@ -518,6 +518,7 @@ export const conceptItems = {
                                 }
                             </template>
                         </code-sample>
+                        <p><br></p>
                     [solution1]
                 `,
                 javaScript: `
@@ -552,6 +553,105 @@ export const conceptItems = {
                         eval(code1 + \`
                             const sortedByColor = sortByColor(fruits);
                             answer = sortedByColor.red === 2 && sortedByColor.orange === 1 && sortedByColor.yellow === 2 && sortedByColor.blue === 1;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            7: {
+                assessML: `
+                    <p>
+                        <code-sample>
+                            <template>
+                                const jobs = [
+                                    {
+                                        id: 0,
+                                        timeInHours: 1
+                                    },
+                                    {
+                                        id: 1,
+                                        timeInHours: 5
+                                    },
+                                    {
+                                        id: 3,
+                                        timeInHours: 10
+                                    },
+                                    {
+                                        id: 4,
+                                        timeInHours: 3
+                                    },
+                                    {
+                                        id: 5,
+                                        timeInHours: 14
+                                    },
+                                    {
+                                        id: 6,
+                                        timeInHours: 18
+                                    },
+                                    {
+                                        id: 7,
+                                        timeInHours: 7
+                                    }
+                                ];
+                            </template>
+                        </code-sample>
+                    </p>
+                    <p>Your editor will have an array called jobs similar to the jobs array above.</p>
+                    <p>In a variable called shortJobs, store all of the jobs that took less than 10 hours.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const shortJobs = jobs.filter((job) => {
+                                    return job.timeInHours < 10;
+                                });
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        const jobs = [
+                            {
+                                id: 0,
+                                timeInHours: 11
+                            },
+                            {
+                                id: 1,
+                                timeInHours: 15
+                            },
+                            {
+                                id: 3,
+                                timeInHours: 1
+                            },
+                            {
+                                id: 4,
+                                timeInHours: 30
+                            },
+                            {
+                                id: 5,
+                                timeInHours: 4
+                            },
+                            {
+                                id: 6,
+                                timeInHours: 2
+                            },
+                            {
+                                id: 7,
+                                timeInHours: 7
+                            }
+                        ];
+
+                        eval(code1 + \`
+                            answer = 
+                                    shortJobs.filter((job) => {
+                                        return job.timeInHours < 10;
+                                    }).length === 4
                         \`);
                     }
                     else {
