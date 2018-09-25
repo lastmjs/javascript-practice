@@ -647,6 +647,14 @@ export const conceptItems = {
                     <p>Invoke the function countCats and store it in a variable called numCats.</p>
                     <p><br></p>
                     <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const numCats = countCats();
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
                 `,
                 javaScript: `
                     if (code1) {

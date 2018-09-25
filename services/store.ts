@@ -50,31 +50,36 @@ const RootReducer = (state=InitialState, action) => {
         };
     }
 
-    if (action.type === 'SET_NEW_CURRENT_QUESTION') {
+    if (action.type === 'SET_NEW_CURRENT_CONCEPT_ITEM') {
         return {
             ...state,
-            currentConceptItem: action.level1ID,
-            currentQuestion: state.conceptItems[action.level1ID].questions[action.level2ID]
+            currentConceptItem: action.conceptItem,
+            currentQuestion: state.conceptItems[action.conceptItem].questions['1']
         };
     }
 
     if (action.type === 'SET_USER_COMPLETED') {
-        return {
-            ...state,
-            conceptItems: {
-                ...state.conceptItems,
-                [state.currentConceptItem]: {
-                    ...state.conceptItems[state.currentConceptItem],
-                    questions: {
-                        ...state.conceptItems[state.currentConceptItem].questions,
-                        [state.currentQuestionId]: {
-                            ...state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId],
-                            userCompleted: action.correct
+        if (action.correct === true) {
+            return {
+                ...state,
+                conceptItems: {
+                    ...state.conceptItems,
+                    [state.currentConceptItem]: {
+                        ...state.conceptItems[state.currentConceptItem],
+                        questions: {
+                            ...state.conceptItems[state.currentConceptItem].questions,
+                            [state.currentQuestionId]: {
+                                ...state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId],
+                                userCompleted: action.correct
+                            }
                         }
                     }
                 }
-            }
-        };
+            };
+        } 
+        else {
+            return state;
+        }
     }
 
     if (action.type === 'NEXT_QUESTION') {

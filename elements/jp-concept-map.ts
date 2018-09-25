@@ -20,9 +20,8 @@ class JPConceptMap extends HTMLElement {
     conceptItemClicked(e) {
         this.selectedConcept = e.target.id;
         Store.dispatch({
-            type: 'SET_NEW_CURRENT_QUESTION',
-            level1ID: this.selectedConcept,
-            level2ID: 1
+            type: 'SET_NEW_CURRENT_CONCEPT_ITEM',
+            conceptItem: this.selectedConcept
         });
     }
 
