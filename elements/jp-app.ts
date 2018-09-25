@@ -106,7 +106,7 @@ class JPApp extends HTMLElement {
                 }
 
                 .question-wrapper-user-completed {
-                    box-shadow: 0px 0px 10px green;
+                    box-shadow: 0px 0px 5px green;
                 }
 
                 .previous-question-button {

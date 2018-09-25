@@ -286,6 +286,36 @@ export const conceptItems = {
         questions: {
             1: {
                 assessML: `
+                    <p>Create an empty array named foo.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = [];
+
+                                // or
+
+                                const foo = new Array();
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = Array.isArray(foo) && foo.length === 0;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
+                assessML: `
                     <p>Create an array named numbers with five elements, each element being of type number.</p>
                     <p><br></p>
                     <p>[code1]</p>
@@ -304,6 +334,127 @@ export const conceptItems = {
                 javaScript: `
                     if (code1) {
                         eval(code1 + 'answer = numbers.length === 5 && typeof numbers[0] === \\\'number\\\' && typeof numbers[1] === \\\'number\\\' && typeof numbers[2] === \\\'number\\\' && typeof numbers[3] === \\\'number\\\' && typeof numbers[4] === \\\'number\\\'');
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            3: {
+                assessML: `
+                    <p>Create an array named twoD with one element.</p>
+                    <p>The one element should be an empty array.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const twoD = [[]];
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = twoD.length === 1 && twoD[0].length === 0;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create an array named fiveByFive.</p>
+                    <p>Each element in the array should be an array with five elements of any type.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const fiveByFive = [
+                                    [1, 2, 3, 4, 5], 
+                                    [1, 2, 3, 4, 5],
+                                    [1, 2, 3, 4, 5],
+                                    [1, 2, 3, 4, 5],
+                                    [1, 2, 3, 4, 5]
+                                ];
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = 
+                                    fiveByFive.length === 5 &&
+                                    fiveByFive.reduce((result, outerItem) => {
+                                        if (outerItem.length !== 5) {
+                                            return false;
+                                        }
+                                        
+                                        return result;
+                                    }, true)
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>Create an array called threeByThreeByThree.</p>
+                    <p>Each element in the array should be an array with three elements.</p>
+                    <p>Each of those elements should be an array with three elements of any type.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const threeByThreeByThree = [
+                                    [
+                                        [1, 2, 3],
+                                        [1, 2, 3],
+                                        [1, 2, 3]
+                                    ],
+                                    [
+                                        [1, 2, 3],
+                                        [1, 2, 3],
+                                        [1, 2, 3]
+                                    ],
+                                    [
+                                        [1, 2, 3],
+                                        [1, 2, 3],
+                                        [1, 2, 3]
+                                    ]
+                                ];
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = 
+                                    threeByThreeByThree.length === 3 &&
+                                    threeByThreeByThree.reduce((result, level1) => {
+                                        return result && level1.reduce((result, level2) => {
+                                            if (level2.length !== 3) {
+                                                return false;
+                                            }
+
+                                            return result;
+                                        }, true);
+                                    }, true);
+                        \`);
                     }
                     else {
                         answer = false;
