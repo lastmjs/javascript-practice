@@ -462,6 +462,203 @@ export const conceptItems = {
                     }
                 `,
                 userCompleted: false
+            },
+            6: {
+                assessML: `
+                    <p>You have an array that looks as follows:</p>
+                    <p>
+                        <code-sample>
+                            <template>
+                                const fruits = [
+                                    {
+                                        name: 'apple',
+                                        color: 'red'
+                                    },
+                                    {
+                                        name: 'orange',
+                                        color: 'orange'
+                                    },
+                                    {
+                                        name: 'banana',
+                                        color: 'yellow'
+                                    },
+                                    {
+                                        name: 'strawberry',
+                                        color: 'red'
+                                    },
+                                    {
+                                        name: 'blueberry',
+                                        color: 'blue'
+                                    },
+                                    {
+                                        name: 'lemon',
+                                        color: 'yellow'
+                                    }
+                                ];
+                            </template>
+                        </code-sample>
+                    </p>
+                    <p>Write a function named sortByColor that takes an array like fruits and returns an object.</p>
+                    <p>The keys of the object's properties are all the possible fruit colors in the array.</p>
+                    <p>The values of the object's properties are the number of fruits of that color in the array.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                function sortByColor(fruits) {
+                                    return fruits.reduce((result, outerFruit) => {
+                                        return {
+                                            ...result,
+                                            [outerFruit.color]: fruits.filter((innerFruit) => {
+                                                return outerFruit.color === innerFruit.color;
+                                            }).length
+                                        };
+                                    }, {});
+                                }
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        const fruits = [
+                            {
+                                name: 'apple',
+                                color: 'red'
+                            },
+                            {
+                                name: 'orange',
+                                color: 'orange'
+                            },
+                            {
+                                name: 'banana',
+                                color: 'yellow'
+                            },
+                            {
+                                name: 'strawberry',
+                                color: 'red'
+                            },
+                            {
+                                name: 'blueberry',
+                                color: 'blue'
+                            },
+                            {
+                                name: 'lemon',
+                                color: 'yellow'
+                            }
+                        ];
+
+                        eval(code1 + \`
+                            const sortedByColor = sortByColor(fruits);
+                            answer = sortedByColor.red === 2 && sortedByColor.orange === 1 && sortedByColor.yellow === 2 && sortedByColor.blue === 1;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            7: {
+                assessML: `
+                    <p>
+                        <code-sample>
+                            <template>
+                                const jobs = [
+                                    {
+                                        id: 0,
+                                        timeInHours: 1
+                                    },
+                                    {
+                                        id: 1,
+                                        timeInHours: 5
+                                    },
+                                    {
+                                        id: 3,
+                                        timeInHours: 10
+                                    },
+                                    {
+                                        id: 4,
+                                        timeInHours: 3
+                                    },
+                                    {
+                                        id: 5,
+                                        timeInHours: 14
+                                    },
+                                    {
+                                        id: 6,
+                                        timeInHours: 18
+                                    },
+                                    {
+                                        id: 7,
+                                        timeInHours: 7
+                                    }
+                                ];
+                            </template>
+                        </code-sample>
+                    </p>
+                    <p>Your editor will have an array called jobs similar to the jobs array above.</p>
+                    <p>In a variable called shortJobs, store all of the jobs that took less than 10 hours.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const shortJobs = jobs.filter((job) => {
+                                    return job.timeInHours < 10;
+                                });
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        const jobs = [
+                            {
+                                id: 0,
+                                timeInHours: 11
+                            },
+                            {
+                                id: 1,
+                                timeInHours: 15
+                            },
+                            {
+                                id: 3,
+                                timeInHours: 1
+                            },
+                            {
+                                id: 4,
+                                timeInHours: 30
+                            },
+                            {
+                                id: 5,
+                                timeInHours: 4
+                            },
+                            {
+                                id: 6,
+                                timeInHours: 2
+                            },
+                            {
+                                id: 7,
+                                timeInHours: 7
+                            }
+                        ];
+
+                        eval(code1 + \`
+                            answer = 
+                                    shortJobs.filter((job) => {
+                                        return job.timeInHours < 10;
+                                    }).length === 4
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
             }
         }
     },
