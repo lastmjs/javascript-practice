@@ -15,7 +15,8 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             },
             2: {
                 assessML: `
@@ -31,7 +32,8 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             },
             3: {
                 assessML: `
@@ -50,7 +52,8 @@ export const conceptItems = {
                 `,
                 javaScript: `
                     answer = radio1 === false && radio2 === true;
-                `
+                `,
+                userCompleted: false
             },
             4: {
                 assessML: `
@@ -69,7 +72,8 @@ export const conceptItems = {
                 `,
                 javaScript: `
                     answer = radio1 === true && radio2 === false;
-                `
+                `,
+                userCompleted: false
             },
             5: {
                 assessML: `
@@ -96,10 +100,10 @@ export const conceptItems = {
                         solutionString.includes('number') &&
                         solutionString.includes('string') &&
                         solutionString.includes('symbol');
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'objects-concept-item': {
         questions: {
@@ -137,10 +141,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'arrays-concept-item': {
         questions: {
@@ -168,10 +172,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'async/await-concept-item': {
         questions: {
@@ -199,10 +203,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'callbacks-concept-item': {
         questions: {
@@ -230,10 +234,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'classes-concept-item': {
         questions: {
@@ -268,10 +272,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'closures-concept-item': {
         questions: {
@@ -302,10 +306,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'control-flow-concept-item': {
         questions: {
@@ -340,10 +344,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'functions-concept-item': {
         questions: {
@@ -386,10 +390,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'generators-concept-item': {
         questions: {
@@ -423,10 +427,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'modules-concept-item': {
         questions: {
@@ -443,10 +447,10 @@ export const conceptItems = {
                 `,
                 javaScript: `
                     answer = input1 === 'module';
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'operators-concept-item': {
         questions: {
@@ -478,10 +482,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'promises-concept-item': {
         questions: {
@@ -542,10 +546,10 @@ export const conceptItems = {
                             answer: false
                         });
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'proxies-concept-item': {
         questions: {
@@ -588,10 +592,10 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'scope-concept-item': {
         questions: {
@@ -606,10 +610,10 @@ export const conceptItems = {
                 `,
                 javaScript: `
                     answer = input1.toLowerCase() === 'hoisting';
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     },
     'variables-concept-item': {
         questions: {
@@ -644,9 +648,9 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
-                `
+                `,
+                userCompleted: false
             }
-        },
-        numUserCompletedQuestions: 0
+        }
     }
 };

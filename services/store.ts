@@ -5,16 +5,37 @@ const persistedState = JSON.parse(window.localStorage.getItem('state'));
 
 const InitialState = persistedState ? {
     ...persistedState,
-    conceptItems: Object.entries(persistedState.conceptItems).reduce((result, conceptItemEntry) => {
-        const key = conceptItemEntry[0];
+    conceptItems: Object.entries(conceptItems).reduce((result, conceptItemEntry) => {
+        const conceptItemKey = conceptItemEntry[0];
+        const conceptItemValue = conceptItemEntry[1];
+
         return {
             ...result,
-            [key]: {
-                ...result[key],
-                questions: conceptItems[key].questions
+            [conceptItemKey]: {
+                ...conceptItemValue,
+                questions: Object.entries(conceptItemValue.questions).reduce((result, questionEntry) => {
+                    const questionKey = questionEntry[0];
+                    const questionValue = questionEntry[1];
+
+                    if (
+                        persistedState.conceptItems[conceptItemKey] &&
+                        persistedState.conceptItems[conceptItemKey].questions[questionKey]
+                    ) {
+                        return {
+                            ...result,
+                            [questionKey]: {
+                                ...questionValue,
+                                userCompleted: persistedState.conceptItems[conceptItemKey].questions[questionKey].persistedState
+                            }
+                        };
+                    }
+                    else {
+                        return result;
+                    }
+                }, conceptItemValue.questions)
             }
         };
-    }, persistedState.conceptItems)
+    }, conceptItems)
 } : {
     currentConceptItem: 'primitive-data-types-concept-item',
     currentQuestionId: 1,
@@ -37,17 +58,20 @@ const RootReducer = (state=InitialState, action) => {
         };
     }
 
-    if (action.type === 'UPDATE_NUM_USER_COMPLETED_QUESTIONS') {
-        const numTotalQuestions = Object.values(state.conceptItems[state.currentConceptItem].questions).length;
-        const numUserCompletedQuestions = state.conceptItems[state.currentConceptItem].numUserCompletedQuestions;
-
+    if (action.type === 'SET_USER_COMPLETED') {
         return {
             ...state,
             conceptItems: {
                 ...state.conceptItems,
                 [state.currentConceptItem]: {
                     ...state.conceptItems[state.currentConceptItem],
-                    numUserCompletedQuestions: numUserCompletedQuestions + (action.correct && numUserCompletedQuestions < numTotalQuestions ? 1 : 0)
+                    questions: {
+                        ...state.conceptItems[state.currentConceptItem].questions,
+                        [state.currentQuestionId]: {
+                            ...state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId],
+                            userCompleted: action.correct
+                        }
+                    }
                 }
             }
         };

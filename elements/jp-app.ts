@@ -37,7 +37,7 @@ class JPApp extends HTMLElement {
         const checkAnswerResponse = e.detail.checkAnswerResponse;
         
         Store.dispatch({
-            type: 'UPDATE_NUM_USER_COMPLETED_QUESTIONS',
+            type: 'SET_USER_COMPLETED',
             correct: checkAnswerResponse === 'Correct'
         });
 

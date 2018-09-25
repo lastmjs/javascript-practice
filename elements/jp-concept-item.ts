@@ -19,7 +19,9 @@ class JPConceptItem extends HTMLElement {
 
     render(state) {
         const numTotalQuestions = Object.values(state.conceptItems[this.id].questions).length;
-        const numUserCompletedQuestions = state.conceptItems[this.id].numUserCompletedQuestions;
+        const numUserCompletedQuestions = Object.values(state.conceptItems[this.id].questions).reduce((result, question) => {
+            return result + (question.userCompleted === true ? 1 : 0);
+        }, 0);
         const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
 
         return html`
