@@ -438,6 +438,7 @@ export const conceptItems = {
                                 ];
                             </template>
                         </code-sample>
+                        <p></br></p>
                     [solution1]
                 `,
                 javaScript: `
@@ -530,6 +531,62 @@ export const conceptItems = {
         questions: {
             1: {
                 assessML: `
+                    <p>Create an empty class named MyClass.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                class MyClass {}
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = MyClass.name === 'MyClass';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
+                assessML: `
+                    <p>Create a class named MyClass with a constructor that sets the init property to true.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                class MyClass {
+                                    constructor() {
+                                        this.init = true;
+                                    }
+                                }
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = new MyClass().init === true;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            3: {
+                assessML: `
                     <p>Create a class named Hans with two methods that each return true.</p>
                     <p>Name the methods pump and youUp.</p>
                     <p><br></p>
@@ -559,6 +616,73 @@ export const conceptItems = {
                     else {
                         answer = false;
                     }
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create a class named Parent with a constructor that sets the init property to true.</p>
+                    <p>Create a class called Child that inherits from Parent.</p>
+                    <p>Ensure that Child properly inherits from Parent when a new instance of Child is created.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                class Parent {
+                                    constructor() {
+                                        this.init = true;
+                                    }
+                                }
+
+                                class Child extends Parent {}
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = new Child().init === true;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>There is a class called Puppy that is available to your editor.</p>
+                    <p>Create an instance of Puppy and store it in a variable called puppy.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const puppy = new Puppy();
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        class Puppy {
+                            constructor() {
+                                this.one = 2562362;
+                                this.two = 1215155;
+                            }
+                        }
+
+                        eval(code1 + \`
+                            answer = puppy.one === 2562362 && puppy.two === 1215155;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    } 
                 `,
                 userCompleted: false
             }
