@@ -4,7 +4,16 @@ export const conceptItems = {
             1: {
                 assessML: `
                     <p>Create a variable named foo that has the boolean value true.</p>
+                    <p><br></p>
                     <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = true;
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
                 `,
                 javaScript: `
                     if (code1) {
@@ -21,7 +30,16 @@ export const conceptItems = {
             2: {
                 assessML: `
                     <p>Create a variable named foo that has the boolean value false.</p>
+                    <p><br></p>
                     <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = false;
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
                 `,
                 javaScript: `
                     if (code1) {
@@ -49,6 +67,9 @@ export const conceptItems = {
                     <p>
                         [radio1]true[radio1]<br><br>[radio2]false[radio2]
                     </p>
+                    [solution1]
+                        <p>false</p>
+                    [solution1]
                 `,
                 javaScript: `
                     answer = radio1 === false && radio2 === true;
@@ -69,6 +90,9 @@ export const conceptItems = {
                     <p>
                         [radio1]true[radio1]<br><br>[radio2]false[radio2]
                     </p>
+                    [solution1]
+                        <p>true</p>
+                    [solution1]
                 `,
                 javaScript: `
                     answer = radio1 === true && radio2 === false;
@@ -109,6 +133,61 @@ export const conceptItems = {
         questions: {
             1: {
                 assessML: `
+                    <p>Create an empty object and store it in the variable foo.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {};
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = JSON.stringify(foo) === '{}';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            2: {
+                assessML: `
+                    <p>Create an object named foo with one property.</p>
+                    <p>The property's key should be hello and its value the string 'there'.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {
+                                    hello: 'there'
+                                };
+                            </template>
+                        </code-sample>
+                        <p><br></p>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = foo.hello === 'there';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            3: {
+                assessML: `
                     <p>Create an object named monkey with three properties.</p>
                     <p>One property should have a key called type with its value the string chimp.</p>
                     <p>One property should have a key called numBananas with its value the number 50.</p>
@@ -137,6 +216,63 @@ export const conceptItems = {
                 javaScript: `
                     if (code1) {
                         eval(code1 + 'answer = monkey.type === \\'chimp\\' && monkey.numBananas === 50 && monkey.ageInYears === 4');
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            4: {
+                assessML: `
+                    <p>Create an object named foo with one property.</p>
+                    <p>The property's key should be child and its value an empty object.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {
+                                    child: {}
+                                };
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = JSON.stringify(foo.child) === '{}';
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `,
+                userCompleted: false
+            },
+            5: {
+                assessML: `
+                    <p>Create an object named foo with one property.</p>
+                    <p>The property's key should be child and its value an object with one property.</p>
+                    <p>That property's key should be grandchild and its value an empty object.</p>
+                    <p><br></p>
+                    <p>[code1]</p>
+                    [solution1]
+                        <code-sample>
+                            <template>
+                                const foo = {
+                                    child: {}
+                                };
+                            </template>
+                        </code-sample>
+                    [solution1]
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = JSON.stringify(foo.child.grandchild) === '{}';
+                        \`);
                     }
                     else {
                         answer = false;

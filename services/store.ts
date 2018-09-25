@@ -25,7 +25,7 @@ const InitialState = persistedState ? {
                             ...result,
                             [questionKey]: {
                                 ...questionValue,
-                                userCompleted: persistedState.conceptItems[conceptItemKey].questions[questionKey].persistedState
+                                userCompleted: persistedState.conceptItems[conceptItemKey].questions[questionKey].userCompleted
                             }
                         };
                     }
