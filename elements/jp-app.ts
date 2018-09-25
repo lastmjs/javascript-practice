@@ -58,6 +58,10 @@ class JPApp extends HTMLElement {
         }
     }
 
+    courseClick() {
+        window.location.href = 'plans-and-pricing.html';
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -72,7 +76,7 @@ class JPApp extends HTMLElement {
                 }
 
                 .question-container {
-                    margin-top: 10vh;
+                    margin-top: 5vh;
                     width: 75em;
                     height: 25vh;
                     margin-left: 10vw;
@@ -118,22 +122,62 @@ class JPApp extends HTMLElement {
                     bottom: 1em;
                     right: 1em;
                 }
+
+                .course-bar {
+                    display: flex;
+                    text-align: center;
+                    box-shadow: 0px 0px 1px black;
+                }
+
+                .course {
+                    flex-grow: 1;
+                    padding: 2em;
+                    cursor: pointer;
+                    transition: background-color .5s ease;
+                    font-weight: bold;
+                    white-space: nowrap;
+                }
+
+                .course:hover {
+                    background-color: rgba(1, 1, 1, .05);
+                }
+
+                .course-focused {
+                    background-color: rgba(1, 1, 1, .1);
+                }
             </style>
 
             <div class="main-grid">
                 <jp-concept-map></jp-concept-map>
 
-                <div class="question-container">
-                    <div id="question-wrapper" class="question-wrapper">
-                        <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
-                        <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick()}>Next question</button>
+                <div>
+                    <div class="course-bar">
+                        <div class="course course-focused">JavaScript</div>
+                        <div @click=${() => this.courseClick()} class="course">TypeScript</div>
+                        <div @click=${() => this.courseClick()} class="course">DOM</div>
+                        <div @click=${() => this.courseClick()} class="course">Web Components</div>
+                        <div @click=${() => this.courseClick()} class="course">Redux</div>
+                        <div @click=${() => this.courseClick()} class="course">GraphQL</div>
+                        <div @click=${() => this.courseClick()} class="course">WebAssembly</div>
+                        <div @click=${() => this.courseClick()} class="course">Web3</div>
+                        <div @click=${() => this.courseClick()} class="course">NPM</div>
+                        <div @click=${() => this.courseClick()} class="course">Node.js</div>
+                        <div @click=${() => this.courseClick()} class="course">Deno</div>
+                    </div>
+
+                    <div class="question-container">
+                        <div id="question-wrapper" class="question-wrapper">
+                            <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
+                            <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick()}>Next question</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <a href="/">
+            <!-- <a href="/">
                 <img src="javascript-logo.png" class="javascript-logo">
-            </a>
+            </a> -->
 
             <a class="privacy-anchor" href="privacy.html">Privacy</a>
         `;
