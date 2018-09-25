@@ -17,11 +17,18 @@ const InitialState = persistedState ? {
     }, persistedState.conceptItems)
 } : {
     currentConceptItem: 'primitive-data-types-concept-item',
-    currentQuestion: conceptItems['primitive-data-types-concept-item'].questions['1'],
+    currentQuestionId: 1,
     conceptItems
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'SET_INITIAL_CURRENT_QUESTION') {
+        return {
+            ...state,
+            currentQuestion: state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId]
+        };
+    }
+
     if (action.type === 'SET_NEW_CURRENT_QUESTION') {
         return {
             ...state,
@@ -43,6 +50,26 @@ const RootReducer = (state=InitialState, action) => {
                     numUserCompletedQuestions: numUserCompletedQuestions + (action.correct && numUserCompletedQuestions < numTotalQuestions ? 1 : 0)
                 }
             }
+        };
+    }
+
+    if (action.type === 'NEXT_QUESTION') {
+        const newCurrentQuestionId = state.currentQuestionId < Object.values(state.conceptItems[state.currentConceptItem].questions).length ? state.currentQuestionId + 1 : state.currentQuestionId;
+
+        return {
+            ...state,
+            currentQuestion: state.conceptItems[state.currentConceptItem].questions[newCurrentQuestionId],
+            currentQuestionId: newCurrentQuestionId
+        };
+    }
+
+    if (action.type === 'PREVIOUS_QUESTION') {
+        const newCurrentQuestionId = state.currentQuestionId > 1 ? state.currentQuestionId - 1 : state.currentQuestionId;
+
+        return {
+            ...state,
+            currentQuestion: state.conceptItems[state.currentConceptItem].questions[newCurrentQuestionId],
+            currentQuestionId: newCurrentQuestionId
         };
     }
 

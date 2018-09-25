@@ -3,6 +3,76 @@ export const conceptItems = {
         questions: {
             1: {
                 assessML: `
+                    <p>Create a variable named foo that has the boolean value true.</p>
+                    <p>[code1]</p>
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = foo === true;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `
+            },
+            2: {
+                assessML: `
+                    <p>Create a variable named foo that has the boolean value false.</p>
+                    <p>[code1]</p>
+                `,
+                javaScript: `
+                    if (code1) {
+                        eval(code1 + \`
+                            answer = foo === false;
+                        \`);
+                    }
+                    else {
+                        answer = false;
+                    }
+                `
+            },
+            3: {
+                assessML: `
+                    <p>What is the value of foo?</p>
+                    <p>
+                        <code-sample>
+                            <template>
+                                const foo = !!0;
+                            </template>
+                        </code-sample>
+                    </p>
+                    <p><br></p>
+                    <p>
+                        [radio1]true[radio1]<br><br>[radio2]false[radio2]
+                    </p>
+                `,
+                javaScript: `
+                    answer = radio1 === false && radio2 === true;
+                `
+            },
+            4: {
+                assessML: `
+                    <p>What is the value of foo?</p>
+                    <p>
+                        <code-sample>
+                            <template>
+                                const foo = !!1;
+                            </template>
+                        </code-sample>
+                    </p>
+                    <p><br></p>
+                    <p>
+                        [radio1]true[radio1]<br><br>[radio2]false[radio2]
+                    </p>
+                `,
+                javaScript: `
+                    answer = radio1 === true && radio2 === false;
+                `
+            },
+            5: {
+                assessML: `
                     <p>What are the six primitive data types in JavaScript?</p>
                     <p><br></p>
                     <p>[input1]</p>
