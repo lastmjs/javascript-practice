@@ -34,6 +34,7 @@ class JPConceptMap extends HTMLElement {
                     flex-direction: column;
                     text-align: center;
                     box-shadow: 0px 0px 1px black;
+                    background-color: rgba(1, 1, 1, .1);
                 }
             </style>
 
