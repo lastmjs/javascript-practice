@@ -51,7 +51,7 @@ class JPConceptItem extends HTMLElement {
                 }
             </style>
 
-            <div class="concept${state.currentConcept && state.currentConcept.id === this.id ? ' concept-focused' : ''}" @click=${(e) => e.concept = this.concept}>
+            <div class="concept${state.currentConcept && state.currentConcept.id === this.id ? ' concept-focused' : ''}">
                 ${this.title}
                 <div class="concept-overlay" style="width: ${percentage}%">
                 </div>
