@@ -3,11 +3,8 @@ import './jp-concept-item';
 import {Store} from '../services/store';
 
 class JPConceptMap extends HTMLElement {
-    selectedConcept: string;
 
     connectedCallback() {
-        this.selectedConcept = `primitive-data-types-concept-item`;
-
         Store.subscribe(() => render(this.render(Store.getState()), this));
 
         setTimeout(() => {
@@ -18,10 +15,9 @@ class JPConceptMap extends HTMLElement {
     }
 
     conceptItemClicked(e) {
-        this.selectedConcept = e.target.id;
         Store.dispatch({
-            type: 'SET_NEW_CURRENT_CONCEPT_ITEM',
-            conceptItem: this.selectedConcept
+            type: 'SET_NEW_CURRENT_CONCEPT',
+            concept: e.target.id
         });
     }
 
@@ -41,82 +37,82 @@ class JPConceptMap extends HTMLElement {
                 <jp-concept-item
                     title="Primitive data types"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Objects"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Functions"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Arrays"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Classes"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Modules"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Operators"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Control flow"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Variables"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Promises"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="async/await"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Generators"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Scope"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Closures"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Callbacks"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
                 <jp-concept-item
                     title="Proxies"
                     @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
+                    .selectedConcept=${state.currentConcept}
                 ></jp-concept-item>
             </div>
         `;

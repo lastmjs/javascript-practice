@@ -1,5 +1,5 @@
 export const conceptItems = {
-    'primitive-data-types-concept-item': {
+    'primitive-data-types': {
         questions: {
             1: {
                 assessML: `
@@ -25,7 +25,8 @@ export const conceptItems = {
                         answer = false;
                     }
                 `,
-                userCompleted: false
+                userCompleted: false,
+                concept: 'primitive-data-types'
             },
             2: {
                 assessML: `
@@ -51,7 +52,8 @@ export const conceptItems = {
                         answer = false;
                     }
                 `,
-                userCompleted: false
+                userCompleted: false,
+                concept: 'primitive-data-types'
             },
             3: {
                 assessML: `
@@ -74,7 +76,8 @@ export const conceptItems = {
                 javaScript: `
                     answer = radio1 === false && radio2 === true;
                 `,
-                userCompleted: false
+                userCompleted: false,
+                concept: 'primitive-data-types'
             },
             4: {
                 assessML: `
@@ -97,7 +100,8 @@ export const conceptItems = {
                 javaScript: `
                     answer = radio1 === true && radio2 === false;
                 `,
-                userCompleted: false
+                userCompleted: false,
+                concept: 'primitive-data-types'
             },
             5: {
                 assessML: `
@@ -125,7 +129,8 @@ export const conceptItems = {
                         solutionString.includes('string') &&
                         solutionString.includes('symbol');
                 `,
-                userCompleted: false
+                userCompleted: false,
+                concept: 'primitive-data-types'
             }
         }
     },

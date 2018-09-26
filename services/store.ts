@@ -1,7 +1,9 @@
 import {createStore} from 'redux';
-import {conceptItems} from './concept-items';
+// import {conceptItems} from './concept-items';
+import {questions} from './questions';
 
-const persistedState = JSON.parse(window.localStorage.getItem('state'));
+// const persistedState = JSON.parse(window.localStorage.getItem('state'));
+const persistedState = null;
 
 const InitialState = persistedState ? {
     ...persistedState,
@@ -37,25 +39,37 @@ const InitialState = persistedState ? {
         };
     }, conceptItems)
 } : {
-    currentConceptItem: 'primitive-data-types-concept-item',
-    currentQuestionId: 1,
-    conceptItems
+    questions,
+    currentConcept: 'primitive-data-types',
+    currentEntity: 'question',
+    currentEntityId: '0',
+    currentEntityBehavior: 'view'
 };
 
 const RootReducer = (state=InitialState, action) => {
-    if (action.type === 'SET_INITIAL_CURRENT_QUESTION') {
+
+    if (action.type === 'SET_ROUTE') {
+        const currentEntity = action.entity;
+        const currentEntityId = action.entityId;
+        const currentEntityBehavior = action.entityBehavior;
+        const currentQuestion = action.entity === 'question' ? state.questions[currentEntityId] : state.currentQuestion;
+        const currentConcept = currentQuestion.concept;
+
         return {
             ...state,
-            currentQuestion: state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId]
+            currentEntity,
+            currentEntityId,
+            currentEntityBehavior,
+            currentQuestion
         };
     }
-
-    if (action.type === 'SET_NEW_CURRENT_CONCEPT_ITEM') {
+    
+    if (action.type === 'SET_NEW_CURRENT_CONCEPT') {
         return {
             ...state,
-            currentConceptItem: action.conceptItem,
-            currentQuestion: state.conceptItems[action.conceptItem].questions['1'],
-            currentQuestionId: 1
+            currentConcept: action.concept,
+            // currentQuestion: state.questions['0'],
+            // currentQuestionId: 0
         };
     }
 
@@ -109,7 +123,7 @@ const RootReducer = (state=InitialState, action) => {
 export const Store = createStore((state, action) => {
     const newState = RootReducer(state, action);
 
-    window.localStorage.setItem('state', JSON.stringify(newState));
+    // window.localStorage.setItem('state', JSON.stringify(newState));
 
     return newState;
 });

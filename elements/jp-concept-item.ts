@@ -4,7 +4,7 @@ import {Store} from '../services/store';
 class JPConceptItem extends HTMLElement {
 
     get id() {
-        return `${this.title.toLowerCase().replace(/\s/g, '-')}-concept-item`;
+        return `${this.title.toLowerCase().replace(/\s/g, '-')}`;
     }
 
     connectedCallback() {
@@ -18,8 +18,8 @@ class JPConceptItem extends HTMLElement {
     }
 
     render(state) {
-        const numTotalQuestions = Object.values(state.conceptItems[this.id].questions).length;
-        const numUserCompletedQuestions = Object.values(state.conceptItems[this.id].questions).reduce((result, question) => {
+        const numTotalQuestions = Object.values(state.questions).length;
+        const numUserCompletedQuestions = Object.values(state.questions).reduce((result, question) => {
             return result + (question.userCompleted === true ? 1 : 0);
         }, 0);
         const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
@@ -53,7 +53,7 @@ class JPConceptItem extends HTMLElement {
                 }
             </style>
 
-            <div id=${this.id} class="concept${state.currentConceptItem === this.id ? ' concept-focused' : ''}">
+            <div id=${this.id} class="concept${state.currentConcept === this.id ? ' concept-focused' : ''}">
                 ${this.title}
                 <div class="concept-overlay" style="width: ${percentage}%">
                 </div>
