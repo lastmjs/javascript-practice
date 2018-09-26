@@ -55,15 +55,6 @@ const RootReducer = (state=InitialState, action) => {
         };
     }
 
-    if (action.type === 'SET_INITIAL_URL') {
-        //TODO figure out how to handle side effects elegantly
-        // setTimeout(() => {
-        //     page(`/${state.currentEntity}/${state.currentEntityId}/${state.currentEntityBehavior}`);
-        // });
-
-        return state;
-    }
-
     if (action.type === 'SET_ROUTE') {
         const currentEntity = action.entity;
         const currentEntityId = action.entityId;
@@ -98,8 +89,6 @@ const RootReducer = (state=InitialState, action) => {
         const currentAssessment = currentConcept.assessments.find((assessment: any) => {
             return assessment.order === 0;
         });
-        // const currentEntity = 
-        // const currentEntityBehavior 
 
         //TODO figure out how to handle side effects elegantly
         setTimeout(() => {

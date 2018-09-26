@@ -164,7 +164,7 @@ class JPAssessment extends HTMLElement {
                 <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
                     <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                     <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
-                    <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
+                    <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
                 </div>
             </div>
         `;
