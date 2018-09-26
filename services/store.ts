@@ -45,10 +45,18 @@ const InitialState = persistedState ? {
     currentEntity: 'question',
     currentEntityId: '0',
     currentEntityBehavior: 'view',
-    currentQuestion: null
+    currentQuestion: null,
+    concepts: []
 };
 
 const RootReducer = (state=InitialState, action) => {
+
+    if (action.type === 'SET_CONCEPTS') {
+        return {
+            ...state,
+            concepts: action.concepts
+        };
+    }
 
     if (action.type === 'SET_INITIAL_URL') {
         //TODO figure out how to handle side effects elegantly

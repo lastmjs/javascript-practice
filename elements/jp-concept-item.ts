@@ -9,12 +9,12 @@ class JPConceptItem extends HTMLElement {
 
     connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
-        //
-        // setTimeout(() => {
-        //     Store.dispatch({
-        //         type: 'TRIGGER_RENDER'
-        //     });
-        // });
+        
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'TRIGGER_RENDER'
+            });
+        });
     }
 
     render(state) {

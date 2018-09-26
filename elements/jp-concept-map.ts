@@ -1,10 +1,11 @@
 import {html, render} from 'lit-html';
-import './jp-concept-item';
+import './jp-concept-item'; 
 import {Store} from '../services/store';
+import {request} from '../services/graphql';
 
 class JPConceptMap extends HTMLElement {
 
-    connectedCallback() {
+    async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
 
         setTimeout(() => {
@@ -12,6 +13,25 @@ class JPConceptMap extends HTMLElement {
                 type: 'TRIGGER_RENDER'
             });
         });
+
+        try {
+            const response = await request(`
+                query {
+                    concepts {
+                        title
+                        order
+                    }
+                }
+            `);
+
+            Store.dispatch({
+                type: 'SET_CONCEPTS',
+                concepts: response.concepts
+            });
+        }
+        catch(error) {
+            alert(JSON.stringify(error, null, 2));
+        }
     }
 
     conceptItemClicked(e) {
@@ -34,86 +54,13 @@ class JPConceptMap extends HTMLElement {
             </style>
 
             <div class="concepts-container">
-                <jp-concept-item
-                    title="Primitive data types"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Objects"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Functions"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Arrays"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Classes"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Modules"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Operators"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Control flow"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Variables"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Promises"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="async/await"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Generators"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Scope"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Closures"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Callbacks"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Proxies"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${state.currentConcept}
-                ></jp-concept-item>
+                ${state.concepts.map((concept) => {
+                    return html`<jp-concept-item 
+                                    title=${concept.title}
+                                    @click=${(e) => this.conceptItemClicked(e)}
+                                    .selectedConcept=${state.currentConcept}>
+                                </jp-concept-item>`;
+                })}
             </div>
         `;
     }
