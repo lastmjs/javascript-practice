@@ -1,9 +1,32 @@
 import {html, render} from 'lit-html';
 import 'prendus-question-elements/prendus-view-question.ts';
 import {Store} from '../services/store';
+import {request} from '../services/graphql';
 
 class JPAssessment extends HTMLElement {
-    connectedCallback() {
+    set assessmentId(val: string) {
+        (async () => {
+            const response = await request(`
+                query($id: ID!) {
+                    assessment(where: {
+                        id: $id
+                    }) {
+                        assessML
+                        javaScript
+                    }
+                }
+            `, {
+                id: val
+            });
+
+            Store.dispatch({
+                type: 'SET_CURRENT_ASSESSMENT',
+                assessment: response.assessment
+            })
+        })();
+    }
+
+    async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
     }
 
@@ -125,7 +148,7 @@ class JPAssessment extends HTMLElement {
 
             <div class="question-container">
                 <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
-                    <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
+                    <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                     <button ?hidden=${state.currentQuestion && state.currentQuestion.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
                     <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
                 </div>

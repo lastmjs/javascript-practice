@@ -7,14 +7,15 @@ export async function request(query, variables?) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            query
+            query,
+            variables
         })
     });
 
     const responseJSON = await response.json();
 
     if (responseJSON.errors) {
-        throw responseJSON.errors;
+        alert(JSON.stringify(responseJSON.errors, null, 2));
     }
     else {
         return responseJSON.data;

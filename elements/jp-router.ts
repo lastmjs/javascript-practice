@@ -21,8 +21,8 @@ class JPRouter extends HTMLElement {
 
     render(state: any) {
         const routes = {
-            question: {
-                view: html`<jp-assessment></jp-assessment>`
+            assessment: {
+                view: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`
             }
         };
 

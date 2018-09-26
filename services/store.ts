@@ -1,6 +1,4 @@
 import {createStore} from 'redux';
-// import {conceptItems} from './concept-items';
-import {questions} from './questions';
 import page from 'page';
 
 // const persistedState = JSON.parse(window.localStorage.getItem('state'));
@@ -40,12 +38,11 @@ const InitialState = persistedState ? {
         };
     }, conceptItems)
 } : {
-    questions,
     currentConcept: 'primitive-data-types',
-    currentEntity: 'question',
-    currentEntityId: '0',
+    currentEntity: 'assessment',
+    currentEntityId: 'cjmjh7h7300810a58spx49a7f',
     currentEntityBehavior: 'view',
-    currentQuestion: null,
+    currentAssessment: null,
     concepts: []
 };
 
@@ -71,8 +68,6 @@ const RootReducer = (state=InitialState, action) => {
         const currentEntity = action.entity;
         const currentEntityId = action.entityId;
         const currentEntityBehavior = action.entityBehavior;
-        const currentQuestion = action.entity === 'question' ? state.questions[currentEntityId] : state.currentQuestion;
-        const currentConcept = currentQuestion.concept;
         const currentRoutePath = action.routePath;
 
         return {
@@ -80,15 +75,20 @@ const RootReducer = (state=InitialState, action) => {
             currentEntity,
             currentEntityId,
             currentEntityBehavior,
-            currentQuestion,
-            currentRoutePath,
-            currentConcept
+            currentRoutePath
+        };
+    }
+
+    if (action.type === 'SET_CURRENT_ASSESSMENT') {
+        return {
+            ...state,
+            currentAssessment: action.assessment
         };
     }
     
     if (action.type === 'SET_NEW_CURRENT_CONCEPT') {
         const currentConcept = action.concept;
-        const currentQuestion = Object.values(questions).find((question) => {
+        const currentQuestion = state.concepts.find((concept) => {
             return question.concept === currentConcept && question.order === 0;
         });
 

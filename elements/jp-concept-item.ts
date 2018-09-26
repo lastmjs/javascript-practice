@@ -18,11 +18,13 @@ class JPConceptItem extends HTMLElement {
     }
 
     render(state) {
-        const numTotalQuestions = Object.values(state.questions).length;
-        const numUserCompletedQuestions = Object.values(state.questions).reduce((result, question) => {
-            return result + (question.userCompleted === true ? 1 : 0);
-        }, 0);
-        const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
+        //TODO this will all be done on the server
+        // const numTotalQuestions = Object.values(state.questions).length;
+        // const numUserCompletedQuestions = Object.values(state.questions).reduce((result, question) => {
+        //     return result + (question.userCompleted === true ? 1 : 0);
+        // }, 0);
+        // const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
+        const percentage = 0;
 
         return html`
             <style>

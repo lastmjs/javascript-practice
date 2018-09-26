@@ -14,24 +14,24 @@ class JPConceptMap extends HTMLElement {
             });
         });
 
-        try {
-            const response = await request(`
-                query {
-                    concepts {
-                        title
-                        order
+        const response = await request(`
+            query {
+                concepts {
+                    title
+                    order
+                    assessments {
+                        id
+                        assessML
+                        javaScript
                     }
                 }
-            `);
+            }
+        `);
 
-            Store.dispatch({
-                type: 'SET_CONCEPTS',
-                concepts: response.concepts
-            });
-        }
-        catch(error) {
-            alert(JSON.stringify(error, null, 2));
-        }
+        Store.dispatch({
+            type: 'SET_CONCEPTS',
+            concepts: response.concepts
+        });
     }
 
     conceptItemClicked(e) {
