@@ -13,6 +13,15 @@ class JPAssessment extends HTMLElement {
                     }) {
                         assessML
                         javaScript
+                        order
+                        concept {
+                            id
+                            title
+                            assessments {
+                                id
+                                order
+                            }
+                        }
                     }
                 }
             `, {
@@ -22,7 +31,12 @@ class JPAssessment extends HTMLElement {
             Store.dispatch({
                 type: 'SET_CURRENT_ASSESSMENT',
                 assessment: response.assessment
-            })
+            });
+
+            Store.dispatch({
+                type: 'SET_CURRENT_CONCEPT',
+                concept: response.assessment.concept
+            });
         })();
     }
 
@@ -30,7 +44,7 @@ class JPAssessment extends HTMLElement {
         Store.subscribe(() => render(this.render(Store.getState()), this));
     }
 
-    nextQuestionClick(state) {
+    nextQuestionClick(state: any) {
         Store.dispatch({
             type: 'NEXT_QUESTION'
         });
@@ -149,7 +163,7 @@ class JPAssessment extends HTMLElement {
             <div class="question-container">
                 <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
                     <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
-                    <button ?hidden=${state.currentQuestion && state.currentQuestion.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
+                    <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
                     <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
                 </div>
             </div>

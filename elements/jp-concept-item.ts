@@ -3,10 +3,6 @@ import {Store} from '../services/store';
 
 class JPConceptItem extends HTMLElement {
 
-    get id() {
-        return `${this.title.toLowerCase().replace(/\s/g, '-')}`;
-    }
-
     connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
         
@@ -17,7 +13,7 @@ class JPConceptItem extends HTMLElement {
         });
     }
 
-    render(state) {
+    render(state: any) {
         //TODO this will all be done on the server
         // const numTotalQuestions = Object.values(state.questions).length;
         // const numUserCompletedQuestions = Object.values(state.questions).reduce((result, question) => {
@@ -55,7 +51,7 @@ class JPConceptItem extends HTMLElement {
                 }
             </style>
 
-            <div id=${this.id} class="concept${state.currentConcept === this.id ? ' concept-focused' : ''}">
+            <div class="concept${state.currentConcept && state.currentConcept.id === this.id ? ' concept-focused' : ''}" @click=${(e) => e.concept = this.concept}>
                 ${this.title}
                 <div class="concept-overlay" style="width: ${percentage}%">
                 </div>

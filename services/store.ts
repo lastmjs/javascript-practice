@@ -38,9 +38,9 @@ const InitialState = persistedState ? {
         };
     }, conceptItems)
 } : {
-    currentConcept: 'primitive-data-types',
+    currentConcept: null,
     currentEntity: 'assessment',
-    currentEntityId: 'cjmjh7h7300810a58spx49a7f',
+    currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
     currentEntityBehavior: 'view',
     currentAssessment: null,
     concepts: []
@@ -57,9 +57,9 @@ const RootReducer = (state=InitialState, action) => {
 
     if (action.type === 'SET_INITIAL_URL') {
         //TODO figure out how to handle side effects elegantly
-        setTimeout(() => {
-            page(`/${state.currentEntity}/${state.currentEntityId}/${state.currentEntityBehavior}`);
-        });
+        // setTimeout(() => {
+        //     page(`/${state.currentEntity}/${state.currentEntityId}/${state.currentEntityBehavior}`);
+        // });
 
         return state;
     }
@@ -85,16 +85,25 @@ const RootReducer = (state=InitialState, action) => {
             currentAssessment: action.assessment
         };
     }
+
+    if (action.type === 'SET_CURRENT_CONCEPT') {
+        return {
+            ...state,
+            currentConcept: action.concept
+        };
+    }
     
-    if (action.type === 'SET_NEW_CURRENT_CONCEPT') {
+    if (action.type === 'SWITCH_SELECTED_CONCEPT') {
         const currentConcept = action.concept;
-        const currentQuestion = state.concepts.find((concept) => {
-            return question.concept === currentConcept && question.order === 0;
+        const currentAssessment = currentConcept.assessments.find((assessment: any) => {
+            return assessment.order === 0;
         });
+        // const currentEntity = 
+        // const currentEntityBehavior 
 
         //TODO figure out how to handle side effects elegantly
         setTimeout(() => {
-            page(`/question/${currentQuestion.id}/view`);
+            page(`/assessment/${currentAssessment.id}/view`);
         });
 
         return {
@@ -128,30 +137,28 @@ const RootReducer = (state=InitialState, action) => {
     }
 
     if (action.type === 'NEXT_QUESTION') {
-        const currentOrder = state.currentQuestion.order;
-        const conceptQuestions = Object.values(questions).filter((question) => question.concept === state.currentConcept);
-        const sortedConceptQuestions = conceptQuestions.sort((a, b) => a.order < b.order);
+        const currentOrder = state.currentAssessment.order;
+        const sortedConceptQuestions = state.currentConcept.assessments.sort((a, b) => a.order < b.order);
         const lastOrder = sortedConceptQuestions[0].order;
         const nextOrder = currentOrder < lastOrder ? currentOrder + 1 : currentOrder;
-        const nextOrderQuestionId = conceptQuestions.find((question) => question.order === nextOrder).id;
+        const nextOrderAssessmentId = state.currentConcept.assessments.find((assessment) => assessment.order === nextOrder).id;
 
         //TODO figure out how to handle side effects elegantly
         setTimeout(() => {
-            page(`/question/${nextOrderQuestionId}/view`);
+            page(`/assessment/${nextOrderAssessmentId}/view`);
         });
 
         return state;
     }
 
     if (action.type === 'PREVIOUS_QUESTION') {
-        const currentOrder = state.currentQuestion.order;
-        const conceptQuestions = Object.values(questions).filter((question) => question.concept === state.currentConcept);
+        const currentOrder = state.currentAssessment.order;
         const previousOrder = currentOrder > 0 ? currentOrder - 1 : currentOrder;
-        const previousOrderQuestionId = conceptQuestions.find((question) => question.order === previousOrder).id;
+        const previousOrderAssessmentId = state.currentConcept.assessments.find((assessment) => assessment.order === previousOrder).id;
 
         //TODO figure out how to handle side effects elegantly
         setTimeout(() => {
-            page(`/question/${previousOrderQuestionId}/view`);
+            page(`/assessment/${previousOrderAssessmentId}/view`);
         });
 
         return state;
