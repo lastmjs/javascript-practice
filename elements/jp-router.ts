@@ -8,7 +8,8 @@ page('/:entity/:id/:behavior', (context: any) => {
         type: 'SET_ROUTE',
         entity: context.params.entity,
         entityId: context.params.id,
-        entityBehavior: context.params.behavior
+        entityBehavior: context.params.behavior,
+        routePath: context.path
     });
 });
 page();

@@ -8,14 +8,9 @@ class JPAssessment extends HTMLElement {
     }
 
     nextQuestionClick(state) {
-        if (Object.values(state.conceptItems[state.currentConceptItem].questions).length === state.currentQuestionId) {
-            window.location.href = 'plans-and-pricing.html';
-        }
-        else {
-            Store.dispatch({
-                type: 'NEXT_QUESTION'
-            });
-        }
+        Store.dispatch({
+            type: 'NEXT_QUESTION'
+        });
     }
 
     previousQuestionClick() {
@@ -128,7 +123,7 @@ class JPAssessment extends HTMLElement {
                 }
             </style>
 
-            <div class="question-container" ?hidden=${!(state.currentEntity === 'question')}>
+            <div class="question-container">
                 <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
                     <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                     <button ?hidden=${state.currentQuestionId === 1} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>

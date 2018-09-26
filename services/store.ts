@@ -1,6 +1,7 @@
 import {createStore} from 'redux';
 // import {conceptItems} from './concept-items';
 import {questions} from './questions';
+import page from 'page';
 
 // const persistedState = JSON.parse(window.localStorage.getItem('state'));
 const persistedState = null;
@@ -54,22 +55,33 @@ const RootReducer = (state=InitialState, action) => {
         const currentEntityBehavior = action.entityBehavior;
         const currentQuestion = action.entity === 'question' ? state.questions[currentEntityId] : state.currentQuestion;
         const currentConcept = currentQuestion.concept;
+        const currentRoutePath = action.routePath;
 
         return {
             ...state,
             currentEntity,
             currentEntityId,
             currentEntityBehavior,
-            currentQuestion
+            currentQuestion,
+            currentRoutePath,
+            currentConcept
         };
     }
     
     if (action.type === 'SET_NEW_CURRENT_CONCEPT') {
+        const currentConcept = action.concept;
+        const currentQuestion = Object.values(questions).find((question) => {
+            return question.concept === currentConcept && question.order === 0;
+        });
+
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/question/${currentQuestion.id}/view`);
+        });
+
         return {
             ...state,
-            currentConcept: action.concept,
-            // currentQuestion: state.questions['0'],
-            // currentQuestionId: 0
+            currentConcept
         };
     }
 
@@ -98,23 +110,21 @@ const RootReducer = (state=InitialState, action) => {
     }
 
     if (action.type === 'NEXT_QUESTION') {
-        const newCurrentQuestionId = state.currentQuestionId < Object.values(state.conceptItems[state.currentConceptItem].questions).length ? state.currentQuestionId + 1 : state.currentQuestionId;
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/question/${+state.currentEntityId + 1}/view`);
+        });
 
-        return {
-            ...state,
-            currentQuestion: state.conceptItems[state.currentConceptItem].questions[newCurrentQuestionId],
-            currentQuestionId: newCurrentQuestionId
-        };
+        return state;
     }
 
     if (action.type === 'PREVIOUS_QUESTION') {
-        const newCurrentQuestionId = state.currentQuestionId > 1 ? state.currentQuestionId - 1 : state.currentQuestionId;
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/question/${+state.currentEntityId - 1}/view`);
+        });
 
-        return {
-            ...state,
-            currentQuestion: state.conceptItems[state.currentConceptItem].questions[newCurrentQuestionId],
-            currentQuestionId: newCurrentQuestionId
-        };
+        return state;
     }
 
     return state;
