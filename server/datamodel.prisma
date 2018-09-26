@@ -1,0 +1,22 @@
+type Course {
+  id: ID! @unique
+  title: String!
+  concepts: [Concept!]!
+  order: Int!
+}
+
+type Concept {
+  id: ID! @unique
+  title: String!
+  course: Course!
+  assessments: [Assessment!]!
+  order: Int!
+}
+
+type Assessment {
+  id: ID! @unique
+  concept: Concept!
+  assessML: String!
+  javaScript: String!
+  order: Int!
+}
