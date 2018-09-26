@@ -110,18 +110,30 @@ const RootReducer = (state=InitialState, action) => {
     }
 
     if (action.type === 'NEXT_QUESTION') {
+        const currentOrder = state.currentQuestion.order;
+        const conceptQuestions = Object.values(questions).filter((question) => question.concept === state.currentConcept);
+        const sortedConceptQuestions = conceptQuestions.sort((a, b) => a.order < b.order);
+        const lastOrder = sortedConceptQuestions[0].order;
+        const nextOrder = currentOrder < lastOrder ? currentOrder + 1 : currentOrder;
+        const nextOrderQuestionId = conceptQuestions.find((question) => question.order === nextOrder).id;
+
         //TODO figure out how to handle side effects elegantly
         setTimeout(() => {
-            page(`/question/${+state.currentEntityId + 1}/view`);
+            page(`/question/${nextOrderQuestionId}/view`);
         });
 
         return state;
     }
 
     if (action.type === 'PREVIOUS_QUESTION') {
+        const currentOrder = state.currentQuestion.order;
+        const conceptQuestions = Object.values(questions).filter((question) => question.concept === state.currentConcept);
+        const previousOrder = currentOrder > 0 ? currentOrder - 1 : currentOrder;
+        const previousOrderQuestionId = conceptQuestions.find((question) => question.order === previousOrder).id;
+
         //TODO figure out how to handle side effects elegantly
         setTimeout(() => {
-            page(`/question/${+state.currentEntityId - 1}/view`);
+            page(`/question/${previousOrderQuestionId}/view`);
         });
 
         return state;
