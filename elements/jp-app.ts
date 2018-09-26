@@ -13,7 +13,7 @@ class JPApp extends HTMLElement {
         });
 
         Store.dispatch({
-            type: 'DEFAULT_ACTION'
+            type: 'SET_INITIAL_URL'
         });
     }
 

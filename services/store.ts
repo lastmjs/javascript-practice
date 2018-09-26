@@ -44,10 +44,20 @@ const InitialState = persistedState ? {
     currentConcept: 'primitive-data-types',
     currentEntity: 'question',
     currentEntityId: '0',
-    currentEntityBehavior: 'view'
+    currentEntityBehavior: 'view',
+    currentQuestion: null
 };
 
 const RootReducer = (state=InitialState, action) => {
+
+    if (action.type === 'SET_INITIAL_URL') {
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/${state.currentEntity}/${state.currentEntityId}/${state.currentEntityBehavior}`);
+        });
+
+        return state;
+    }
 
     if (action.type === 'SET_ROUTE') {
         const currentEntity = action.entity;
