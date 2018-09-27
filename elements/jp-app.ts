@@ -94,7 +94,7 @@ class JPApp extends HTMLElement {
                         <div @click=${() => this.courseClick()} class="course">Deno</div>
                     </div> -->
 
-                    <!-- <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button> -->
+                    <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
 
                     <jp-router></jp-router>
 

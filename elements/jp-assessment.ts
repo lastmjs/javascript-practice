@@ -44,6 +44,15 @@ class JPAssessment extends HTMLElement {
         Store.subscribe(() => render(this.render(Store.getState()), this));
     }
 
+    questionResponse(e: any) {
+        const checkAnswerResponse = e.detail.checkAnswerResponse;
+        alert(checkAnswerResponse);
+        // Store.dispatch({
+        //     type: 'SET_USER_COMPLETED',
+        //     correct: checkAnswerResponse === 'Correct'
+        // });
+    }
+
     nextQuestionClick(state: any) {
         Store.dispatch({
             type: 'NEXT_QUESTION'
@@ -54,47 +63,6 @@ class JPAssessment extends HTMLElement {
         Store.dispatch({
             type: 'PREVIOUS_QUESTION'
         });
-    }
-
-    questionResponse(e: any) {
-        const checkAnswerResponse = e.detail.checkAnswerResponse;
-        
-        Store.dispatch({
-            type: 'SET_USER_COMPLETED',
-            correct: checkAnswerResponse === 'Correct'
-        });
-
-        //TODO the below code is obviously disgusting and evil and must be changed...but not yet
-        if (checkAnswerResponse === 'Correct') {
-            this.querySelector('#question-wrapper').style.backgroundColor = 'rgba(0, 255, 0, .5)';
-            
-            setTimeout(() => {
-                
-                this.querySelector('#question-wrapper').style.transition = 'background-color .5s linear';
-                this.querySelector('#question-wrapper').style.backgroundColor = 'white';
-    
-                setTimeout(() => {
-                    this.querySelector('#question-wrapper').style.transition = '';
-                }, 1000);
-            });
-        }
-        else {
-            this.querySelector('#question-wrapper').style.backgroundColor = 'rgba(255, 0, 0, .5)';
-            
-            setTimeout(() => {
-                
-                this.querySelector('#question-wrapper').style.transition = 'background-color .5s linear';
-                this.querySelector('#question-wrapper').style.backgroundColor = 'white';
-                
-                if (checkAnswerResponse !== 'Incorrect') {
-                    alert(checkAnswerResponse);
-                }
-    
-                setTimeout(() => {
-                    this.querySelector('#question-wrapper').style.transition = '';
-                }, 1000);
-            });
-        }
     }
 
     render(state) {
@@ -158,11 +126,9 @@ class JPAssessment extends HTMLElement {
             </style>
 
             <div class="question-container">
-                <div id="question-wrapper" class="${state.currentQuestion && state.currentQuestion.userCompleted === true ? 'question-wrapper-user-completed' : ''}">
-                    <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
-                    <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
-                    <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
-                </div>
+                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
+                <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
+                <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
             </div>
         `;
     }
