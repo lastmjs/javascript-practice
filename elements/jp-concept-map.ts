@@ -53,7 +53,7 @@ class JPConceptMap extends HTMLElement {
                 * or implement something ourselves
                 */
                 #concepts-container::-webkit-scrollbar {
-                    width: 0;
+                    display: none;
                 }
 
                 @media (min-width: 1024px) {
@@ -64,7 +64,7 @@ class JPConceptMap extends HTMLElement {
                         box-shadow: 0px 0px 1px black;
                         background-color: ${backgroundColor};
                         height: 100vh;
-                        overflow-y: scroll;                   
+                        overflow-y: auto;                   
                     }
                 }
 
@@ -79,7 +79,7 @@ class JPConceptMap extends HTMLElement {
                         box-shadow: 0px 0px 1px black;
                         background-color: ${backgroundColor};
                         height: 100vh;
-                        overflow-y: scroll;                       
+                        overflow-y: auto;                       
                     }
 
                     .concepts-container-hidden {

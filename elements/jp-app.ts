@@ -124,12 +124,17 @@ class JPApp extends HTMLElement {
                 .next-question-button:hover {
                     background-color: ${highlightColor};
                 }
+
+                .router-area {
+                    height: 100vh;
+                    overflow-y: auto;
+                }
             </style>
 
             <div class="main-grid">
                 <jp-concept-map></jp-concept-map>
 
-                <div>
+                <div class="router-area">
                     
                     <!-- <div style="width: 100%; background-color: black; height: 5vh; color: white"> -->
                         <!-- Bar where stuff can go -->
