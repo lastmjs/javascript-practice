@@ -22,7 +22,7 @@ class JPApp extends HTMLElement {
             <style>
                 .main-grid {
                     display: grid;
-                    grid-template-columns: 20em 100vw;
+                    grid-template-columns: 15% 85%;
                 }
 
                 .privacy-anchor {
@@ -60,7 +60,7 @@ class JPApp extends HTMLElement {
                 <jp-concept-map></jp-concept-map>
 
                 <div>
-                    <div class="course-bar">
+                    <!-- <div class="course-bar">
                         <div class="course course-focused">JavaScript</div>
                         <div @click=${() => this.courseClick()} class="course">TypeScript</div>
                         <div @click=${() => this.courseClick()} class="course">DOM</div>
@@ -72,7 +72,7 @@ class JPApp extends HTMLElement {
                         <div @click=${() => this.courseClick()} class="course">NPM</div>
                         <div @click=${() => this.courseClick()} class="course">Node.js</div>
                         <div @click=${() => this.courseClick()} class="course">Deno</div>
-                    </div>
+                    </div> -->
 
                     <jp-router></jp-router>
 

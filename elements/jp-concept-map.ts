@@ -38,16 +38,27 @@ class JPConceptMap extends HTMLElement {
     render(state: any) {
         return html`
             <style>
+                /*TODO I know this is a vendor prefix and is non-standard.
+                * The scrollbars on FireFox look good, but on Chrome look really bad
+                * I think it's worth it for now so that we don't have to use some huge library
+                * or implement something ourselves
+                */
+                #concepts-container::-webkit-scrollbar {
+                    width: 0;
+                }
+
                 .concepts-container {
                     display: flex;
                     flex-direction: column;
                     text-align: center;
                     box-shadow: 0px 0px 1px black;
                     background-color: rgba(1, 1, 1, .1);
+                    height: 100vh;
+                    overflow-y: scroll;
                 }
             </style>
 
-            <div class="concepts-container">
+            <div id="concepts-container" class="concepts-container">
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
                                     id=${concept.id}

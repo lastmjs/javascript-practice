@@ -107,9 +107,25 @@ class JPAssessment extends HTMLElement {
 
                 .question-container {
                     margin-top: 5vh;
-                    width: 75em;
-                    height: 25vh;
-                    margin-left: 10vw;
+                    /* width: 50vw; */
+                    /* max-width: 100%; */
+                    /* min-width: 50%; */
+                    /* width: 75vw; */
+                    /* width: calc(200vw - 100%); */
+                    /* width: calc(50% - 50vw); */
+                    /* margin-left: auto; */
+                    /* margin-right: auto; */
+                    min-width: 75%;
+                    max-width: 100%;
+                    width: calc((1000px - 100%) * 1000);
+                    margin-left: auto;
+                    margin-right: auto;
+                    /* margin-left: calc(50% - 50vw); */
+                    /* margin-right: calc(50% - 50vw); */
+                    /* margin: auto; */
+                    /* width: 75em; */
+                    /* height: 25vh; */
+                    /* margin-left: 10vw; */
                 }
 
                 .question-wrapper {
