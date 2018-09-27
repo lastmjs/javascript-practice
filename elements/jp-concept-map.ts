@@ -2,6 +2,7 @@ import {html, render} from 'lit-html';
 import './jp-concept-item';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
+import {backgroundColor, highlightColor} from '../services/constants';
 
 document.body.addEventListener('click', (e) => {
     if (Store.getState().showMainMenu && e.target.id !== 'main-menu-button') {
@@ -61,10 +62,9 @@ class JPConceptMap extends HTMLElement {
                         flex-direction: column;
                         text-align: center;
                         box-shadow: 0px 0px 1px black;
-                        background-color: rgba(1, 1, 1, .1);
+                        background-color: ${backgroundColor};
                         height: 100vh;
-                        overflow-y: scroll;
-                        background-color: grey;                        
+                        overflow-y: scroll;                   
                     }
                 }
 
@@ -77,10 +77,9 @@ class JPConceptMap extends HTMLElement {
                         flex-direction: column;
                         text-align: center;
                         box-shadow: 0px 0px 1px black;
-                        background-color: rgba(1, 1, 1, .1);
+                        background-color: ${backgroundColor};
                         height: 100vh;
-                        overflow-y: scroll;
-                        background-color: grey;                        
+                        overflow-y: scroll;                       
                     }
 
                     .concepts-container-hidden {
