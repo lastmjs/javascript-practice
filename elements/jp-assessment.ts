@@ -67,6 +67,7 @@ class JPAssessment extends HTMLElement {
                 /* This is just to hack the input boxes temporarily */
                 span {
                     min-width: 100px !important;
+                    background-color: white;
                 }
 
                 @media (min-width: 1024px) {
