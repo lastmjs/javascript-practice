@@ -61,6 +61,14 @@ class JPAssessment extends HTMLElement {
         }
     }
 
+    viewQuestionReady() {
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'HIDE_GLOBAL_LOAD_INDICATOR'
+            });
+        });
+    }
+
     render(state) {
         return html`
             <style>
@@ -93,7 +101,7 @@ class JPAssessment extends HTMLElement {
             </style>
 
             <div class="question-container">
-                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
+                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)} @ready=${() => this.viewQuestionReady()}>Loading...</prendus-view-question>
             </div>
         `;
     }
