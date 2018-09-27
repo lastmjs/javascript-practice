@@ -1,7 +1,8 @@
+import './jp-router';
 import {html, render} from 'lit-html';
 import './jp-concept-map';
-import 'prendus-question-elements/prendus-view-question.ts';
 import {Store} from '../services/store';
+import {highlightColor} from '../services/constants';
 
 class JPApp extends HTMLElement {
 
@@ -11,25 +12,22 @@ class JPApp extends HTMLElement {
         Store.dispatch({
             type: 'DEFAULT_ACTION'
         });
+    }
 
-        Store.dispatch({
-            type: 'DEFAULT_ACTION'
-        });
+    courseClick() {
+        window.location.href = 'plans-and-pricing.html';
+    }
 
+    mainMenuToggle() {
         Store.dispatch({
-            type: 'SET_INITIAL_CURRENT_QUESTION'
+            type: 'TOGGLE_MAIN_MENU'
         });
     }
 
-    nextQuestionClick(state) {
-        if (Object.values(state.conceptItems[state.currentConceptItem].questions).length === state.currentQuestionId) {
-            window.location.href = 'plans-and-pricing.html';
-        }
-        else {
-            Store.dispatch({
-                type: 'NEXT_QUESTION'
-            });
-        }
+    nextQuestionClick(state: any) {
+        Store.dispatch({
+            type: 'NEXT_QUESTION'
+        });
     }
 
     previousQuestionClick() {
@@ -38,125 +36,29 @@ class JPApp extends HTMLElement {
         });
     }
 
-    questionResponse(e: any) {
-        const checkAnswerResponse = e.detail.checkAnswerResponse;
-        
-        Store.dispatch({
-            type: 'SET_USER_COMPLETED',
-            correct: checkAnswerResponse === 'Correct'
-        });
-
-        //TODO the below code is obviously disgusting and evil and must be changed...but not yet
-        if (checkAnswerResponse === 'Correct') {
-            this.querySelector('#question-wrapper').style.backgroundColor = 'rgba(0, 255, 0, .5)';
-            
-            setTimeout(() => {
-                
-                this.querySelector('#question-wrapper').style.transition = 'background-color .5s linear';
-                this.querySelector('#question-wrapper').style.backgroundColor = 'white';
-    
-                setTimeout(() => {
-                    this.querySelector('#question-wrapper').style.transition = '';
-                }, 1000);
-            });
-        }
-        else {
-            this.querySelector('#question-wrapper').style.backgroundColor = 'rgba(255, 0, 0, .5)';
-            
-            setTimeout(() => {
-                
-                this.querySelector('#question-wrapper').style.transition = 'background-color .5s linear';
-                this.querySelector('#question-wrapper').style.backgroundColor = 'white';
-                
-                if (checkAnswerResponse !== 'Incorrect') {
-                    alert(checkAnswerResponse);
-                }
-    
-                setTimeout(() => {
-                    this.querySelector('#question-wrapper').style.transition = '';
-                }, 1000);
-            });
-        }
-    }
-
-    courseClick() {
-        window.location.href = 'plans-and-pricing.html';
-    }
-
     render(state: any) {
         return html`
             <style>
-                /* This is just to hack the input boxes temporarily */
-                span {
-                    min-width: 100px !important;
+                @media (min-width: 1024px) {
+                    .main-grid {
+                        display: grid;
+                        grid-template-columns: 20% 80%;
+                    }
+
+                    .menu-button {
+                        display: none;
+                    }
                 }
 
-                .main-grid {
-                    display: grid;
-                    grid-template-columns: 20em 100vw;
-                }
+                @media (max-width: 1024px) {
+                    .main-grid {
+                        display: grid;
+                        grid-template-columns: 0% 100%;
+                    }
 
-                .question-container {
-                    margin-top: 5vh;
-                    width: 75em;
-                    height: 25vh;
-                    margin-left: 10vw;
-                }
-
-                .question-wrapper {
-                    background-color: white;
-                    padding: 5em;
-                    position: relative;
-                    box-shadow: 0px 0px 1px black;
-                }
-
-                .question-wrapper-user-completed {
-                    box-shadow: 0px 0px 5px green;
-                }
-
-                .previous-question-button {
-                    position: absolute;
-                    left: 0;
-                    bottom: -75px;
-                    border: none;
-                    background-color: white;
-                    padding: 1.5em;
-                    cursor: pointer;
-                    font-family: monospace;
-                    transition: background-color .5s ease;
-                    color: black;
-                    box-shadow: 0px 0px 1px black;
-                }
-
-                .previous-question-button:hover {
-                    background-color: rgba(1, 1, 1, .05);
-                }
-
-                .next-question-button {
-                    position: absolute;
-                    right: 0;
-                    bottom: -75px;
-                    border: none;
-                    background-color: white;
-                    padding: 1.5em;
-                    cursor: pointer;
-                    font-family: monospace;
-                    transition: background-color .5s ease;
-                    color: black;
-                    box-shadow: 0px 0px 1px black;
-                }
-
-                .next-question-button:hover {
-                    background-color: rgba(1, 1, 1, .05);
-                }
-
-                .javascript-logo {
-                    position: fixed;
-                    top: 0;
-                    right: 0;
-                    width: 50px;
-                    padding: 5px;
-                    box-shadow: 0px 0px 5px black;
+                    .menu-button {
+                        display: block;
+                    }
                 }
 
                 .privacy-anchor {
@@ -179,6 +81,7 @@ class JPApp extends HTMLElement {
                     transition: background-color .5s ease;
                     font-weight: bold;
                     white-space: nowrap;
+                    font-size: 1.5em;
                 }
 
                 .course:hover {
@@ -186,7 +89,40 @@ class JPApp extends HTMLElement {
                 }
 
                 .course-focused {
-                    background-color: rgba(1, 1, 1, .1);
+                    background-color: ${highlightColor};
+                }
+
+                .previous-question-button {
+                    border: none;
+                    background-color: white;
+                    padding: 1.5em;
+                    cursor: pointer;
+                    font-family: monospace;
+                    transition: background-color .5s ease;
+                    color: black;
+                    box-shadow: 0px 0px 1px black;
+                    font-size: calc(12px + 1vmin);
+                }
+
+                .previous-question-button:hover {
+                    background-color: ${highlightColor};
+                }
+
+                .next-question-button {
+                    margin-left: auto;
+                    border: none;
+                    background-color: white;
+                    padding: 1.5em;
+                    cursor: pointer;
+                    font-family: monospace;
+                    transition: background-color .5s ease;
+                    color: black;
+                    box-shadow: 0px 0px 1px black;
+                    font-size: calc(12px + 1vmin);
+                }
+
+                .next-question-button:hover {
+                    background-color: ${highlightColor};
                 }
             </style>
 
@@ -194,34 +130,22 @@ class JPApp extends HTMLElement {
                 <jp-concept-map></jp-concept-map>
 
                 <div>
-                    <div class="course-bar">
-                        <div class="course course-focused">JavaScript</div>
-                        <div @click=${() => this.courseClick()} class="course">TypeScript</div>
-                        <div @click=${() => this.courseClick()} class="course">DOM</div>
-                        <div @click=${() => this.courseClick()} class="course">Web Components</div>
-                        <div @click=${() => this.courseClick()} class="course">Redux</div>
-                        <div @click=${() => this.courseClick()} class="course">GraphQL</div>
-                        <div @click=${() => this.courseClick()} class="course">WebAssembly</div>
-                        <div @click=${() => this.courseClick()} class="course">Web3</div>
-                        <div @click=${() => this.courseClick()} class="course">NPM</div>
-                        <div @click=${() => this.courseClick()} class="course">Node.js</div>
-                        <div @click=${() => this.courseClick()} class="course">Deno</div>
+                    
+                    <!-- <div style="width: 100%; background-color: black; height: 5vh; color: white"> -->
+                        <!-- Bar where stuff can go -->
+                        <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
+                    <!-- </div> -->
+
+                    <div style="display: flex">
+                        <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
+                        <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
                     </div>
 
-                    <div class="question-container">
-                        <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
-                            <prendus-view-question .question=${state.currentQuestion} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
-                            <button ?hidden=${state.currentQuestionId === 1} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
-                            <button class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
-                        </div>
-                    </div>
+                    <jp-router></jp-router>
+
                 </div>
 
             </div>
-
-            <!-- <a href="/">
-                <img src="javascript-logo.png" class="javascript-logo">
-            </a> -->
 
             <a class="privacy-anchor" href="privacy.html">Privacy</a>
         `;

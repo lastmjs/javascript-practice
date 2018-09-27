@@ -1,123 +1,102 @@
 import {html, render} from 'lit-html';
 import './jp-concept-item';
 import {Store} from '../services/store';
+import {request} from '../services/graphql';
+import {backgroundColor, highlightColor} from '../services/constants';
+
+document.body.addEventListener('click', (e) => {
+    if (Store.getState().showMainMenu && e.target.id !== 'main-menu-button') {
+        Store.dispatch({
+            type: 'TOGGLE_MAIN_MENU'
+        });
+    }
+});
 
 class JPConceptMap extends HTMLElement {
-    selectedConcept: string;
 
-    connectedCallback() {
-        this.selectedConcept = `primitive-data-types-concept-item`;
-
+    async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
 
-        setTimeout(() => {
-            Store.dispatch({
-                type: 'TRIGGER_RENDER'
-            });
-        });
-    }
+        const response = await request(`
+            query {
+                concepts {
+                    id
+                    title
+                    order
+                    assessments {
+                        id
+                        order
+                    }
+                }
+            }
+        `);
 
-    conceptItemClicked(e) {
-        this.selectedConcept = e.target.id;
         Store.dispatch({
-            type: 'SET_NEW_CURRENT_CONCEPT_ITEM',
-            conceptItem: this.selectedConcept
+            type: 'SET_CONCEPTS',
+            concepts: response.concepts
         });
     }
 
-    render(state) {
+    conceptItemClicked(e: any) {
+        Store.dispatch({
+            type: 'SWITCH_SELECTED_CONCEPT',
+            concept: e.currentTarget.concept
+        });
+    }
+
+    render(state: any) {
         return html`
             <style>
-                .concepts-container {
-                    display: flex;
-                    flex-direction: column;
-                    text-align: center;
-                    box-shadow: 0px 0px 1px black;
-                    background-color: rgba(1, 1, 1, .1);
+                /*TODO I know this is a vendor prefix and is non-standard.
+                * The scrollbars on FireFox look good, but on Chrome look really bad
+                * I think it's worth it for now so that we don't have to use some huge library
+                * or implement something ourselves
+                */
+                #concepts-container::-webkit-scrollbar {
+                    width: 0;
+                }
+
+                @media (min-width: 1024px) {
+                    .concepts-container {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        box-shadow: 0px 0px 1px black;
+                        background-color: ${backgroundColor};
+                        height: 100vh;
+                        overflow-y: scroll;                   
+                    }
+                }
+
+                @media (max-width: 1024px) {
+                    .concepts-container {
+                        width: 70%;
+                        z-index: 5;
+                        position: absolute;
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        box-shadow: 0px 0px 1px black;
+                        background-color: ${backgroundColor};
+                        height: 100vh;
+                        overflow-y: scroll;                       
+                    }
+
+                    .concepts-container-hidden {
+                        visibility: hidden;
+                    }
                 }
             </style>
 
-            <div class="concepts-container">
-                <jp-concept-item
-                    title="Primitive data types"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Objects"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Functions"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Arrays"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Classes"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Modules"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Operators"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Control flow"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Variables"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Promises"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="async/await"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Generators"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Scope"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Closures"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Callbacks"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
-                <jp-concept-item
-                    title="Proxies"
-                    @click=${(e) => this.conceptItemClicked(e)}
-                    .selectedConcept=${this.selectedConcept}
-                ></jp-concept-item>
+            <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">
+                ${state.concepts.map((concept: any) => {
+                    return html`<jp-concept-item
+                                    id=${concept.id}
+                                    title=${concept.title}
+                                    @click=${(e: any) => this.conceptItemClicked(e)}
+                                    .concept=${concept}>
+                                </jp-concept-item>`;
+                })}
             </div>
         `;
     }

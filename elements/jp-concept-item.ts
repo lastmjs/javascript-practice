@@ -1,28 +1,24 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
+import {highlightColor, selectedColor} from '../services/constants';
 
 class JPConceptItem extends HTMLElement {
 
-    get id() {
-        return `${this.title.toLowerCase().replace(/\s/g, '-')}-concept-item`;
-    }
-
     connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
-        //
-        // setTimeout(() => {
-        //     Store.dispatch({
-        //         type: 'TRIGGER_RENDER'
-        //     });
-        // });
+        
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'TRIGGER_RENDER'
+            });
+        });
     }
 
-    render(state) {
-        const numTotalQuestions = Object.values(state.conceptItems[this.id].questions).length;
-        const numUserCompletedQuestions = Object.values(state.conceptItems[this.id].questions).reduce((result, question) => {
-            return result + (question.userCompleted === true ? 1 : 0);
-        }, 0);
-        const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
+    render(state: any) {
+        //TODO this will all be done on the server
+        const numTotalAssessments = state.concepts.find((concept) => concept.id === this.id).assessments.length;
+        const numUserCompletedAssessments = Object.values(state.userProgress[this.id] || {}).length;
+        const percentage = (numUserCompletedAssessments / numTotalAssessments) * 100;
 
         return html`
             <style>
@@ -33,14 +29,15 @@ class JPConceptItem extends HTMLElement {
                     cursor: pointer;
                     transition: background-color .5s ease;
                     font-weight: bold;
+                    font-size: calc(12px + 1vmin);
                 }
 
                 .concept:hover {
-                    background-color: rgba(1, 1, 1, .05);
+                    background-color: ${highlightColor};
                 }
 
                 .concept-focused {
-                    background-color: rgba(1, 1, 1, .1);
+                    background-color: ${selectedColor};
                 }
 
                 .concept-overlay {
@@ -49,11 +46,11 @@ class JPConceptItem extends HTMLElement {
                     background-color: rgba(6, 150, 14, .5);
                     top: 0;
                     left: 0;
-                    z-index: -1;
+                    z-index: 10;
                 }
             </style>
 
-            <div id=${this.id} class="concept${state.currentConceptItem === this.id ? ' concept-focused' : ''}">
+            <div class="concept${state.currentConcept && state.currentConcept.id === this.id ? ' concept-focused' : ''}">
                 ${this.title}
                 <div class="concept-overlay" style="width: ${percentage}%">
                 </div>

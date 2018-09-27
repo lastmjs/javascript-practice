@@ -1,106 +1,124 @@
 import {createStore} from 'redux';
-import {conceptItems} from './concept-items';
+import page from 'page';
 
-const persistedState = JSON.parse(window.localStorage.getItem('state'));
+let persistedState = JSON.parse(window.localStorage.getItem('state'));
 
-const InitialState = persistedState ? {
-    ...persistedState,
-    conceptItems: Object.entries(conceptItems).reduce((result, conceptItemEntry) => {
-        const conceptItemKey = conceptItemEntry[0];
-        const conceptItemValue = conceptItemEntry[1];
+if (persistedState && !persistedState.userProgress) {
+    window.localStorage.setItem('state', null);
+    persistedState = null;
+}
 
-        return {
-            ...result,
-            [conceptItemKey]: {
-                ...conceptItemValue,
-                questions: Object.entries(conceptItemValue.questions).reduce((result, questionEntry) => {
-                    const questionKey = questionEntry[0];
-                    const questionValue = questionEntry[1];
-
-                    if (
-                        persistedState.conceptItems[conceptItemKey] &&
-                        persistedState.conceptItems[conceptItemKey].questions[questionKey]
-                    ) {
-                        return {
-                            ...result,
-                            [questionKey]: {
-                                ...questionValue,
-                                userCompleted: persistedState.conceptItems[conceptItemKey].questions[questionKey].userCompleted
-                            }
-                        };
-                    }
-                    else {
-                        return result;
-                    }
-                }, conceptItemValue.questions)
-            }
-        };
-    }, conceptItems)
-} : {
-    currentConceptItem: 'primitive-data-types-concept-item',
-    currentQuestionId: 1,
-    conceptItems
+const InitialState = persistedState || {
+    currentConcept: null,
+    currentEntity: 'assessment',
+    currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
+    currentEntityBehavior: 'view',
+    currentAssessment: null,
+    concepts: [],
+    showMainMenu: false,
+    userProgress: {}
 };
 
 const RootReducer = (state=InitialState, action) => {
-    if (action.type === 'SET_INITIAL_CURRENT_QUESTION') {
+    if (action.type === 'TOGGLE_MAIN_MENU') {
         return {
             ...state,
-            currentQuestion: state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId]
+            showMainMenu: !state.showMainMenu
         };
     }
 
-    if (action.type === 'SET_NEW_CURRENT_CONCEPT_ITEM') {
+    if (action.type === 'SET_CONCEPTS') {
         return {
             ...state,
-            currentConceptItem: action.conceptItem,
-            currentQuestion: state.conceptItems[action.conceptItem].questions['1'],
-            currentQuestionId: 1
+            concepts: action.concepts
+        };
+    }
+
+    if (action.type === 'SET_ROUTE') {
+        const currentEntity = action.entity;
+        const currentEntityId = action.entityId;
+        const currentEntityBehavior = action.entityBehavior;
+        const currentRoutePath = action.routePath;
+
+        return {
+            ...state,
+            currentEntity,
+            currentEntityId,
+            currentEntityBehavior,
+            currentRoutePath
+        };
+    }
+
+    if (action.type === 'SET_CURRENT_ASSESSMENT') {
+        return {
+            ...state,
+            currentAssessment: action.assessment
+        };
+    }
+
+    if (action.type === 'SET_CURRENT_CONCEPT') {
+        return {
+            ...state,
+            currentConcept: action.concept
+        };
+    }
+    
+    if (action.type === 'SWITCH_SELECTED_CONCEPT') {
+        const currentConcept = action.concept;
+        const currentAssessment = currentConcept.assessments.find((assessment: any) => {
+            return assessment.order === 0;
+        });
+
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/assessment/${currentAssessment.id}/view`);
+        });
+
+        return {
+            ...state,
+            currentConcept
         };
     }
 
     if (action.type === 'SET_USER_COMPLETED') {
-        if (action.correct === true) {
-            return {
-                ...state,
-                conceptItems: {
-                    ...state.conceptItems,
-                    [state.currentConceptItem]: {
-                        ...state.conceptItems[state.currentConceptItem],
-                        questions: {
-                            ...state.conceptItems[state.currentConceptItem].questions,
-                            [state.currentQuestionId]: {
-                                ...state.conceptItems[state.currentConceptItem].questions[state.currentQuestionId],
-                                userCompleted: action.correct
-                            }
-                        }
-                    }
+        return {
+            ...state,
+            userProgress: {
+                ...state.userProgress,
+                [state.currentConcept.id]: {
+                    ...state.userProgress[state.currentConcept.id],
+                    [state.currentAssessment.id]: true
                 }
-            };
-        } 
-        else {
-            return state;
-        }
+            }
+        };
     }
 
     if (action.type === 'NEXT_QUESTION') {
-        const newCurrentQuestionId = state.currentQuestionId < Object.values(state.conceptItems[state.currentConceptItem].questions).length ? state.currentQuestionId + 1 : state.currentQuestionId;
+        const currentOrder = state.currentAssessment.order;
+        const sortedConceptQuestions = state.currentConcept.assessments.sort((a, b) => a.order < b.order);
+        const lastOrder = sortedConceptQuestions[0].order;
+        const nextOrder = currentOrder < lastOrder ? currentOrder + 1 : currentOrder;
+        const nextOrderAssessmentId = state.currentConcept.assessments.find((assessment) => assessment.order === nextOrder).id;
 
-        return {
-            ...state,
-            currentQuestion: state.conceptItems[state.currentConceptItem].questions[newCurrentQuestionId],
-            currentQuestionId: newCurrentQuestionId
-        };
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/assessment/${nextOrderAssessmentId}/view`);
+        });
+
+        return state;
     }
 
     if (action.type === 'PREVIOUS_QUESTION') {
-        const newCurrentQuestionId = state.currentQuestionId > 1 ? state.currentQuestionId - 1 : state.currentQuestionId;
+        const currentOrder = state.currentAssessment.order;
+        const previousOrder = currentOrder > 0 ? currentOrder - 1 : currentOrder;
+        const previousOrderAssessmentId = state.currentConcept.assessments.find((assessment) => assessment.order === previousOrder).id;
 
-        return {
-            ...state,
-            currentQuestion: state.conceptItems[state.currentConceptItem].questions[newCurrentQuestionId],
-            currentQuestionId: newCurrentQuestionId
-        };
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/assessment/${previousOrderAssessmentId}/view`);
+        });
+
+        return state;
     }
 
     return state;

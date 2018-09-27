@@ -1,0 +1,11 @@
+# endpoint: http://localhost:4466
+endpoint: https://us1.prisma.sh/jordan-last/javascript-practice/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: typescript-client
+    output: ./generated/prisma
+
+hooks:
+  post-deploy:
+    - prisma generate
