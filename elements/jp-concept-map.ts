@@ -3,6 +3,14 @@ import './jp-concept-item';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
 
+document.body.addEventListener('click', (e) => {
+    if (Store.getState().showMainMenu && e.target.id !== 'main-menu-button') {
+        Store.dispatch({
+            type: 'TOGGLE_MAIN_MENU'
+        });
+    }
+});
+
 class JPConceptMap extends HTMLElement {
 
     async connectedCallback() {
@@ -47,18 +55,41 @@ class JPConceptMap extends HTMLElement {
                     width: 0;
                 }
 
-                .concepts-container {
-                    display: flex;
-                    flex-direction: column;
-                    text-align: center;
-                    box-shadow: 0px 0px 1px black;
-                    background-color: rgba(1, 1, 1, .1);
-                    height: 100vh;
-                    overflow-y: scroll;
+                @media (min-width: 1000px) {
+                    .concepts-container {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        box-shadow: 0px 0px 1px black;
+                        background-color: rgba(1, 1, 1, .1);
+                        height: 100vh;
+                        overflow-y: scroll;
+                        background-color: grey;                        
+                    }
+                }
+
+                @media (max-width: 1000px) {
+                    .concepts-container {
+                        width: 70%;
+                        z-index: 5;
+                        position: absolute;
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        box-shadow: 0px 0px 1px black;
+                        background-color: rgba(1, 1, 1, .1);
+                        height: 100vh;
+                        overflow-y: scroll;
+                        background-color: grey;                        
+                    }
+
+                    .concepts-container-hidden {
+                        visibility: hidden;
+                    }
                 }
             </style>
 
-            <div id="concepts-container" class="concepts-container">
+            <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
                                     id=${concept.id}

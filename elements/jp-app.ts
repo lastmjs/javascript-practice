@@ -17,13 +17,23 @@ class JPApp extends HTMLElement {
         window.location.href = 'plans-and-pricing.html';
     }
 
+    mainMenuToggle() {
+        Store.dispatch({
+            type: 'TOGGLE_MAIN_MENU'
+        });
+    }
+
     render(state: any) {
         return html`
             <style>
                 @media (min-width: 1000px) {
                     .main-grid {
                         display: grid;
-                        grid-template-columns: 15% 85%;
+                        grid-template-columns: 20% 85%;
+                    }
+
+                    .menu-button {
+                        display: none;
                     }
                 }
 
@@ -82,6 +92,8 @@ class JPApp extends HTMLElement {
                         <div @click=${() => this.courseClick()} class="course">Node.js</div>
                         <div @click=${() => this.courseClick()} class="course">Deno</div>
                     </div> -->
+
+                    <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
 
                     <jp-router></jp-router>
 
