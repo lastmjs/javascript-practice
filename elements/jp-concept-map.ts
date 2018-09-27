@@ -29,11 +29,9 @@ class JPConceptMap extends HTMLElement {
     }
 
     conceptItemClicked(e: any) {
-        //TODO the event handlers are a little messed up here. I shouldn't be grabbing concept directly off of the event
-        //TODO follow this issue: https://github.com/Polymer/lit-html/issues/520
         Store.dispatch({
             type: 'SWITCH_SELECTED_CONCEPT',
-            concept: e.concept
+            concept: e.currentTarget.concept
         });
     }
 
