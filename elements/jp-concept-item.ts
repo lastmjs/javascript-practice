@@ -1,5 +1,6 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
+import {highlightColor, selectedColor} from '../services/constants';
 
 class JPConceptItem extends HTMLElement {
 
@@ -31,14 +32,15 @@ class JPConceptItem extends HTMLElement {
                     cursor: pointer;
                     transition: background-color .5s ease;
                     font-weight: bold;
+                    font-size: 1.5em;
                 }
 
                 .concept:hover {
-                    background-color: rgba(1, 1, 1, .05);
+                    background-color: ${highlightColor};
                 }
 
                 .concept-focused {
-                    background-color: rgba(1, 1, 1, .1);
+                    background-color: ${selectedColor};
                 }
 
                 .concept-overlay {

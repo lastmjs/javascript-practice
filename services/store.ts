@@ -43,10 +43,17 @@ const InitialState = persistedState ? {
     currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
     currentEntityBehavior: 'view',
     currentAssessment: null,
-    concepts: []
+    concepts: [],
+    showMainMenu: false
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'TOGGLE_MAIN_MENU') {
+        return {
+            ...state,
+            showMainMenu: !state.showMainMenu
+        };
+    }
 
     if (action.type === 'SET_CONCEPTS') {
         return {

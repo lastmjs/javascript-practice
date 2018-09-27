@@ -20,6 +20,8 @@
     "start": "zwitterion",
     "prisma-up": "cd server && docker-compose up --build",
     "prisma-deploy": "cd server && prisma deploy",
+    "prisma-export": "cd server && prisma export --path database.zip",
+    "prisma-import": "cd server && prisma import --data database.zip",
     "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,redux/es,@kuscamara"
   },
   "repository": {
