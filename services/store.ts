@@ -8,7 +8,10 @@ if (persistedState && !persistedState.userProgress) {
     persistedState = null;
 }
 
-const InitialState = persistedState || {
+const InitialState = persistedState ?  {
+    ...persistedState,
+    hideGlobalLoadIndicator: false
+} : {
     currentConcept: null,
     currentEntity: 'assessment',
     currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
@@ -16,10 +19,18 @@ const InitialState = persistedState || {
     currentAssessment: null,
     concepts: [],
     showMainMenu: false,
-    userProgress: {}
+    userProgress: {},
+    hideGlobalLoadIndicator: false
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'HIDE_GLOBAL_LOAD_INDICATOR') {
+        return {
+            ...state,
+            hideGlobalLoadIndicator: true
+        };
+    }
+
     if (action.type === 'TOGGLE_MAIN_MENU') {
         return {
             ...state,
