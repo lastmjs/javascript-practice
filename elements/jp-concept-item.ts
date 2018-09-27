@@ -16,12 +16,9 @@ class JPConceptItem extends HTMLElement {
 
     render(state: any) {
         //TODO this will all be done on the server
-        // const numTotalQuestions = Object.values(state.questions).length;
-        // const numUserCompletedQuestions = Object.values(state.questions).reduce((result, question) => {
-        //     return result + (question.userCompleted === true ? 1 : 0);
-        // }, 0);
-        // const percentage = (numUserCompletedQuestions / numTotalQuestions) * 100;
-        const percentage = 0;
+        const numTotalAssessments = state.concepts.find((concept) => concept.id === this.id).assessments.length;
+        const numUserCompletedAssessments = Object.values(state.userProgress[this.id] || {}).length;
+        const percentage = (numUserCompletedAssessments / numTotalAssessments) * 100;
 
         return html`
             <style>
@@ -49,7 +46,7 @@ class JPConceptItem extends HTMLElement {
                     background-color: rgba(6, 150, 14, .5);
                     top: 0;
                     left: 0;
-                    z-index: -1;
+                    z-index: 10;
                 }
             </style>
 

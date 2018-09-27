@@ -11,6 +11,7 @@ class JPAssessment extends HTMLElement {
                     assessment(where: {
                         id: $id
                     }) {
+                        id
                         assessML
                         javaScript
                         order
@@ -46,11 +47,18 @@ class JPAssessment extends HTMLElement {
 
     questionResponse(e: any) {
         const checkAnswerResponse = e.detail.checkAnswerResponse;
+        
         alert(checkAnswerResponse);
-        // Store.dispatch({
-        //     type: 'SET_USER_COMPLETED',
-        //     correct: checkAnswerResponse === 'Correct'
-        // });
+
+        if (checkAnswerResponse === 'Correct') {
+            Store.dispatch({
+                type: 'NEXT_QUESTION'
+            });
+
+            Store.dispatch({
+                type: 'SET_USER_COMPLETED'
+            });
+        }
     }
 
     render(state) {
