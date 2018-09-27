@@ -56,7 +56,7 @@ class JPConceptMap extends HTMLElement {
                     width: 0;
                 }
 
-                @media (min-width: 1000px) {
+                @media (min-width: 1024px) {
                     .concepts-container {
                         display: flex;
                         flex-direction: column;
@@ -68,7 +68,7 @@ class JPConceptMap extends HTMLElement {
                     }
                 }
 
-                @media (max-width: 1000px) {
+                @media (max-width: 1024px) {
                     .concepts-container {
                         width: 70%;
                         z-index: 5;

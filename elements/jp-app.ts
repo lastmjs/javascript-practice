@@ -39,7 +39,7 @@ class JPApp extends HTMLElement {
     render(state: any) {
         return html`
             <style>
-                @media (min-width: 1000px) {
+                @media (min-width: 1024px) {
                     .main-grid {
                         display: grid;
                         grid-template-columns: 20% 80%;
@@ -50,7 +50,7 @@ class JPApp extends HTMLElement {
                     }
                 }
 
-                @media (max-width: 1000px) {
+                @media (max-width: 1024px) {
                     .main-grid {
                         display: grid;
                         grid-template-columns: 0% 100%;
@@ -97,6 +97,7 @@ class JPApp extends HTMLElement {
                     transition: background-color .5s ease;
                     color: black;
                     box-shadow: 0px 0px 1px black;
+                    font-size: calc(12px + 1vmin);
                 }
 
                 .previous-question-button:hover {
@@ -113,6 +114,7 @@ class JPApp extends HTMLElement {
                     transition: background-color .5s ease;
                     color: black;
                     box-shadow: 0px 0px 1px black;
+                    font-size: calc(12px + 1vmin);
                 }
 
                 .next-question-button:hover {
