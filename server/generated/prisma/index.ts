@@ -1071,6 +1071,6 @@ export type String = string;
 
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
-  endpoint: "http://localhost:4466"
+  endpoint: "https://us1.prisma.sh/jordan-last/javascript-practice/dev"
 });
 export const prisma = new Prisma();
