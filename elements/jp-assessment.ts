@@ -107,11 +107,10 @@ class JPAssessment extends HTMLElement {
 
                 @media (min-width: 1000px) {
                     .question-container {
-                        margin-top: 5vh;
+                        margin-top: 10vh;
                         margin-left: auto;
                         margin-right: auto;
                         width: 75%;
-                        max-height: 75vh;
                     }
                 }
 
@@ -119,20 +118,6 @@ class JPAssessment extends HTMLElement {
                     .question-container {
                         width: 100%;
                     }
-                }
-
-                .question-wrapper {
-                    background-color: white;
-                    padding-top: 5em;
-                    padding-bottom: 5em;
-                    padding-left: 5vw;
-                    padding-right: 5vw;
-                    position: relative;
-                    box-shadow: 0px 0px 1px black;
-                }
-
-                .question-wrapper-user-completed {
-                    box-shadow: 0px 0px 5px green;
                 }
 
                 .previous-question-button {
@@ -173,7 +158,7 @@ class JPAssessment extends HTMLElement {
             </style>
 
             <div class="question-container">
-                <div id="question-wrapper" class="question-wrapper${state.currentQuestion && state.currentQuestion.userCompleted === true ? ' question-wrapper-user-completed' : ''}">
+                <div id="question-wrapper" class="${state.currentQuestion && state.currentQuestion.userCompleted === true ? 'question-wrapper-user-completed' : ''}">
                     <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)}>Loading...</prendus-view-question>
                     <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
                     <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>

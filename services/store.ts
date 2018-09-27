@@ -48,7 +48,6 @@ const InitialState = persistedState ? {
 };
 
 const RootReducer = (state=InitialState, action) => {
-    console.log(action)
     if (action.type === 'TOGGLE_MAIN_MENU') {
         return {
             ...state,

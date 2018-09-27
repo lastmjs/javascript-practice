@@ -29,7 +29,7 @@ class JPApp extends HTMLElement {
                 @media (min-width: 1000px) {
                     .main-grid {
                         display: grid;
-                        grid-template-columns: 20% 85%;
+                        grid-template-columns: 20% 80%;
                     }
 
                     .menu-button {
@@ -64,6 +64,7 @@ class JPApp extends HTMLElement {
                     transition: background-color .5s ease;
                     font-weight: bold;
                     white-space: nowrap;
+                    font-size: 1.5em;
                 }
 
                 .course:hover {
@@ -93,7 +94,7 @@ class JPApp extends HTMLElement {
                         <div @click=${() => this.courseClick()} class="course">Deno</div>
                     </div> -->
 
-                    <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
+                    <!-- <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button> -->
 
                     <jp-router></jp-router>
 
