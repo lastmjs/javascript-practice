@@ -68,15 +68,17 @@ class JPAssessment extends HTMLElement {
                         margin-right: auto;
                         width: 75%;
                         font-size: calc(12px + 1vmin);
+                        margin-bottom: 10vh;
                     }
                 }
 
                 @media (max-width: 1024px) {
                     .question-container {
-                        width: 100%;
+                        width: 96%;
+                        margin-left: 2%;
+                        margin-right: 2%;
                         font-size: calc(12px + 1vmin);
-                        margin-left: 1vw;
-                        margin-right: 1vw;
+                        margin-bottom: 10vh;
                     }
                 }
             </style>

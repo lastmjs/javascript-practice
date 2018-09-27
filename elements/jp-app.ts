@@ -55,6 +55,10 @@ class JPApp extends HTMLElement {
                         display: grid;
                         grid-template-columns: 0% 100%;
                     }
+
+                    .menu-button {
+                        display: block;
+                    }
                 }
 
                 .privacy-anchor {
