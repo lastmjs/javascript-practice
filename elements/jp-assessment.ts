@@ -105,32 +105,28 @@ class JPAssessment extends HTMLElement {
                     min-width: 100px !important;
                 }
 
-                .question-container {
-                    margin-top: 5vh;
-                    /* width: 50vw; */
-                    /* max-width: 100%; */
-                    /* min-width: 50%; */
-                    /* width: 75vw; */
-                    /* width: calc(200vw - 100%); */
-                    /* width: calc(50% - 50vw); */
-                    /* margin-left: auto; */
-                    /* margin-right: auto; */
-                    min-width: 75%;
-                    max-width: 100%;
-                    width: calc((1000px - 100%) * 1000);
-                    margin-left: auto;
-                    margin-right: auto;
-                    /* margin-left: calc(50% - 50vw); */
-                    /* margin-right: calc(50% - 50vw); */
-                    /* margin: auto; */
-                    /* width: 75em; */
-                    /* height: 25vh; */
-                    /* margin-left: 10vw; */
+                @media (min-width: 1000px) {
+                    .question-container {
+                        margin-top: 5vh;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 75%;
+                        max-height: 75vh;
+                    }
+                }
+
+                @media (max-width: 1000px) {
+                    .question-container {
+                        width: 100%;
+                    }
                 }
 
                 .question-wrapper {
                     background-color: white;
-                    padding: 5em;
+                    padding-top: 5em;
+                    padding-bottom: 5em;
+                    padding-left: 5vw;
+                    padding-right: 5vw;
                     position: relative;
                     box-shadow: 0px 0px 1px black;
                 }
@@ -142,7 +138,7 @@ class JPAssessment extends HTMLElement {
                 .previous-question-button {
                     position: absolute;
                     left: 0;
-                    bottom: -75px;
+                    top: 0;
                     border: none;
                     background-color: white;
                     padding: 1.5em;
@@ -160,7 +156,7 @@ class JPAssessment extends HTMLElement {
                 .next-question-button {
                     position: absolute;
                     right: 0;
-                    bottom: -75px;
+                    top: 0;
                     border: none;
                     background-color: white;
                     padding: 1.5em;

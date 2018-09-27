@@ -20,9 +20,18 @@ class JPApp extends HTMLElement {
     render(state: any) {
         return html`
             <style>
-                .main-grid {
-                    display: grid;
-                    grid-template-columns: 15% 85%;
+                @media (min-width: 1000px) {
+                    .main-grid {
+                        display: grid;
+                        grid-template-columns: 15% 85%;
+                    }
+                }
+
+                @media (max-width: 1000px) {
+                    .main-grid {
+                        display: grid;
+                        grid-template-columns: 0% 100%;
+                    }
                 }
 
                 .privacy-anchor {
