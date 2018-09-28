@@ -22,10 +22,26 @@ const InitialState = persistedState ?  {
     showMainMenu: false,
     userProgress: {},
     hideGlobalLoadIndicator: false,
-    lowerGlobalLoadIndicator: false
+    lowerGlobalLoadIndicator: false,
+    hideLoadIndicator: false,
+    lowerLoadIndicator: false
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'LOWER_LOAD_INDICATOR') {
+        return {
+            ...state,
+            lowerLoadIndicator: true
+        };
+    }
+
+    if (action.type === 'HIDE_LOAD_INDICATOR') {
+        return {
+            ...state,
+            hideLoadIndicator: true
+        };
+    }
+
     if (action.type === 'LOWER_GLOBAL_LOAD_INDICATOR') {
         return {
             ...state,
@@ -125,7 +141,11 @@ const RootReducer = (state=InitialState, action) => {
             page(`/assessment/${nextOrderAssessmentId}/view`);
         });
 
-        return state;
+        return {
+            ...state,
+            hideLoadIndicator: false,
+            lowerLoadIndicator: false
+        };
     }
 
     if (action.type === 'PREVIOUS_QUESTION') {
@@ -138,7 +158,11 @@ const RootReducer = (state=InitialState, action) => {
             page(`/assessment/${previousOrderAssessmentId}/view`);
         });
 
-        return state;
+        return {
+            ...state,
+            hideLoadIndicator: false,
+            lowerLoadIndicator: false
+        };
     }
 
     return state;

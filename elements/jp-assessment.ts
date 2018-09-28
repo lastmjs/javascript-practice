@@ -2,7 +2,6 @@ import {html, render} from 'lit-html';
 import 'prendus-question-elements/prendus-view-question.ts';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
-import './jp-load-indicator';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
@@ -43,7 +42,17 @@ class JPAssessment extends HTMLElement {
     }
 
     async connectedCallback() {
-        Store.subscribe(() => render(this.render(Store.getState()), this));
+        Store.subscribe(() => {
+            const state = Store.getState();
+
+            if (state.currentAssessment === this.previousAssessment) {
+                return;
+            }
+
+            this.previousAssessment = state.currentAssessment;
+
+            render(this.render(state), this);
+        });
     }
 
     questionResponse(e: any) {
@@ -68,12 +77,38 @@ class JPAssessment extends HTMLElement {
                 type: 'HIDE_GLOBAL_LOAD_INDICATOR'
             });
 
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             setTimeout(() => {
                 Store.dispatch({
                     type: 'LOWER_GLOBAL_LOAD_INDICATOR'
                 });
+
+                Store.dispatch({
+                    type: 'LOWER_LOAD_INDICATOR'
+                });
             }, 1000);
-        });
+        }, 1000);
+    }
+
+    questionBuilt() {
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
+            setTimeout(() => {
+                Store.dispatch({
+                    type: 'LOWER_LOAD_INDICATOR'
+                });
+
+                Store.dispatch({
+                    type: 'TRIGGER_RENDER'
+                });
+            }, 1000);
+        }, 1000);
     }
 
     render(state) {
@@ -108,7 +143,7 @@ class JPAssessment extends HTMLElement {
             </style>
 
             <div class="question-container">
-                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)} @ready=${() => this.viewQuestionReady()}>Loading...</prendus-view-question>
+                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)} @ready=${() => this.viewQuestionReady()} @question-built=${() => this.questionBuilt()}>Loading...</prendus-view-question>
             </div>
         `;
     }
