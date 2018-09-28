@@ -3,6 +3,7 @@ import {html, render} from 'lit-html';
 import './jp-concept-map';
 import {Store} from '../services/store';
 import {highlightColor} from '../services/constants';
+import './jp-load-indicator';
 
 class JPApp extends HTMLElement {
 
@@ -102,6 +103,7 @@ class JPApp extends HTMLElement {
                     color: black;
                     box-shadow: 0px 0px 1px black;
                     font-size: calc(12px + 1vmin);
+                    z-index: 10;
                 }
 
                 .previous-question-button:hover {
@@ -119,6 +121,7 @@ class JPApp extends HTMLElement {
                     color: black;
                     box-shadow: 0px 0px 1px black;
                     font-size: calc(12px + 1vmin);
+                    z-index: 10;
                 }
 
                 .next-question-button:hover {
@@ -126,6 +129,7 @@ class JPApp extends HTMLElement {
                 }
 
                 .router-area {
+                    position: relative;
                     height: 100vh;
                     overflow-y: auto;
                 }
@@ -136,7 +140,7 @@ class JPApp extends HTMLElement {
 
                 <div class="router-area">
 
-                    <jp-load-indicator .hide=${state.hide}></jp-load-indicator>
+                    <jp-load-indicator .hide=${state.hideLoadIndicator} .lower=${state.lowerLoadIndicator}></jp-load-indicator>
                     
                     <!-- <div style="width: 100%; background-color: black; height: 5vh; color: white"> -->
                         <!-- Bar where stuff can go -->
