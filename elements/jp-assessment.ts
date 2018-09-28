@@ -2,6 +2,7 @@ import {html, render} from 'lit-html';
 import 'prendus-question-elements/prendus-view-question.ts';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
+import {highlightColor} from '../services/constants';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
@@ -111,6 +112,18 @@ class JPAssessment extends HTMLElement {
         }, 1000);
     }
 
+    nextAssessmentClick() {
+        Store.dispatch({
+            type: 'NEXT_QUESTION'
+        });
+    }
+
+    previousAssessmentClick() {
+        Store.dispatch({
+            type: 'PREVIOUS_QUESTION'
+        });
+    }
+
     render(state) {
         return html`
             <style>
@@ -122,12 +135,11 @@ class JPAssessment extends HTMLElement {
 
                 @media (min-width: 1024px) {
                     .question-container {
-                        margin-top: 10vh;
                         margin-left: auto;
                         margin-right: auto;
                         width: 75%;
                         font-size: calc(12px + 1vmin);
-                        margin-bottom: 10vh;
+                        overflow-y: auto;
                     }
                 }
 
@@ -137,14 +149,43 @@ class JPAssessment extends HTMLElement {
                         margin-left: 2%;
                         margin-right: 2%;
                         font-size: calc(12px + 1vmin);
-                        margin-bottom: 10vh;
+                        overflow-y: auto;
                     }
+                }
+
+                .assessment-container {
+                    display: grid;
+                    grid-template-rows: 90% 10%;
+                    height: 100%;
+                }
+
+                .bottom-buttons-container {
+                    display: flex;
+                }
+
+                .bottom-button {
+                    flex: 1;
+                    font-size: calc(12px + 1vmin);
+                    padding: calc(12px + 1vmin);
+                    background: none;
+                    font-family: monospace;
+                    transition: background-color .5s ease;
+                    cursor: pointer;
                 }
             </style>
 
-            <div class="question-container">
-                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)} @ready=${() => this.viewQuestionReady()} @question-built=${() => this.questionBuilt()}>Loading...</prendus-view-question>
+            <div class="assessment-container">
+                    <div class="question-container">
+                        <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)} @ready=${() => this.viewQuestionReady()} @question-built=${() => this.questionBuilt()}>Loading...</prendus-view-question>
+                    </div>
+        
+                    <div class="bottom-buttons-container">
+                        <button class="bottom-button" @click=${() => this.previousAssessmentClick()} ?disabled=${state.currentAssessment && state.currentAssessment.order === 0}><-</button>
+                        <button class="bottom-button">Submit</button>
+                        <button class="bottom-button" @click=${() => this.nextAssessmentClick()} ?disabled=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1}>-></button>
+                    </div>
             </div>
+
         `;
     }
 }

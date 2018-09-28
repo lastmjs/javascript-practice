@@ -5,6 +5,12 @@ import {Store} from '../services/store';
 import {highlightColor, backgroundColor} from '../services/constants';
 import './jp-load-indicator';
 
+window.addEventListener('resize', () => {
+    Store.dispatch({
+        type: 'WINDOW_RESIZE'
+    });
+});
+
 class JPApp extends HTMLElement {
 
     connectedCallback() {
@@ -15,25 +21,9 @@ class JPApp extends HTMLElement {
         });
     }
 
-    courseClick() {
-        window.location.href = 'plans-and-pricing.html';
-    }
-
     mainMenuToggle() {
         Store.dispatch({
             type: 'TOGGLE_MAIN_MENU'
-        });
-    }
-
-    nextQuestionClick(state: any) {
-        Store.dispatch({
-            type: 'NEXT_QUESTION'
-        });
-    }
-
-    previousQuestionClick() {
-        Store.dispatch({
-            type: 'PREVIOUS_QUESTION'
         });
     }
 
@@ -44,6 +34,8 @@ class JPApp extends HTMLElement {
                     .main-grid {
                         display: grid;
                         grid-template-columns: 20% 80%;
+                        height: 100%;
+                        overflow: hidden;
                     }
 
                     .menu-button {
@@ -55,6 +47,8 @@ class JPApp extends HTMLElement {
                     .main-grid {
                         display: grid;
                         grid-template-columns: 0% 100%;
+                        height: 100%;
+                        overflow: hidden;
                     }
 
                     .menu-button {
@@ -69,69 +63,9 @@ class JPApp extends HTMLElement {
                     right: 1em;
                 }
 
-                .course-bar {
-                    display: flex;
-                    text-align: center;
-                    box-shadow: 0px 0px 1px black;
-                }
-
-                .course {
-                    flex-grow: 1;
-                    padding: 2em;
-                    cursor: pointer;
-                    transition: background-color .5s ease;
-                    font-weight: bold;
-                    white-space: nowrap;
-                    font-size: 1.5em;
-                }
-
-                .course:hover {
-                    background-color: rgba(1, 1, 1, .05);
-                }
-
-                .course-focused {
-                    background-color: ${highlightColor};
-                }
-
-                .previous-question-button {
-                    border: none;
-                    background-color: white;
-                    padding: 1.5em;
-                    cursor: pointer;
-                    font-family: monospace;
-                    transition: background-color .5s ease;
-                    color: black;
-                    box-shadow: 0px 0px 1px black;
-                    font-size: calc(12px + 1vmin);
-                    z-index: 10;
-                }
-
-                .previous-question-button:hover {
-                    background-color: ${highlightColor};
-                }
-
-                .next-question-button {
-                    margin-left: auto;
-                    border: none;
-                    background-color: white;
-                    padding: 1.5em;
-                    cursor: pointer;
-                    font-family: monospace;
-                    transition: background-color .5s ease;
-                    color: black;
-                    box-shadow: 0px 0px 1px black;
-                    font-size: calc(12px + 1vmin);
-                    z-index: 10;
-                }
-
-                .next-question-button:hover {
-                    background-color: ${highlightColor};
-                }
-
                 .router-area {
-                    position: relative;
-                    height: 100vh;
-                    overflow-y: auto;
+                    height: ${window.innerHeight}px;
+                    overflow: hidden;
                 }
             </style>
 
@@ -142,11 +76,11 @@ class JPApp extends HTMLElement {
 
                     <jp-load-indicator .hide=${state.hideLoadIndicator} .lower=${state.lowerLoadIndicator}></jp-load-indicator>
                     
-                    <div style="border-left: 1px solid grey; display: flex; width: 100%; background-color: ${backgroundColor}; box-shadow: 0px 4px 2px -2px grey">
+                    <!-- <div style="border-left: 1px solid grey; display: flex; width: 100%; background-color: ${backgroundColor}; box-shadow: 0px 4px 2px -2px grey">
                         <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
                         <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
                         <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
-                    </div>
+                    </div> -->
 
                     <jp-router></jp-router>
 
