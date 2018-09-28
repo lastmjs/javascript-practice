@@ -2,6 +2,7 @@ import {html, render} from 'lit-html';
 import 'prendus-question-elements/prendus-view-question.ts';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
+import './jp-load-indicator';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
@@ -66,6 +67,12 @@ class JPAssessment extends HTMLElement {
             Store.dispatch({
                 type: 'HIDE_GLOBAL_LOAD_INDICATOR'
             });
+
+            setTimeout(() => {
+                Store.dispatch({
+                    type: 'LOWER_GLOBAL_LOAD_INDICATOR'
+                });
+            }, 1000);
         });
     }
 

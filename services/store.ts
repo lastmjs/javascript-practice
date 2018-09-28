@@ -10,7 +10,8 @@ if (persistedState && !persistedState.userProgress) {
 
 const InitialState = persistedState ?  {
     ...persistedState,
-    hideGlobalLoadIndicator: false
+    hideGlobalLoadIndicator: false,
+    lowerGlobalLoadIndicator: false
 } : {
     currentConcept: null,
     currentEntity: 'assessment',
@@ -20,10 +21,18 @@ const InitialState = persistedState ?  {
     concepts: [],
     showMainMenu: false,
     userProgress: {},
-    hideGlobalLoadIndicator: false
+    hideGlobalLoadIndicator: false,
+    lowerGlobalLoadIndicator: false
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'LOWER_GLOBAL_LOAD_INDICATOR') {
+        return {
+            ...state,
+            lowerGlobalLoadIndicator: true
+        };
+    }
+
     if (action.type === 'HIDE_GLOBAL_LOAD_INDICATOR') {
         return {
             ...state,

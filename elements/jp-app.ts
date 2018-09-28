@@ -135,6 +135,8 @@ class JPApp extends HTMLElement {
                 <jp-concept-map></jp-concept-map>
 
                 <div class="router-area">
+
+                    <jp-load-indicator .hide=${state.hide}></jp-load-indicator>
                     
                     <!-- <div style="width: 100%; background-color: black; height: 5vh; color: white"> -->
                         <!-- Bar where stuff can go -->
