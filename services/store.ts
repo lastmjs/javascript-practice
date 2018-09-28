@@ -112,7 +112,9 @@ const RootReducer = (state=InitialState, action) => {
 
         return {
             ...state,
-            currentConcept
+            currentConcept,
+            hideLoadIndicator: false,
+            lowerLoadIndicator: false
         };
     }
 

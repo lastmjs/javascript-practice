@@ -2,7 +2,7 @@ import './jp-router';
 import {html, render} from 'lit-html';
 import './jp-concept-map';
 import {Store} from '../services/store';
-import {highlightColor} from '../services/constants';
+import {highlightColor, backgroundColor} from '../services/constants';
 import './jp-load-indicator';
 
 class JPApp extends HTMLElement {
@@ -142,12 +142,8 @@ class JPApp extends HTMLElement {
 
                     <jp-load-indicator .hide=${state.hideLoadIndicator} .lower=${state.lowerLoadIndicator}></jp-load-indicator>
                     
-                    <!-- <div style="width: 100%; background-color: black; height: 5vh; color: white"> -->
-                        <!-- Bar where stuff can go -->
+                    <div style="border-left: 1px solid grey; display: flex; width: 100%; background-color: ${backgroundColor}; box-shadow: 0px 4px 2px -2px grey">
                         <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
-                    <!-- </div> -->
-
-                    <div style="display: flex">
                         <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
                         <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
                     </div>
