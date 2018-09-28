@@ -9,6 +9,7 @@ class JPLoadIndicator extends HTMLElement {
     
     render(state) {
         const theBackgroundColor = state.hideGlobalLoadIndicator ? 'rgba(0, 0, 0, 0)' : backgroundColor;
+        const zIndex = state.lowerGlobalLoadIndicator ? '-100' : 100;
 
         return html`
             <style>
@@ -19,8 +20,8 @@ class JPLoadIndicator extends HTMLElement {
                     top: 0;
                     right: 0;
                     background-color: ${theBackgroundColor};
-                    z-index: 100;
-                    transition: background-color 2s linear;
+                    z-index: ${zIndex};
+                    transition: background-color 1s linear;
                 }
             </style>
 
