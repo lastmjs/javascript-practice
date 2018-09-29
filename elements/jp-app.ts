@@ -2,8 +2,9 @@ import './jp-router';
 import {html, render} from 'lit-html';
 import './jp-concept-map';
 import {Store} from '../services/store';
-import {highlightColor, backgroundColor} from '../services/constants';
+import {highlightColor, backgroundColor, zIndexLayer6} from '../services/constants';
 import './jp-load-indicator';
+import '../services/listeners';
 
 class JPApp extends HTMLElement {
 
@@ -15,25 +16,9 @@ class JPApp extends HTMLElement {
         });
     }
 
-    courseClick() {
-        window.location.href = 'plans-and-pricing.html';
-    }
-
     mainMenuToggle() {
         Store.dispatch({
             type: 'TOGGLE_MAIN_MENU'
-        });
-    }
-
-    nextQuestionClick(state: any) {
-        Store.dispatch({
-            type: 'NEXT_QUESTION'
-        });
-    }
-
-    previousQuestionClick() {
-        Store.dispatch({
-            type: 'PREVIOUS_QUESTION'
         });
     }
 
@@ -43,11 +28,9 @@ class JPApp extends HTMLElement {
                 @media (min-width: 1024px) {
                     .main-grid {
                         display: grid;
-                        grid-template-columns: 20% 80%;
-                    }
-
-                    .menu-button {
-                        display: none;
+                        grid-template-columns: ${state.showMainMenu ? '20' : '0'}% ${state.showMainMenu ? '80' : '100'}%;
+                        height: 100%;
+                        overflow: hidden;
                     }
                 }
 
@@ -55,10 +38,8 @@ class JPApp extends HTMLElement {
                     .main-grid {
                         display: grid;
                         grid-template-columns: 0% 100%;
-                    }
-
-                    .menu-button {
-                        display: block;
+                        height: 100%;
+                        overflow: hidden;
                     }
                 }
 
@@ -69,69 +50,32 @@ class JPApp extends HTMLElement {
                     right: 1em;
                 }
 
-                .course-bar {
-                    display: flex;
-                    text-align: center;
-                    box-shadow: 0px 0px 1px black;
-                }
-
-                .course {
-                    flex-grow: 1;
-                    padding: 2em;
-                    cursor: pointer;
-                    transition: background-color .5s ease;
-                    font-weight: bold;
-                    white-space: nowrap;
-                    font-size: 1.5em;
-                }
-
-                .course:hover {
-                    background-color: rgba(1, 1, 1, .05);
-                }
-
-                .course-focused {
-                    background-color: ${highlightColor};
-                }
-
-                .previous-question-button {
-                    border: none;
-                    background-color: white;
-                    padding: 1.5em;
-                    cursor: pointer;
-                    font-family: monospace;
-                    transition: background-color .5s ease;
-                    color: black;
-                    box-shadow: 0px 0px 1px black;
-                    font-size: calc(12px + 1vmin);
-                    z-index: 10;
-                }
-
-                .previous-question-button:hover {
-                    background-color: ${highlightColor};
-                }
-
-                .next-question-button {
-                    margin-left: auto;
-                    border: none;
-                    background-color: white;
-                    padding: 1.5em;
-                    cursor: pointer;
-                    font-family: monospace;
-                    transition: background-color .5s ease;
-                    color: black;
-                    box-shadow: 0px 0px 1px black;
-                    font-size: calc(12px + 1vmin);
-                    z-index: 10;
-                }
-
-                .next-question-button:hover {
-                    background-color: ${highlightColor};
-                }
-
                 .router-area {
+                    height: ${window.innerHeight}px;
+                    overflow: hidden;
                     position: relative;
-                    height: 100vh;
-                    overflow-y: auto;
+                }
+
+                .router-container {
+                    height: 90%;
+                }
+
+                .top-bar {
+                    height: 10%;
+                    border-left: 1px solid grey;
+                    display: flex;
+                    width: 100%;
+                    background-color: ${backgroundColor};
+                    box-shadow: 0px 4px 2px -2px grey;
+                    z-index: ${zIndexLayer6};
+                    position: relative;
+                }
+
+                .menu-button {
+                    background: none;
+                    font-size: calc(12px + 1vmin);
+                    padding: calc(12px + 1vmin);
+                    cursor: pointer;
                 }
             </style>
 
@@ -140,15 +84,22 @@ class JPApp extends HTMLElement {
 
                 <div class="router-area">
 
-                    <jp-load-indicator .hide=${state.hideLoadIndicator} .lower=${state.lowerLoadIndicator}></jp-load-indicator>
+                    <jp-load-indicator
+                        .hide=${state.hideLoadIndicator}
+                        .lower=${state.lowerLoadIndicator}
+                    ></jp-load-indicator>
                     
-                    <div style="border-left: 1px solid grey; display: flex; width: 100%; background-color: ${backgroundColor}; box-shadow: 0px 4px 2px -2px grey">
-                        <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
-                        <button ?hidden=${state.currentAssessment && state.currentAssessment.order === 0} class="previous-question-button" @click=${(e: any) => this.previousQuestionClick()}>Previous question</button>
-                        <button ?hidden=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1} class="next-question-button" @click=${(e: any) => this.nextQuestionClick(state)}>Next question</button>
+                    <div class="top-bar">
+                        <button
+                            id="main-menu-button"
+                            class="menu-button"
+                            @click=${() => this.mainMenuToggle()}
+                        >${state.showMainMenu ? 'Hide menu' : 'Menu'}</button>
                     </div>
 
-                    <jp-router></jp-router>
+                    <div class="router-container">
+                        <jp-router></jp-router>
+                    </div>
 
                 </div>
 

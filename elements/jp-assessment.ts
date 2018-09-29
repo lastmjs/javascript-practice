@@ -2,6 +2,7 @@ import {html, render} from 'lit-html';
 import 'prendus-question-elements/prendus-view-question.ts';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
+import {highlightColor, zIndexLayer6} from '../services/constants';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
@@ -62,53 +63,38 @@ class JPAssessment extends HTMLElement {
 
         if (checkAnswerResponse === 'Correct') {
             Store.dispatch({
-                type: 'NEXT_QUESTION'
-            });
-
-            Store.dispatch({
                 type: 'SET_USER_COMPLETED'
             });
         }
     }
 
     viewQuestionReady() {
-        setTimeout(() => {
-            Store.dispatch({
-                type: 'HIDE_GLOBAL_LOAD_INDICATOR'
-            });
-
-            Store.dispatch({
-                type: 'HIDE_LOAD_INDICATOR'
-            });
-
-            setTimeout(() => {
-                Store.dispatch({
-                    type: 'LOWER_GLOBAL_LOAD_INDICATOR'
-                });
-
-                Store.dispatch({
-                    type: 'LOWER_LOAD_INDICATOR'
-                });
-            }, 1000);
-        }, 1000);
+        Store.dispatch({
+            type: 'HIDE_GLOBAL_LOAD_INDICATOR'
+        });
     }
 
     questionBuilt() {
-        setTimeout(() => {
-            Store.dispatch({
-                type: 'HIDE_LOAD_INDICATOR'
-            });
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
+    }
 
-            setTimeout(() => {
-                Store.dispatch({
-                    type: 'LOWER_LOAD_INDICATOR'
-                });
+    nextAssessmentClick() {
+        Store.dispatch({
+            type: 'NEXT_QUESTION'
+        });
+    }
 
-                Store.dispatch({
-                    type: 'TRIGGER_RENDER'
-                });
-            }, 1000);
-        }, 1000);
+    previousAssessmentClick() {
+        Store.dispatch({
+            type: 'PREVIOUS_QUESTION'
+        });
+    }
+
+    submitAnswer() {
+        const prendusViewQuestion = this.querySelector('#prendus-view-question');
+        prendusViewQuestion.checkAnswer(prendusViewQuestion.componentId, prendusViewQuestion.question, prendusViewQuestion.builtQuestion);
     }
 
     render(state) {
@@ -122,12 +108,11 @@ class JPAssessment extends HTMLElement {
 
                 @media (min-width: 1024px) {
                     .question-container {
-                        margin-top: 10vh;
                         margin-left: auto;
                         margin-right: auto;
                         width: 75%;
                         font-size: calc(12px + 1vmin);
-                        margin-bottom: 10vh;
+                        overflow-y: auto;
                     }
                 }
 
@@ -137,14 +122,73 @@ class JPAssessment extends HTMLElement {
                         margin-left: 2%;
                         margin-right: 2%;
                         font-size: calc(12px + 1vmin);
-                        margin-bottom: 10vh;
+                        overflow-y: auto;
                     }
+                }
+
+                .assessment-container {
+                    display: grid;
+                    grid-template-rows: 90% 10%;
+                    height: 100%;
+                }
+
+                .bottom-buttons-container {
+                    display: flex;
+                    z-index: ${zIndexLayer6};
+                }
+
+                .bottom-button {
+                    flex: 1;
+                    font-size: calc(12px + 1vmin);
+                    padding: calc(12px + 1vmin);
+                    background: none;
+                    font-family: monospace;
+                    transition: background-color .5s ease;
+                    cursor: pointer;
                 }
             </style>
 
-            <div class="question-container">
-                <prendus-view-question .question=${state.currentAssessment} @question-response=${(e: any) => this.questionResponse(e)} @ready=${() => this.viewQuestionReady()} @question-built=${() => this.questionBuilt()}>Loading...</prendus-view-question>
+            <div class="assessment-container">
+                    <div class="question-container">
+                        <h1>${state.currentConcept.title}</h1>
+                        <h2>Question ${state.currentAssessment.order + 1} / ${state.currentConcept.assessments.length}</h2>
+                        <prendus-view-question
+                            id="prendus-view-question"
+                            .question=${state.currentAssessment}
+                            @question-response=${(e: any) => this.questionResponse(e)}
+                            @ready=${() => this.viewQuestionReady()}
+                            @question-built=${() => this.questionBuilt()}
+                        >
+                            Loading...
+                        </prendus-view-question>
+                    </div>
+        
+                    <div class="bottom-buttons-container">
+                        <button
+                            class="bottom-button"
+                            @click=${() => this.previousAssessmentClick()}
+                            ?disabled=${state.currentAssessment && state.currentAssessment.order === 0}
+                        >
+                            Prev
+                        </button>
+                        
+                        <button
+                            class="bottom-button"
+                            @click=${() => this.submitAnswer()}
+                        >
+                            Submit
+                        </button>
+                        
+                        <button
+                            class="bottom-button"
+                            @click=${() => this.nextAssessmentClick()}
+                            ?disabled=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1}
+                        >
+                            Next
+                        </button>
+                    </div>
             </div>
+
         `;
     }
 }

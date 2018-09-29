@@ -2,15 +2,7 @@ import {html, render} from 'lit-html';
 import './jp-concept-item';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
-import {backgroundColor, highlightColor} from '../services/constants';
-
-document.body.addEventListener('click', (e) => {
-    if (Store.getState().showMainMenu && e.target.id !== 'main-menu-button') {
-        Store.dispatch({
-            type: 'TOGGLE_MAIN_MENU'
-        });
-    }
-});
+import {backgroundColor, zIndexLayer7} from '../services/constants';
 
 class JPConceptMap extends HTMLElement {
 
@@ -71,7 +63,7 @@ class JPConceptMap extends HTMLElement {
                 @media (max-width: 1024px) {
                     .concepts-container {
                         width: 70%;
-                        z-index: 5;
+                        z-index: ${zIndexLayer7};
                         position: absolute;
                         display: flex;
                         flex-direction: column;
