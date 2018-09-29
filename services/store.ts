@@ -19,33 +19,18 @@ const InitialState = persistedState ?  {
     currentEntityBehavior: 'view',
     currentAssessment: null,
     concepts: [],
-    showMainMenu: false,
+    showMainMenu: window.matchMedia('(min-width: 1024px)').matches,
     userProgress: {},
     hideGlobalLoadIndicator: false,
-    lowerGlobalLoadIndicator: false,
-    hideLoadIndicator: false,
-    lowerLoadIndicator: false
+    hideLoadIndicator: false
 };
 
 const RootReducer = (state=InitialState, action) => {
-    if (action.type === 'LOWER_LOAD_INDICATOR') {
-        return {
-            ...state,
-            lowerLoadIndicator: true
-        };
-    }
 
     if (action.type === 'HIDE_LOAD_INDICATOR') {
         return {
             ...state,
             hideLoadIndicator: true
-        };
-    }
-
-    if (action.type === 'LOWER_GLOBAL_LOAD_INDICATOR') {
-        return {
-            ...state,
-            lowerGlobalLoadIndicator: true
         };
     }
 

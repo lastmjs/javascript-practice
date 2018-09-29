@@ -2,14 +2,9 @@ import './jp-router';
 import {html, render} from 'lit-html';
 import './jp-concept-map';
 import {Store} from '../services/store';
-import {highlightColor, backgroundColor} from '../services/constants';
+import {highlightColor, backgroundColor, zIndexLayer6} from '../services/constants';
 import './jp-load-indicator';
-
-window.addEventListener('resize', () => {
-    Store.dispatch({
-        type: 'WINDOW_RESIZE'
-    });
-});
+import '../services/listeners';
 
 class JPApp extends HTMLElement {
 
@@ -33,7 +28,7 @@ class JPApp extends HTMLElement {
                 @media (min-width: 1024px) {
                     .main-grid {
                         display: grid;
-                        grid-template-columns: 20% 80%;
+                        grid-template-columns: ${state.showMainMenu ? '20' : '0'}% ${state.showMainMenu ? '80' : '100'}%;
                         height: 100%;
                         overflow: hidden;
                     }
@@ -58,6 +53,7 @@ class JPApp extends HTMLElement {
                 .router-area {
                     height: ${window.innerHeight}px;
                     overflow: hidden;
+                    position: relative;
                 }
 
                 .router-container {
@@ -71,6 +67,15 @@ class JPApp extends HTMLElement {
                     width: 100%;
                     background-color: ${backgroundColor};
                     box-shadow: 0px 4px 2px -2px grey;
+                    z-index: ${zIndexLayer6};
+                    position: relative;
+                }
+
+                .menu-button {
+                    background: none;
+                    font-size: calc(12px + 1vmin);
+                    padding: calc(12px + 1vmin);
+                    cursor: pointer;
                 }
             </style>
 
@@ -79,10 +84,17 @@ class JPApp extends HTMLElement {
 
                 <div class="router-area">
 
-                    <jp-load-indicator .hide=${state.hideLoadIndicator} .lower=${state.lowerLoadIndicator}></jp-load-indicator>
+                    <jp-load-indicator
+                        .hide=${state.hideLoadIndicator}
+                        .lower=${state.lowerLoadIndicator}
+                    ></jp-load-indicator>
                     
                     <div class="top-bar">
-                        <button id="main-menu-button" class="menu-button" @click=${() => this.mainMenuToggle()}>Menu</button>
+                        <button
+                            id="main-menu-button"
+                            class="menu-button"
+                            @click=${() => this.mainMenuToggle()}
+                        >Menu</button>
                     </div>
 
                     <div class="router-container">

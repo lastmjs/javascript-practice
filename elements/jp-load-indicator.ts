@@ -4,7 +4,7 @@
 
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
-import {backgroundColor} from '../services/constants';
+import {backgroundColor, zIndexLayer5} from '../services/constants';
 
 class JPLoadIndicator extends HTMLElement {
     hide: boolean = false;
@@ -16,7 +16,6 @@ class JPLoadIndicator extends HTMLElement {
     
     render(state) {
         const theBackgroundColor = this.hide ? 'rgba(0, 0, 0, 0)' : backgroundColor;
-        const zIndex = this.lower ? '-100' : 5;
 
         return html`
             <style>
@@ -27,7 +26,8 @@ class JPLoadIndicator extends HTMLElement {
                     top: 0;
                     right: 0;
                     background-color: ${theBackgroundColor};
-                    z-index: ${zIndex};
+                    z-index: ${zIndexLayer5};
+                    pointer-events: none;
                     ${this.hide ? 'transition: background-color .5s linear;' : ''}
                 }
             </style>

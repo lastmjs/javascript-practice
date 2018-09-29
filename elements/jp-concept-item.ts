@@ -1,6 +1,6 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
-import {highlightColor, selectedColor} from '../services/constants';
+import {highlightColor, selectedColor, zIndexLayer1} from '../services/constants';
 
 class JPConceptItem extends HTMLElement {
 
@@ -46,7 +46,7 @@ class JPConceptItem extends HTMLElement {
                     background-color: rgba(6, 150, 14, .5);
                     top: 0;
                     left: 0;
-                    z-index: 10;
+                    z-index: ${zIndexLayer1};
                 }
             </style>
 
