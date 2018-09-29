@@ -10,8 +10,7 @@ if (persistedState && !persistedState.userProgress) {
 
 const InitialState = persistedState ?  {
     ...persistedState,
-    hideGlobalLoadIndicator: false,
-    lowerGlobalLoadIndicator: false
+    hideGlobalLoadIndicator: false
 } : {
     currentConcept: null,
     currentEntity: 'assessment',
@@ -98,8 +97,7 @@ const RootReducer = (state=InitialState, action) => {
         return {
             ...state,
             currentConcept,
-            hideLoadIndicator: false,
-            lowerLoadIndicator: false
+            hideLoadIndicator: state.currentConcept.id === action.concept.id ? true : false
         };
     }
 
@@ -130,8 +128,7 @@ const RootReducer = (state=InitialState, action) => {
 
         return {
             ...state,
-            hideLoadIndicator: false,
-            lowerLoadIndicator: false
+            hideLoadIndicator: false
         };
     }
 
@@ -147,8 +144,7 @@ const RootReducer = (state=InitialState, action) => {
 
         return {
             ...state,
-            hideLoadIndicator: false,
-            lowerLoadIndicator: false
+            hideLoadIndicator: false
         };
     }
 
