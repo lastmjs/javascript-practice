@@ -184,6 +184,12 @@ class JPAssessment extends HTMLElement {
                         >
                             Submit
                         </button>
+
+                        <button
+                            class="bottom-button"
+                        >
+                            Solution
+                        </button>
                         
                         <button
                             class="bottom-button"
