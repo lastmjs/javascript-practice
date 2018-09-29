@@ -50,7 +50,6 @@ class JPAssessment extends HTMLElement {
             if (
                 state.currentAssessment === this.previousAssessment &&
                 state.currentConcept === this.previousConcept
-            
             ) {
                 return;
             }
@@ -90,6 +89,9 @@ class JPAssessment extends HTMLElement {
         Store.dispatch({
             type: 'NEXT_QUESTION'
         });
+
+        this.querySelector('#solution-button').innerHTML = `Solution`;
+        this.querySelector('#submit-button').removeAttribute('disabled');
     }
 
     previousAssessmentClick() {
@@ -98,9 +100,27 @@ class JPAssessment extends HTMLElement {
         });
     }
 
+    showSolution() {
+        const prendusViewQuestion = this.querySelector('#prendus-view-question');
+        prendusViewQuestion.showSolutionClick();
+
+        //TODO everything below here is evil
+        //TODO rendering of this component really needs to be redone
+        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
+
+        if (solutionTemplate) {
+            this.querySelector('#solution-button').innerHTML = `Solution`;
+            this.querySelector('#submit-button').removeAttribute('disabled');
+        }
+        else {
+            this.querySelector('#solution-button').innerHTML = `Question`;
+            this.querySelector('#submit-button').setAttribute('disabled', true);
+        }
+    }
+
     submitAnswer() {
         const prendusViewQuestion = this.querySelector('#prendus-view-question');
-        prendusViewQuestion.checkAnswer(prendusViewQuestion.componentId, prendusViewQuestion.question, prendusViewQuestion.builtQuestion);
+        prendusViewQuestion.checkAnswer();
     }
 
     render(state) {
@@ -177,8 +197,17 @@ class JPAssessment extends HTMLElement {
                         >
                             Prev
                         </button>
-                        
+
                         <button
+                            id="solution-button"
+                            class="bottom-button"
+                            @click=${() => this.showSolution()}
+                        >
+                            Solution
+                        </button>
+
+                        <button
+                            id="submit-button"
                             class="bottom-button"
                             @click=${() => this.submitAnswer()}
                         >
