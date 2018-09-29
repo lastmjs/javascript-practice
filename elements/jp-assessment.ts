@@ -44,13 +44,19 @@ class JPAssessment extends HTMLElement {
 
     async connectedCallback() {
         Store.subscribe(() => {
+            //TODO be very careful with this change detection, it could be the source of significant bugs in the future
             const state = Store.getState();
 
-            if (state.currentAssessment === this.previousAssessment) {
+            if (
+                state.currentAssessment === this.previousAssessment &&
+                state.currentConcept === this.previousConcept
+            
+            ) {
                 return;
             }
 
             this.previousAssessment = state.currentAssessment;
+            this.previousConcept = state.currentConcept;
 
             render(this.render(state), this);
         });
@@ -150,8 +156,8 @@ class JPAssessment extends HTMLElement {
 
             <div class="assessment-container">
                     <div class="question-container">
-                        <h1>${state.currentConcept.title}</h1>
-                        <h2>Question ${state.currentAssessment.order + 1} / ${state.currentConcept.assessments.length}</h2>
+                        <h1>${state.currentConcept && state.currentConcept.title}</h1>
+                        <h2>Question ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
