@@ -16,3 +16,4 @@ export const zIndexLayer4 = '4';
 export const zIndexLayer5 = '5';
 export const zIndexLayer6 = '6';
 export const zIndexLayer7 = '7';
+export const zIndexLayer8 = '8';

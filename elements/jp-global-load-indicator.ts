@@ -1,6 +1,6 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
-import {backgroundColor, zIndexLayer7} from '../services/constants';
+import {backgroundColor, zIndexLayer8} from '../services/constants';
 
 class JPGlobalLoadIndicator extends HTMLElement {
     connectedCallback() {
@@ -19,7 +19,7 @@ class JPGlobalLoadIndicator extends HTMLElement {
                     top: 0;
                     right: 0;
                     background-color: ${theBackgroundColor};
-                    z-index: ${zIndexLayer7};
+                    z-index: ${zIndexLayer8};
                     transition: background-color 1s linear;
                     pointer-events: none;
                 }
