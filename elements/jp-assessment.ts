@@ -150,6 +150,8 @@ class JPAssessment extends HTMLElement {
 
             <div class="assessment-container">
                     <div class="question-container">
+                        <h1>${state.currentConcept.title}</h1>
+                        <h2>Question ${state.currentAssessment.order + 1} / ${state.currentConcept.assessments.length}</h2>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
