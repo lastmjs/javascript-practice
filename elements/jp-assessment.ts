@@ -98,9 +98,14 @@ class JPAssessment extends HTMLElement {
         });
     }
 
+    showSolution() {
+        const prendusViewQuestion = this.querySelector('#prendus-view-question');
+        prendusViewQuestion.showSolutionClick();
+    }
+
     submitAnswer() {
         const prendusViewQuestion = this.querySelector('#prendus-view-question');
-        prendusViewQuestion.checkAnswer(prendusViewQuestion.componentId, prendusViewQuestion.question, prendusViewQuestion.builtQuestion);
+        prendusViewQuestion.checkAnswer();
     }
 
     render(state) {
@@ -177,18 +182,19 @@ class JPAssessment extends HTMLElement {
                         >
                             Prev
                         </button>
-                        
+
+                        <button
+                            class="bottom-button"
+                            @click=${() => this.showSolution()}
+                        >
+                            Solution
+                        </button>
+
                         <button
                             class="bottom-button"
                             @click=${() => this.submitAnswer()}
                         >
                             Submit
-                        </button>
-
-                        <button
-                            class="bottom-button"
-                        >
-                            Solution
                         </button>
                         
                         <button
