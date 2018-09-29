@@ -94,7 +94,7 @@ class JPApp extends HTMLElement {
                             id="main-menu-button"
                             class="menu-button"
                             @click=${() => this.mainMenuToggle()}
-                        >Menu</button>
+                        >${state.showMainMenu ? 'Hide menu' : 'Menu'}</button>
                     </div>
 
                     <div class="router-container">
