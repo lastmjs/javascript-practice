@@ -157,7 +157,15 @@ class JPAssessment extends HTMLElement {
             <div class="assessment-container">
                     <div class="question-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
-                        <h2>Question ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
+                        <div style="display: flex">
+                            <h2 style="flex: 10">Question ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
+                            <button
+                                class="bottom-button"
+                                style="margin-left: auto; margin-right: 5vw"
+                            >
+                                Solution
+                            </button>
+                        </div>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
@@ -183,12 +191,6 @@ class JPAssessment extends HTMLElement {
                             @click=${() => this.submitAnswer()}
                         >
                             Submit
-                        </button>
-
-                        <button
-                            class="bottom-button"
-                        >
-                            Solution
                         </button>
                         
                         <button
