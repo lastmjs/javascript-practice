@@ -1,6 +1,6 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
-import {highlightColor, selectedColor, zIndexLayer1} from '../services/constants';
+import {highlightColor, selectedColor, zIndexLayer1, menuItemProperties} from '../services/constants';
 
 class JPConceptItem extends HTMLElement {
 
@@ -22,21 +22,15 @@ class JPConceptItem extends HTMLElement {
 
         return html`
             <style>
-                .concept {
-                    position: relative;
-                    flex-grow: 1;
-                    padding: 2em;
-                    cursor: pointer;
-                    transition: background-color .5s ease;
-                    font-weight: bold;
-                    font-size: calc(12px + 1vmin);
+                .concept-item {
+                    ${menuItemProperties}
                 }
 
-                .concept:hover {
+                .concept-item:hover {
                     background-color: ${highlightColor};
                 }
 
-                .concept-focused {
+                .concept-item-focused {
                     background-color: ${selectedColor};
                 }
 
@@ -50,7 +44,7 @@ class JPConceptItem extends HTMLElement {
                 }
             </style>
 
-            <div class="concept${state.currentConcept && state.currentConcept.id === this.id ? ' concept-focused' : ''}">
+            <div class="concept-item${state.currentConcept && state.currentConcept.id === this.id ? ' concept-item-focused' : ''}">
                 ${this.title}
                 <div class="concept-overlay" style="width: ${percentage}%">
                 </div>
