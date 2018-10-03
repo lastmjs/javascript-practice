@@ -25,22 +25,11 @@ class JPApp extends HTMLElement {
     render(state: any) {
         return html`
             <style>
-                @media (min-width: 1024px) {
-                    .main-grid {
-                        display: grid;
-                        grid-template-columns: ${state.showMainMenu ? '20' : '0'}% ${state.showMainMenu ? '80' : '100'}%;
-                        height: 100%;
-                        overflow: hidden;
-                    }
-                }
-
-                @media (max-width: 1024px) {
-                    .main-grid {
-                        display: grid;
-                        grid-template-columns: 0% 100%;
-                        height: 100%;
-                        overflow: hidden;
-                    }
+                .main-grid {
+                    display: grid;
+                    height: 100%;
+                    overflow: hidden;
+                    grid-template-columns: ${state.showMainMenu ? '20' : '0'}% ${state.showMainMenu ? '80' : '100'}%;
                 }
 
                 .privacy-anchor {

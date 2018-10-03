@@ -48,36 +48,24 @@ class JPConceptMap extends HTMLElement {
                     display: none;
                 }
 
-                @media (min-width: 1024px) {
-                    .concepts-container {
-                        display: flex;
-                        flex-direction: column;
-                        text-align: center;
-                        box-shadow: 0px 0px 1px black;
-                        background-color: ${backgroundColor};
-                        height: 100vh;
-                        overflow-y: auto;                   
-                    }
+                .concepts-container {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    box-shadow: 0px 0px 1px black;
+                    background-color: ${backgroundColor};
+                    height: 100vh;
+                    overflow-y: auto;
+                    ${state.mobileScreen ? 'position: absolute;' : ''}
+                    ${state.mobileScreen ? 'width: 70%;' : ''}
+                    ${state.mobileScreen ? `z-index: ${zIndexLayer7};` : ''}
                 }
 
-                @media (max-width: 1024px) {
-                    .concepts-container {
-                        width: 70%;
-                        z-index: ${zIndexLayer7};
-                        position: absolute;
-                        display: flex;
-                        flex-direction: column;
-                        text-align: center;
-                        box-shadow: 0px 0px 1px black;
-                        background-color: ${backgroundColor};
-                        height: 100vh;
-                        overflow-y: auto;                       
-                    }
-
+                ${state.mobileScreen ? `
                     .concepts-container-hidden {
                         visibility: hidden;
                     }
-                }
+                ` : ''}
             </style>
 
             <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">
