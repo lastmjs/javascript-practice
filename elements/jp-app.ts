@@ -61,10 +61,19 @@ class JPApp extends HTMLElement {
                 }
 
                 .menu-button {
+                    font-family: monospace;
                     background: none;
+                    border: none;
                     font-size: calc(12px + 1vmin);
                     padding: calc(12px + 1vmin);
                     cursor: pointer;
+                }
+
+                .account-buttons {
+                    margin-left: auto;
+                    display: grid;
+                    grid-template-columns: 50% 50%;
+                    margin-right: calc(12px + 1vmin);
                 }
             </style>
 
@@ -84,6 +93,11 @@ class JPApp extends HTMLElement {
                             class="menu-button"
                             @click=${() => this.mainMenuToggle()}
                         >${state.showMainMenu ? 'Hide menu' : 'Menu'}</button>
+
+                        <div class="account-buttons">
+                            <button class="menu-button">Login</button>
+                            <button class="menu-button">Signup</button>
+                        </div>
                     </div>
 
                     <div class="router-container">

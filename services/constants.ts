@@ -17,3 +17,13 @@ export const zIndexLayer5 = '5';
 export const zIndexLayer6 = '6';
 export const zIndexLayer7 = '7';
 export const zIndexLayer8 = '8';
+
+export const menuItemProperties = `
+    position: relative;
+    flex-grow: 1;
+    padding: 2em;
+    cursor: pointer;
+    transition: background-color .5s ease;
+    font-weight: bold;
+    font-size: calc(12px + 1vmin);
+`;

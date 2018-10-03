@@ -97,7 +97,7 @@ class JPAssessment extends HTMLElement {
             this.querySelector('#submit-button').removeAttribute('disabled');
         }
         else {
-            this.querySelector('#solution-button').innerHTML = `Question`;
+            this.querySelector('#solution-button').innerHTML = `Exercise`;
             this.querySelector('#submit-button').setAttribute('disabled', true);
         }
     }
@@ -144,6 +144,7 @@ class JPAssessment extends HTMLElement {
                     font-size: calc(12px + 1vmin);
                     padding: calc(12px + 1vmin);
                     background: none;
+                    border: none;
                     font-family: monospace;
                     transition: background-color .5s ease;
                     cursor: pointer;
@@ -153,7 +154,7 @@ class JPAssessment extends HTMLElement {
             <div class="assessment-container">
                     <div id="question-container" class="question-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
-                        <h2>Question ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
+                        <h2>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}

@@ -2,7 +2,7 @@ import {html, render} from 'lit-html';
 import './jp-concept-item';
 import {Store} from '../services/store';
 import {request} from '../services/graphql';
-import {backgroundColor, zIndexLayer7} from '../services/constants';
+import {backgroundColor, zIndexLayer7, menuItemProperties, highlightColor} from '../services/constants';
 
 class JPConceptMap extends HTMLElement {
 
@@ -68,7 +68,7 @@ class JPConceptMap extends HTMLElement {
                 ` : ''}
             </style>
 
-            <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">
+            <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">                
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
                                     id=${concept.id}
