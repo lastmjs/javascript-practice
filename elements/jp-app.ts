@@ -5,6 +5,7 @@ import {Store} from '../services/store';
 import {highlightColor, backgroundColor, zIndexLayer6, zIndexLayer5} from '../services/constants';
 import './jp-load-indicator';
 import '../services/listeners';
+import page from 'page';
 
 class JPApp extends HTMLElement {
 
@@ -19,6 +20,34 @@ class JPApp extends HTMLElement {
     mainMenuToggle() {
         Store.dispatch({
             type: 'TOGGLE_MAIN_MENU'
+        });
+    }
+
+    loginClick() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
+        page(`/user/login`);
+
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+        });
+    }
+
+    signupClick() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
+        page(`/user/signup`);
+
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
         });
     }
 
@@ -95,8 +124,8 @@ class JPApp extends HTMLElement {
                         >${state.showMainMenu ? 'Hide menu' : 'Menu'}</button>
 
                         <div class="account-buttons">
-                            <button class="menu-button">Login</button>
-                            <button class="menu-button">Signup</button>
+                            <button class="menu-button" @click=${() => this.loginClick()}>Login</button>
+                            <button class="menu-button" @click=${() => this.signupClick()}>Signup</button>
                         </div>
                     </div>
 
