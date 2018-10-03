@@ -2,7 +2,7 @@ import './jp-router';
 import {html, render} from 'lit-html';
 import './jp-concept-map';
 import {Store} from '../services/store';
-import {highlightColor, backgroundColor, zIndexLayer6} from '../services/constants';
+import {highlightColor, backgroundColor, zIndexLayer6, zIndexLayer5} from '../services/constants';
 import './jp-load-indicator';
 import '../services/listeners';
 
@@ -35,7 +35,7 @@ class JPApp extends HTMLElement {
                 .privacy-anchor {
                     color: black;
                     position: fixed;
-                    bottom: 1em;
+                    top: 11vh;
                     right: 1em;
                 }
 
