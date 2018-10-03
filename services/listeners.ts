@@ -2,7 +2,9 @@ import {Store} from './store';
 
 window.addEventListener('resize', () => {
     Store.dispatch({
-        type: 'WINDOW_RESIZE'
+        type: 'WINDOW_RESIZE_EVENT',
+        desktopScreen: window.matchMedia('(min-width: 1024px)').matches,
+        mobileScreen: window.matchMedia('(max-width: 1024px)').matches
     });
 });
 

@@ -21,10 +21,20 @@ const InitialState = persistedState ?  {
     showMainMenu: window.matchMedia('(min-width: 1024px)').matches,
     userProgress: {},
     hideGlobalLoadIndicator: false,
-    hideLoadIndicator: false
+    hideLoadIndicator: false,
+    desktopScreen: window.matchMedia('(min-width: 1024px)').matches,
+    mobileScreen: window.matchMedia('(max-width: 1024px)').matches
 };
 
 const RootReducer = (state=InitialState, action) => {
+
+    if (action.type === 'WINDOW_RESIZE_EVENT') {
+        return {
+            ...state,
+            desktopScreen: action.desktopScreen,
+            mobileScreen: action.mobileScreen
+        };
+    }
 
     if (action.type === 'HIDE_LOAD_INDICATOR') {
         return {

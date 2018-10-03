@@ -132,24 +132,16 @@ class JPAssessment extends HTMLElement {
                     background-color: white;
                 }
 
-                @media (min-width: 1024px) {
-                    .question-container {
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 75%;
-                        font-size: calc(12px + 1vmin);
-                        overflow-y: auto;
-                    }
+                #question-container::-webkit-scrollbar {
+                    display: none;
                 }
 
-                @media (max-width: 1024px) {
-                    .question-container {
-                        width: 96%;
-                        margin-left: 2%;
-                        margin-right: 2%;
-                        font-size: calc(12px + 1vmin);
-                        overflow-y: auto;
-                    }
+                .question-container {
+                    overflow-y: auto;
+                    font-size: calc(12px + 1vmin);
+                    width: ${state.desktopScreen ? '75%' : '96%'};
+                    margin-left: ${state.desktopScreen ? 'auto' : '2%'};
+                    margin-right: ${state.desktopScreen ? 'auto' : '2%'};
                 }
 
                 .assessment-container {
@@ -175,7 +167,7 @@ class JPAssessment extends HTMLElement {
             </style>
 
             <div class="assessment-container">
-                    <div class="question-container">
+                    <div id="question-container" class="question-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
                         <h2>Question ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
                         <prendus-view-question
