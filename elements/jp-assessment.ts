@@ -43,22 +43,7 @@ class JPAssessment extends HTMLElement {
     }
 
     async connectedCallback() {
-        Store.subscribe(() => {
-            //TODO be very careful with this change detection, it could be the source of significant bugs in the future
-            const state = Store.getState();
-
-            if (
-                state.currentAssessment === this.previousAssessment &&
-                state.currentConcept === this.previousConcept
-            ) {
-                return;
-            }
-
-            this.previousAssessment = state.currentAssessment;
-            this.previousConcept = state.currentConcept;
-
-            render(this.render(state), this);
-        });
+        Store.subscribe(() => render(this.render(Store.getState()), this));
     }
 
     questionResponse(e: any) {
@@ -73,13 +58,11 @@ class JPAssessment extends HTMLElement {
         }
     }
 
-    viewQuestionReady() {
+    questionChanged() {
         Store.dispatch({
             type: 'HIDE_GLOBAL_LOAD_INDICATOR'
         });
-    }
 
-    questionBuilt() {
         Store.dispatch({
             type: 'HIDE_LOAD_INDICATOR'
         });
@@ -90,6 +73,7 @@ class JPAssessment extends HTMLElement {
             type: 'NEXT_QUESTION'
         });
 
+        //TODO this is evil
         this.querySelector('#solution-button').innerHTML = `Solution`;
         this.querySelector('#submit-button').removeAttribute('disabled');
     }
@@ -174,8 +158,7 @@ class JPAssessment extends HTMLElement {
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
                             @question-response=${(e: any) => this.questionResponse(e)}
-                            @ready=${() => this.viewQuestionReady()}
-                            @question-built=${() => this.questionBuilt()}
+                            @question-changed=${() => this.questionChanged()}
                         >
                             Loading...
                         </prendus-view-question>
