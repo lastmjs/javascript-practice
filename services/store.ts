@@ -28,6 +28,13 @@ const InitialState = persistedState ?  {
 
 const RootReducer = (state=InitialState, action) => {
 
+    if (action.type === 'SHOW_LOAD_INDICATOR') {
+        return {
+            ...state,
+            hideLoadIndicator: false
+        };
+    }
+
     if (action.type === 'WINDOW_RESIZE_EVENT') {
         return {
             ...state,

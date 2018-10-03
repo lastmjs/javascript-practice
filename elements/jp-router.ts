@@ -3,6 +3,8 @@ import {Store} from '../services/store';
 import page from 'page';
 import './jp-assessment';
 import './jp-assessment-create';
+import './jp-login';
+import './jp-signup';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -35,6 +37,10 @@ class JPRouter extends HTMLElement {
             assessment: {
                 view: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`,
                 create: html`<jp-assessment-create></jp-assessment-create>`
+            },
+            user: {
+                login: html`<jp-login></jp-login>`,
+                signup: html`<jp-signup></jp-signup>`
             }
         };
 
