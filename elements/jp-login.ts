@@ -23,7 +23,7 @@ class JPLogin extends HTMLElement {
                 .authentication-input {
                     font-family: monospace;
                     font-size: calc(20px + 1vmin);
-                    width: 100%;
+                    padding: calc(12px + 1vmin);
                     border: none;
                     box-shadow: 0px 0px 1px grey;
                     background-color: ${selectedColor};
@@ -32,27 +32,30 @@ class JPLogin extends HTMLElement {
                 .authentication-inputs-container {
                     display: grid;
                     margin-top: 10vh;
-                    margin-left: ${state.desktopScreen ? '15%' : '2%'};
-                    margin-right: ${state.desktopScreen ? '15%' : '2%'};
                 }
 
                 .authentication-input-row {
-                    text-align: center;
                     margin-bottom: 5vh;
+                    text-align: center;
+                }
+
+                .authentication-submit-button {
+                    font-size: calc(12px + 1vmin);
+                    font-family: monospace;
                 }
             </style>
 
             <div class="authentication-inputs-container">
                 <div class="authentication-input-row">
-                    <input type="text" class="authentication-input">
+                    <input type="text" class="authentication-input" placeholder="email">
                 </div>
 
                 <div class="authentication-input-row">
-                    <input type="password" class="authentication-input">
+                    <input type="password" class="authentication-input" placeholder="password">
                 </div>
 
                 <div class="authentication-input-row">
-                    <button @click=${() => this.loginClick()}>Login</button>
+                    <button @click=${() => this.loginClick()} class="authentication-submit-button">Login</button>
                 </div>
             </div>
         `;
