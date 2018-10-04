@@ -10,7 +10,7 @@ class JPHamburger extends HTMLElement {
         return html`
             <style>
                 .hamburger-container {
-                    font-size: calc(1px + 1vmin);
+                    font-size: ${state.desktopScreen ? '10px' : '6px' };
                     cursor: pointer;
                     text-align: center;
                     vertical-align: middle;
