@@ -4,6 +4,7 @@ import './jp-concept-map';
 import {Store} from '../services/store';
 import {highlightColor, backgroundColor, zIndexLayer6, zIndexLayer5} from '../services/constants';
 import './jp-load-indicator';
+import './jp-hamburger';
 import '../services/listeners';
 import page from 'page';
 
@@ -87,6 +88,12 @@ class JPApp extends HTMLElement {
                     box-shadow: 0px 4px 2px -2px grey;
                     z-index: ${zIndexLayer6};
                     position: relative;
+                    align-items: center;
+                }
+
+                .hamburger-menu {
+                    padding: calc(12px + 1vmin);
+                    cursor: pointer;
                 }
 
                 .menu-button {
@@ -117,11 +124,10 @@ class JPApp extends HTMLElement {
                     ></jp-load-indicator>
                     
                     <div class="top-bar">
-                        <button
-                            id="main-menu-button"
-                            class="menu-button"
+                        <jp-hamburger
                             @click=${() => this.mainMenuToggle()}
-                        >${state.showMainMenu ? 'Hide menu' : 'Menu'}</button>
+                            class="hamburger-menu"
+                        ></jp-hamburger>
 
                         <div class="account-buttons">
                             <button class="menu-button" @click=${() => this.loginClick()}>Login</button>

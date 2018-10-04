@@ -8,10 +8,28 @@ window.addEventListener('resize', () => {
     });
 });
 
-document.body.addEventListener('click', (e) => {
-    if (Store.getState().showMainMenu && e.target.id !== 'main-menu-button' && window.matchMedia('(max-width: 1024px)').matches) {
+document.body.addEventListener('click', (e) => {    
+    if (
+        Store.getState().mobileScreen &&
+        Store.getState().showMainMenu &&
+        Store.getState().bodyClickListenerLock === false
+    ) {
         Store.dispatch({
             type: 'TOGGLE_MAIN_MENU'
         });
+
+        Store.dispatch({
+            type: 'LOCK_BODY_CLICK_LISTENER'
+        });
     }
+
+    if (
+        Store.getState().mobileScreen &&
+        Store.getState().showMainMenu &&
+        Store.getState().bodyClickListenerLock === true
+    ) {
+        Store.dispatch({
+            type: 'UNLOCK_BODY_CLICK_LISTENER'
+        });
+    } 
 });

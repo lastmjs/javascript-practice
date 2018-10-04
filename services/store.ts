@@ -23,10 +23,24 @@ const InitialState = persistedState ?  {
     hideGlobalLoadIndicator: false,
     hideLoadIndicator: false,
     desktopScreen: window.matchMedia('(min-width: 1024px)').matches,
-    mobileScreen: window.matchMedia('(max-width: 1024px)').matches
+    mobileScreen: window.matchMedia('(max-width: 1024px)').matches,
+    bodyClickListenerLock: true
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'LOCK_BODY_CLICK_LISTENER') {
+        return {
+            ...state,
+            bodyClickListenerLock: true
+        };
+    }
+
+    if (action.type === 'UNLOCK_BODY_CLICK_LISTENER') {
+        return {
+            ...state,
+            bodyClickListenerLock: false
+        };
+    }
 
     if (action.type === 'SHOW_LOAD_INDICATOR') {
         return {
@@ -39,7 +53,8 @@ const RootReducer = (state=InitialState, action) => {
         return {
             ...state,
             desktopScreen: action.desktopScreen,
-            mobileScreen: action.mobileScreen
+            mobileScreen: action.mobileScreen,
+            bodyClickListenerLock: action.mobileScreen ? !state.showMainMenu : true
         };
     }
 
