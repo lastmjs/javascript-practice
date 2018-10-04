@@ -3,7 +3,7 @@ import page from 'page';
 
 let persistedState = JSON.parse(window.localStorage.getItem('state'));
 
-if (persistedState && !persistedState.userProgress) {
+if (persistedState && persistedState.version !== 0) {
     window.localStorage.setItem('state', null);
     persistedState = null;
 }
@@ -12,6 +12,7 @@ const InitialState = persistedState ?  {
     ...persistedState,
     hideGlobalLoadIndicator: false
 } : {
+    version: 0,
     currentConcept: null,
     currentEntity: 'assessment',
     currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
