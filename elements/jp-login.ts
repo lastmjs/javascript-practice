@@ -1,6 +1,11 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
-import {selectedColor} from '../services/constants';
+import {
+    authenticationInput,
+    authenticationInputsContainer,
+    authenticationInputRow,
+    authenticationSubmitButton
+} from '../services/constants';
 
 class JPLogin extends HTMLElement {
     connectedCallback() {
@@ -20,29 +25,10 @@ class JPLogin extends HTMLElement {
     render(state: any) {
         return html`
             <style>
-                .authentication-input {
-                    font-family: monospace;
-                    font-size: calc(20px + 1vmin);
-                    padding: calc(12px + 1vmin);
-                    border: none;
-                    box-shadow: 0px 0px 1px grey;
-                    background-color: ${selectedColor};
-                }
-
-                .authentication-inputs-container {
-                    display: grid;
-                    margin-top: 10vh;
-                }
-
-                .authentication-input-row {
-                    margin-bottom: 5vh;
-                    text-align: center;
-                }
-
-                .authentication-submit-button {
-                    font-size: calc(12px + 1vmin);
-                    font-family: monospace;
-                }
+                ${authenticationInput}
+                ${authenticationInputsContainer}
+                ${authenticationInputRow}
+                ${authenticationSubmitButton}
             </style>
 
             <div class="authentication-inputs-container">
