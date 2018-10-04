@@ -1,5 +1,11 @@
 import {html, render} from 'lit-html';
 import {Store} from '../services/store';
+import {
+    authenticationInput,
+    authenticationInputsContainer,
+    authenticationInputRow,
+    authenticationSubmitButton
+} from '../services/constants';
 
 class JPSignup extends HTMLElement {
     connectedCallback() {
@@ -18,20 +24,29 @@ class JPSignup extends HTMLElement {
 
     render(state: any) {
         return html`
-            <div>
-                Email: <input type="text">
-            </div>
+            <style>
+                ${authenticationInput}
+                ${authenticationInputsContainer}
+                ${authenticationInputRow}
+                ${authenticationSubmitButton}
+            </style>
 
-            <div>
-                Password: <input type="text">
-            </div>
+            <div class="authentication-inputs-container">
+                <div class="authentication-input-row">
+                    <input type="text" class="authentication-input" placeholder="email">
+                </div>
 
-            <div>
-                Re-enter password: <input type="text">
-            </div>
+                <div class="authentication-input-row">
+                    <input type="password" class="authentication-input" placeholder="password">
+                </div>
 
-            <div>
-                <button @click=${() => this.signupClick()}>Signup</button>
+                <div class="authentication-input-row">
+                    <input type="password" class="authentication-input" placeholder="re-enter password">
+                </div>
+
+                <div class="authentication-input-row">
+                    <button @click=${() => this.signupClick()} class="authentication-submit-button">Signup</button>
+                </div>
             </div>
         `;
     }

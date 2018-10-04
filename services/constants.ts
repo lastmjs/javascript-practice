@@ -27,3 +27,40 @@ export const menuItemProperties = `
     font-weight: bold;
     font-size: calc(12px + 1vmin);
 `;
+
+export const authenticationInput = `
+    .authentication-input {
+        font-family: monospace;
+        font-size: calc(20px + 1vmin);
+        padding: calc(12px + 1vmin);
+        border: none;
+        box-shadow: 0px 0px 1px grey;
+        background-color: ${selectedColor};
+    }
+`;
+
+export const authenticationInputsContainer = `
+    .authentication-inputs-container {
+        display: grid;
+        margin-top: 10vh;
+    }
+`;
+
+export const authenticationInputRow = `
+    .authentication-input-row {
+        margin-bottom: 5vh;
+        text-align: center;
+    }
+`;
+
+export const authenticationSubmitButton = `
+    .authentication-submit-button {
+        font-size: calc(12px + 1vmin);
+        font-family: monospace;
+        cursor: pointer;
+        background: none;
+        padding: calc(12px + 1vmin);
+        border: none;
+        box-shadow: 0px 0px 5px grey;
+    }
+`;
