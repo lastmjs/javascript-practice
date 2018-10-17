@@ -23,7 +23,7 @@ console.log(process.env);
 
 export const handler = async (event, context, callback) => {
     try {
-        callback(error, {
+        callback(null, {
             statusCode: 200,
             body: JSON.stringify(process.env)
         });
