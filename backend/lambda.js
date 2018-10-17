@@ -2,6 +2,8 @@ import { GraphQLServerLambda } from 'graphql-yoga';
 import { Prisma } from 'prisma-binding';
 import { typeDefs } from './generated/prisma/prisma-schema.js';
 
+console.log(process.env);
+
 const prisma = new Prisma({
     typeDefs,
     endpoint: process.env.CONTEXT === 'production' || process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy' ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466'
