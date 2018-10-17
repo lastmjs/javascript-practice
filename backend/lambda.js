@@ -3,7 +3,7 @@ import { Prisma } from 'prisma-binding';
 import { typeDefs } from './generated/prisma/prisma-schema.js';
 import { signup } from './resolvers/signup.js';
 import { mergeTypes } from 'merge-graphql-schemas';
-import { readFileSync } from 'fs';
+import { dataopsTypeDefs } from './dataops.js';
 
 export const prisma = new Prisma({
     typeDefs,
@@ -25,7 +25,7 @@ const resolvers = {
 
 const ultimateTypeDefs = mergeTypes([
     typeDefs,
-    readFileSync('./backend/dataops.graphql').toString()
+    dataopsTypeDefs
 ], {
     all: true
 });
