@@ -25,10 +25,25 @@ const InitialState = persistedState ?  {
     hideLoadIndicator: false,
     desktopScreen: window.matchMedia('(min-width: 1024px)').matches,
     mobileScreen: window.matchMedia('(max-width: 1024px)').matches,
-    bodyClickListenerLock: true
+    bodyClickListenerLock: true,
+    user: null,
+    userToken: null
 };
 
 const RootReducer = (state=InitialState, action) => {
+    if (action.type === 'LOGIN_USER') {
+        //TODO figure out how to handle side effects elegantly
+        setTimeout(() => {
+            page(`/assessment/${state.currentAssessment.id}/view`);
+        });
+
+        return {
+            ...state,
+            user: action.user,
+            userToken: action.userToken
+        };
+    }
+
     if (action.type === 'LOCK_BODY_CLICK_LISTENER') {
         return {
             ...state,

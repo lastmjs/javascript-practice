@@ -1,5 +1,11 @@
 directive @unique on FIELD | FIELD_DEFINITION
 
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+}
+
 type Course {
   id: ID! @unique
   title: String!

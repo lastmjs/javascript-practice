@@ -130,8 +130,12 @@ class JPApp extends HTMLElement {
                         ></jp-hamburger>
 
                         <div class="account-buttons">
-                            <button class="menu-button" @click=${() => this.loginClick()}>Login</button>
-                            <button class="menu-button" @click=${() => this.signupClick()}>Signup</button>
+                            <button ?hidden=${state.user} class="menu-button" @click=${() => this.loginClick()}>Login</button>
+                            <button ?hidden=${state.user} class="menu-button" @click=${() => this.signupClick()}>Signup</button>
+
+                            <div ?hidden=${!state.user}>
+                                ${state.user ? state.user.email : ''}
+                            </div>
                         </div>
                     </div>
 

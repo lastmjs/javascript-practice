@@ -1,8 +1,11 @@
 import { GraphQLServerLambda } from 'graphql-yoga';
 import { Prisma } from 'prisma-binding';
 import { typeDefs } from './generated/prisma/prisma-schema.js';
+import { signup } from './resolvers/signup.js';
+import { mergeTypes } from 'merge-graphql-schemas';
+import { readFileSync } from 'fs';
 
-const prisma = new Prisma({
+export const prisma = new Prisma({
     typeDefs,
     endpoint: process.env.AWS_REGION ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466'
 });
@@ -15,12 +18,20 @@ const resolvers = {
         ...preparedTopLevelQueryResolvers
     },
     Mutation: {
-        ...preparedTopLevelMutationResolvers
+        ...preparedTopLevelMutationResolvers,
+        signup
     }
 };
 
-const lambda = new GraphQLServerLambda({
+const ultimateTypeDefs = mergeTypes([
     typeDefs,
+    readFileSync('./backend/dataops.graphql').toString()
+], {
+    all: true
+});
+
+const lambda = new GraphQLServerLambda({
+    typeDefs: ultimateTypeDefs,
     resolvers,
     resolverValidationOptions: {
         requireResolversForResolveType: false
