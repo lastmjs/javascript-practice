@@ -22,7 +22,7 @@
 // };
 
 export const handler = async (event, context, callback) => {
-    callback(error, {
+    callback(null, {
         statusCode: 200,
         body: 'Hello there'
     });
