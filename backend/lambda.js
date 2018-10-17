@@ -29,39 +29,6 @@ const lambda = new GraphQLServerLambda({
 
 export const handler = lambda.handler;
 
-// export const handler = async (event, context, callback) => {
-//     // callback(null, {
-//     //     statusCode: 200,
-//     //     body: 'Hello there'
-//     // });
-
-//     console.log(0);
-
-//     try {
-//         console.log(1);
-//         const server = new GraphQLServerLambda({
-//             typeDefs,
-//             resolvers,
-//             resolverValidationOptions: {
-//                 requireResolversForResolveType: false
-//             }
-//         });
-//         console.log(2);
-//         server.graphqlHandler(event, context, (error, output) => {
-//             console.log(3);
-//             callback(error, {
-//                 ...output,
-//                 statusCode: 200
-//             });
-//         });
-//     }
-//     catch(error) {
-//         console.log(error);
-//     }
-
-//     console.log(4);
-// };
-
 function prepareTopLevelResolvers(resolverObject) {
     return Object.entries(resolverObject).reduce((result, entry) => {
             const resolverName = entry[0];
