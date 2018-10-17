@@ -21,24 +21,28 @@ console.log(process.env);
 //     }
 // };
 
-// export const handler = async (event, context, callback) => {
-//     try {
-//         const server = new GraphQLServerLambda({
-//             typeDefs,
-//             resolvers
-//         });
+export const handler = async (event, context, callback) => {
+    try {
+        callback(error, {
+            statusCode: 200,
+            body: JSON.stringify(process.env)
+        });
+        // const server = new GraphQLServerLambda({
+        //     typeDefs,
+        //     resolvers
+        // });
 
-//         server.graphqlHandler(event, context, (error, output) => {
-//             callback(error, {
-//                 ...output,
-//                 statusCode: 200
-//             });
-//         });
-//     }
-//     catch(error) {
-//         console.log(error);
-//     }
-// };
+        // server.graphqlHandler(event, context, (error, output) => {
+        //     callback(error, {
+        //         ...output,
+        //         statusCode: 200
+        //     });
+        // });
+    }
+    catch(error) {
+        console.log(error);
+    }
+};
 
 // function prepareTopLevelResolvers(resolverObject) {
 //     return Object.entries(resolverObject).reduce((result, entry) => {
