@@ -22,6 +22,9 @@
 // };
 
 export const handler = async (event, context, callback) => {
+    console.log(process.env);
+    console.log('why hello there');
+
     callback(null, {
         statusCode: 200,
         body: 'Hello there'
