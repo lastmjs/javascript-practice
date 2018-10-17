@@ -1,4 +1,5 @@
-export const typeDefs = /* GraphQL */ `type AggregateAssessment {
+module.exports = {
+        typeDefs: /* GraphQL */ `type AggregateAssessment {
   count: Int!
 }
 
@@ -573,3 +574,5 @@ type Subscription {
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
 }
 `
+      }
+    
