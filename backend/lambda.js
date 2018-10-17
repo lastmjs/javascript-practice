@@ -31,7 +31,10 @@ export const handler = async (event, context, callback) => {
         console.log(1);
         const server = new GraphQLServerLambda({
             typeDefs,
-            resolvers
+            resolvers,
+            resolverValidationOptions: {
+                requireResolversForResolveType: false
+            }
         });
         console.log(2);
         server.graphqlHandler(event, context, (error, output) => {
