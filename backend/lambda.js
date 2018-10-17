@@ -1,13 +1,15 @@
 // import { GraphQLServerLambda } from 'graphql-yoga';
-// import { Prisma } from 'prisma-binding';
-// import { typeDefs } from './generated/prisma/prisma-schema.js';
+import { Prisma } from 'prisma-binding';
+import { typeDefs } from './generated/prisma/prisma-schema.js';
 
-// http://localhost:4466
+console.log(0);
 
-// const prisma = new Prisma({
-//     typeDefs,
-//     endpoint: process.env.CONTEXT === 'production' || process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy' ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'https://us1.prisma.sh/jordan-last/javascript-practice/dev'
-// });
+const prisma = new Prisma({
+    typeDefs,
+    endpoint: process.env.AWS_REGION ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466'
+});
+
+console.log(1);
 
 // const preparedTopLevelQueryResolvers = prepareTopLevelResolvers(prisma.query);
 // const preparedTopLevelMutationResolvers = prepareTopLevelResolvers(prisma.mutation);
@@ -22,9 +24,6 @@
 // };
 
 export const handler = async (event, context, callback) => {
-    console.log(process.env);
-    console.log('why hello there');
-
     callback(null, {
         statusCode: 200,
         body: 'Hello there'
