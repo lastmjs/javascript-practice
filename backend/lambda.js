@@ -4,7 +4,7 @@ import { typeDefs } from './generated/prisma/prisma-schema.js';
 
 const prisma = new Prisma({
     typeDefs,
-    endpoint: 'http://localhost:4466'
+    endpoint: process.env.CONTEXT === 'production' ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466'
 });
 
 const preparedTopLevelQueryResolvers = prepareTopLevelResolvers(prisma.query);
