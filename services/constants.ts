@@ -1,7 +1,7 @@
 export const GRAPHQL_HTTP_ENDPOINT = {
     production: 'https://us1.prisma.sh/jordan-last/javascript-practice/dev',
     staging: 'https://us1.prisma.sh/jordan-last/javascript-practice/dev',
-    development: 'http://10.0.1.35:4466'
+    development: 'http://localhost:8080/lambda'
 }[window.process.env.NODE_ENV];
 
 export const highlightColor = `rgba(240, 219, 79, 1)`;

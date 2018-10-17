@@ -5,23 +5,31 @@
   "dependencies": {
     "@kuscamara/code-sample": "^3.0.1",
     "@webcomponents/webcomponentsjs": "^2.1.3",
+    "concurrently": "^4.0.1",
+    "graphql-yoga": "^1.16.2",
+    "http-server": "^0.11.1",
     "lit-html": "0.11.4",
+    "netlify-lambda": "^1.0.2",
     "page": "^1.10.2",
     "prendus-question-elements": "git+https://github.com/Prendus/prendus-question-elements.git#new-stuff",
-    "prisma": "^1.17.1",
+    "prisma": "^1.18.1",
+    "prisma-binding": "^2.1.6",
     "redux": "4.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
     "deep-equal-es-module": "0.0.0",
     "jsverify-es-module": "0.0.2",
     "zwitterion": "^0.27.3"
   },
   "scripts": {
-    "start": "zwitterion",
-    "prisma-up": "cd server && docker-compose up --build",
-    "prisma-deploy": "cd server && prisma deploy",
-    "prisma-export": "cd server && prisma export --path database.zip",
-    "prisma-import": "cd server && prisma import --data database.zip",
+    "start": "concurrently \"zwitterion\" \"npm run lambda-proxy\" \"npm run lambda-serve\"",
+    "prisma-up": "cd backend && docker-compose up --build",
+    "prisma-deploy": "cd backend && prisma deploy",
+    "prisma-export": "cd backend && prisma export --path database.zip",
+    "prisma-import": "cd backend && prisma import --data database.zip",
+    "lambda-proxy": "http-server --cors --proxy http://localhost:9000",
+    "lambda-serve": "netlify-lambda build backend && netlify-lambda serve backend --static",
     "build": "zwitterion --build-static --exclude node_modules --include @polymer,prendus-question-elements,assessml,prendus-shared,redux/es,@kuscamara"
   },
   "repository": {
