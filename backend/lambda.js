@@ -25,13 +25,17 @@ export const handler = async (event, context, callback) => {
     //     body: 'Hello there'
     // });
 
+    console.log(0);
+
     try {
+        console.log(1);
         const server = new GraphQLServerLambda({
             typeDefs,
             resolvers
         });
-
+        console.log(2);
         server.graphqlHandler(event, context, (error, output) => {
+            console.log(3);
             callback(error, {
                 ...output,
                 statusCode: 200
@@ -41,6 +45,8 @@ export const handler = async (event, context, callback) => {
     catch(error) {
         console.log(error);
     }
+
+    console.log(4);
 };
 
 function prepareTopLevelResolvers(resolverObject) {
