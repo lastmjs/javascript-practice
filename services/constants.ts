@@ -1,6 +1,6 @@
 export const GRAPHQL_HTTP_ENDPOINT = {
-    production: 'https://us1.prisma.sh/jordan-last/javascript-practice/dev',
-    staging: 'https://us1.prisma.sh/jordan-last/javascript-practice/dev',
+    production: '/.netlify/functions/lambda',
+    staging: '/.netlify/functions/lambda',
     development: 'http://localhost:8080/lambda'
 }[window.process.env.NODE_ENV];
 
