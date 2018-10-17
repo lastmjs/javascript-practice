@@ -52,6 +52,10 @@ class JPApp extends HTMLElement {
         });
     }
 
+    emailClick() {
+        page('/user/profile');
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -130,8 +134,28 @@ class JPApp extends HTMLElement {
                         ></jp-hamburger>
 
                         <div class="account-buttons">
-                            <button class="menu-button" @click=${() => this.loginClick()}>Login</button>
-                            <button class="menu-button" @click=${() => this.signupClick()}>Signup</button>
+                            <button 
+                                ?hidden=${state.user}
+                                class="menu-button"
+                                @click=${() => this.loginClick()}
+                            >
+                                Login
+                            </button>
+                            <button
+                                ?hidden=${state.user}
+                                class="menu-button"
+                                @click=${() => this.signupClick()}
+                            >
+                                Signup
+                            </button>
+
+                            <button
+                                ?hidden=${!state.user}
+                                class="menu-button"
+                                @click=${() => this.emailClick()}
+                            >
+                                ${state.user ? state.user.email : ''}
+                            </button>
                         </div>
                     </div>
 

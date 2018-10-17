@@ -40,7 +40,8 @@ class JPRouter extends HTMLElement {
             },
             user: {
                 login: html`<jp-login></jp-login>`,
-                signup: html`<jp-signup></jp-signup>`
+                signup: html`<jp-signup></jp-signup>`,
+                profile: html`Welcome to the profile page`
             }
         };
 
