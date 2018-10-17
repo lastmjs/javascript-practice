@@ -29,8 +29,10 @@
     "prisma-export": "cd backend && prisma export --path database.zip",
     "prisma-import": "cd backend && prisma import --data database.zip",
     "lambda-proxy": "http-server --cors --proxy http://localhost:9000",
-    "lambda-serve": "netlify-lambda build backend && netlify-lambda serve backend --static",
-    "build": "zwitterion --build-static --exclude node_modules,backend --include @polymer,prendus-question-elements,assessml,prendus-shared,redux/es,@kuscamara"
+    "lambda-build": "netlify-lambda build backend",
+    "lambda-serve": "npm run lambda-build && netlify-lambda serve backend --static",
+    "build-static-assets": "zwitterion --build-static --exclude node_modules,backend --include @polymer,prendus-question-elements,assessml,prendus-shared,redux/es,@kuscamara",
+    "build": "npm run build-static-assets && npm run lambda-build"
   },
   "repository": {
     "type": "git",
