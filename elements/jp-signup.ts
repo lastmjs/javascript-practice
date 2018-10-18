@@ -49,6 +49,7 @@ class JPSignup extends HTMLElement {
                     user {
                         id
                         email
+                        tokens
                     }
                     jwt
                 }

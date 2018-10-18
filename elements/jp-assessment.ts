@@ -137,6 +137,7 @@ class JPAssessment extends HTMLElement {
                 .bottom-buttons-container {
                     display: flex;
                     z-index: ${zIndexLayer6};
+                    box-shadow: 0px -5px 5px -5px grey;
                 }
 
                 .bottom-button {

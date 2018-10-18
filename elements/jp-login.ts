@@ -43,6 +43,7 @@ class JPLogin extends HTMLElement {
                     user {
                         id
                         email
+                        tokens
                     }
                     jwt
                 }

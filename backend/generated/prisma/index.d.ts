@@ -275,6 +275,8 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
+  | "tokens_ASC"
+  | "tokens_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -460,6 +462,7 @@ export interface AssessmentSubscriptionWhereInput {
 export interface UserUpdateInput {
   email?: String;
   password?: String;
+  tokens?: Int;
 }
 
 export interface AssessmentCreateInput {
@@ -563,6 +566,14 @@ export interface UserWhereInput {
   password_not_starts_with?: String;
   password_ends_with?: String;
   password_not_ends_with?: String;
+  tokens?: Int;
+  tokens_not?: Int;
+  tokens_in?: Int[] | Int;
+  tokens_not_in?: Int[] | Int;
+  tokens_lt?: Int;
+  tokens_lte?: Int;
+  tokens_gt?: Int;
+  tokens_gte?: Int;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
@@ -729,6 +740,7 @@ export interface ConceptUpdateWithWhereUniqueWithoutCourseInput {
 export interface UserCreateInput {
   email: String;
   password: String;
+  tokens?: Int;
 }
 
 export interface NodeNode {
@@ -739,6 +751,7 @@ export interface UserPreviousValuesNode {
   id: ID_Output;
   email: String;
   password: String;
+  tokens: Int;
 }
 
 export interface UserPreviousValues
@@ -747,6 +760,7 @@ export interface UserPreviousValues
   id: () => Promise<ID_Output>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  tokens: () => Promise<Int>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -755,6 +769,7 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  tokens: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ConceptEdgeNode {
@@ -990,12 +1005,14 @@ export interface UserNode {
   id: ID_Output;
   email: String;
   password: String;
+  tokens: Int;
 }
 
 export interface User extends Promise<UserNode>, Fragmentable {
   id: () => Promise<ID_Output>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  tokens: () => Promise<Int>;
 }
 
 export interface UserSubscription
@@ -1004,6 +1021,7 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  tokens: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AssessmentSubscriptionPayloadNode {
