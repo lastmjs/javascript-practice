@@ -6,6 +6,7 @@ import {
     authenticationInputRow,
     authenticationSubmitButton
 } from '../services/constants';
+import { request } from '../services/graphql';
 
 class JPLogin extends HTMLElement {
     connectedCallback() {
@@ -22,8 +23,42 @@ class JPLogin extends HTMLElement {
         });
     }
 
-    loginClick() {
-        alert('logged in!');
+    async loginClick() {
+        const email = this.querySelector('#login-email-input').value;
+        const password = this.querySelector('#login-password-input').value;
+
+        if (email === '') {
+            alert('Email cannot be empty');
+            return;
+        }
+
+        if (password === '') {
+            alert('Password cannot be empty');
+            return;
+        }
+
+        const response = await request(`
+            mutation($email: String!, $password: String!) {
+                login(email: $email, password: $password) {
+                    user {
+                        id
+                        email
+                    }
+                    token
+                }
+            }
+        `, {
+            email,
+            password
+        })
+
+        if (response.login.token) {
+            Store.dispatch({
+                type: 'LOGIN_USER',
+                user: response.login.user,
+                userToken: response.login.token
+            });
+        }
     }
 
     render(state: any) {
@@ -37,11 +72,11 @@ class JPLogin extends HTMLElement {
 
             <div class="authentication-inputs-container">
                 <div class="authentication-input-row">
-                    <input type="text" class="authentication-input" placeholder="email">
+                    <input id="login-email-input" type="text" class="authentication-input" placeholder="email">
                 </div>
 
                 <div class="authentication-input-row">
-                    <input type="password" class="authentication-input" placeholder="password">
+                    <input id="login-password-input" type="password" class="authentication-input" placeholder="password">
                 </div>
 
                 <div class="authentication-input-row">

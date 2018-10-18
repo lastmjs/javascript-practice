@@ -24,9 +24,9 @@ class JPSignup extends HTMLElement {
     }
 
     async signupClick() {
-        const email = this.querySelector('#email-input').value;
-        const password1 = this.querySelector('#password-input-1').value;
-        const password2 = this.querySelector('#password-input-2').value;
+        const email = this.querySelector('#signup-email-input').value;
+        const password1 = this.querySelector('#signup-password-input-1').value;
+        const password2 = this.querySelector('#signup-password-input-2').value;
 
         if (email === '') {
             alert('Email cannot be empty');
@@ -78,15 +78,15 @@ class JPSignup extends HTMLElement {
 
             <div class="authentication-inputs-container">
                 <div class="authentication-input-row">
-                    <input id="email-input" type="text" class="authentication-input" placeholder="email">
+                    <input id="signup-email-input" type="text" class="authentication-input" placeholder="email">
                 </div>
 
                 <div class="authentication-input-row">
-                    <input id="password-input-1" type="password" class="authentication-input" placeholder="password">
+                    <input id="signup-password-input-1" type="password" class="authentication-input" placeholder="password">
                 </div>
 
                 <div class="authentication-input-row">
-                    <input id="password-input-2" type="password" class="authentication-input" placeholder="re-enter password">
+                    <input id="signup-password-input-2" type="password" class="authentication-input" placeholder="re-enter password">
                 </div>
 
                 <div class="authentication-input-row">
