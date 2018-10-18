@@ -32,11 +32,6 @@ const InitialState = persistedState ?  {
 
 const RootReducer = (state=InitialState, action) => {
     if (action.type === 'LOGOUT_USER') {
-        //TODO figure out how to handle side effects elegantly
-        setTimeout(() => {
-            page(`/assessment/${state.currentAssessment.id}/view`);
-        });
-
         return {
             ...state,
             user: null,
@@ -45,11 +40,6 @@ const RootReducer = (state=InitialState, action) => {
     }
 
     if (action.type === 'LOGIN_USER') {
-        //TODO figure out how to handle side effects elegantly
-        setTimeout(() => {
-            page(`/assessment/${state.currentAssessment.id}/view`);
-        });
-
         return {
             ...state,
             user: action.user,

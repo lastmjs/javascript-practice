@@ -65,6 +65,8 @@ class JPSignup extends HTMLElement {
                 user: response.signup.user,
                 userJWT: response.signup.jwt
             });
+
+            page(`/assessment/${Store.getState().currentAssessment.id}/view`);
         }
     }
 

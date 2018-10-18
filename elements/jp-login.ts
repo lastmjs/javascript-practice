@@ -7,6 +7,7 @@ import {
 } from '../services/constants';
 import { request } from '../services/graphql';
 import './jp-button';
+import page from 'page';
 
 class JPLogin extends HTMLElement {
     connectedCallback() {
@@ -59,6 +60,8 @@ class JPLogin extends HTMLElement {
                 user: response.login.user,
                 userJWT: response.login.jwt
             });
+
+            page(`/assessment/${Store.getState().currentAssessment.id}/view`);
         }
     }
 
