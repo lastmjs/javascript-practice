@@ -16,6 +16,10 @@ class JPSignup extends HTMLElement {
             Store.dispatch({
                 type: 'HIDE_GLOBAL_LOAD_INDICATOR'
             });
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
         });
     }
 

@@ -5,6 +5,7 @@ import './jp-assessment';
 import './jp-assessment-create';
 import './jp-login';
 import './jp-signup';
+import './jp-profile';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -41,7 +42,7 @@ class JPRouter extends HTMLElement {
             user: {
                 login: html`<jp-login></jp-login>`,
                 signup: html`<jp-signup></jp-signup>`,
-                profile: html`Welcome to the profile page`
+                profile: html`<jp-profile></jp-profile>`
             }
         };
 
