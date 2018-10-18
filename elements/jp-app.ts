@@ -1,12 +1,13 @@
 import './jp-router';
-import {html, render} from 'lit-html';
+import { html, render } from 'lit-html';
 import './jp-concept-map';
-import {Store} from '../services/store';
-import {highlightColor, backgroundColor, zIndexLayer6, zIndexLayer5} from '../services/constants';
+import { Store } from '../services/store';
+import { backgroundColorCSSValue, zIndexLayer6 } from '../services/constants';
 import './jp-load-indicator';
 import './jp-hamburger';
 import '../services/listeners';
 import page from 'page';
+import '../services/init';
 
 class JPApp extends HTMLElement {
 
@@ -56,6 +57,10 @@ class JPApp extends HTMLElement {
         page('/user/profile');
     }
 
+    tokensClick() {
+        page('/token/overview');
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -88,8 +93,8 @@ class JPApp extends HTMLElement {
                     border-left: 1px solid grey;
                     display: flex;
                     width: 100%;
-                    background-color: ${backgroundColor};
-                    box-shadow: 0px 4px 2px -2px grey;
+                    background-color: ${backgroundColorCSSValue};
+                    box-shadow: 0px 5px 5px -5px grey;
                     z-index: ${zIndexLayer6};
                     position: relative;
                     align-items: center;
@@ -112,8 +117,17 @@ class JPApp extends HTMLElement {
                 .account-buttons {
                     margin-left: auto;
                     display: grid;
-                    grid-template-columns: 50% 50%;
+                    grid-template-columns: 1fr 1fr;
                     margin-right: calc(12px + 1vmin);
+                    overflow: hidden;
+                }
+
+                .account-buttons-logged-in {
+                    grid-template-columns: 1fr 5fr;
+                }
+
+                #user-logged-out-account-buttons[hidden], #user-logged-in-account-buttons[hidden] {
+                    display: none;
                 }
             </style>
 
@@ -133,24 +147,29 @@ class JPApp extends HTMLElement {
                             class="hamburger-menu"
                         ></jp-hamburger>
 
-                        <div class="account-buttons">
+                        <div id="user-logged-out-account-buttons" class="account-buttons" ?hidden=${state.user}>
                             <button 
-                                ?hidden=${state.user}
                                 class="menu-button"
                                 @click=${() => this.loginClick()}
                             >
                                 Login
                             </button>
                             <button
-                                ?hidden=${state.user}
                                 class="menu-button"
                                 @click=${() => this.signupClick()}
                             >
                                 Signup
                             </button>
+                        </div>
 
+                        <div id="user-logged-in-account-buttons" class="account-buttons account-buttons-logged-in" ?hidden=${!state.user}>
                             <button
-                                ?hidden=${!state.user}
+                                class="menu-button"
+                                @click=${() => this.tokensClick()}
+                            >
+                                ${state.user ? state.user.tokens : ''}
+                            </button>
+                            <button
                                 class="menu-button"
                                 @click=${() => this.emailClick()}
                             >

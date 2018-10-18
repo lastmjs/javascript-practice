@@ -4,6 +4,7 @@ type User {
   id: ID! @unique
   email: String! @unique
   password: String!
+  tokens: Int! @default(value: 50)
 }
 
 type Course {

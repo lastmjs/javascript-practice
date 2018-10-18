@@ -1,12 +1,13 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
 import {
-    authenticationInput,
-    authenticationInputsContainer,
-    authenticationInputRow,
-    authenticationSubmitButton
+    authenticationInputCSSClass,
+    authenticationInputsContainerCSSClass,
+    authenticationInputRowCSSClass
 } from '../services/constants';
 import { request } from '../services/graphql';
+import './jp-button';
+import page from 'page';
 
 class JPLogin extends HTMLElement {
     connectedCallback() {
@@ -43,6 +44,7 @@ class JPLogin extends HTMLElement {
                     user {
                         id
                         email
+                        tokens
                     }
                     jwt
                 }
@@ -58,16 +60,17 @@ class JPLogin extends HTMLElement {
                 user: response.login.user,
                 userJWT: response.login.jwt
             });
+
+            page(`/assessment/${Store.getState().currentAssessment.id}/view`);
         }
     }
 
     render(state: any) {
         return html`
             <style>
-                ${authenticationInput}
-                ${authenticationInputsContainer}
-                ${authenticationInputRow}
-                ${authenticationSubmitButton}
+                ${authenticationInputCSSClass}
+                ${authenticationInputsContainerCSSClass}
+                ${authenticationInputRowCSSClass}
             </style>
 
             <div class="authentication-inputs-container">
@@ -80,7 +83,7 @@ class JPLogin extends HTMLElement {
                 </div>
 
                 <div class="authentication-input-row">
-                    <button @click=${() => this.loginClick()} class="authentication-submit-button">Login</button>
+                    <jp-button @click=${() => this.loginClick()} .text=${"Login"}></jp-button>
                 </div>
             </div>
         `;

@@ -1,6 +1,11 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
-import {highlightColor, selectedColor, zIndexLayer1, menuItemProperties} from '../services/constants';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
+import {
+    highlightColorCSSValue,
+    selectedColorCSSValue,
+    zIndexLayer1,
+    menuItemCSSProperties
+} from '../services/constants';
 
 class JPConceptItem extends HTMLElement {
 
@@ -16,22 +21,22 @@ class JPConceptItem extends HTMLElement {
 
     render(state: any) {
         //TODO this will all be done on the server
-        const numTotalAssessments = state.concepts.find((concept) => concept.id === this.id).assessments.length;
+        const numTotalAssessments = state.concepts.find((concept: any) => concept.id === this.id).assessments.length;
         const numUserCompletedAssessments = Object.values(state.userProgress[this.id] || {}).length;
         const percentage = (numUserCompletedAssessments / numTotalAssessments) * 100;
 
         return html`
             <style>
                 .concept-item {
-                    ${menuItemProperties}
+                    ${menuItemCSSProperties}
                 }
 
                 .concept-item:hover {
-                    background-color: ${highlightColor};
+                    background-color: ${highlightColorCSSValue};
                 }
 
                 .concept-item-focused {
-                    background-color: ${selectedColor};
+                    background-color: ${selectedColorCSSValue};
                 }
 
                 .concept-overlay {

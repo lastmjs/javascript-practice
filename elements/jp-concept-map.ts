@@ -1,8 +1,8 @@
-import {html, render} from 'lit-html';
+import { html, render } from 'lit-html';
 import './jp-concept-item';
-import {Store} from '../services/store';
-import {request} from '../services/graphql';
-import {backgroundColor, zIndexLayer7, menuItemProperties, highlightColor} from '../services/constants';
+import { Store } from '../services/store';
+import { request } from '../services/graphql';
+import { backgroundColorCSSValue, zIndexLayer7 } from '../services/constants';
 
 class JPConceptMap extends HTMLElement {
 
@@ -53,7 +53,7 @@ class JPConceptMap extends HTMLElement {
                     flex-direction: column;
                     text-align: center;
                     box-shadow: 0px 0px 1px black;
-                    background-color: ${backgroundColor};
+                    background-color: ${backgroundColorCSSValue};
                     height: 100vh;
                     overflow-y: auto;
                     ${state.mobileScreen ? 'position: absolute;' : ''}

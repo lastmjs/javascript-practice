@@ -1,6 +1,6 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
-import {request} from '../services/graphql';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
+import { request } from '../services/graphql';
 
 class JPAssessmentCreate extends HTMLElement {
     connectedCallback() {

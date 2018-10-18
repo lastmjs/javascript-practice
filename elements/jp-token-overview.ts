@@ -1,11 +1,10 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
-import './jp-button';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
 import { jpContainerCSSClass } from '../services/constants';
 
-class JPProfile extends HTMLElement {
+class JPTokenOverview extends HTMLElement {
     connectedCallback() {
-        Store.subscribe(() => render(this.render(Store.getState()), this)); 
+        Store.subscribe(() => render(this.render(Store.getState()), this));    
         
         setTimeout(() => {
             Store.dispatch({
@@ -18,12 +17,6 @@ class JPProfile extends HTMLElement {
         });
     }
 
-    logoutClick() {
-        Store.dispatch({
-            type: 'LOGOUT_USER'
-        });
-    }
-
     render(state: any) {
         return html`
             <style>
@@ -31,12 +24,15 @@ class JPProfile extends HTMLElement {
             </style>
 
             <div class="jp-container">
-                <h1>Welcome ${state.user ? state.user.email : 'unregistered user'}</h1>
+                <h1>Tokenomics</h1>
                 <h2>You have ${state.user ? state.user.tokens : 0} ${state.user ? state.user.tokens === 1 ? 'token, use it wisely' : 'tokens, use them wisely' : 'tokens, signup to get some'}</h2>
-                <button ?hidden=${!state.user} @click=${() => this.logoutClick()}>Logout</button>
+                <h3>+20: Create an exercise that is accepted into the course</h3>
+                <h3>+1: Answer correctly (only applies once per exercise)</h3>
+                <h3>-2: Answer incorrectly (only applies once per exercise and before answering correctly)</h3>
+                <h3>-1: View solution (only applies once per exercise and before answering correctly)</h3>
             </div>
         `;
     }
 }
 
-window.customElements.define('jp-profile', JPProfile);
+window.customElements.define('jp-token-overview', JPTokenOverview);
