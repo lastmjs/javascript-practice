@@ -120,6 +120,7 @@ class JPAssessment extends HTMLElement {
                     display: none;
                 }
 
+                /*TODO this kind of container should probably be standardized*/
                 .question-container {
                     overflow-y: auto;
                     font-size: calc(12px + 1vmin);
