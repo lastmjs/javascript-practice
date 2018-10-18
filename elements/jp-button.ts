@@ -1,5 +1,4 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
+import { html, render } from 'lit-html';
 
 class JPButton extends HTMLElement {
     text: string = '';

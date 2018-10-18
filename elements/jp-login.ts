@@ -1,9 +1,9 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
 import {
-    authenticationInput,
-    authenticationInputsContainer,
-    authenticationInputRow
+    authenticationInputCSSClass,
+    authenticationInputsContainerCSSClass,
+    authenticationInputRowCSSClass
 } from '../services/constants';
 import { request } from '../services/graphql';
 import './jp-button';
@@ -65,9 +65,9 @@ class JPLogin extends HTMLElement {
     render(state: any) {
         return html`
             <style>
-                ${authenticationInput}
-                ${authenticationInputsContainer}
-                ${authenticationInputRow}
+                ${authenticationInputCSSClass}
+                ${authenticationInputsContainerCSSClass}
+                ${authenticationInputRowCSSClass}
             </style>
 
             <div class="authentication-inputs-container">

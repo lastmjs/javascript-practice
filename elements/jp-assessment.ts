@@ -1,8 +1,8 @@
-import {html, render} from 'lit-html';
+import { html, render } from 'lit-html';
 import 'prendus-question-elements/prendus-view-question.ts';
-import {Store} from '../services/store';
-import {request} from '../services/graphql';
-import {highlightColor, zIndexLayer6} from '../services/constants';
+import { Store } from '../services/store';
+import { request } from '../services/graphql';
+import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
@@ -120,14 +120,7 @@ class JPAssessment extends HTMLElement {
                     display: none;
                 }
 
-                /*TODO this kind of container should probably be standardized*/
-                .question-container {
-                    overflow-y: auto;
-                    font-size: calc(12px + 1vmin);
-                    width: ${state.desktopScreen ? '75%' : '96%'};
-                    margin-left: ${state.desktopScreen ? 'auto' : '2%'};
-                    margin-right: ${state.desktopScreen ? 'auto' : '2%'};
-                }
+                ${jpContainerCSSClass(state)}                
 
                 .assessment-container {
                     display: grid;
@@ -154,7 +147,7 @@ class JPAssessment extends HTMLElement {
             </style>
 
             <div class="assessment-container">
-                    <div id="question-container" class="question-container">
+                    <div id="question-container" class="jp-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
                         <h2>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
                         <prendus-view-question

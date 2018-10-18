@@ -4,9 +4,9 @@ export const GRAPHQL_HTTP_ENDPOINT = {
     development: 'http://localhost:8080/lambda'
 }[window.process.env.NODE_ENV];
 
-export const highlightColor = `rgba(240, 219, 79, 1)`;
-export const backgroundColor = `rgba(229, 229, 229, 1)`;
-export const selectedColor = `rgba(200, 200, 200, 1)`;
+export const highlightColorCSSValue = `rgba(240, 219, 79, 1)`;
+export const backgroundColorCSSValue = `rgba(229, 229, 229, 1)`;
+export const selectedColorCSSValue = `rgba(200, 200, 200, 1)`;
 export const zIndexLayerNegative1 = '-1';
 export const zIndexLayer0 = '0';
 export const zIndexLayer1 = '1';
@@ -18,7 +18,7 @@ export const zIndexLayer6 = '6';
 export const zIndexLayer7 = '7';
 export const zIndexLayer8 = '8';
 
-export const menuItemProperties = `
+export const menuItemCSSProperties = `
     position: relative;
     flex-grow: 1;
     padding: 2em;
@@ -28,27 +28,38 @@ export const menuItemProperties = `
     font-size: calc(12px + 1vmin);
 `;
 
-export const authenticationInput = `
+export const authenticationInputCSSClass = `
     .authentication-input {
         font-family: monospace;
         font-size: calc(20px + 1vmin);
         padding: calc(12px + 1vmin);
         border: none;
         box-shadow: 0px 0px 1px grey;
-        background-color: ${selectedColor};
+        background-color: ${selectedColorCSSValue};
     }
 `;
 
-export const authenticationInputsContainer = `
+export const authenticationInputsContainerCSSClass = `
     .authentication-inputs-container {
         display: grid;
         margin-top: 10vh;
     }
 `;
 
-export const authenticationInputRow = `
+export const authenticationInputRowCSSClass = `
     .authentication-input-row {
         margin-bottom: 5vh;
         text-align: center;
+    }
+`;
+
+export const jpContainerCSSClass = (state: any) => `
+    .jp-container {
+        overflow-y: auto;
+        overflow-wrap: break-word;
+        font-size: calc(12px + 1vmin);
+        width: ${state.desktopScreen ? '75%' : '96%'};
+        margin-left: ${state.desktopScreen ? 'auto' : '2%'};
+        margin-right: ${state.desktopScreen ? 'auto' : '2%'};
     }
 `;

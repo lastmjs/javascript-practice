@@ -2,9 +2,9 @@
 //TODO the reason they are duplicated is to get around some redux/event listener/change detection issues temporarily
 //TODO those issues have been resolved, the two element implementations can be combined at any time
 
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
-import {backgroundColor, zIndexLayer5} from '../services/constants';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
+import { backgroundColorCSSValue, zIndexLayer5 } from '../services/constants';
 
 class JPLoadIndicator extends HTMLElement {
     hide: boolean = false;
@@ -14,8 +14,8 @@ class JPLoadIndicator extends HTMLElement {
         Store.subscribe(() => render(this.render(Store.getState()), this));        
     }
     
-    render(state) {
-        const theBackgroundColor = this.hide ? 'rgba(0, 0, 0, 0)' : backgroundColor;
+    render(state: any) {
+        const theBackgroundColor = this.hide ? 'rgba(0, 0, 0, 0)' : backgroundColorCSSValue;
 
         return html`
             <style>

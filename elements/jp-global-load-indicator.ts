@@ -1,14 +1,14 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
-import {backgroundColor, zIndexLayer8} from '../services/constants';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
+import { backgroundColorCSSValue, zIndexLayer8 } from '../services/constants';
 
 class JPGlobalLoadIndicator extends HTMLElement {
     connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));        
     }
     
-    render(state) {
-        const theBackgroundColor = state.hideGlobalLoadIndicator ? 'rgba(0, 0, 0, 0)' : backgroundColor;
+    render(state: any) {
+        const theBackgroundColor = state.hideGlobalLoadIndicator ? 'rgba(0, 0, 0, 0)' : backgroundColorCSSValue;
 
         return html`
             <style>

@@ -1,5 +1,5 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
 
 class JPHamburger extends HTMLElement {
     connectedCallback() {

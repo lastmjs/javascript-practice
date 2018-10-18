@@ -1,8 +1,8 @@
 import './jp-router';
-import {html, render} from 'lit-html';
+import { html, render } from 'lit-html';
 import './jp-concept-map';
-import {Store} from '../services/store';
-import {highlightColor, backgroundColor, zIndexLayer6, zIndexLayer5} from '../services/constants';
+import { Store } from '../services/store';
+import { backgroundColorCSSValue, zIndexLayer6 } from '../services/constants';
 import './jp-load-indicator';
 import './jp-hamburger';
 import '../services/listeners';
@@ -93,7 +93,7 @@ class JPApp extends HTMLElement {
                     border-left: 1px solid grey;
                     display: flex;
                     width: 100%;
-                    background-color: ${backgroundColor};
+                    background-color: ${backgroundColorCSSValue};
                     box-shadow: 0px 5px 5px -5px grey;
                     z-index: ${zIndexLayer6};
                     position: relative;
