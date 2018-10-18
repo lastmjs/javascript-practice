@@ -52,15 +52,3 @@ export const authenticationInputRow = `
         text-align: center;
     }
 `;
-
-export const authenticationSubmitButton = `
-    .authentication-submit-button {
-        font-size: calc(12px + 1vmin);
-        font-family: monospace;
-        cursor: pointer;
-        background: none;
-        padding: calc(12px + 1vmin);
-        border: none;
-        box-shadow: 0px 0px 5px grey;
-    }
-`;

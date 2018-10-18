@@ -3,10 +3,10 @@ import { Store } from '../services/store';
 import {
     authenticationInput,
     authenticationInputsContainer,
-    authenticationInputRow,
-    authenticationSubmitButton
+    authenticationInputRow
 } from '../services/constants';
 import { request } from '../services/graphql';
+import './jp-button';
 
 class JPSignup extends HTMLElement {
     connectedCallback() {
@@ -74,7 +74,6 @@ class JPSignup extends HTMLElement {
                 ${authenticationInput}
                 ${authenticationInputsContainer}
                 ${authenticationInputRow}
-                ${authenticationSubmitButton}
             </style>
 
             <div class="authentication-inputs-container">
@@ -91,7 +90,7 @@ class JPSignup extends HTMLElement {
                 </div>
 
                 <div class="authentication-input-row">
-                    <button @click=${() => this.signupClick()} class="authentication-submit-button">Signup</button>
+                    <jp-button @click=${() => this.signupClick()} .text=${"Signup"}></jp-button>
                 </div>
             </div>
         `;

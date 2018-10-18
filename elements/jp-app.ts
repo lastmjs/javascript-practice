@@ -58,7 +58,7 @@ class JPApp extends HTMLElement {
     }
 
     tokensClick() {
-        page('/tokens/rules');
+        page('/token/overview');
     }
 
     render(state: any) {
