@@ -2,6 +2,7 @@ import { GraphQLServerLambda } from 'graphql-yoga';
 import { Prisma } from 'prisma-binding';
 import { typeDefs } from './generated/prisma/prisma-schema.js';
 import { signup } from './resolvers/signup.js';
+import { login } from './resolvers/login.js';
 import { mergeTypes } from 'merge-graphql-schemas';
 import { dataopsTypeDefs } from './dataops.js';
 
@@ -19,7 +20,8 @@ const resolvers = {
     },
     Mutation: {
         ...preparedTopLevelMutationResolvers,
-        signup
+        signup,
+        login
     }
 };
 

@@ -15,7 +15,7 @@ export async function request(query, variables?) {
     const responseJSON = await response.json();
 
     if (responseJSON.errors) {
-        alert(JSON.stringify(responseJSON.errors, null, 2));
+        alert(responseJSON.errors.map((error: any) => error.message).join(','));
     }
     else {
         return responseJSON.data;
