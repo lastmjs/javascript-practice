@@ -44,7 +44,7 @@ class JPLogin extends HTMLElement {
                         id
                         email
                     }
-                    token
+                    jwt
                 }
             }
         `, {
@@ -52,11 +52,11 @@ class JPLogin extends HTMLElement {
             password
         })
 
-        if (response.login.token) {
+        if (response && response.login.jwt) {
             Store.dispatch({
                 type: 'LOGIN_USER',
                 user: response.login.user,
-                userToken: response.login.token
+                userJWT: response.login.jwt
             });
         }
     }

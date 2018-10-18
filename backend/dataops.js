@@ -5,7 +5,7 @@ export const dataopsTypeDefs = `
     }
     
     type AuthPayload {
-        token: String!
         user: User!
+        jwt: String!
     }
 `;

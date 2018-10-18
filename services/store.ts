@@ -3,7 +3,7 @@ import page from 'page';
 
 let persistedState = JSON.parse(window.localStorage.getItem('state'));
 
-if (persistedState && persistedState.version !== 0) {
+if (persistedState && persistedState.version !== 1) {
     window.localStorage.setItem('state', null);
     persistedState = null;
 }
@@ -12,7 +12,7 @@ const InitialState = persistedState ?  {
     ...persistedState,
     hideGlobalLoadIndicator: false
 } : {
-    version: 0,
+    version: 1,
     currentConcept: null,
     currentEntity: 'assessment',
     currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
@@ -27,7 +27,7 @@ const InitialState = persistedState ?  {
     mobileScreen: window.matchMedia('(max-width: 1024px)').matches,
     bodyClickListenerLock: true,
     user: null,
-    userToken: null
+    userJWT: null
 };
 
 const RootReducer = (state=InitialState, action) => {
@@ -40,7 +40,7 @@ const RootReducer = (state=InitialState, action) => {
         return {
             ...state,
             user: null,
-            userToken: null
+            userJWT: null
         };
     }
 
@@ -53,7 +53,7 @@ const RootReducer = (state=InitialState, action) => {
         return {
             ...state,
             user: action.user,
-            userToken: action.userToken
+            userJWT: action.userJWT
         };
     }
 

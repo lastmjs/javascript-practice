@@ -24,7 +24,7 @@ export async function login(parent, args, context, info) {
     }
 
     return {
-        token: jwt.sign({ userId: user.id }, 'secret'),
-        user
+        user,
+        jwt: jwt.sign({ userId: user.id }, 'secret')
     };
 }

@@ -8,6 +8,9 @@ import jwt from 'jsonwebtoken';
 
 export async function signup(parent, args, context, info) {
     const password = await bcrypt.hash(args.password, 10);
+
+    //TODO first check if user already exists and throw the error
+
     const user = await prisma.mutation.createUser({
         data: {
             email: args.email,
@@ -16,7 +19,7 @@ export async function signup(parent, args, context, info) {
     });
 
     return {
-        token: jwt.sign({ userId: user.id }, 'secret'),
-        user
+        user,
+        jwt: jwt.sign({ userId: user.id }, 'secret')
     };
 }
