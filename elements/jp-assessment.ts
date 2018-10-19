@@ -131,22 +131,67 @@ class JPAssessment extends HTMLElement {
         });
     }
 
-    showSolution() {
-        const prendusViewQuestion = this.querySelector('#prendus-view-question');
-        prendusViewQuestion.showSolutionClick();
+    async showSolution() {
+        const showSolutionResponse = await request(`
+            mutation($assessmentId: ID!) {
+                viewSolution(assessmentId: $assessmentId) {
+                    allowed
+                    tokenReward
+                }
+            }
+        `, {
+            assessmentId: Store.getState().currentAssessment.id
+        });
 
-        //TODO everything below here is evil
-        //TODO rendering of this component really needs to be redone
-        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
+        if (!showSolutionResponse) {
+            return;
+        }
 
-        if (solutionTemplate) {
-            this.querySelector('#solution-button').innerHTML = `Solution`;
-            this.querySelector('#submit-button').removeAttribute('disabled');
+        if (!showSolutionResponse.viewSolution.allowed) {
+            alert('You do not have enough tokens to view the solution');
+            return;
         }
-        else {
-            this.querySelector('#solution-button').innerHTML = `Exercise`;
-            this.querySelector('#submit-button').setAttribute('disabled', true);
+
+        if (showSolutionResponse.viewSolution.tokenReward < 0) {
+            alert(`${showSolutionResponse.viewSolution.tokenReward} ${showSolutionResponse.viewSolution.tokenReward === -1 ? 'token' : 'tokens'}!`);
         }
+
+        const updateUserResponse = await request(`
+            query($userId: ID!) {
+                user(where: {
+                    id: $userId
+                }) {
+                    tokens
+                }
+            }
+        `, {
+            userId: Store.getState().user.id
+        });
+
+        Store.dispatch({
+            type: 'SET_USER_TOKENS',
+            tokens: updateUserResponse.user.tokens
+        });
+
+        //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
+        //TODO and the question is shown again
+        // setTimeout(() => {
+            const prendusViewQuestion = this.querySelector('#prendus-view-question');
+            prendusViewQuestion.showSolutionClick();
+
+            //TODO everything below here is evil
+            //TODO rendering of this component really needs to be redone
+            const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
+
+            if (solutionTemplate) {
+                this.querySelector('#solution-button').innerHTML = `Solution`;
+                this.querySelector('#submit-button').removeAttribute('disabled');
+            }
+            else {
+                this.querySelector('#solution-button').innerHTML = `Exercise`;
+                this.querySelector('#submit-button').setAttribute('disabled', true);
+            }
+        // }, 1000);
     }
 
     submitAnswer() {

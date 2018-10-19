@@ -70,6 +70,7 @@ type AssessmentInfo {
   user: User!
   assessment: Assessment!
   answeredCorrectly: Boolean!
+  solutionViewed: Boolean!
 }
 
 type AssessmentInfoConnection {
@@ -82,6 +83,7 @@ input AssessmentInfoCreateInput {
   user: UserCreateOneWithoutAssessmentInfosInput!
   assessment: AssessmentCreateOneInput!
   answeredCorrectly: Boolean!
+  solutionViewed: Boolean!
 }
 
 input AssessmentInfoCreateManyWithoutUserInput {
@@ -92,6 +94,7 @@ input AssessmentInfoCreateManyWithoutUserInput {
 input AssessmentInfoCreateWithoutUserInput {
   assessment: AssessmentCreateOneInput!
   answeredCorrectly: Boolean!
+  solutionViewed: Boolean!
 }
 
 type AssessmentInfoEdge {
@@ -104,6 +107,8 @@ enum AssessmentInfoOrderByInput {
   id_DESC
   answeredCorrectly_ASC
   answeredCorrectly_DESC
+  solutionViewed_ASC
+  solutionViewed_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -113,6 +118,7 @@ enum AssessmentInfoOrderByInput {
 type AssessmentInfoPreviousValues {
   id: ID!
   answeredCorrectly: Boolean!
+  solutionViewed: Boolean!
 }
 
 type AssessmentInfoSubscriptionPayload {
@@ -137,6 +143,7 @@ input AssessmentInfoUpdateInput {
   user: UserUpdateOneRequiredWithoutAssessmentInfosInput
   assessment: AssessmentUpdateOneRequiredInput
   answeredCorrectly: Boolean
+  solutionViewed: Boolean
 }
 
 input AssessmentInfoUpdateManyWithoutUserInput {
@@ -151,6 +158,7 @@ input AssessmentInfoUpdateManyWithoutUserInput {
 input AssessmentInfoUpdateWithoutUserDataInput {
   assessment: AssessmentUpdateOneRequiredInput
   answeredCorrectly: Boolean
+  solutionViewed: Boolean
 }
 
 input AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
@@ -183,6 +191,8 @@ input AssessmentInfoWhereInput {
   assessment: AssessmentWhereInput
   answeredCorrectly: Boolean
   answeredCorrectly_not: Boolean
+  solutionViewed: Boolean
+  solutionViewed_not: Boolean
   AND: [AssessmentInfoWhereInput!]
   OR: [AssessmentInfoWhereInput!]
   NOT: [AssessmentInfoWhereInput!]

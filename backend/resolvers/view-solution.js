@@ -1,7 +1,7 @@
 import { prisma } from '../lambda.js';
 import jwt from 'jsonwebtoken';
 
-export async function checkAnswer(parent, args, context, info) {
+export async function viewSolution(parent, args, context, info) {
     try {
         const token = context.event.headers['authorization'].replace('Bearer ', '');
         const payload = getPayload(token, 'secret');
@@ -18,20 +18,20 @@ export async function checkAnswer(parent, args, context, info) {
                     assessment {
                         id
                     }
-                    answeredCorrectly
+                    solutionViewed
                 }
             }
         `);
         const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
 
         if (assessmentInfo) {
-            if (assessmentInfo.answeredCorrectly === false && args.correct === true) {
+            if (assessmentInfo.solutionViewed === false) {
                 await prisma.mutation.updateAssessmentInfo({
                     where: {
                         id: assessmentInfo.id
                     },
                     data: {
-                        answeredCorrectly: args.correct
+                        solutionViewed: true
                     }
                 });
             }
@@ -49,13 +49,13 @@ export async function checkAnswer(parent, args, context, info) {
                             id: args.assessmentId
                         }
                     },
-                    answeredCorrectly: args.correct,
-                    solutionViewed: false
+                    answeredCorrectly: false,
+                    solutionViewed: true
                 }
             });
         }
 
-        const tokenReward = calculateTokenReward(assessmentInfo, args.correct);
+        const tokenReward = calculateTokenReward(assessmentInfo);
 
         if (tokenReward !== 0) {
             await prisma.mutation.createTokenTransaction({
@@ -66,7 +66,7 @@ export async function checkAnswer(parent, args, context, info) {
                         }
                     },
                     amount: tokenReward,
-                    type: args.correct ? 'ANSWER_CORRECT' : 'ANSWER_INCORRECT'
+                    type: 'VIEW_SOLUTION'
                 }
             });
 
@@ -81,8 +81,7 @@ export async function checkAnswer(parent, args, context, info) {
         }
 
         return {
-            allowed: user.tokens >= 2,
-            correct: args.correct,
+            allowed: user.tokens >= 1,
             tokenReward
         };
     }
@@ -102,16 +101,6 @@ function getPayload(token, secret) {
     }
 }
 
-function calculateTokenReward(assessmentInfo, correct) {
-    if (assessmentInfo) {
-        if (assessmentInfo.answeredCorrectly) {
-            return 0;
-        }
-        else {
-            return correct ? 1 : 0;
-        }
-    }
-    else {
-        return correct ? 1 : -2;
-    }
+function calculateTokenReward(assessmentInfo) {
+    return assessmentInfo && assessmentInfo.solutionViewed ? 0 : -1;
 }

@@ -7,6 +7,7 @@ import {
 } from '../services/constants';
 import { request } from '../services/graphql';
 import './jp-button';
+import page from 'page';
 
 class JPSignup extends HTMLElement {
     connectedCallback() {

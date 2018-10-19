@@ -50,4 +50,5 @@ type AssessmentInfo {
   user: User!
   assessment: Assessment!
   answeredCorrectly: Boolean!
+  solutionViewed: Boolean!
 }

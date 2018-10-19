@@ -4,6 +4,7 @@ import { typeDefs } from './generated/prisma/prisma-schema.js';
 import { signup } from './resolvers/signup.js';
 import { login } from './resolvers/login.js';
 import { checkAnswer } from './resolvers/check-answer.js';
+import { viewSolution } from './resolvers/view-solution.js';
 import { mergeTypes } from 'merge-graphql-schemas';
 import { dataopsTypeDefs } from './dataops.js';
 
@@ -23,7 +24,8 @@ const resolvers = {
         ...preparedTopLevelMutationResolvers,
         signup,
         login,
-        checkAnswer
+        checkAnswer,
+        viewSolution
     }
 };
 
