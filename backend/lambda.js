@@ -11,8 +11,10 @@ import { dataopsTypeDefs } from './dataops.js';
 export const prisma = new Prisma({
     typeDefs,
     endpoint: process.env.AWS_REGION ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466',
-    secret: process.env['PRISMA_SERVER_SECRET']
+    secret: 'secret'
 });
+
+console.log(process.env.PRISMA_SERVER_SECRET);
 
 const preparedTopLevelQueryResolvers = prepareTopLevelResolvers(prisma.query);
 const preparedTopLevelMutationResolvers = prepareTopLevelResolvers(prisma.mutation);
@@ -46,7 +48,10 @@ const lambda = new GraphQLServerLambda({
     }
 });
 
-export const handler = lambda.handler;
+export const handler = (() => {
+    console.log(process.env.PRISMA_SERVER_SECRET);
+    return lambda.handler;
+})();
 
 function prepareTopLevelResolvers(resolverObject) {
     return Object.entries(resolverObject).reduce((result, entry) => {
