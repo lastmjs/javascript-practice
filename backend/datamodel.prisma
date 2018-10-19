@@ -5,6 +5,7 @@ type User {
   email: String! @unique
   password: String!
   tokens: Int! @default(value: 50)
+  assessmentInfos: [AssessmentInfo!]!
 }
 
 type Course {
@@ -28,4 +29,25 @@ type Assessment {
   assessML: String!
   javaScript: String!
   order: Int!
+}
+
+type TokenTransaction {
+  id: ID! @unique
+  user: User!
+  amount: Int!
+  type: TokenTransactionType!
+}
+
+enum TokenTransactionType {
+  ANSWER_CORRECT
+  ANSWER_INCORRECT
+  VIEW_SOLUTION
+  EXERCISE_CREATED_AND_ACCEPTED
+}
+
+type AssessmentInfo {
+  id: ID! @unique
+  user: User!
+  assessment: Assessment!
+  answeredCorrectly: Boolean!
 }

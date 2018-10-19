@@ -12,8 +12,10 @@ type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 
 export interface Exists {
   assessment: (where?: AssessmentWhereInput) => Promise<boolean>;
+  assessmentInfo: (where?: AssessmentInfoWhereInput) => Promise<boolean>;
   concept: (where?: ConceptWhereInput) => Promise<boolean>;
   course: (where?: CourseWhereInput) => Promise<boolean>;
+  tokenTransaction: (where?: TokenTransactionWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -60,6 +62,29 @@ export interface Prisma {
       last?: Int;
     }
   ) => AssessmentConnection;
+  assessmentInfo: (where: AssessmentInfoWhereUniqueInput) => AssessmentInfo;
+  assessmentInfoes: (
+    args?: {
+      where?: AssessmentInfoWhereInput;
+      orderBy?: AssessmentInfoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<AssessmentInfoNode>;
+  assessmentInfoesConnection: (
+    args?: {
+      where?: AssessmentInfoWhereInput;
+      orderBy?: AssessmentInfoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => AssessmentInfoConnection;
   concept: (where: ConceptWhereUniqueInput) => Concept;
   concepts: (
     args?: {
@@ -106,6 +131,31 @@ export interface Prisma {
       last?: Int;
     }
   ) => CourseConnection;
+  tokenTransaction: (
+    where: TokenTransactionWhereUniqueInput
+  ) => TokenTransaction;
+  tokenTransactions: (
+    args?: {
+      where?: TokenTransactionWhereInput;
+      orderBy?: TokenTransactionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<TokenTransactionNode>;
+  tokenTransactionsConnection: (
+    args?: {
+      where?: TokenTransactionWhereInput;
+      orderBy?: TokenTransactionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => TokenTransactionConnection;
   user: (where: UserWhereUniqueInput) => User;
   users: (
     args?: {
@@ -151,6 +201,29 @@ export interface Prisma {
   ) => Assessment;
   deleteAssessment: (where: AssessmentWhereUniqueInput) => Assessment;
   deleteManyAssessments: (where?: AssessmentWhereInput) => BatchPayload;
+  createAssessmentInfo: (data: AssessmentInfoCreateInput) => AssessmentInfo;
+  updateAssessmentInfo: (
+    args: {
+      data: AssessmentInfoUpdateInput;
+      where: AssessmentInfoWhereUniqueInput;
+    }
+  ) => AssessmentInfo;
+  updateManyAssessmentInfoes: (
+    args: { data: AssessmentInfoUpdateInput; where?: AssessmentInfoWhereInput }
+  ) => BatchPayload;
+  upsertAssessmentInfo: (
+    args: {
+      where: AssessmentInfoWhereUniqueInput;
+      create: AssessmentInfoCreateInput;
+      update: AssessmentInfoUpdateInput;
+    }
+  ) => AssessmentInfo;
+  deleteAssessmentInfo: (
+    where: AssessmentInfoWhereUniqueInput
+  ) => AssessmentInfo;
+  deleteManyAssessmentInfoes: (
+    where?: AssessmentInfoWhereInput
+  ) => BatchPayload;
   createConcept: (data: ConceptCreateInput) => Concept;
   updateConcept: (
     args: { data: ConceptUpdateInput; where: ConceptWhereUniqueInput }
@@ -183,6 +256,34 @@ export interface Prisma {
   ) => Course;
   deleteCourse: (where: CourseWhereUniqueInput) => Course;
   deleteManyCourses: (where?: CourseWhereInput) => BatchPayload;
+  createTokenTransaction: (
+    data: TokenTransactionCreateInput
+  ) => TokenTransaction;
+  updateTokenTransaction: (
+    args: {
+      data: TokenTransactionUpdateInput;
+      where: TokenTransactionWhereUniqueInput;
+    }
+  ) => TokenTransaction;
+  updateManyTokenTransactions: (
+    args: {
+      data: TokenTransactionUpdateInput;
+      where?: TokenTransactionWhereInput;
+    }
+  ) => BatchPayload;
+  upsertTokenTransaction: (
+    args: {
+      where: TokenTransactionWhereUniqueInput;
+      create: TokenTransactionCreateInput;
+      update: TokenTransactionUpdateInput;
+    }
+  ) => TokenTransaction;
+  deleteTokenTransaction: (
+    where: TokenTransactionWhereUniqueInput
+  ) => TokenTransaction;
+  deleteManyTokenTransactions: (
+    where?: TokenTransactionWhereInput
+  ) => BatchPayload;
   createUser: (data: UserCreateInput) => User;
   updateUser: (
     args: { data: UserUpdateInput; where: UserWhereUniqueInput }
@@ -211,12 +312,18 @@ export interface Subscription {
   assessment: (
     where?: AssessmentSubscriptionWhereInput
   ) => AssessmentSubscriptionPayloadSubscription;
+  assessmentInfo: (
+    where?: AssessmentInfoSubscriptionWhereInput
+  ) => AssessmentInfoSubscriptionPayloadSubscription;
   concept: (
     where?: ConceptSubscriptionWhereInput
   ) => ConceptSubscriptionPayloadSubscription;
   course: (
     where?: CourseSubscriptionWhereInput
   ) => CourseSubscriptionPayloadSubscription;
+  tokenTransaction: (
+    where?: TokenTransactionSubscriptionWhereInput
+  ) => TokenTransactionSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -256,6 +363,18 @@ export type AssessmentOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type AssessmentInfoOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "answeredCorrectly_ASC"
+  | "answeredCorrectly_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type CourseOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -263,6 +382,24 @@ export type CourseOrderByInput =
   | "title_DESC"
   | "order_ASC"
   | "order_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type TokenTransactionType =
+  | "ANSWER_CORRECT"
+  | "ANSWER_INCORRECT"
+  | "VIEW_SOLUTION"
+  | "EXERCISE_CREATED_AND_ACCEPTED";
+
+export type TokenTransactionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "type_ASC"
+  | "type_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -282,72 +419,30 @@ export type UserOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export interface ConceptUpdateWithWhereUniqueWithoutCourseInput {
+  where: ConceptWhereUniqueInput;
+  data: ConceptUpdateWithoutCourseDataInput;
+}
 
-export interface AssessmentUpdateInput {
-  concept?: ConceptUpdateOneRequiredWithoutAssessmentsInput;
+export interface AssessmentUpdateWithoutConceptDataInput {
   assessML?: String;
   javaScript?: String;
   order?: Int;
+}
+
+export interface ConceptCreateWithoutCourseInput {
+  title: String;
+  assessments?: AssessmentCreateManyWithoutConceptInput;
+  order: Int;
 }
 
 export type AssessmentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface CourseUpdateWithoutConceptsDataInput {
-  title?: String;
-  order?: Int;
-}
-
-export interface CourseWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  concepts_every?: ConceptWhereInput;
-  concepts_some?: ConceptWhereInput;
-  concepts_none?: ConceptWhereInput;
-  order?: Int;
-  order_not?: Int;
-  order_in?: Int[] | Int;
-  order_not_in?: Int[] | Int;
-  order_lt?: Int;
-  order_lte?: Int;
-  order_gt?: Int;
-  order_gte?: Int;
-  AND?: CourseWhereInput[] | CourseWhereInput;
-  OR?: CourseWhereInput[] | CourseWhereInput;
-  NOT?: CourseWhereInput[] | CourseWhereInput;
-}
-
-export interface CourseUpsertWithoutConceptsInput {
-  update: CourseUpdateWithoutConceptsDataInput;
-  create: CourseCreateWithoutConceptsInput;
+export interface ConceptCreateManyWithoutCourseInput {
+  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
+  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
 }
 
 export interface AssessmentWhereInput {
@@ -407,47 +502,6 @@ export interface AssessmentWhereInput {
   NOT?: AssessmentWhereInput[] | AssessmentWhereInput;
 }
 
-export interface CourseCreateInput {
-  title: String;
-  concepts?: ConceptCreateManyWithoutCourseInput;
-  order: Int;
-}
-
-export interface ConceptCreateInput {
-  title: String;
-  course: CourseCreateOneWithoutConceptsInput;
-  assessments?: AssessmentCreateManyWithoutConceptInput;
-  order: Int;
-}
-
-export interface AssessmentUpsertWithWhereUniqueWithoutConceptInput {
-  where: AssessmentWhereUniqueInput;
-  update: AssessmentUpdateWithoutConceptDataInput;
-  create: AssessmentCreateWithoutConceptInput;
-}
-
-export interface ConceptUpsertWithoutAssessmentsInput {
-  update: ConceptUpdateWithoutAssessmentsDataInput;
-  create: ConceptCreateWithoutAssessmentsInput;
-}
-
-export interface AssessmentUpdateWithoutConceptDataInput {
-  assessML?: String;
-  javaScript?: String;
-  order?: Int;
-}
-
-export interface CourseSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CourseWhereInput;
-  AND?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
-  OR?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
-  NOT?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
-}
-
 export interface AssessmentSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -459,10 +513,9 @@ export interface AssessmentSubscriptionWhereInput {
   NOT?: AssessmentSubscriptionWhereInput[] | AssessmentSubscriptionWhereInput;
 }
 
-export interface UserUpdateInput {
-  email?: String;
-  password?: String;
-  tokens?: Int;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
 export interface AssessmentCreateInput {
@@ -472,54 +525,23 @@ export interface AssessmentCreateInput {
   order: Int;
 }
 
-export interface ConceptUpsertWithWhereUniqueWithoutCourseInput {
-  where: ConceptWhereUniqueInput;
-  update: ConceptUpdateWithoutCourseDataInput;
-  create: ConceptCreateWithoutCourseInput;
-}
+export type AssessmentInfoWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface ConceptCreateOneWithoutAssessmentsInput {
   create?: ConceptCreateWithoutAssessmentsInput;
   connect?: ConceptWhereUniqueInput;
 }
 
-export interface ConceptUpdateWithoutCourseDataInput {
-  title?: String;
-  assessments?: AssessmentUpdateManyWithoutConceptInput;
-  order?: Int;
+export interface AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
+  where: AssessmentInfoWhereUniqueInput;
+  data: AssessmentInfoUpdateWithoutUserDataInput;
 }
 
 export interface ConceptCreateWithoutAssessmentsInput {
   title: String;
   course: CourseCreateOneWithoutConceptsInput;
-  order: Int;
-}
-
-export interface ConceptUpdateManyWithoutCourseInput {
-  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
-  delete?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-  disconnect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-  update?:
-    | ConceptUpdateWithWhereUniqueWithoutCourseInput[]
-    | ConceptUpdateWithWhereUniqueWithoutCourseInput;
-  upsert?:
-    | ConceptUpsertWithWhereUniqueWithoutCourseInput[]
-    | ConceptUpsertWithWhereUniqueWithoutCourseInput;
-}
-
-export interface CourseCreateOneWithoutConceptsInput {
-  create?: CourseCreateWithoutConceptsInput;
-  connect?: CourseWhereUniqueInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface CourseCreateWithoutConceptsInput {
-  title: String;
   order: Int;
 }
 
@@ -574,25 +596,59 @@ export interface UserWhereInput {
   tokens_lte?: Int;
   tokens_gt?: Int;
   tokens_gte?: Int;
+  assessmentInfos_every?: AssessmentInfoWhereInput;
+  assessmentInfos_some?: AssessmentInfoWhereInput;
+  assessmentInfos_none?: AssessmentInfoWhereInput;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface AssessmentUpdateWithWhereUniqueWithoutConceptInput {
-  where: AssessmentWhereUniqueInput;
-  data: AssessmentUpdateWithoutConceptDataInput;
+export interface CourseCreateOneWithoutConceptsInput {
+  create?: CourseCreateWithoutConceptsInput;
+  connect?: CourseWhereUniqueInput;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+export interface AssessmentInfoUpdateManyWithoutUserInput {
+  create?:
+    | AssessmentInfoCreateWithoutUserInput[]
+    | AssessmentInfoCreateWithoutUserInput;
+  delete?: AssessmentInfoWhereUniqueInput[] | AssessmentInfoWhereUniqueInput;
+  connect?: AssessmentInfoWhereUniqueInput[] | AssessmentInfoWhereUniqueInput;
+  disconnect?:
+    | AssessmentInfoWhereUniqueInput[]
+    | AssessmentInfoWhereUniqueInput;
+  update?:
+    | AssessmentInfoUpdateWithWhereUniqueWithoutUserInput[]
+    | AssessmentInfoUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | AssessmentInfoUpsertWithWhereUniqueWithoutUserInput[]
+    | AssessmentInfoUpsertWithWhereUniqueWithoutUserInput;
+}
+
+export interface CourseCreateWithoutConceptsInput {
+  title: String;
+  order: Int;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface AssessmentUpdateInput {
+  concept?: ConceptUpdateOneRequiredWithoutAssessmentsInput;
+  assessML?: String;
+  javaScript?: String;
+  order?: Int;
+}
+
+export interface TokenTransactionUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  amount?: Int;
+  type?: TokenTransactionType;
 }
 
 export interface ConceptUpdateOneRequiredWithoutAssessmentsInput {
@@ -602,70 +658,16 @@ export interface ConceptUpdateOneRequiredWithoutAssessmentsInput {
   connect?: ConceptWhereUniqueInput;
 }
 
-export type ConceptWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface AssessmentInfoCreateManyWithoutUserInput {
+  create?:
+    | AssessmentInfoCreateWithoutUserInput[]
+    | AssessmentInfoCreateWithoutUserInput;
+  connect?: AssessmentInfoWhereUniqueInput[] | AssessmentInfoWhereUniqueInput;
+}
 
 export interface ConceptUpdateWithoutAssessmentsDataInput {
   title?: String;
   course?: CourseUpdateOneRequiredWithoutConceptsInput;
-  order?: Int;
-}
-
-export type CourseWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface CourseUpdateOneRequiredWithoutConceptsInput {
-  create?: CourseCreateWithoutConceptsInput;
-  update?: CourseUpdateWithoutConceptsDataInput;
-  upsert?: CourseUpsertWithoutConceptsInput;
-  connect?: CourseWhereUniqueInput;
-}
-
-export interface CourseUpdateInput {
-  title?: String;
-  concepts?: ConceptUpdateManyWithoutCourseInput;
-  order?: Int;
-}
-
-export interface AssessmentUpdateManyWithoutConceptInput {
-  create?:
-    | AssessmentCreateWithoutConceptInput[]
-    | AssessmentCreateWithoutConceptInput;
-  delete?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-  disconnect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-  update?:
-    | AssessmentUpdateWithWhereUniqueWithoutConceptInput[]
-    | AssessmentUpdateWithWhereUniqueWithoutConceptInput;
-  upsert?:
-    | AssessmentUpsertWithWhereUniqueWithoutConceptInput[]
-    | AssessmentUpsertWithWhereUniqueWithoutConceptInput;
-}
-
-export interface ConceptCreateManyWithoutCourseInput {
-  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
-  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-}
-
-export interface AssessmentCreateManyWithoutConceptInput {
-  create?:
-    | AssessmentCreateWithoutConceptInput[]
-    | AssessmentCreateWithoutConceptInput;
-  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-}
-
-export interface AssessmentCreateWithoutConceptInput {
-  assessML: String;
-  javaScript: String;
-  order: Int;
-}
-
-export interface ConceptUpdateInput {
-  title?: String;
-  course?: CourseUpdateOneRequiredWithoutConceptsInput;
-  assessments?: AssessmentUpdateManyWithoutConceptInput;
   order?: Int;
 }
 
@@ -715,6 +717,32 @@ export interface ConceptWhereInput {
   NOT?: ConceptWhereInput[] | ConceptWhereInput;
 }
 
+export interface CourseUpdateOneRequiredWithoutConceptsInput {
+  create?: CourseCreateWithoutConceptsInput;
+  update?: CourseUpdateWithoutConceptsDataInput;
+  upsert?: CourseUpsertWithoutConceptsInput;
+  connect?: CourseWhereUniqueInput;
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface CourseUpdateWithoutConceptsDataInput {
+  title?: String;
+  order?: Int;
+}
+
+export type TokenTransactionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CourseUpsertWithoutConceptsInput {
+  update: CourseUpdateWithoutConceptsDataInput;
+  create: CourseCreateWithoutConceptsInput;
+}
+
 export interface ConceptSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -726,25 +754,414 @@ export interface ConceptSubscriptionWhereInput {
   NOT?: ConceptSubscriptionWhereInput[] | ConceptSubscriptionWhereInput;
 }
 
-export interface ConceptCreateWithoutCourseInput {
+export interface ConceptUpsertWithoutAssessmentsInput {
+  update: ConceptUpdateWithoutAssessmentsDataInput;
+  create: ConceptCreateWithoutAssessmentsInput;
+}
+
+export interface CourseSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CourseWhereInput;
+  AND?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
+  OR?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
+  NOT?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
+}
+
+export interface CourseCreateInput {
   title: String;
+  concepts?: ConceptCreateManyWithoutCourseInput;
+  order: Int;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface AssessmentUpsertWithWhereUniqueWithoutConceptInput {
+  where: AssessmentWhereUniqueInput;
+  update: AssessmentUpdateWithoutConceptDataInput;
+  create: AssessmentCreateWithoutConceptInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface AssessmentInfoCreateInput {
+  user: UserCreateOneWithoutAssessmentInfosInput;
+  assessment: AssessmentCreateOneInput;
+  answeredCorrectly: Boolean;
+}
+
+export interface CourseUpdateInput {
+  title?: String;
+  concepts?: ConceptUpdateManyWithoutCourseInput;
+  order?: Int;
+}
+
+export interface UserCreateOneWithoutAssessmentInfosInput {
+  create?: UserCreateWithoutAssessmentInfosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateInput {
+  email?: String;
+  password?: String;
+  tokens?: Int;
+  assessmentInfos?: AssessmentInfoUpdateManyWithoutUserInput;
+}
+
+export interface UserCreateWithoutAssessmentInfosInput {
+  email: String;
+  password: String;
+  tokens?: Int;
+}
+
+export interface AssessmentInfoUpdateWithoutUserDataInput {
+  assessment?: AssessmentUpdateOneRequiredInput;
+  answeredCorrectly?: Boolean;
+}
+
+export interface AssessmentCreateOneInput {
+  create?: AssessmentCreateInput;
+  connect?: AssessmentWhereUniqueInput;
+}
+
+export interface CourseWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  concepts_every?: ConceptWhereInput;
+  concepts_some?: ConceptWhereInput;
+  concepts_none?: ConceptWhereInput;
+  order?: Int;
+  order_not?: Int;
+  order_in?: Int[] | Int;
+  order_not_in?: Int[] | Int;
+  order_lt?: Int;
+  order_lte?: Int;
+  order_gt?: Int;
+  order_gte?: Int;
+  AND?: CourseWhereInput[] | CourseWhereInput;
+  OR?: CourseWhereInput[] | CourseWhereInput;
+  NOT?: CourseWhereInput[] | CourseWhereInput;
+}
+
+export interface AssessmentInfoUpdateInput {
+  user?: UserUpdateOneRequiredWithoutAssessmentInfosInput;
+  assessment?: AssessmentUpdateOneRequiredInput;
+  answeredCorrectly?: Boolean;
+}
+
+export type ConceptWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateOneRequiredWithoutAssessmentInfosInput {
+  create?: UserCreateWithoutAssessmentInfosInput;
+  update?: UserUpdateWithoutAssessmentInfosDataInput;
+  upsert?: UserUpsertWithoutAssessmentInfosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export type CourseWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateWithoutAssessmentInfosDataInput {
+  email?: String;
+  password?: String;
+  tokens?: Int;
+}
+
+export interface TokenTransactionCreateInput {
+  user: UserCreateOneInput;
+  amount: Int;
+  type: TokenTransactionType;
+}
+
+export interface UserUpsertWithoutAssessmentInfosInput {
+  update: UserUpdateWithoutAssessmentInfosDataInput;
+  create: UserCreateWithoutAssessmentInfosInput;
+}
+
+export interface TokenTransactionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  user?: UserWhereInput;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  type?: TokenTransactionType;
+  type_not?: TokenTransactionType;
+  type_in?: TokenTransactionType[] | TokenTransactionType;
+  type_not_in?: TokenTransactionType[] | TokenTransactionType;
+  AND?: TokenTransactionWhereInput[] | TokenTransactionWhereInput;
+  OR?: TokenTransactionWhereInput[] | TokenTransactionWhereInput;
+  NOT?: TokenTransactionWhereInput[] | TokenTransactionWhereInput;
+}
+
+export interface AssessmentUpdateOneRequiredInput {
+  create?: AssessmentCreateInput;
+  update?: AssessmentUpdateDataInput;
+  upsert?: AssessmentUpsertNestedInput;
+  connect?: AssessmentWhereUniqueInput;
+}
+
+export interface ConceptUpdateManyWithoutCourseInput {
+  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
+  delete?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+  disconnect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+  update?:
+    | ConceptUpdateWithWhereUniqueWithoutCourseInput[]
+    | ConceptUpdateWithWhereUniqueWithoutCourseInput;
+  upsert?:
+    | ConceptUpsertWithWhereUniqueWithoutCourseInput[]
+    | ConceptUpsertWithWhereUniqueWithoutCourseInput;
+}
+
+export interface AssessmentUpdateDataInput {
+  concept?: ConceptUpdateOneRequiredWithoutAssessmentsInput;
+  assessML?: String;
+  javaScript?: String;
+  order?: Int;
+}
+
+export interface AssessmentInfoSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: AssessmentInfoWhereInput;
+  AND?:
+    | AssessmentInfoSubscriptionWhereInput[]
+    | AssessmentInfoSubscriptionWhereInput;
+  OR?:
+    | AssessmentInfoSubscriptionWhereInput[]
+    | AssessmentInfoSubscriptionWhereInput;
+  NOT?:
+    | AssessmentInfoSubscriptionWhereInput[]
+    | AssessmentInfoSubscriptionWhereInput;
+}
+
+export interface AssessmentUpsertNestedInput {
+  update: AssessmentUpdateDataInput;
+  create: AssessmentCreateInput;
+}
+
+export interface AssessmentInfoWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  user?: UserWhereInput;
+  assessment?: AssessmentWhereInput;
+  answeredCorrectly?: Boolean;
+  answeredCorrectly_not?: Boolean;
+  AND?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
+  OR?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
+  NOT?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
+}
+
+export interface ConceptCreateInput {
+  title: String;
+  course: CourseCreateOneWithoutConceptsInput;
   assessments?: AssessmentCreateManyWithoutConceptInput;
   order: Int;
 }
 
-export interface ConceptUpdateWithWhereUniqueWithoutCourseInput {
+export interface AssessmentInfoCreateWithoutUserInput {
+  assessment: AssessmentCreateOneInput;
+  answeredCorrectly: Boolean;
+}
+
+export interface AssessmentCreateManyWithoutConceptInput {
+  create?:
+    | AssessmentCreateWithoutConceptInput[]
+    | AssessmentCreateWithoutConceptInput;
+  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+}
+
+export interface ConceptUpsertWithWhereUniqueWithoutCourseInput {
   where: ConceptWhereUniqueInput;
-  data: ConceptUpdateWithoutCourseDataInput;
+  update: ConceptUpdateWithoutCourseDataInput;
+  create: ConceptCreateWithoutCourseInput;
+}
+
+export interface AssessmentUpdateWithWhereUniqueWithoutConceptInput {
+  where: AssessmentWhereUniqueInput;
+  data: AssessmentUpdateWithoutConceptDataInput;
+}
+
+export interface AssessmentUpdateManyWithoutConceptInput {
+  create?:
+    | AssessmentCreateWithoutConceptInput[]
+    | AssessmentCreateWithoutConceptInput;
+  delete?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+  disconnect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+  update?:
+    | AssessmentUpdateWithWhereUniqueWithoutConceptInput[]
+    | AssessmentUpdateWithWhereUniqueWithoutConceptInput;
+  upsert?:
+    | AssessmentUpsertWithWhereUniqueWithoutConceptInput[]
+    | AssessmentUpsertWithWhereUniqueWithoutConceptInput;
+}
+
+export interface ConceptUpdateInput {
+  title?: String;
+  course?: CourseUpdateOneRequiredWithoutConceptsInput;
+  assessments?: AssessmentUpdateManyWithoutConceptInput;
+  order?: Int;
+}
+
+export interface AssessmentCreateWithoutConceptInput {
+  assessML: String;
+  javaScript: String;
+  order: Int;
+}
+
+export interface ConceptUpdateWithoutCourseDataInput {
+  title?: String;
+  assessments?: AssessmentUpdateManyWithoutConceptInput;
+  order?: Int;
 }
 
 export interface UserCreateInput {
   email: String;
   password: String;
   tokens?: Int;
+  assessmentInfos?: AssessmentInfoCreateManyWithoutUserInput;
+}
+
+export interface UserUpdateDataInput {
+  email?: String;
+  password?: String;
+  tokens?: Int;
+  assessmentInfos?: AssessmentInfoUpdateManyWithoutUserInput;
+}
+
+export interface AssessmentInfoUpsertWithWhereUniqueWithoutUserInput {
+  where: AssessmentInfoWhereUniqueInput;
+  update: AssessmentInfoUpdateWithoutUserDataInput;
+  create: AssessmentInfoCreateWithoutUserInput;
+}
+
+export interface TokenTransactionSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TokenTransactionWhereInput;
+  AND?:
+    | TokenTransactionSubscriptionWhereInput[]
+    | TokenTransactionSubscriptionWhereInput;
+  OR?:
+    | TokenTransactionSubscriptionWhereInput[]
+    | TokenTransactionSubscriptionWhereInput;
+  NOT?:
+    | TokenTransactionSubscriptionWhereInput[]
+    | TokenTransactionSubscriptionWhereInput;
 }
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface BatchPayloadNode {
+  count: Long;
+}
+
+export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayloadNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AssessmentEdgeNode {
+  cursor: String;
+}
+
+export interface AssessmentEdge
+  extends Promise<AssessmentEdgeNode>,
+    Fragmentable {
+  node: <T = Assessment>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AssessmentEdgeSubscription
+  extends Promise<AsyncIterator<AssessmentEdgeNode>>,
+    Fragmentable {
+  node: <T = AssessmentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserPreviousValuesNode {
@@ -772,6 +1189,257 @@ export interface UserPreviousValuesSubscription
   tokens: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface AggregateAssessmentNode {
+  count: Int;
+}
+
+export interface AggregateAssessment
+  extends Promise<AggregateAssessmentNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAssessmentSubscription
+  extends Promise<AsyncIterator<AggregateAssessmentNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TokenTransactionSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface TokenTransactionSubscriptionPayload
+  extends Promise<TokenTransactionSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TokenTransaction>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TokenTransactionPreviousValues>() => T;
+}
+
+export interface TokenTransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TokenTransactionSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TokenTransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TokenTransactionPreviousValuesSubscription>() => T;
+}
+
+export interface UserSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface UserSubscriptionPayload
+  extends Promise<UserSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = User>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValues>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateUserNode {
+  count: Int;
+}
+
+export interface AggregateUser
+  extends Promise<AggregateUserNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUserNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserEdgeNode {
+  cursor: String;
+}
+
+export interface UserEdge extends Promise<UserEdgeNode>, Fragmentable {
+  node: <T = User>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdgeNode>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTokenTransactionNode {
+  count: Int;
+}
+
+export interface AggregateTokenTransaction
+  extends Promise<AggregateTokenTransactionNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTokenTransactionSubscription
+  extends Promise<AsyncIterator<AggregateTokenTransactionNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PageInfoNode {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfoNode>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TokenTransactionConnectionNode {}
+
+export interface TokenTransactionConnection
+  extends Promise<TokenTransactionConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<TokenTransactionEdgeNode>>() => T;
+  aggregate: <T = AggregateTokenTransaction>() => T;
+}
+
+export interface TokenTransactionConnectionSubscription
+  extends Promise<AsyncIterator<TokenTransactionConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TokenTransactionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTokenTransactionSubscription>() => T;
+}
+
+export interface AssessmentConnectionNode {}
+
+export interface AssessmentConnection
+  extends Promise<AssessmentConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<AssessmentEdgeNode>>() => T;
+  aggregate: <T = AggregateAssessment>() => T;
+}
+
+export interface AssessmentConnectionSubscription
+  extends Promise<AsyncIterator<AssessmentConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AssessmentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAssessmentSubscription>() => T;
+}
+
+export interface AggregateCourseNode {
+  count: Int;
+}
+
+export interface AggregateCourse
+  extends Promise<AggregateCourseNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCourseSubscription
+  extends Promise<AsyncIterator<AggregateCourseNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AssessmentSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface AssessmentSubscriptionPayload
+  extends Promise<AssessmentSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Assessment>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AssessmentPreviousValues>() => T;
+}
+
+export interface AssessmentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AssessmentSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AssessmentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AssessmentPreviousValuesSubscription>() => T;
+}
+
+export interface CourseConnectionNode {}
+
+export interface CourseConnection
+  extends Promise<CourseConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<CourseEdgeNode>>() => T;
+  aggregate: <T = AggregateCourse>() => T;
+}
+
+export interface CourseConnectionSubscription
+  extends Promise<AsyncIterator<CourseConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CourseEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCourseSubscription>() => T;
+}
+
+export interface AssessmentPreviousValuesNode {
+  id: ID_Output;
+  assessML: String;
+  javaScript: String;
+  order: Int;
+}
+
+export interface AssessmentPreviousValues
+  extends Promise<AssessmentPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  assessML: () => Promise<String>;
+  javaScript: () => Promise<String>;
+  order: () => Promise<Int>;
+}
+
+export interface AssessmentPreviousValuesSubscription
+  extends Promise<AsyncIterator<AssessmentPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  assessML: () => Promise<AsyncIterator<String>>;
+  javaScript: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface ConceptEdgeNode {
   cursor: String;
 }
@@ -786,6 +1454,130 @@ export interface ConceptEdgeSubscription
     Fragmentable {
   node: <T = ConceptSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AssessmentNode {
+  id: ID_Output;
+  assessML: String;
+  javaScript: String;
+  order: Int;
+}
+
+export interface Assessment extends Promise<AssessmentNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  concept: <T = Concept>() => T;
+  assessML: () => Promise<String>;
+  javaScript: () => Promise<String>;
+  order: () => Promise<Int>;
+}
+
+export interface AssessmentSubscription
+  extends Promise<AsyncIterator<AssessmentNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  concept: <T = ConceptSubscription>() => T;
+  assessML: () => Promise<AsyncIterator<String>>;
+  javaScript: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateAssessmentInfoNode {
+  count: Int;
+}
+
+export interface AggregateAssessmentInfo
+  extends Promise<AggregateAssessmentInfoNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAssessmentInfoSubscription
+  extends Promise<AsyncIterator<AggregateAssessmentInfoNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AssessmentInfoSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface AssessmentInfoSubscriptionPayload
+  extends Promise<AssessmentInfoSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AssessmentInfo>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AssessmentInfoPreviousValues>() => T;
+}
+
+export interface AssessmentInfoSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AssessmentInfoSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AssessmentInfoSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AssessmentInfoPreviousValuesSubscription>() => T;
+}
+
+export interface AssessmentInfoConnectionNode {}
+
+export interface AssessmentInfoConnection
+  extends Promise<AssessmentInfoConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<AssessmentInfoEdgeNode>>() => T;
+  aggregate: <T = AggregateAssessmentInfo>() => T;
+}
+
+export interface AssessmentInfoConnectionSubscription
+  extends Promise<AsyncIterator<AssessmentInfoConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AssessmentInfoEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAssessmentInfoSubscription>() => T;
+}
+
+export interface AssessmentInfoPreviousValuesNode {
+  id: ID_Output;
+  answeredCorrectly: Boolean;
+}
+
+export interface AssessmentInfoPreviousValues
+  extends Promise<AssessmentInfoPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  answeredCorrectly: () => Promise<Boolean>;
+}
+
+export interface AssessmentInfoPreviousValuesSubscription
+  extends Promise<AsyncIterator<AssessmentInfoPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  answeredCorrectly: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface AssessmentInfoNode {
+  id: ID_Output;
+  answeredCorrectly: Boolean;
+}
+
+export interface AssessmentInfo
+  extends Promise<AssessmentInfoNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = User>() => T;
+  assessment: <T = Assessment>() => T;
+  answeredCorrectly: () => Promise<Boolean>;
+}
+
+export interface AssessmentInfoSubscription
+  extends Promise<AsyncIterator<AssessmentInfoNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = UserSubscription>() => T;
+  assessment: <T = AssessmentSubscription>() => T;
+  answeredCorrectly: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface CourseNode {
@@ -830,345 +1622,22 @@ export interface CourseSubscription
   order: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ConceptConnectionNode {}
-
-export interface ConceptConnection
-  extends Promise<ConceptConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<ConceptEdgeNode>>() => T;
-  aggregate: <T = AggregateConcept>() => T;
-}
-
-export interface ConceptConnectionSubscription
-  extends Promise<AsyncIterator<ConceptConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ConceptEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateConceptSubscription>() => T;
-}
-
-export interface AssessmentConnectionNode {}
-
-export interface AssessmentConnection
-  extends Promise<AssessmentConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<AssessmentEdgeNode>>() => T;
-  aggregate: <T = AggregateAssessment>() => T;
-}
-
-export interface AssessmentConnectionSubscription
-  extends Promise<AsyncIterator<AssessmentConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AssessmentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAssessmentSubscription>() => T;
-}
-
-export interface BatchPayloadNode {
-  count: Long;
-}
-
-export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayloadNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface CourseSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface CourseSubscriptionPayload
-  extends Promise<CourseSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Course>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CoursePreviousValues>() => T;
-}
-
-export interface CourseSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CourseSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CourseSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CoursePreviousValuesSubscription>() => T;
-}
-
-export interface PageInfoNode {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfoNode>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateAssessmentNode {
-  count: Int;
-}
-
-export interface AggregateAssessment
-  extends Promise<AggregateAssessmentNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAssessmentSubscription
-  extends Promise<AsyncIterator<AggregateAssessmentNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateUserNode {
-  count: Int;
-}
-
-export interface AggregateUser
-  extends Promise<AggregateUserNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUserNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnectionNode {}
-
-export interface UserConnection
-  extends Promise<UserConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<UserEdgeNode>>() => T;
-  aggregate: <T = AggregateUser>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface AssessmentNode {
-  id: ID_Output;
-  assessML: String;
-  javaScript: String;
-  order: Int;
-}
-
-export interface Assessment extends Promise<AssessmentNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  concept: <T = Concept>() => T;
-  assessML: () => Promise<String>;
-  javaScript: () => Promise<String>;
-  order: () => Promise<Int>;
-}
-
-export interface AssessmentSubscription
-  extends Promise<AsyncIterator<AssessmentNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  concept: <T = ConceptSubscription>() => T;
-  assessML: () => Promise<AsyncIterator<String>>;
-  javaScript: () => Promise<AsyncIterator<String>>;
-  order: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserNode {
-  id: ID_Output;
-  email: String;
-  password: String;
-  tokens: Int;
-}
-
-export interface User extends Promise<UserNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  tokens: () => Promise<Int>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<UserNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  tokens: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AssessmentSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface AssessmentSubscriptionPayload
-  extends Promise<AssessmentSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Assessment>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = AssessmentPreviousValues>() => T;
-}
-
-export interface AssessmentSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<AssessmentSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = AssessmentSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = AssessmentPreviousValuesSubscription>() => T;
-}
-
-export interface CourseEdgeNode {
+export interface TokenTransactionEdgeNode {
   cursor: String;
 }
 
-export interface CourseEdge extends Promise<CourseEdgeNode>, Fragmentable {
-  node: <T = Course>() => T;
+export interface TokenTransactionEdge
+  extends Promise<TokenTransactionEdgeNode>,
+    Fragmentable {
+  node: <T = TokenTransaction>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface CourseEdgeSubscription
-  extends Promise<AsyncIterator<CourseEdgeNode>>,
+export interface TokenTransactionEdgeSubscription
+  extends Promise<AsyncIterator<TokenTransactionEdgeNode>>,
     Fragmentable {
-  node: <T = CourseSubscription>() => T;
+  node: <T = TokenTransactionSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AssessmentPreviousValuesNode {
-  id: ID_Output;
-  assessML: String;
-  javaScript: String;
-  order: Int;
-}
-
-export interface AssessmentPreviousValues
-  extends Promise<AssessmentPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  assessML: () => Promise<String>;
-  javaScript: () => Promise<String>;
-  order: () => Promise<Int>;
-}
-
-export interface AssessmentPreviousValuesSubscription
-  extends Promise<AsyncIterator<AssessmentPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  assessML: () => Promise<AsyncIterator<String>>;
-  javaScript: () => Promise<AsyncIterator<String>>;
-  order: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface UserSubscriptionPayload
-  extends Promise<UserSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = User>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValues>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface UserEdgeNode {
-  cursor: String;
-}
-
-export interface UserEdge extends Promise<UserEdgeNode>, Fragmentable {
-  node: <T = User>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdgeNode>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CoursePreviousValuesNode {
-  id: ID_Output;
-  title: String;
-  order: Int;
-}
-
-export interface CoursePreviousValues
-  extends Promise<CoursePreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  order: () => Promise<Int>;
-}
-
-export interface CoursePreviousValuesSubscription
-  extends Promise<AsyncIterator<CoursePreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  order: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ConceptPreviousValuesNode {
-  id: ID_Output;
-  title: String;
-  order: Int;
-}
-
-export interface ConceptPreviousValues
-  extends Promise<ConceptPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  order: () => Promise<Int>;
-}
-
-export interface ConceptPreviousValuesSubscription
-  extends Promise<AsyncIterator<ConceptPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  order: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ConceptSubscriptionPayloadNode {
@@ -1194,22 +1663,105 @@ export interface ConceptSubscriptionPayloadSubscription
   previousValues: <T = ConceptPreviousValuesSubscription>() => T;
 }
 
-export interface AssessmentEdgeNode {
+export interface CourseEdgeNode {
   cursor: String;
 }
 
-export interface AssessmentEdge
-  extends Promise<AssessmentEdgeNode>,
-    Fragmentable {
-  node: <T = Assessment>() => T;
+export interface CourseEdge extends Promise<CourseEdgeNode>, Fragmentable {
+  node: <T = Course>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface AssessmentEdgeSubscription
-  extends Promise<AsyncIterator<AssessmentEdgeNode>>,
+export interface CourseEdgeSubscription
+  extends Promise<AsyncIterator<CourseEdgeNode>>,
     Fragmentable {
-  node: <T = AssessmentSubscription>() => T;
+  node: <T = CourseSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ConceptPreviousValuesNode {
+  id: ID_Output;
+  title: String;
+  order: Int;
+}
+
+export interface ConceptPreviousValues
+  extends Promise<ConceptPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  order: () => Promise<Int>;
+}
+
+export interface ConceptPreviousValuesSubscription
+  extends Promise<AsyncIterator<ConceptPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ConceptConnectionNode {}
+
+export interface ConceptConnection
+  extends Promise<ConceptConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<ConceptEdgeNode>>() => T;
+  aggregate: <T = AggregateConcept>() => T;
+}
+
+export interface ConceptConnectionSubscription
+  extends Promise<AsyncIterator<ConceptConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ConceptEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateConceptSubscription>() => T;
+}
+
+export interface UserNode {
+  id: ID_Output;
+  email: String;
+  password: String;
+  tokens: Int;
+}
+
+export interface User extends Promise<UserNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  tokens: () => Promise<Int>;
+  assessmentInfos: <T = FragmentableArray<AssessmentInfoNode>>(
+    args?: {
+      where?: AssessmentInfoWhereInput;
+      orderBy?: AssessmentInfoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<UserNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  tokens: () => Promise<AsyncIterator<Int>>;
+  assessmentInfos: <T = Promise<AsyncIterator<AssessmentInfoSubscription>>>(
+    args?: {
+      where?: AssessmentInfoWhereInput;
+      orderBy?: AssessmentInfoOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
 export interface ConceptNode {
@@ -1256,6 +1808,109 @@ export interface ConceptSubscription
   order: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface CoursePreviousValuesNode {
+  id: ID_Output;
+  title: String;
+  order: Int;
+}
+
+export interface CoursePreviousValues
+  extends Promise<CoursePreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  order: () => Promise<Int>;
+}
+
+export interface CoursePreviousValuesSubscription
+  extends Promise<AsyncIterator<CoursePreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CourseSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface CourseSubscriptionPayload
+  extends Promise<CourseSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Course>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CoursePreviousValues>() => T;
+}
+
+export interface CourseSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CourseSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CourseSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CoursePreviousValuesSubscription>() => T;
+}
+
+export interface TokenTransactionPreviousValuesNode {
+  id: ID_Output;
+  amount: Int;
+  type: TokenTransactionType;
+}
+
+export interface TokenTransactionPreviousValues
+  extends Promise<TokenTransactionPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  amount: () => Promise<Int>;
+  type: () => Promise<TokenTransactionType>;
+}
+
+export interface TokenTransactionPreviousValuesSubscription
+  extends Promise<AsyncIterator<TokenTransactionPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  type: () => Promise<AsyncIterator<TokenTransactionType>>;
+}
+
+export interface UserConnectionNode {}
+
+export interface UserConnection
+  extends Promise<UserConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<UserEdgeNode>>() => T;
+  aggregate: <T = AggregateUser>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface AssessmentInfoEdgeNode {
+  cursor: String;
+}
+
+export interface AssessmentInfoEdge
+  extends Promise<AssessmentInfoEdgeNode>,
+    Fragmentable {
+  node: <T = AssessmentInfo>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AssessmentInfoEdgeSubscription
+  extends Promise<AsyncIterator<AssessmentInfoEdgeNode>>,
+    Fragmentable {
+  node: <T = AssessmentInfoSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface AggregateConceptNode {
   count: Int;
 }
@@ -1272,39 +1927,34 @@ export interface AggregateConceptSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface CourseConnectionNode {}
+export interface TokenTransactionNode {
+  id: ID_Output;
+  amount: Int;
+  type: TokenTransactionType;
+}
 
-export interface CourseConnection
-  extends Promise<CourseConnectionNode>,
+export interface TokenTransaction
+  extends Promise<TokenTransactionNode>,
     Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<CourseEdgeNode>>() => T;
-  aggregate: <T = AggregateCourse>() => T;
+  id: () => Promise<ID_Output>;
+  user: <T = User>() => T;
+  amount: () => Promise<Int>;
+  type: () => Promise<TokenTransactionType>;
 }
 
-export interface CourseConnectionSubscription
-  extends Promise<AsyncIterator<CourseConnectionNode>>,
+export interface TokenTransactionSubscription
+  extends Promise<AsyncIterator<TokenTransactionNode>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CourseEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCourseSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = UserSubscription>() => T;
+  amount: () => Promise<AsyncIterator<Int>>;
+  type: () => Promise<AsyncIterator<TokenTransactionType>>;
 }
 
-export interface AggregateCourseNode {
-  count: Int;
-}
-
-export interface AggregateCourse
-  extends Promise<AggregateCourseNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCourseSubscription
-  extends Promise<AsyncIterator<AggregateCourseNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 export type Long = string;
 
@@ -1315,19 +1965,14 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type Boolean = boolean;
+export type String = string;
 
 /**
  * Type Defs

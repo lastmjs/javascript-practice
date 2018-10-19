@@ -46,16 +46,63 @@ class JPAssessment extends HTMLElement {
         Store.subscribe(() => render(this.render(Store.getState()), this));
     }
 
-    questionResponse(e: any) {
+    async questionResponse(e: any) {
         const checkAnswerResponse = e.detail.checkAnswerResponse;
-        
-        alert(checkAnswerResponse);
 
-        if (checkAnswerResponse === 'Correct') {
-            Store.dispatch({
-                type: 'SET_USER_COMPLETED'
-            });
+        const response = await request(`
+            mutation($assessmentId: ID!, $correct: Boolean!) {
+                checkAnswer(assessmentId: $assessmentId, correct: $correct) {
+                    allowed
+                    tokenReward
+                    correct
+                }
+            }
+        `, {
+            assessmentId: Store.getState().currentAssessment.id,
+            correct: checkAnswerResponse === 'Correct'
+        });
+
+        if (!response) {
+            return;
         }
+
+        if (!response.checkAnswer.allowed) {
+            alert('You do not have enough tokens to submit an answer');
+            return;
+        }
+
+        if (response.checkAnswer.correct) {
+            alert('Correct!');
+        }
+
+        if (!response.checkAnswer.correct) {
+            alert('Incorrect!');
+        }
+
+        if (response.checkAnswer.tokenReward > 0) {
+            alert(`+${response.checkAnswer.tokenReward} ${response.checkAnswer.tokenReward === 1 ? 'token' : 'tokens'}!`);
+        }
+
+        if (response.checkAnswer.tokenReward < 0) {
+            alert(`${response.checkAnswer.tokenReward} ${response.checkAnswer.tokenReward === -1 ? 'token' : 'tokens'}!`);
+        }
+
+        const updateUserResponse = await request(`
+            query($userId: ID!) {
+                user(where: {
+                    id: $userId
+                }) {
+                    tokens
+                }
+            }
+        `, {
+            userId: Store.getState().user.id
+        });
+
+        Store.dispatch({
+            type: 'SET_USER_TOKENS',
+            tokens: updateUserResponse.user.tokens
+        });
     }
 
     questionChanged() {

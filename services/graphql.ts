@@ -1,10 +1,12 @@
-import {GRAPHQL_HTTP_ENDPOINT} from '../services/constants';
+import { Store } from '../services/store';
+import { GRAPHQL_HTTP_ENDPOINT } from '../services/constants';
 
-export async function request(query, variables?) {
+export async function request(query: any, variables?: any) {
     const response = await window.fetch(GRAPHQL_HTTP_ENDPOINT, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Store.getState().userJWT}`
         },
         body: JSON.stringify({
             query,

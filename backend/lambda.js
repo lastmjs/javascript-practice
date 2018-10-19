@@ -3,6 +3,7 @@ import { Prisma } from 'prisma-binding';
 import { typeDefs } from './generated/prisma/prisma-schema.js';
 import { signup } from './resolvers/signup.js';
 import { login } from './resolvers/login.js';
+import { checkAnswer } from './resolvers/check-answer.js';
 import { mergeTypes } from 'merge-graphql-schemas';
 import { dataopsTypeDefs } from './dataops.js';
 
@@ -21,7 +22,8 @@ const resolvers = {
     Mutation: {
         ...preparedTopLevelMutationResolvers,
         signup,
-        login
+        login,
+        checkAnswer
     }
 };
 
@@ -35,6 +37,7 @@ const ultimateTypeDefs = mergeTypes([
 const lambda = new GraphQLServerLambda({
     typeDefs: ultimateTypeDefs,
     resolvers,
+    context: (req) => req,
     resolverValidationOptions: {
         requireResolversForResolveType: false
     }

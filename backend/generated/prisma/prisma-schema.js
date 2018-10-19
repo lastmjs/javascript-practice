@@ -3,11 +3,19 @@ module.exports = {
   count: Int!
 }
 
+type AggregateAssessmentInfo {
+  count: Int!
+}
+
 type AggregateConcept {
   count: Int!
 }
 
 type AggregateCourse {
+  count: Int!
+}
+
+type AggregateTokenTransaction {
   count: Int!
 }
 
@@ -41,6 +49,11 @@ input AssessmentCreateManyWithoutConceptInput {
   connect: [AssessmentWhereUniqueInput!]
 }
 
+input AssessmentCreateOneInput {
+  create: AssessmentCreateInput
+  connect: AssessmentWhereUniqueInput
+}
+
 input AssessmentCreateWithoutConceptInput {
   assessML: String!
   javaScript: String!
@@ -50,6 +63,133 @@ input AssessmentCreateWithoutConceptInput {
 type AssessmentEdge {
   node: Assessment!
   cursor: String!
+}
+
+type AssessmentInfo {
+  id: ID!
+  user: User!
+  assessment: Assessment!
+  answeredCorrectly: Boolean!
+}
+
+type AssessmentInfoConnection {
+  pageInfo: PageInfo!
+  edges: [AssessmentInfoEdge]!
+  aggregate: AggregateAssessmentInfo!
+}
+
+input AssessmentInfoCreateInput {
+  user: UserCreateOneWithoutAssessmentInfosInput!
+  assessment: AssessmentCreateOneInput!
+  answeredCorrectly: Boolean!
+}
+
+input AssessmentInfoCreateManyWithoutUserInput {
+  create: [AssessmentInfoCreateWithoutUserInput!]
+  connect: [AssessmentInfoWhereUniqueInput!]
+}
+
+input AssessmentInfoCreateWithoutUserInput {
+  assessment: AssessmentCreateOneInput!
+  answeredCorrectly: Boolean!
+}
+
+type AssessmentInfoEdge {
+  node: AssessmentInfo!
+  cursor: String!
+}
+
+enum AssessmentInfoOrderByInput {
+  id_ASC
+  id_DESC
+  answeredCorrectly_ASC
+  answeredCorrectly_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AssessmentInfoPreviousValues {
+  id: ID!
+  answeredCorrectly: Boolean!
+}
+
+type AssessmentInfoSubscriptionPayload {
+  mutation: MutationType!
+  node: AssessmentInfo
+  updatedFields: [String!]
+  previousValues: AssessmentInfoPreviousValues
+}
+
+input AssessmentInfoSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AssessmentInfoWhereInput
+  AND: [AssessmentInfoSubscriptionWhereInput!]
+  OR: [AssessmentInfoSubscriptionWhereInput!]
+  NOT: [AssessmentInfoSubscriptionWhereInput!]
+}
+
+input AssessmentInfoUpdateInput {
+  user: UserUpdateOneRequiredWithoutAssessmentInfosInput
+  assessment: AssessmentUpdateOneRequiredInput
+  answeredCorrectly: Boolean
+}
+
+input AssessmentInfoUpdateManyWithoutUserInput {
+  create: [AssessmentInfoCreateWithoutUserInput!]
+  delete: [AssessmentInfoWhereUniqueInput!]
+  connect: [AssessmentInfoWhereUniqueInput!]
+  disconnect: [AssessmentInfoWhereUniqueInput!]
+  update: [AssessmentInfoUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [AssessmentInfoUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input AssessmentInfoUpdateWithoutUserDataInput {
+  assessment: AssessmentUpdateOneRequiredInput
+  answeredCorrectly: Boolean
+}
+
+input AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
+  where: AssessmentInfoWhereUniqueInput!
+  data: AssessmentInfoUpdateWithoutUserDataInput!
+}
+
+input AssessmentInfoUpsertWithWhereUniqueWithoutUserInput {
+  where: AssessmentInfoWhereUniqueInput!
+  update: AssessmentInfoUpdateWithoutUserDataInput!
+  create: AssessmentInfoCreateWithoutUserInput!
+}
+
+input AssessmentInfoWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  assessment: AssessmentWhereInput
+  answeredCorrectly: Boolean
+  answeredCorrectly_not: Boolean
+  AND: [AssessmentInfoWhereInput!]
+  OR: [AssessmentInfoWhereInput!]
+  NOT: [AssessmentInfoWhereInput!]
+}
+
+input AssessmentInfoWhereUniqueInput {
+  id: ID
 }
 
 enum AssessmentOrderByInput {
@@ -92,6 +232,13 @@ input AssessmentSubscriptionWhereInput {
   NOT: [AssessmentSubscriptionWhereInput!]
 }
 
+input AssessmentUpdateDataInput {
+  concept: ConceptUpdateOneRequiredWithoutAssessmentsInput
+  assessML: String
+  javaScript: String
+  order: Int
+}
+
 input AssessmentUpdateInput {
   concept: ConceptUpdateOneRequiredWithoutAssessmentsInput
   assessML: String
@@ -108,6 +255,13 @@ input AssessmentUpdateManyWithoutConceptInput {
   upsert: [AssessmentUpsertWithWhereUniqueWithoutConceptInput!]
 }
 
+input AssessmentUpdateOneRequiredInput {
+  create: AssessmentCreateInput
+  update: AssessmentUpdateDataInput
+  upsert: AssessmentUpsertNestedInput
+  connect: AssessmentWhereUniqueInput
+}
+
 input AssessmentUpdateWithoutConceptDataInput {
   assessML: String
   javaScript: String
@@ -117,6 +271,11 @@ input AssessmentUpdateWithoutConceptDataInput {
 input AssessmentUpdateWithWhereUniqueWithoutConceptInput {
   where: AssessmentWhereUniqueInput!
   data: AssessmentUpdateWithoutConceptDataInput!
+}
+
+input AssessmentUpsertNestedInput {
+  update: AssessmentUpdateDataInput!
+  create: AssessmentCreateInput!
 }
 
 input AssessmentUpsertWithWhereUniqueWithoutConceptInput {
@@ -528,6 +687,12 @@ type Mutation {
   upsertAssessment(where: AssessmentWhereUniqueInput!, create: AssessmentCreateInput!, update: AssessmentUpdateInput!): Assessment!
   deleteAssessment(where: AssessmentWhereUniqueInput!): Assessment
   deleteManyAssessments(where: AssessmentWhereInput): BatchPayload!
+  createAssessmentInfo(data: AssessmentInfoCreateInput!): AssessmentInfo!
+  updateAssessmentInfo(data: AssessmentInfoUpdateInput!, where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
+  updateManyAssessmentInfoes(data: AssessmentInfoUpdateInput!, where: AssessmentInfoWhereInput): BatchPayload!
+  upsertAssessmentInfo(where: AssessmentInfoWhereUniqueInput!, create: AssessmentInfoCreateInput!, update: AssessmentInfoUpdateInput!): AssessmentInfo!
+  deleteAssessmentInfo(where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
+  deleteManyAssessmentInfoes(where: AssessmentInfoWhereInput): BatchPayload!
   createConcept(data: ConceptCreateInput!): Concept!
   updateConcept(data: ConceptUpdateInput!, where: ConceptWhereUniqueInput!): Concept
   updateManyConcepts(data: ConceptUpdateInput!, where: ConceptWhereInput): BatchPayload!
@@ -540,6 +705,12 @@ type Mutation {
   upsertCourse(where: CourseWhereUniqueInput!, create: CourseCreateInput!, update: CourseUpdateInput!): Course!
   deleteCourse(where: CourseWhereUniqueInput!): Course
   deleteManyCourses(where: CourseWhereInput): BatchPayload!
+  createTokenTransaction(data: TokenTransactionCreateInput!): TokenTransaction!
+  updateTokenTransaction(data: TokenTransactionUpdateInput!, where: TokenTransactionWhereUniqueInput!): TokenTransaction
+  updateManyTokenTransactions(data: TokenTransactionUpdateInput!, where: TokenTransactionWhereInput): BatchPayload!
+  upsertTokenTransaction(where: TokenTransactionWhereUniqueInput!, create: TokenTransactionCreateInput!, update: TokenTransactionUpdateInput!): TokenTransaction!
+  deleteTokenTransaction(where: TokenTransactionWhereUniqueInput!): TokenTransaction
+  deleteManyTokenTransactions(where: TokenTransactionWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
@@ -569,12 +740,18 @@ type Query {
   assessment(where: AssessmentWhereUniqueInput!): Assessment
   assessments(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assessment]!
   assessmentsConnection(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssessmentConnection!
+  assessmentInfo(where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
+  assessmentInfoes(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentInfo]!
+  assessmentInfoesConnection(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssessmentInfoConnection!
   concept(where: ConceptWhereUniqueInput!): Concept
   concepts(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Concept]!
   conceptsConnection(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConceptConnection!
   course(where: CourseWhereUniqueInput!): Course
   courses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course]!
   coursesConnection(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseConnection!
+  tokenTransaction(where: TokenTransactionWhereUniqueInput!): TokenTransaction
+  tokenTransactions(where: TokenTransactionWhereInput, orderBy: TokenTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TokenTransaction]!
+  tokenTransactionsConnection(where: TokenTransactionWhereInput, orderBy: TokenTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TokenTransactionConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -583,9 +760,122 @@ type Query {
 
 type Subscription {
   assessment(where: AssessmentSubscriptionWhereInput): AssessmentSubscriptionPayload
+  assessmentInfo(where: AssessmentInfoSubscriptionWhereInput): AssessmentInfoSubscriptionPayload
   concept(where: ConceptSubscriptionWhereInput): ConceptSubscriptionPayload
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
+  tokenTransaction(where: TokenTransactionSubscriptionWhereInput): TokenTransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type TokenTransaction {
+  id: ID!
+  user: User!
+  amount: Int!
+  type: TokenTransactionType!
+}
+
+type TokenTransactionConnection {
+  pageInfo: PageInfo!
+  edges: [TokenTransactionEdge]!
+  aggregate: AggregateTokenTransaction!
+}
+
+input TokenTransactionCreateInput {
+  user: UserCreateOneInput!
+  amount: Int!
+  type: TokenTransactionType!
+}
+
+type TokenTransactionEdge {
+  node: TokenTransaction!
+  cursor: String!
+}
+
+enum TokenTransactionOrderByInput {
+  id_ASC
+  id_DESC
+  amount_ASC
+  amount_DESC
+  type_ASC
+  type_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TokenTransactionPreviousValues {
+  id: ID!
+  amount: Int!
+  type: TokenTransactionType!
+}
+
+type TokenTransactionSubscriptionPayload {
+  mutation: MutationType!
+  node: TokenTransaction
+  updatedFields: [String!]
+  previousValues: TokenTransactionPreviousValues
+}
+
+input TokenTransactionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TokenTransactionWhereInput
+  AND: [TokenTransactionSubscriptionWhereInput!]
+  OR: [TokenTransactionSubscriptionWhereInput!]
+  NOT: [TokenTransactionSubscriptionWhereInput!]
+}
+
+enum TokenTransactionType {
+  ANSWER_CORRECT
+  ANSWER_INCORRECT
+  VIEW_SOLUTION
+  EXERCISE_CREATED_AND_ACCEPTED
+}
+
+input TokenTransactionUpdateInput {
+  user: UserUpdateOneRequiredInput
+  amount: Int
+  type: TokenTransactionType
+}
+
+input TokenTransactionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  type: TokenTransactionType
+  type_not: TokenTransactionType
+  type_in: [TokenTransactionType!]
+  type_not_in: [TokenTransactionType!]
+  AND: [TokenTransactionWhereInput!]
+  OR: [TokenTransactionWhereInput!]
+  NOT: [TokenTransactionWhereInput!]
+}
+
+input TokenTransactionWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -593,6 +883,7 @@ type User {
   email: String!
   password: String!
   tokens: Int!
+  assessmentInfos(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentInfo!]
 }
 
 type UserConnection {
@@ -602,6 +893,23 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  email: String!
+  password: String!
+  tokens: Int
+  assessmentInfos: AssessmentInfoCreateManyWithoutUserInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutAssessmentInfosInput {
+  create: UserCreateWithoutAssessmentInfosInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutAssessmentInfosInput {
   email: String!
   password: String!
   tokens: Int
@@ -652,10 +960,48 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  email: String
+  password: String
+  tokens: Int
+  assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
+}
+
 input UserUpdateInput {
   email: String
   password: String
   tokens: Int
+  assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutAssessmentInfosInput {
+  create: UserCreateWithoutAssessmentInfosInput
+  update: UserUpdateWithoutAssessmentInfosDataInput
+  upsert: UserUpsertWithoutAssessmentInfosInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutAssessmentInfosDataInput {
+  email: String
+  password: String
+  tokens: Int
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutAssessmentInfosInput {
+  update: UserUpdateWithoutAssessmentInfosDataInput!
+  create: UserCreateWithoutAssessmentInfosInput!
 }
 
 input UserWhereInput {
@@ -709,6 +1055,9 @@ input UserWhereInput {
   tokens_lte: Int
   tokens_gt: Int
   tokens_gte: Int
+  assessmentInfos_every: AssessmentInfoWhereInput
+  assessmentInfos_some: AssessmentInfoWhereInput
+  assessmentInfos_none: AssessmentInfoWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
