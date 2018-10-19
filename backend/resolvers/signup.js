@@ -7,7 +7,13 @@ import jwt from 'jsonwebtoken';
 export async function signup(parent, args, context, info) {
     const password = await bcrypt.hash(args.password, 10);
 
-    //TODO first check if user already exists and throw the error
+    const userAlreadyExists = await prisma.exists.User({
+        email: args.email
+    });
+
+    if (userAlreadyExists) {
+        throw new Error('That email address has already been registered');
+    }
 
     const user = await prisma.mutation.createUser({
         data: {
