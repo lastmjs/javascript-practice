@@ -6,61 +6,68 @@ import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
-        (async () => {
-            const response = await request(`
-                query($assessmentId: ID!, $userId: ID!) {
-                    assessment(where: {
-                        id: $assessmentId
-                    }) {
-                        id
-                        assessML
-                        javaScript
-                        order
-                        concept {
-                            id
-                            title
-                            assessments {
-                                id
-                                order
-                            }
-                        }
-                    }
+        this._assessmentId = val;
+        this.loadAssessment(val);
+    }
 
-                    assessmentInfoes(where: {
-                        user: {
-                            id: $userId
-                        }
-                        assessment: {
-                            id: $assessmentId
-                        }
-                    }) {
-                        answeredCorrectly
-                    }
-                }
-            `, {
-                assessmentId: val,
-                userId: Store.getState().user ? Store.getState().user.id : ''
-            });
-
-            if (response) {
-                //TODO figure out local redux state management
-                this.assessmentInfo = response.assessmentInfoes[0];
-            }
-
-            Store.dispatch({
-                type: 'SET_CURRENT_ASSESSMENT',
-                assessment: response.assessment
-            });
-
-            Store.dispatch({
-                type: 'SET_CURRENT_CONCEPT',
-                concept: response.assessment.concept
-            });
-        })();
+    get assessmentId() {
+        return this._assessmentId;
     }
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
+    }
+
+    async loadAssessment(assessmentId: string) {
+        const response = await request(`
+            query($assessmentId: ID!, $userId: ID!) {
+                assessment(where: {
+                    id: $assessmentId
+                }) {
+                    id
+                    assessML
+                    javaScript
+                    order
+                    concept {
+                        id
+                        title
+                        assessments {
+                            id
+                            order
+                        }
+                    }
+                }
+
+                assessmentInfoes(where: {
+                    user: {
+                        id: $userId
+                    }
+                    assessment: {
+                        id: $assessmentId
+                    }
+                }) {
+                    answeredCorrectly
+                }
+            }
+        `, {
+            assessmentId,
+            userId: Store.getState().user ? Store.getState().user.id : ''
+        });
+
+        if (response) {
+            //TODO figure out local redux state management
+            this.assessmentInfo = response.assessmentInfoes[0];
+        }
+
+        Store.dispatch({
+            type: 'SET_CURRENT_ASSESSMENT',
+            assessment: response.assessment
+        });
+
+        Store.dispatch({
+            type: 'SET_CURRENT_CONCEPT',
+            concept: response.assessment.concept
+        });
     }
 
     async questionResponse(e: any) {
@@ -139,6 +146,8 @@ class JPAssessment extends HTMLElement {
             type: 'SET_USER_TOKENS',
             tokens: updateUserResponse.user.tokens
         });
+
+        this.loadAssessment(this.assessmentId);
     }
 
     questionChanged() {
@@ -267,7 +276,6 @@ class JPAssessment extends HTMLElement {
     }
 
     render(state: any) {
-        console.log(state);
         return html`
             <style>
                 /* This is just to hack the input boxes temporarily */
