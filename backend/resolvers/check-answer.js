@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 export async function checkAnswer(parent, args, context, info) {
     try {
         const token = context.event.headers['authorization'].replace('Bearer ', '');
-        const payload = getPayload(token, 'secret');
+        const payload = getPayload(token, process.env.APPLICATION_SERVER_SECRET);
         const user = await prisma.query.user({
             where: {
                 id: payload.userId
