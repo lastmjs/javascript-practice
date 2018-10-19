@@ -29,7 +29,7 @@ class JPTokenOverview extends HTMLElement {
                 <h3>+20: Create an exercise that is accepted into the course</h3>
                 <h3>+1: Answer correctly (only applies once per exercise)</h3>
                 <h3>-2: Answer incorrectly (only applies once per exercise and before answering correctly)</h3>
-                <h3>-1: View solution (only applies once per exercise and before answering correctly)</h3>
+                <h3>-1: View solution (only applies once per exercise, before answering correctly, and after attempting an answer)</h3>
             </div>
         `;
     }

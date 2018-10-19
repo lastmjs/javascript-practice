@@ -3,6 +3,7 @@ export const dataopsTypeDefs = `
         signup(email: String!, password: String!): AuthPayload!
         login(email: String!, password: String!): AuthPayload!
         checkAnswer(assessmentId: ID!, correct: Boolean!): CheckAnswerPayload!
+        viewSolution(assessmentId: ID!): ViewSolutionPayload!
     }
     
     type AuthPayload {
@@ -12,6 +13,11 @@ export const dataopsTypeDefs = `
 
     type CheckAnswerPayload {
         correct: Boolean
+        tokenReward: Int
+        allowed: Boolean!
+    }
+
+    type ViewSolutionPayload {
         tokenReward: Int
         allowed: Boolean!
     }

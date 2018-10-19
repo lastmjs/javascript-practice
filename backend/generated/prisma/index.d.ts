@@ -370,6 +370,8 @@ export type AssessmentInfoOrderByInput =
   | "id_DESC"
   | "answeredCorrectly_ASC"
   | "answeredCorrectly_DESC"
+  | "solutionViewed_ASC"
+  | "solutionViewed_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -802,6 +804,7 @@ export interface AssessmentInfoCreateInput {
   user: UserCreateOneWithoutAssessmentInfosInput;
   assessment: AssessmentCreateOneInput;
   answeredCorrectly: Boolean;
+  solutionViewed: Boolean;
 }
 
 export interface CourseUpdateInput {
@@ -831,6 +834,7 @@ export interface UserCreateWithoutAssessmentInfosInput {
 export interface AssessmentInfoUpdateWithoutUserDataInput {
   assessment?: AssessmentUpdateOneRequiredInput;
   answeredCorrectly?: Boolean;
+  solutionViewed?: Boolean;
 }
 
 export interface AssessmentCreateOneInput {
@@ -887,6 +891,7 @@ export interface AssessmentInfoUpdateInput {
   user?: UserUpdateOneRequiredWithoutAssessmentInfosInput;
   assessment?: AssessmentUpdateOneRequiredInput;
   answeredCorrectly?: Boolean;
+  solutionViewed?: Boolean;
 }
 
 export type ConceptWhereUniqueInput = AtLeastOne<{
@@ -1022,6 +1027,8 @@ export interface AssessmentInfoWhereInput {
   assessment?: AssessmentWhereInput;
   answeredCorrectly?: Boolean;
   answeredCorrectly_not?: Boolean;
+  solutionViewed?: Boolean;
+  solutionViewed_not?: Boolean;
   AND?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
   OR?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
   NOT?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
@@ -1037,6 +1044,7 @@ export interface ConceptCreateInput {
 export interface AssessmentInfoCreateWithoutUserInput {
   assessment: AssessmentCreateOneInput;
   answeredCorrectly: Boolean;
+  solutionViewed: Boolean;
 }
 
 export interface AssessmentCreateManyWithoutConceptInput {
@@ -1541,6 +1549,7 @@ export interface AssessmentInfoConnectionSubscription
 export interface AssessmentInfoPreviousValuesNode {
   id: ID_Output;
   answeredCorrectly: Boolean;
+  solutionViewed: Boolean;
 }
 
 export interface AssessmentInfoPreviousValues
@@ -1548,6 +1557,7 @@ export interface AssessmentInfoPreviousValues
     Fragmentable {
   id: () => Promise<ID_Output>;
   answeredCorrectly: () => Promise<Boolean>;
+  solutionViewed: () => Promise<Boolean>;
 }
 
 export interface AssessmentInfoPreviousValuesSubscription
@@ -1555,11 +1565,13 @@ export interface AssessmentInfoPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   answeredCorrectly: () => Promise<AsyncIterator<Boolean>>;
+  solutionViewed: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface AssessmentInfoNode {
   id: ID_Output;
   answeredCorrectly: Boolean;
+  solutionViewed: Boolean;
 }
 
 export interface AssessmentInfo
@@ -1569,6 +1581,7 @@ export interface AssessmentInfo
   user: <T = User>() => T;
   assessment: <T = Assessment>() => T;
   answeredCorrectly: () => Promise<Boolean>;
+  solutionViewed: () => Promise<Boolean>;
 }
 
 export interface AssessmentInfoSubscription
@@ -1578,6 +1591,7 @@ export interface AssessmentInfoSubscription
   user: <T = UserSubscription>() => T;
   assessment: <T = AssessmentSubscription>() => T;
   answeredCorrectly: () => Promise<AsyncIterator<Boolean>>;
+  solutionViewed: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface CourseNode {
