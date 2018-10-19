@@ -192,10 +192,14 @@ class JPAssessment extends HTMLElement {
         if (solutionTemplate) {
             this.querySelector('#solution-button').innerHTML = `Solution`;
             this.querySelector('#submit-button').removeAttribute('disabled');
+            this.querySelector('#next-button').removeAttribute('disabled');
+            this.querySelector('#prev-button').removeAttribute('disabled');
         }
         else {
             this.querySelector('#solution-button').innerHTML = `Exercise`;
             this.querySelector('#submit-button').setAttribute('disabled', true);
+            this.querySelector('#next-button').setAttribute('disabled', true);
+            this.querySelector('#prev-button').setAttribute('disabled', true);
         }
 
         Store.dispatch({
@@ -268,6 +272,7 @@ class JPAssessment extends HTMLElement {
         
                     <div class="bottom-buttons-container">
                         <button
+                            id="prev-button"
                             class="bottom-button"
                             @click=${() => this.previousAssessmentClick()}
                             ?disabled=${state.currentAssessment && state.currentAssessment.order === 0}
@@ -292,6 +297,7 @@ class JPAssessment extends HTMLElement {
                         </button>
                         
                         <button
+                            id="next-button"
                             class="bottom-button"
                             @click=${() => this.nextAssessmentClick()}
                             ?disabled=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1}
