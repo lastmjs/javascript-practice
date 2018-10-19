@@ -14,8 +14,6 @@ export const prisma = new Prisma({
     secret: process.env.PRISMA_SERVER_SECRET
 });
 
-console.log(process.env.PRISMA_SERVER_SECRET);
-
 const preparedTopLevelQueryResolvers = prepareTopLevelResolvers(prisma.query);
 const preparedTopLevelMutationResolvers = prepareTopLevelResolvers(prisma.mutation);
 
@@ -48,10 +46,7 @@ const lambda = new GraphQLServerLambda({
     }
 });
 
-export const handler = (() => {
-    console.log(process.env.PRISMA_SERVER_SECRET);
-    return lambda.handler;
-})();
+export const handler = lambda.handler;
 
 function prepareTopLevelResolvers(resolverObject) {
     return Object.entries(resolverObject).reduce((result, entry) => {
