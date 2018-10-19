@@ -88,24 +88,39 @@ class JPAssessment extends HTMLElement {
         }
 
         if (!response.checkAnswer.allowed) {
-            alert('You do not have enough tokens to submit an answer');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'You do not have enough tokens to submit an answer'
+            });
             return;
         }
 
         if (response.checkAnswer.correct) {
-            alert('Correct!');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Correct'
+            });
         }
 
         if (!response.checkAnswer.correct) {
-            alert('Incorrect!');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Incorrect'
+            });
         }
 
         if (response.checkAnswer.tokenReward > 0) {
-            alert(`+${response.checkAnswer.tokenReward} ${response.checkAnswer.tokenReward === 1 ? 'token' : 'tokens'}!`);
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: `+${response.checkAnswer.tokenReward} ${response.checkAnswer.tokenReward === 1 ? 'token' : 'tokens'}`
+            });
         }
 
         if (response.checkAnswer.tokenReward < 0) {
-            alert(`${response.checkAnswer.tokenReward} ${response.checkAnswer.tokenReward === -1 ? 'token' : 'tokens'}!`);
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: `${response.checkAnswer.tokenReward} ${response.checkAnswer.tokenReward === -1 ? 'token' : 'tokens'}`
+            });
         }
 
         const updateUserResponse = await request(`
@@ -183,7 +198,10 @@ class JPAssessment extends HTMLElement {
         }
 
         if (!showSolutionResponse.viewSolution.allowed) {
-            alert('You do not have enough tokens to view the solution');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'You do not have enough tokens to view the solution'
+            });
 
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
@@ -193,7 +211,10 @@ class JPAssessment extends HTMLElement {
         }
 
         if (showSolutionResponse.viewSolution.tokenReward < 0) {
-            alert(`${showSolutionResponse.viewSolution.tokenReward} ${showSolutionResponse.viewSolution.tokenReward === -1 ? 'token' : 'tokens'}!`);
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: `${showSolutionResponse.viewSolution.tokenReward} ${showSolutionResponse.viewSolution.tokenReward === -1 ? 'token' : 'tokens'}!`
+            });
         }
 
         const updateUserResponse = await request(`

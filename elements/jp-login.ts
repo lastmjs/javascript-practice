@@ -33,7 +33,10 @@ class JPLogin extends HTMLElement {
         const password = this.querySelector('#login-password-input').value;
 
         if (email === '') {
-            alert('Email cannot be empty');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Email cannot be empty'
+            });
 
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
@@ -43,7 +46,10 @@ class JPLogin extends HTMLElement {
         }
 
         if (password === '') {
-            alert('Password cannot be empty');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Password cannot be empty'
+            });
 
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
