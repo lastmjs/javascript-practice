@@ -22,6 +22,15 @@ export async function checkAnswer(parent, args, context, info) {
                 }
             }
         `);
+
+        const allowed = user.tokens >= 2;
+
+        if (!allowed) {
+            return {
+                allowed
+            };
+        }
+
         const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
 
         if (assessmentInfo) {
@@ -81,7 +90,7 @@ export async function checkAnswer(parent, args, context, info) {
         }
 
         return {
-            allowed: user.tokens >= 2,
+            allowed,
             correct: args.correct,
             tokenReward
         };
