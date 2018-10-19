@@ -11,7 +11,7 @@ import { dataopsTypeDefs } from './dataops.js';
 export const prisma = new Prisma({
     typeDefs,
     endpoint: process.env.AWS_REGION ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466',
-    secret: process.env.PRISMA_SERVER_SECRET
+    secret: 'secret'
 });
 
 console.log(process.env.PRISMA_SERVER_SECRET);
