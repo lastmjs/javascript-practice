@@ -19,6 +19,7 @@ export async function viewSolution(parent, args, context, info) {
                         id
                     }
                     solutionViewed
+                    answeredCorrectly
                 }
             }
         `);
@@ -87,5 +88,5 @@ function getPayload(token, secret) {
 }
 
 function calculateTokenReward(assessmentInfo) {
-    return assessmentInfo && assessmentInfo.solutionViewed ? 0 : -1;
+    return assessmentInfo && (assessmentInfo.solutionViewed || assessmentInfo.answeredCorrectly) ? 0 : -1;
 }
