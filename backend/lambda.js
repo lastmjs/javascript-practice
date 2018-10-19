@@ -14,6 +14,8 @@ export const prisma = new Prisma({
     secret: process.env.PRISMA_SERVER_SECRET
 });
 
+console.log(process.env.PRISMA_SERVER_SECRET);
+
 const preparedTopLevelQueryResolvers = prepareTopLevelResolvers(prisma.query);
 const preparedTopLevelMutationResolvers = prepareTopLevelResolvers(prisma.mutation);
 
