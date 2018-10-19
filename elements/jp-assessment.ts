@@ -168,30 +168,28 @@ class JPAssessment extends HTMLElement {
             userId: Store.getState().user.id
         });
 
+        //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
+        //TODO and the question is shown again
+        const prendusViewQuestion = this.querySelector('#prendus-view-question');
+        prendusViewQuestion.showSolutionClick();
+
+        //TODO everything below here is evil
+        //TODO rendering of this component really needs to be redone
+        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
+
+        if (solutionTemplate) {
+            this.querySelector('#solution-button').innerHTML = `Solution`;
+            this.querySelector('#submit-button').removeAttribute('disabled');
+        }
+        else {
+            this.querySelector('#solution-button').innerHTML = `Exercise`;
+            this.querySelector('#submit-button').setAttribute('disabled', true);
+        }
+
         Store.dispatch({
             type: 'SET_USER_TOKENS',
             tokens: updateUserResponse.user.tokens
         });
-
-        //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
-        //TODO and the question is shown again
-        // setTimeout(() => {
-            const prendusViewQuestion = this.querySelector('#prendus-view-question');
-            prendusViewQuestion.showSolutionClick();
-
-            //TODO everything below here is evil
-            //TODO rendering of this component really needs to be redone
-            const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
-
-            if (solutionTemplate) {
-                this.querySelector('#solution-button').innerHTML = `Solution`;
-                this.querySelector('#submit-button').removeAttribute('disabled');
-            }
-            else {
-                this.querySelector('#solution-button').innerHTML = `Exercise`;
-                this.querySelector('#submit-button').setAttribute('disabled', true);
-            }
-        // }, 1000);
     }
 
     submitAnswer() {
