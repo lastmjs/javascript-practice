@@ -119,6 +119,12 @@ class JPAssessment extends HTMLElement {
         });
     }
 
+    questionBuilt() {
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
+    }
+
     nextAssessmentClick() {
         Store.dispatch({
             type: 'NEXT_QUESTION'
@@ -151,16 +157,21 @@ class JPAssessment extends HTMLElement {
             assessmentId: Store.getState().currentAssessment.id
         });
 
-        Store.dispatch({
-            type: 'HIDE_LOAD_INDICATOR'
-        });
-
         if (!showSolutionResponse) {
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
         if (!showSolutionResponse.viewSolution.allowed) {
             alert('You do not have enough tokens to view the solution');
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
@@ -265,6 +276,7 @@ class JPAssessment extends HTMLElement {
                             .question=${state.currentAssessment}
                             @question-response=${(e: any) => this.questionResponse(e)}
                             @question-changed=${() => this.questionChanged()}
+                            @question-built=${() => this.questionBuilt()}
                         >
                             Loading...
                         </prendus-view-question>
