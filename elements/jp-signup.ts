@@ -25,6 +25,10 @@ class JPSignup extends HTMLElement {
     }
 
     async signupClick() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
         const email = this.querySelector('#signup-email-input').value;
         const password1 = this.querySelector('#signup-password-input-1').value;
         const password2 = this.querySelector('#signup-password-input-2').value;
@@ -69,6 +73,10 @@ class JPSignup extends HTMLElement {
 
             page(`/assessment/${Store.getState().currentAssessment.id}/view`);
         }
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
     }
 
     render(state: any) {
