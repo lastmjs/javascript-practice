@@ -23,6 +23,15 @@ export async function viewSolution(parent, args, context, info) {
                 }
             }
         `);
+
+        const allowed = user.tokens >= 1;
+
+        if (!allowed) {
+            return {
+                allowed
+            };
+        }
+
         const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
 
         if (assessmentInfo) {
@@ -67,7 +76,7 @@ export async function viewSolution(parent, args, context, info) {
         }
 
         return {
-            allowed: user.tokens >= 1,
+            allowed,
             tokenReward
         };
     }

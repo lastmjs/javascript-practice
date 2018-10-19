@@ -6,61 +6,68 @@ import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
-        (async () => {
-            const response = await request(`
-                query($assessmentId: ID!, $userId: ID!) {
-                    assessment(where: {
-                        id: $assessmentId
-                    }) {
-                        id
-                        assessML
-                        javaScript
-                        order
-                        concept {
-                            id
-                            title
-                            assessments {
-                                id
-                                order
-                            }
-                        }
-                    }
+        this._assessmentId = val;
+        this.loadAssessment(val);
+    }
 
-                    assessmentInfoes(where: {
-                        user: {
-                            id: $userId
-                        }
-                        assessment: {
-                            id: $assessmentId
-                        }
-                    }) {
-                        answeredCorrectly
-                    }
-                }
-            `, {
-                assessmentId: val,
-                userId: Store.getState().user ? Store.getState().user.id : ''
-            });
-
-            if (response) {
-                //TODO figure out local redux state management
-                this.assessmentInfo = response.assessmentInfoes[0];
-            }
-
-            Store.dispatch({
-                type: 'SET_CURRENT_ASSESSMENT',
-                assessment: response.assessment
-            });
-
-            Store.dispatch({
-                type: 'SET_CURRENT_CONCEPT',
-                concept: response.assessment.concept
-            });
-        })();
+    get assessmentId() {
+        return this._assessmentId;
     }
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
+    }
+
+    async loadAssessment(assessmentId: string) {
+        const response = await request(`
+            query($assessmentId: ID!, $userId: ID!) {
+                assessment(where: {
+                    id: $assessmentId
+                }) {
+                    id
+                    assessML
+                    javaScript
+                    order
+                    concept {
+                        id
+                        title
+                        assessments {
+                            id
+                            order
+                        }
+                    }
+                }
+
+                assessmentInfoes(where: {
+                    user: {
+                        id: $userId
+                    }
+                    assessment: {
+                        id: $assessmentId
+                    }
+                }) {
+                    answeredCorrectly
+                }
+            }
+        `, {
+            assessmentId,
+            userId: Store.getState().user ? Store.getState().user.id : ''
+        });
+
+        if (response) {
+            //TODO figure out local redux state management
+            this.assessmentInfo = response.assessmentInfoes[0];
+        }
+
+        Store.dispatch({
+            type: 'SET_CURRENT_ASSESSMENT',
+            assessment: response.assessment
+        });
+
+        Store.dispatch({
+            type: 'SET_CURRENT_CONCEPT',
+            concept: response.assessment.concept
+        });
     }
 
     async questionResponse(e: any) {
@@ -139,6 +146,8 @@ class JPAssessment extends HTMLElement {
             type: 'SET_USER_TOKENS',
             tokens: updateUserResponse.user.tokens
         });
+
+        this.loadAssessment(this.assessmentId);
     }
 
     questionChanged() {
@@ -171,6 +180,10 @@ class JPAssessment extends HTMLElement {
         Store.dispatch({
             type: 'PREVIOUS_QUESTION'
         });
+
+        //TODO this is evil
+        this.querySelector('#solution-button').innerHTML = `Solution`;
+        this.querySelector('#submit-button').removeAttribute('disabled');
     }
 
     async showSolution() {
@@ -241,14 +254,10 @@ class JPAssessment extends HTMLElement {
         if (solutionTemplate) {
             this.querySelector('#solution-button').innerHTML = `Solution`;
             this.querySelector('#submit-button').removeAttribute('disabled');
-            this.querySelector('#next-button').removeAttribute('disabled');
-            this.querySelector('#prev-button').removeAttribute('disabled');
         }
         else {
             this.querySelector('#solution-button').innerHTML = `Exercise`;
             this.querySelector('#submit-button').setAttribute('disabled', true);
-            this.querySelector('#next-button').setAttribute('disabled', true);
-            this.querySelector('#prev-button').setAttribute('disabled', true);
         }
 
         Store.dispatch({
@@ -266,7 +275,7 @@ class JPAssessment extends HTMLElement {
         prendusViewQuestion.checkAnswer();
     }
 
-    render(state) {
+    render(state: any) {
         return html`
             <style>
                 /* This is just to hack the input boxes temporarily */
