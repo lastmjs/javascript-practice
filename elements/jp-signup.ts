@@ -35,16 +35,31 @@ class JPSignup extends HTMLElement {
 
         if (email === '') {
             alert('Email cannot be empty');
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
         if (password1 === '' || password2 === '') {
             alert('Passwords cannot be empty');
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
         if (password1 !== password2) {
             alert('Passwords must match');
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
@@ -79,6 +94,12 @@ class JPSignup extends HTMLElement {
         });
     }
 
+    passwordInputKeydown(e: any) {
+        if (e.keyCode === 13) {
+            this.signupClick();
+        }
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -97,7 +118,13 @@ class JPSignup extends HTMLElement {
                 </div>
 
                 <div class="authentication-input-row">
-                    <input id="signup-password-input-2" type="password" class="authentication-input" placeholder="re-enter password">
+                    <input
+                        id="signup-password-input-2"
+                        type="password"
+                        class="authentication-input"
+                        placeholder="re-enter password"
+                        @keydown=${(e: any) => this.passwordInputKeydown(e)}
+                    >
                 </div>
 
                 <div class="authentication-input-row">

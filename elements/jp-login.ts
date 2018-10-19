@@ -34,11 +34,21 @@ class JPLogin extends HTMLElement {
 
         if (email === '') {
             alert('Email cannot be empty');
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
         if (password === '') {
             alert('Password cannot be empty');
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
             return;
         }
 
@@ -73,6 +83,12 @@ class JPLogin extends HTMLElement {
         });
     }
 
+    passwordInputKeydown(e: any) {
+        if (e.keyCode === 13) {
+            this.loginClick();
+        }
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -87,7 +103,13 @@ class JPLogin extends HTMLElement {
                 </div>
 
                 <div class="authentication-input-row">
-                    <input id="login-password-input" type="password" class="authentication-input" placeholder="password">
+                    <input
+                        id="login-password-input"
+                        type="password"
+                        class="authentication-input"
+                        placeholder="password"
+                        @keydown=${(e: any) => this.passwordInputKeydown(e)}
+                    >
                 </div>
 
                 <div class="authentication-input-row">
