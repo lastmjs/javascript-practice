@@ -62,6 +62,10 @@ class JPAssessment extends HTMLElement {
             correct: checkAnswerResponse === 'Correct'
         });
 
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
+
         if (!response) {
             return;
         }
@@ -132,6 +136,10 @@ class JPAssessment extends HTMLElement {
     }
 
     async showSolution() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
         const showSolutionResponse = await request(`
             mutation($assessmentId: ID!) {
                 viewSolution(assessmentId: $assessmentId) {
@@ -141,6 +149,10 @@ class JPAssessment extends HTMLElement {
             }
         `, {
             assessmentId: Store.getState().currentAssessment.id
+        });
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
         });
 
         if (!showSolutionResponse) {
@@ -193,6 +205,10 @@ class JPAssessment extends HTMLElement {
     }
 
     submitAnswer() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
         const prendusViewQuestion = this.querySelector('#prendus-view-question');
         prendusViewQuestion.checkAnswer();
     }

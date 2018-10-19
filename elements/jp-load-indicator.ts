@@ -19,6 +19,25 @@ class JPLoadIndicator extends HTMLElement {
 
         return html`
             <style>
+                .loading {
+                    display: inline-block;
+                    width: 50px;
+                    height: 50px;
+                    border: 3px solid rgba(255, 255 , 255, .3);
+                    border-radius: 50%;
+                    border-top-color: #fff;
+                    animation: spin 1s ease-in-out infinite;
+                    margin-top: 30vh;
+                }
+
+                .loading[hidden] {
+                    display: none;
+                }
+
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
+
                 .load-indicator {
                     position: absolute;
                     width: 100%;
@@ -29,10 +48,13 @@ class JPLoadIndicator extends HTMLElement {
                     z-index: ${zIndexLayer5};
                     pointer-events: none;
                     ${this.hide ? 'transition: background-color .5s linear;' : ''}
+                    text-align: center;
                 }
             </style>
 
-            <div class="load-indicator"></div>
+            <div class="load-indicator">
+                <div class="global-loading" ?hidden=${this.hide}></div>
+            </div>
         `;
     }
 }

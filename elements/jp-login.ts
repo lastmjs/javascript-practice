@@ -25,6 +25,10 @@ class JPLogin extends HTMLElement {
     }
 
     async loginClick() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
         const email = this.querySelector('#login-email-input').value;
         const password = this.querySelector('#login-password-input').value;
 
@@ -63,6 +67,10 @@ class JPLogin extends HTMLElement {
 
             page(`/assessment/${Store.getState().currentAssessment.id}/view`);
         }
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
     }
 
     render(state: any) {
