@@ -42,13 +42,13 @@ export const authenticationInputCSSClass = `
 export const authenticationInputsContainerCSSClass = `
     .authentication-inputs-container {
         display: grid;
-        margin-top: 10vh;
+        padding-top: 10vh;
     }
 `;
 
 export const authenticationInputRowCSSClass = `
     .authentication-input-row {
-        margin-bottom: 5vh;
+        padding-bottom: 5vh;
         text-align: center;
     }
 `;

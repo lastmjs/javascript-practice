@@ -34,7 +34,10 @@ class JPSignup extends HTMLElement {
         const password2 = this.querySelector('#signup-password-input-2').value;
 
         if (email === '') {
-            alert('Email cannot be empty');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Email cannot be empty'
+            });
 
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
@@ -44,7 +47,10 @@ class JPSignup extends HTMLElement {
         }
 
         if (password1 === '' || password2 === '') {
-            alert('Passwords cannot be empty');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Passwords cannot be empty'
+            });
 
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
@@ -54,7 +60,10 @@ class JPSignup extends HTMLElement {
         }
 
         if (password1 !== password2) {
-            alert('Passwords must match');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Passwords must match'
+            });
 
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'

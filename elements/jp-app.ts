@@ -8,6 +8,7 @@ import './jp-hamburger';
 import '../services/listeners';
 import page from 'page';
 import '../services/init';
+import './jp-notifications';
 
 class JPApp extends HTMLElement {
 
@@ -134,7 +135,7 @@ class JPApp extends HTMLElement {
             <div class="main-grid">
                 <jp-concept-map></jp-concept-map>
 
-                <div class="router-area">
+                <div id="router-area" class="router-area">
 
                     <jp-load-indicator
                         .hide=${state.hideLoadIndicator}
@@ -178,8 +179,9 @@ class JPApp extends HTMLElement {
                         </div>
                     </div>
 
-                    <div class="router-container">
+                    <div id="router-container" class="router-container">
                         <jp-router></jp-router>
+                        <jp-notifications .fitInto=${this.querySelector('#router-container')}></jp-notifications>
                     </div>
 
                 </div>

@@ -3,7 +3,7 @@ import page from 'page';
 
 let persistedState = JSON.parse(window.localStorage.getItem('state'));
 
-if (persistedState && persistedState.version !== 1) {
+if (persistedState && persistedState.version !== 2) {
     window.localStorage.setItem('state', null);
     persistedState = null;
 }
@@ -12,7 +12,7 @@ const InitialState = persistedState ?  {
     ...persistedState,
     hideGlobalLoadIndicator: false
 } : {
-    version: 1,
+    version: 2,
     currentConcept: null,
     currentEntity: 'assessment',
     currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
@@ -27,10 +27,25 @@ const InitialState = persistedState ?  {
     mobileScreen: window.matchMedia('(max-width: 1024px)').matches,
     bodyClickListenerLock: true,
     user: null,
-    userJWT: null
+    userJWT: null,
+    notifications: []
 };
 
 const RootReducer = (state=InitialState, action: any) => {
+    if (action.type === 'ADD_NOTIFICATION') {
+        return {
+            ...state,
+            notifications: [...state.notifications, action.notification]
+        };
+    }
+
+    if (action.type === 'CLEAR_NOTIFICATIONS') {
+        return {
+            ...state,
+            notifications: []
+        };
+    }
+
     if (action.type === 'SET_USER_TOKENS') {
         return {
             ...state,

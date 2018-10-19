@@ -17,7 +17,10 @@ export async function request(query: any, variables?: any) {
     const responseJSON = await response.json();
 
     if (responseJSON.errors) {
-        alert(responseJSON.errors.map((error: any) => error.message).join(','));
+        Store.dispatch({
+            type: 'ADD_NOTIFICATION',
+            notification: responseJSON.errors.map((error: any) => error.message).join(',')
+        });
     }
     else {
         return responseJSON.data;
