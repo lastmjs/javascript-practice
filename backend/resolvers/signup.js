@@ -1,7 +1,5 @@
 // Based on https://www.prisma.io/docs/maintain/graphcool-to-prisma/authentication-and-authorization-gcf3/
 
-//TODO setup secret environment variable
-
 import { prisma } from '../lambda.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -20,6 +18,6 @@ export async function signup(parent, args, context, info) {
 
     return {
         user,
-        jwt: jwt.sign({ userId: user.id }, 'secret')
+        jwt: jwt.sign({ userId: user.id }, process.env.APPLICATION_SERVER_SECRET)
     };
 }
