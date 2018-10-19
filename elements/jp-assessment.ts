@@ -8,9 +8,9 @@ class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
         (async () => {
             const response = await request(`
-                query($id: ID!) {
+                query($assessmentId: ID!, $userId: ID!) {
                     assessment(where: {
-                        id: $id
+                        id: $assessmentId
                     }) {
                         id
                         assessML
@@ -25,10 +25,27 @@ class JPAssessment extends HTMLElement {
                             }
                         }
                     }
+
+                    assessmentInfoes(where: {
+                        user: {
+                            id: $userId
+                        }
+                        assessment: {
+                            id: $assessmentId
+                        }
+                    }) {
+                        answeredCorrectly
+                    }
                 }
             `, {
-                id: val
+                assessmentId: val,
+                userId: Store.getState().user ? Store.getState().user.id : ''
             });
+
+            if (response) {
+                //TODO figure out local redux state management
+                this.assessmentInfo = response.assessmentInfoes[0];
+            }
 
             Store.dispatch({
                 type: 'SET_CURRENT_ASSESSMENT',
@@ -270,7 +287,7 @@ class JPAssessment extends HTMLElement {
             <div class="assessment-container">
                     <div id="question-container" class="jp-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
-                        <h2>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length}</h2>
+                        <h2>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
