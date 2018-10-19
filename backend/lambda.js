@@ -8,12 +8,10 @@ import { viewSolution } from './resolvers/view-solution.js';
 import { mergeTypes } from 'merge-graphql-schemas';
 import { dataopsTypeDefs } from './dataops.js';
 
-// process.env.PRISMA_SERVER_SECRET
-
 export const prisma = new Prisma({
     typeDefs,
     endpoint: process.env.AWS_REGION ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466',
-    secret: 'monkey'
+    secret: process.env.PRISMA_SERVER_SECRET
 });
 
 const preparedTopLevelQueryResolvers = prepareTopLevelResolvers(prisma.query);
