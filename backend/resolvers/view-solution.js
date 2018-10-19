@@ -83,7 +83,7 @@ function getPayload(token, secret) {
     }
     catch(error) {
         console.log(error);
-        throw new Error('Not authorized');
+        throw new Error('You must log in or sign up to view the solution');
     }
 }
 
