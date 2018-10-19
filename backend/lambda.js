@@ -48,7 +48,10 @@ const lambda = new GraphQLServerLambda({
     }
 });
 
-export const handler = lambda.handler;
+export const handler = (() => {
+    console.log(process.env.PRISMA_SERVER_SECRET);
+    return lambda.handler;
+})();
 
 function prepareTopLevelResolvers(resolverObject) {
     return Object.entries(resolverObject).reduce((result, entry) => {
