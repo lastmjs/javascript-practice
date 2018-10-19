@@ -37,22 +37,7 @@ export async function viewSolution(parent, args, context, info) {
             }
         }
         else {
-            await prisma.mutation.createAssessmentInfo({
-                data: {
-                    user: {
-                        connect: {
-                            id: user.id
-                        }
-                    },
-                    assessment: {
-                        connect: {
-                            id: args.assessmentId
-                        }
-                    },
-                    answeredCorrectly: false,
-                    solutionViewed: true
-                }
-            });
+            throw new Error('You must attempt an answer before viewing the solution');
         }
 
         const tokenReward = calculateTokenReward(assessmentInfo);
