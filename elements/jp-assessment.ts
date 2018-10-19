@@ -171,6 +171,10 @@ class JPAssessment extends HTMLElement {
         Store.dispatch({
             type: 'PREVIOUS_QUESTION'
         });
+
+        //TODO this is evil
+        this.querySelector('#solution-button').innerHTML = `Solution`;
+        this.querySelector('#submit-button').removeAttribute('disabled');
     }
 
     async showSolution() {
@@ -241,14 +245,10 @@ class JPAssessment extends HTMLElement {
         if (solutionTemplate) {
             this.querySelector('#solution-button').innerHTML = `Solution`;
             this.querySelector('#submit-button').removeAttribute('disabled');
-            this.querySelector('#next-button').removeAttribute('disabled');
-            this.querySelector('#prev-button').removeAttribute('disabled');
         }
         else {
             this.querySelector('#solution-button').innerHTML = `Exercise`;
             this.querySelector('#submit-button').setAttribute('disabled', true);
-            this.querySelector('#next-button').setAttribute('disabled', true);
-            this.querySelector('#prev-button').setAttribute('disabled', true);
         }
 
         Store.dispatch({
@@ -266,7 +266,8 @@ class JPAssessment extends HTMLElement {
         prendusViewQuestion.checkAnswer();
     }
 
-    render(state) {
+    render(state: any) {
+        console.log(state);
         return html`
             <style>
                 /* This is just to hack the input boxes temporarily */
