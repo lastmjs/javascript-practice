@@ -30,7 +30,17 @@ const InitialState = persistedState ?  {
     userJWT: null
 };
 
-const RootReducer = (state=InitialState, action) => {
+const RootReducer = (state=InitialState, action: any) => {
+    if (action.type === 'SET_USER_TOKENS') {
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                tokens: action.tokens
+            }
+        };
+    }
+
     if (action.type === 'LOGOUT_USER') {
         return {
             ...state,
