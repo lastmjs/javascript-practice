@@ -25,6 +25,8 @@ type AggregateUser {
 
 type Assessment {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   concept: Concept!
   assessML: String!
   javaScript: String!
@@ -67,6 +69,8 @@ type AssessmentEdge {
 
 type AssessmentInfo {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   user: User!
   assessment: Assessment!
   answeredCorrectly: Boolean!
@@ -105,18 +109,20 @@ type AssessmentInfoEdge {
 enum AssessmentInfoOrderByInput {
   id_ASC
   id_DESC
-  answeredCorrectly_ASC
-  answeredCorrectly_DESC
-  solutionViewed_ASC
-  solutionViewed_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  answeredCorrectly_ASC
+  answeredCorrectly_DESC
+  solutionViewed_ASC
+  solutionViewed_DESC
 }
 
 type AssessmentInfoPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
 }
@@ -187,6 +193,22 @@ input AssessmentInfoWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   user: UserWhereInput
   assessment: AssessmentWhereInput
   answeredCorrectly: Boolean
@@ -205,20 +227,22 @@ input AssessmentInfoWhereUniqueInput {
 enum AssessmentOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   assessML_ASC
   assessML_DESC
   javaScript_ASC
   javaScript_DESC
   order_ASC
   order_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type AssessmentPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   assessML: String!
   javaScript: String!
   order: Int!
@@ -309,6 +333,22 @@ input AssessmentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   concept: ConceptWhereInput
   assessML: String
   assessML_not: String
@@ -361,6 +401,8 @@ type BatchPayload {
 
 type Concept {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   course: Course!
   assessments(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assessment!]
@@ -410,18 +452,20 @@ type ConceptEdge {
 enum ConceptOrderByInput {
   id_ASC
   id_DESC
-  title_ASC
-  title_DESC
-  order_ASC
-  order_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  title_ASC
+  title_DESC
+  order_ASC
+  order_DESC
 }
 
 type ConceptPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   order: Int!
 }
@@ -510,6 +554,22 @@ input ConceptWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   title: String
   title_not: String
   title_in: [String!]
@@ -547,6 +607,8 @@ input ConceptWhereUniqueInput {
 
 type Course {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   concepts(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Concept!]
   order: Int!
@@ -582,18 +644,20 @@ type CourseEdge {
 enum CourseOrderByInput {
   id_ASC
   id_DESC
-  title_ASC
-  title_DESC
-  order_ASC
-  order_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  title_ASC
+  title_DESC
+  order_ASC
+  order_DESC
 }
 
 type CoursePreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   order: Int!
 }
@@ -654,6 +718,22 @@ input CourseWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   title: String
   title_not: String
   title_in: [String!]
@@ -687,6 +767,8 @@ input CourseWhereInput {
 input CourseWhereUniqueInput {
   id: ID
 }
+
+scalar DateTime
 
 scalar Long
 
@@ -779,6 +861,8 @@ type Subscription {
 
 type TokenTransaction {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   user: User!
   amount: Int!
   type: TokenTransactionType!
@@ -804,18 +888,20 @@ type TokenTransactionEdge {
 enum TokenTransactionOrderByInput {
   id_ASC
   id_DESC
-  amount_ASC
-  amount_DESC
-  type_ASC
-  type_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  amount_ASC
+  amount_DESC
+  type_ASC
+  type_DESC
 }
 
 type TokenTransactionPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   amount: Int!
   type: TokenTransactionType!
 }
@@ -866,6 +952,22 @@ input TokenTransactionWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   user: UserWhereInput
   amount: Int
   amount_not: Int
@@ -890,6 +992,8 @@ input TokenTransactionWhereUniqueInput {
 
 type User {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   password: String!
   tokens: Int!
@@ -933,20 +1037,22 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   email_ASC
   email_DESC
   password_ASC
   password_DESC
   tokens_ASC
   tokens_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   password: String!
   tokens: Int!
@@ -1029,6 +1135,22 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   email: String
   email_not: String
   email_in: [String!]

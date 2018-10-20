@@ -3,6 +3,7 @@ import 'prendus-question-elements/prendus-view-question.ts';
 import { Store } from '../services/store';
 import { request } from '../services/graphql';
 import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
+import { loadUser } from '../services/init';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
@@ -130,22 +131,7 @@ class JPAssessment extends HTMLElement {
             });
         }
 
-        const updateUserResponse = await request(`
-            query($userId: ID!) {
-                user(where: {
-                    id: $userId
-                }) {
-                    tokens
-                }
-            }
-        `, {
-            userId: Store.getState().user.id
-        });
-
-        Store.dispatch({
-            type: 'SET_USER_TOKENS',
-            tokens: updateUserResponse.user.tokens
-        });
+        loadUser();
 
         this.loadAssessment(this.assessmentId);
     }
