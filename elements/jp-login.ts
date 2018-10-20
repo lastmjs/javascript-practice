@@ -58,6 +58,7 @@ class JPLogin extends HTMLElement {
             return;
         }
 
+        //TODO we should somehow combine this with init/load-user, because we're repeating the user selection/loading in 3 places
         const response = await request(`
             mutation($email: String!, $password: String!) {
                 login(email: $email, password: $password) {
@@ -65,6 +66,14 @@ class JPLogin extends HTMLElement {
                         id
                         email
                         tokens
+                        assessmentInfos {
+                            assessment {
+                                concept {
+                                    id
+                                }
+                            }
+                            answeredCorrectly
+                        }
                     }
                     jwt
                 }

@@ -20,7 +20,6 @@ const InitialState = persistedState ?  {
     currentAssessment: null,
     concepts: [],
     showMainMenu: window.matchMedia('(min-width: 1024px)').matches,
-    userProgress: {},
     hideGlobalLoadIndicator: false,
     hideLoadIndicator: false,
     desktopScreen: window.matchMedia('(min-width: 1024px)').matches,
@@ -174,19 +173,6 @@ const RootReducer = (state=InitialState, action: any) => {
             ...state,
             currentConcept,
             hideLoadIndicator: state.currentConcept.id === action.concept.id ? true : false
-        };
-    }
-
-    if (action.type === 'SET_USER_COMPLETED') {
-        return {
-            ...state,
-            userProgress: {
-                ...state.userProgress,
-                [state.currentConcept.id]: {
-                    ...state.userProgress[state.currentConcept.id],
-                    [state.currentAssessment.id]: true
-                }
-            }
         };
     }
 

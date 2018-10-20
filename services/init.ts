@@ -3,7 +3,7 @@ import { request } from './graphql';
 
 loadUser();
 
-async function loadUser() {
+export async function loadUser() {
     const user = Store.getState().user;
 
     if (user) {
@@ -15,6 +15,14 @@ async function loadUser() {
                     id
                     email
                     tokens
+                    assessmentInfos {
+                        assessment {
+                            concept {
+                                id
+                            }
+                        }
+                        answeredCorrectly
+                    }
                 }
             }
         `, {

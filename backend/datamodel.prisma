@@ -2,6 +2,8 @@ directive @unique on FIELD | FIELD_DEFINITION
 
 type User {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   email: String! @unique
   password: String!
   tokens: Int! @default(value: 50)
@@ -10,6 +12,8 @@ type User {
 
 type Course {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   concepts: [Concept!]!
   order: Int!
@@ -17,6 +21,8 @@ type Course {
 
 type Concept {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   course: Course!
   assessments: [Assessment!]!
@@ -25,6 +31,8 @@ type Concept {
 
 type Assessment {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   concept: Concept!
   assessML: String!
   javaScript: String!
@@ -33,6 +41,8 @@ type Assessment {
 
 type TokenTransaction {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   user: User!
   amount: Int!
   type: TokenTransactionType!
@@ -47,6 +57,8 @@ enum TokenTransactionType {
 
 type AssessmentInfo {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   user: User!
   assessment: Assessment!
   answeredCorrectly: Boolean!
