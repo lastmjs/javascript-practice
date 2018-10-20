@@ -3,6 +3,7 @@ import './jp-concept-item';
 import { Store } from '../services/store';
 import { request } from '../services/graphql';
 import { backgroundColorCSSValue, zIndexLayer7, menuItemCSSProperties, highlightColorCSSValue } from '../services/constants';
+import page from 'page';
 
 class JPConceptMap extends HTMLElement {
 
@@ -38,6 +39,14 @@ class JPConceptMap extends HTMLElement {
         // TODO this is extremely evil
         document.querySelector('#solution-button').innerHTML = `Solution`;
         document.querySelector('#submit-button').removeAttribute('disabled');
+    }
+
+    earnTokensClicked() {
+        page('/token/earn');
+    }
+
+    buyTokensClicked() {
+        page('/token/buy');
     }
 
     render(state: any) {
@@ -89,9 +98,8 @@ class JPConceptMap extends HTMLElement {
             <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">                
                 <div class="menu-item-title">JS Practice Alpha</div>
                 <hr style="width: 90%">
-                <div class="menu-item">Create</div>
-                <div class="menu-item">Feedback</div>
-                <div class="menu-item">Support</div>
+                <div class="menu-item" @click=${() => this.earnTokensClicked()}>Earn tokens</div>
+                <div class="menu-item" @click=${() => this.buyTokensClicked()}>Buy tokens</div>
                 <hr style="width: 90%">
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
