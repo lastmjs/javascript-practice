@@ -20,7 +20,21 @@ export async function signup(parent, args, context, info) {
             email: args.email,
             password
         }
-    });
+    }, `
+        {
+            id
+            email
+            tokens
+            assessmentInfos {
+                assessment {
+                    concept {
+                        id
+                    }
+                }
+                answeredCorrectly
+            }
+        }
+    `);
 
     return {
         user,

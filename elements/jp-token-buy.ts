@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 import { Store } from '../services/store';
 import { jpContainerCSSClass } from '../services/constants';
+import './jp-button';
 
 class JPTokenBuy extends HTMLElement {
     price: string = '$5.00';
@@ -52,7 +53,7 @@ class JPTokenBuy extends HTMLElement {
                     >
                 </div>
                 <div>${this.price}</div>
-                <button @click=${() => this.buyNowClick()} style="cursor: pointer">Buy now</button>
+                <jp-button @click=${() => this.buyNowClick()} style="cursor: pointer" .text=${"Buy now"}></jp-button>
             </div>
         `;
     }

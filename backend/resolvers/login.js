@@ -9,7 +9,22 @@ export async function login(parent, args, context, info) {
         where: {
             email: args.email
         }
-    });
+    }, `
+        {
+            id
+            email
+            password
+            tokens
+            assessmentInfos {
+                assessment {
+                    concept {
+                        id
+                    }
+                }
+                answeredCorrectly
+            }
+        }
+    `);
 
     if (!user) {
         throw new Error('User not found');
