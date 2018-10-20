@@ -2,7 +2,7 @@ import { html, render } from 'lit-html';
 import './jp-concept-item';
 import { Store } from '../services/store';
 import { request } from '../services/graphql';
-import { backgroundColorCSSValue, zIndexLayer7, menuItemCSSProperties } from '../services/constants';
+import { backgroundColorCSSValue, zIndexLayer7, menuItemCSSProperties, highlightColorCSSValue } from '../services/constants';
 
 class JPConceptMap extends HTMLElement {
 
@@ -65,9 +65,18 @@ class JPConceptMap extends HTMLElement {
                     ${state.mobileScreen ? `z-index: ${zIndexLayer7};` : ''}
                 }
 
-                .menu-item {
+                .menu-item-title {
                     ${menuItemCSSProperties}
                     font-size: calc(10px + 1vmin);
+                }
+
+                .menu-item {
+                    ${menuItemCSSProperties}
+                    font-size: calc(8px + 1vmin);
+                }
+
+                .menu-item:hover {
+                    background-color: ${highlightColorCSSValue};
                 }
 
                 ${state.mobileScreen ? `
@@ -78,7 +87,11 @@ class JPConceptMap extends HTMLElement {
             </style>
 
             <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">                
-                <div class="menu-item">JS Practice Alpha</div>
+                <div class="menu-item-title">JS Practice Alpha</div>
+                <hr style="width: 90%">
+                <div class="menu-item">Create</div>
+                <div class="menu-item">Feedback</div>
+                <div class="menu-item">Support</div>
                 <hr style="width: 90%">
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
