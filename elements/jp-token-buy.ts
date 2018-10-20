@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 import { Store } from '../services/store';
 import { jpContainerCSSClass } from '../services/constants';
+import './jp-button';
 
 class JPTokenBuy extends HTMLElement {
     price: string = '$5.00';
@@ -41,18 +42,20 @@ class JPTokenBuy extends HTMLElement {
 
             <div class="jp-container">
                 <h1>Buy tokens</h1>
-                <h2>1 token = $0.10</h2>
                 <div>
-                    <input
+                    Tokens: <input
+                        id="tokens-input"
                         type="number"
                         value="50"
-                        style="font-size: calc(12px + 1vmin)"
+                        style="font-size: calc(12px + 1vmin); width: ${this.querySelector('#tokens-input') ? `${this.querySelector('#tokens-input').value.length * 10 + 50}px` : '50px'}"
                         min="50"
                         @input=${(e: any) => this.numTokenInput(e)}
                     >
                 </div>
-                <div>${this.price}</div>
-                <button @click=${() => this.buyNowClick()} style="cursor: pointer">Buy now</button>
+                <br>
+                <div>Price: ${this.price}</div>
+                <br>
+                <jp-button @click=${() => this.buyNowClick()} style="cursor: pointer" .text=${"Buy now"}></jp-button>
             </div>
         `;
     }

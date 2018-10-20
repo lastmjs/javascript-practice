@@ -33,7 +33,7 @@ class JPProfile extends HTMLElement {
             <div class="jp-container">
                 <h1>Welcome ${state.user ? state.user.email : 'unregistered user'}</h1>
                 <h2>You have ${state.user ? state.user.tokens : 0} ${state.user ? state.user.tokens === 1 ? 'token, use it wisely' : 'tokens, use them wisely' : 'tokens, signup to get some'}</h2>
-                <button ?hidden=${!state.user} @click=${() => this.logoutClick()}>Logout</button>
+                <jp-button ?hidden=${!state.user} @click=${() => this.logoutClick()} .text=${'Logout'}></jp-button>
             </div>
         `;
     }
