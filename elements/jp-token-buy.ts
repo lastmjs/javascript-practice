@@ -3,7 +3,7 @@ import { Store } from '../services/store';
 import { jpContainerCSSClass } from '../services/constants';
 
 class JPTokenBuy extends HTMLElement {
-    price: string = '$0.50';
+    price: string = '$5.00';
 
     connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
@@ -45,9 +45,9 @@ class JPTokenBuy extends HTMLElement {
                 <div>
                     <input
                         type="number"
-                        value="5"
+                        value="50"
                         style="font-size: calc(12px + 1vmin)"
-                        min="5"
+                        min="50"
                         @input=${(e: any) => this.numTokenInput(e)}
                     >
                 </div>
