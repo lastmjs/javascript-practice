@@ -2,7 +2,7 @@ import { html, render } from 'lit-html';
 import './jp-concept-item';
 import { Store } from '../services/store';
 import { request } from '../services/graphql';
-import { backgroundColorCSSValue, zIndexLayer7 } from '../services/constants';
+import { backgroundColorCSSValue, zIndexLayer7, menuItemCSSProperties } from '../services/constants';
 
 class JPConceptMap extends HTMLElement {
 
@@ -65,6 +65,11 @@ class JPConceptMap extends HTMLElement {
                     ${state.mobileScreen ? `z-index: ${zIndexLayer7};` : ''}
                 }
 
+                .menu-item {
+                    ${menuItemCSSProperties}
+                    font-size: calc(10px + 1vmin);
+                }
+
                 ${state.mobileScreen ? `
                     .concepts-container-hidden {
                         visibility: hidden;
@@ -73,6 +78,8 @@ class JPConceptMap extends HTMLElement {
             </style>
 
             <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">                
+                <div class="menu-item">JS Practice Alpha</div>
+                <hr style="width: 90%">
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
                                     id=${concept.id}
