@@ -212,7 +212,7 @@ class JPAssessment extends HTMLElement {
         if (showSolutionResponse.viewSolution.tokenReward < 0) {
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
-                notification: `${showSolutionResponse.viewSolution.tokenReward} ${showSolutionResponse.viewSolution.tokenReward === -1 ? 'token' : 'tokens'}!`
+                notification: `${showSolutionResponse.viewSolution.tokenReward} ${showSolutionResponse.viewSolution.tokenReward === -1 ? 'token' : 'tokens'}`
             });
         }
 

@@ -15,10 +15,13 @@ export async function signup(parent, args, context, info) {
         throw new Error('That email address has already been registered');
     }
 
+    const initialTokenAmount = 20;
+
     const user = await prisma.mutation.createUser({
         data: {
             email: args.email,
-            password
+            password,
+            tokens: initialTokenAmount
         }
     }, `
         {
@@ -35,6 +38,18 @@ export async function signup(parent, args, context, info) {
             }
         }
     `);
+
+    await prisma.mutation.createTokenTransaction({
+        data: {
+            user: {
+                connect: {
+                    id: user.id
+                }
+            },
+            amount: initialTokenAmount,
+            type: 'INITIAL_ENDOWMENT'
+        }
+    });
 
     return {
         user,

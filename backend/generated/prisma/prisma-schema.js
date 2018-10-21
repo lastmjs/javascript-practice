@@ -929,6 +929,7 @@ enum TokenTransactionType {
   ANSWER_INCORRECT
   VIEW_SOLUTION
   EXERCISE_CREATED_AND_ACCEPTED
+  INITIAL_ENDOWMENT
 }
 
 input TokenTransactionUpdateInput {
@@ -1009,7 +1010,7 @@ type UserConnection {
 input UserCreateInput {
   email: String!
   password: String!
-  tokens: Int
+  tokens: Int!
   assessmentInfos: AssessmentInfoCreateManyWithoutUserInput
 }
 
@@ -1026,7 +1027,7 @@ input UserCreateOneWithoutAssessmentInfosInput {
 input UserCreateWithoutAssessmentInfosInput {
   email: String!
   password: String!
-  tokens: Int
+  tokens: Int!
 }
 
 type UserEdge {

@@ -6,7 +6,7 @@ type User {
   updatedAt: DateTime!
   email: String! @unique
   password: String!
-  tokens: Int! @default(value: 50)
+  tokens: Int!
   assessmentInfos: [AssessmentInfo!]!
 }
 
@@ -53,6 +53,7 @@ enum TokenTransactionType {
   ANSWER_INCORRECT
   VIEW_SOLUTION
   EXERCISE_CREATED_AND_ACCEPTED
+  INITIAL_ENDOWMENT
 }
 
 type AssessmentInfo {
