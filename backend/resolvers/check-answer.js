@@ -23,7 +23,7 @@ export async function checkAnswer(parent, args, context, info) {
             }
         `);
 
-        const allowed = user.tokens >= 2;
+        const allowed = user.tokens >= 1;
 
         if (!allowed) {
             return {
@@ -112,15 +112,5 @@ function getPayload(token, secret) {
 }
 
 function calculateTokenReward(assessmentInfo, correct) {
-    if (assessmentInfo) {
-        if (assessmentInfo.answeredCorrectly) {
-            return 0;
-        }
-        else {
-            return correct ? 1 : 0;
-        }
-    }
-    else {
-        return correct ? 1 : -2;
-    }
+    return assessmentInfo ? 0 : correct ? 0 : -1;
 }

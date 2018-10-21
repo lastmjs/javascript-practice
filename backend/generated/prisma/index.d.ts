@@ -393,7 +393,8 @@ export type TokenTransactionType =
   | "ANSWER_CORRECT"
   | "ANSWER_INCORRECT"
   | "VIEW_SOLUTION"
-  | "EXERCISE_CREATED_AND_ACCEPTED";
+  | "EXERCISE_CREATED_AND_ACCEPTED"
+  | "INITIAL_ENDOWMENT";
 
 export type TokenTransactionOrderByInput =
   | "id_ASC"
@@ -886,7 +887,7 @@ export type AssessmentInfoWhereUniqueInput = AtLeastOne<{
 export interface UserCreateWithoutAssessmentInfosInput {
   email: String;
   password: String;
-  tokens?: Int;
+  tokens: Int;
 }
 
 export interface UserWhereInput {
@@ -985,7 +986,7 @@ export interface AssessmentInfoUpdateInput {
 export interface UserCreateInput {
   email: String;
   password: String;
-  tokens?: Int;
+  tokens: Int;
   assessmentInfos?: AssessmentInfoCreateManyWithoutUserInput;
 }
 
