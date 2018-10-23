@@ -36,8 +36,12 @@ export async function login(parent, args, context, info) {
         throw new Error('Invalid password');
     }
 
+    const jwToken = jwt.sign({ userId: user.id }, process.env.APPLICATION_SERVER_SECRET);
+
+    context.event.headers['authorization'] = `Bearer ${jwToken}`;
+
     return {
         user,
-        jwt: jwt.sign({ userId: user.id }, process.env.APPLICATION_SERVER_SECRET)
+        jwt: jwToken
     };
 }

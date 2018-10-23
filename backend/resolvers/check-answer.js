@@ -1,13 +1,12 @@
 import { prisma } from '../lambda.js';
-import jwt from 'jsonwebtoken';
+import { getUserId } from '../services/utilities.js';
 
 export async function checkAnswer(parent, args, context, info) {
     try {
-        const token = context.event.headers['authorization'].replace('Bearer ', '');
-        const payload = getPayload(token, process.env.APPLICATION_SERVER_SECRET);
+        const userId = getUserId(context, 'You must log in or sign up to submit an answer');
         const user = await prisma.query.user({
             where: {
-                id: payload.userId
+                id: userId
             }
         }, `
             {
@@ -98,16 +97,6 @@ export async function checkAnswer(parent, args, context, info) {
     catch(error) {
         console.log(error);
         throw error;
-    }
-}
-
-function getPayload(token, secret) {
-    try {
-        return jwt.verify(token, secret);
-    }
-    catch(error) {
-        console.log(error);
-        throw new Error('You must log in or sign up to submit an answer');
     }
 }
 
