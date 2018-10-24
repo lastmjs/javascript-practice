@@ -877,6 +877,7 @@ type TokenReward {
   id: ID!
   type: TokenTransactionType!
   amount: Int!
+  price: Int!
 }
 
 type TokenRewardConnection {
@@ -888,6 +889,7 @@ type TokenRewardConnection {
 input TokenRewardCreateInput {
   type: TokenTransactionType!
   amount: Int!
+  price: Int!
 }
 
 type TokenRewardEdge {
@@ -902,6 +904,8 @@ enum TokenRewardOrderByInput {
   type_DESC
   amount_ASC
   amount_DESC
+  price_ASC
+  price_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -912,6 +916,7 @@ type TokenRewardPreviousValues {
   id: ID!
   type: TokenTransactionType!
   amount: Int!
+  price: Int!
 }
 
 type TokenRewardSubscriptionPayload {
@@ -935,6 +940,7 @@ input TokenRewardSubscriptionWhereInput {
 input TokenRewardUpdateInput {
   type: TokenTransactionType
   amount: Int
+  price: Int
 }
 
 input TokenRewardWhereInput {
@@ -964,6 +970,14 @@ input TokenRewardWhereInput {
   amount_lte: Int
   amount_gt: Int
   amount_gte: Int
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
   AND: [TokenRewardWhereInput!]
   OR: [TokenRewardWhereInput!]
   NOT: [TokenRewardWhereInput!]
@@ -1049,7 +1063,9 @@ enum TokenTransactionType {
   ANSWER_INCORRECT
   VIEW_SOLUTION
   EXERCISE_CREATED_AND_ACCEPTED
+  FEEDBACK_RECEIVED
   INITIAL_ENDOWMENT
+  TOKEN_PURCHASE
 }
 
 input TokenTransactionUpdateInput {

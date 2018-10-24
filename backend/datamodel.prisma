@@ -68,6 +68,7 @@ type TokenReward {
   id: ID! @unique
   type: TokenTransactionType! @unique
   amount: Int!
+  price: Int!
 }
 
 enum TokenTransactionType {
@@ -75,7 +76,9 @@ enum TokenTransactionType {
   ANSWER_INCORRECT
   VIEW_SOLUTION
   EXERCISE_CREATED_AND_ACCEPTED
+  FEEDBACK_RECEIVED
   INITIAL_ENDOWMENT
+  TOKEN_PURCHASE
 }
 
 enum VisibilityType {

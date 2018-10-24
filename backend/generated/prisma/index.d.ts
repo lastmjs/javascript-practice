@@ -435,7 +435,9 @@ export type TokenTransactionType =
   | "ANSWER_INCORRECT"
   | "VIEW_SOLUTION"
   | "EXERCISE_CREATED_AND_ACCEPTED"
-  | "INITIAL_ENDOWMENT";
+  | "FEEDBACK_RECEIVED"
+  | "INITIAL_ENDOWMENT"
+  | "TOKEN_PURCHASE";
 
 export type TokenRewardOrderByInput =
   | "id_ASC"
@@ -444,6 +446,8 @@ export type TokenRewardOrderByInput =
   | "type_DESC"
   | "amount_ASC"
   | "amount_DESC"
+  | "price_ASC"
+  | "price_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1009,6 +1013,7 @@ export interface CourseUpsertWithoutConceptsInput {
 export interface TokenRewardCreateInput {
   type: TokenTransactionType;
   amount: Int;
+  price: Int;
 }
 
 export interface ConceptCreateManyWithoutCourseInput {
@@ -1176,6 +1181,14 @@ export interface TokenRewardWhereInput {
   amount_lte?: Int;
   amount_gt?: Int;
   amount_gte?: Int;
+  price?: Int;
+  price_not?: Int;
+  price_in?: Int[] | Int;
+  price_not_in?: Int[] | Int;
+  price_lt?: Int;
+  price_lte?: Int;
+  price_gt?: Int;
+  price_gte?: Int;
   AND?: TokenRewardWhereInput[] | TokenRewardWhereInput;
   OR?: TokenRewardWhereInput[] | TokenRewardWhereInput;
   NOT?: TokenRewardWhereInput[] | TokenRewardWhereInput;
@@ -1203,6 +1216,7 @@ export interface UserUpdateOneRequiredWithoutAssessmentInfosInput {
 export interface TokenRewardUpdateInput {
   type?: TokenTransactionType;
   amount?: Int;
+  price?: Int;
 }
 
 export interface UserUpdateWithoutAssessmentInfosDataInput {
@@ -2231,6 +2245,7 @@ export interface TokenRewardPreviousValuesNode {
   id: ID_Output;
   type: TokenTransactionType;
   amount: Int;
+  price: Int;
 }
 
 export interface TokenRewardPreviousValues
@@ -2239,6 +2254,7 @@ export interface TokenRewardPreviousValues
   id: () => Promise<ID_Output>;
   type: () => Promise<TokenTransactionType>;
   amount: () => Promise<Int>;
+  price: () => Promise<Int>;
 }
 
 export interface TokenRewardPreviousValuesSubscription
@@ -2247,6 +2263,7 @@ export interface TokenRewardPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   type: () => Promise<AsyncIterator<TokenTransactionType>>;
   amount: () => Promise<AsyncIterator<Int>>;
+  price: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface TokenRewardSubscriptionPayloadNode {
@@ -2356,12 +2373,14 @@ export interface TokenRewardNode {
   id: ID_Output;
   type: TokenTransactionType;
   amount: Int;
+  price: Int;
 }
 
 export interface TokenReward extends Promise<TokenRewardNode>, Fragmentable {
   id: () => Promise<ID_Output>;
   type: () => Promise<TokenTransactionType>;
   amount: () => Promise<Int>;
+  price: () => Promise<Int>;
 }
 
 export interface TokenRewardSubscription
@@ -2370,6 +2389,7 @@ export interface TokenRewardSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   type: () => Promise<AsyncIterator<TokenTransactionType>>;
   amount: () => Promise<AsyncIterator<Int>>;
+  price: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AggregateTokenRewardNode {

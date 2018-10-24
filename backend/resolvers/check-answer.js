@@ -22,7 +22,25 @@ export async function checkAnswer(parent, args, context, info) {
             }
         `);
 
-        const allowed = user.tokens >= 1;
+        const answerCorrectTokenReward = await prisma.query.tokenReward({
+            where: {
+                type: 'ANSWER_CORRECT'
+            }
+        }, {
+            amount
+        });
+
+        const answerIncorrectTokenReward = await prisma.query.tokenReward({
+            where: {
+                type: 'ANSWER_INCORRECT'
+            }
+        }, {
+            amount
+        });
+
+        const maximum = Math.max(answerCorrectTokenReward.amount < 0 ? Math.abs(answerCorrectTokenReward.amount) : 0, answerIncorrectTokenReward.amount < 0 ? Math.abs(answerIncorrectTokenReward.amount) : 0);
+
+        const allowed = user.tokens >= maximum;
 
         if (!allowed) {
             return {
@@ -63,7 +81,7 @@ export async function checkAnswer(parent, args, context, info) {
             });
         }
 
-        const tokenReward = calculateTokenReward(assessmentInfo, args.correct);
+        const tokenReward = calculateTokenReward(assessmentInfo, args.correct, answerCorrectTokenReward.amount, answerIncorrectTokenReward.amount);
 
         if (tokenReward !== 0) {
             await prisma.mutation.createTokenTransaction({
@@ -101,6 +119,6 @@ export async function checkAnswer(parent, args, context, info) {
     }
 }
 
-function calculateTokenReward(assessmentInfo, correct) {
-    return assessmentInfo ? 0 : correct ? 0 : -1;
+function calculateTokenReward(assessmentInfo, correct, answerCorrectTokenRewardAmount, answerIncorrectTokenRewardAmount) {
+    return assessmentInfo ? 0 : correct ? answerCorrectTokenRewardAmount : answerIncorrectTokenRewardAmount;
 }

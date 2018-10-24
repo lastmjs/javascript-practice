@@ -15,13 +15,19 @@ export async function signup(parent, args, context, info) {
         throw new Error('That email address has already been registered');
     }
 
-    const initialTokenAmount = 20;
+    const initialEndowmentTokenReward = await prisma.query.tokenReward({
+        where: {
+            type: 'INITIAL_ENDOWMENT'
+        }
+    }, {
+        amount
+    });
 
     const user = await prisma.mutation.createUser({
         data: {
             email: args.email,
             password,
-            tokens: initialTokenAmount
+            tokens: initialEndowmentTokenReward.amount
         }
     }, `
         {
@@ -47,9 +53,9 @@ export async function signup(parent, args, context, info) {
                     id: user.id
                 }
             },
-            amount: initialTokenAmount,
+            amount: initialEndowmentTokenReward.amount,
             type: 'INITIAL_ENDOWMENT',
-            description: `User ${user.id} received ${initialTokenAmount} ${initialTokenAmount === 1 ? 'token' : 'tokens'} from the system`
+            description: `User ${user.id} received ${initialEndowmentTokenReward.amount} ${initialEndowmentTokenReward.amount === 1 ? 'token' : 'tokens'} from the system`
         }
     });
 
