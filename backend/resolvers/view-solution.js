@@ -23,7 +23,15 @@ export async function viewSolution(parent, args, context, info) {
             }
         `);
 
-        const allowed = user.tokens >= 1;
+        const viewSolutionTokenReward = await prisma.query.tokenReward({
+            where: {
+                type: 'VIEW_SOLUTION'
+            }
+        }, `{
+            amount
+        }`);
+
+        const allowed = user.tokens >= Math.abs(viewSolutionTokenReward.amount);
 
         if (!allowed) {
             return {
@@ -49,7 +57,7 @@ export async function viewSolution(parent, args, context, info) {
             throw new Error('You must attempt an answer before viewing the solution');
         }
 
-        const tokenReward = calculateTokenReward(assessmentInfo);
+        const tokenReward = calculateTokenReward(assessmentInfo, viewSolutionTokenReward.amount);
 
         if (tokenReward !== 0) {
             await prisma.mutation.createTokenTransaction({
@@ -60,7 +68,8 @@ export async function viewSolution(parent, args, context, info) {
                         }
                     },
                     amount: tokenReward,
-                    type: 'VIEW_SOLUTION'
+                    type: 'VIEW_SOLUTION',
+                    description: `Exercise ${args.assessmentId} solution viewed`
                 }
             });
 
@@ -85,6 +94,6 @@ export async function viewSolution(parent, args, context, info) {
     }
 }
 
-function calculateTokenReward(assessmentInfo) {
-    return assessmentInfo && (assessmentInfo.solutionViewed || assessmentInfo.answeredCorrectly) ? 0 : -1;
+function calculateTokenReward(assessmentInfo, viewSolutionTokenRewardAmount) {
+    return assessmentInfo && (assessmentInfo.solutionViewed || assessmentInfo.answeredCorrectly) ? 0 : viewSolutionTokenRewardAmount;
 }
