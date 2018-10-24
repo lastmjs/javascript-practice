@@ -5,8 +5,8 @@ directive @visibility(type: VisibilityType!) on FIELD | FIELD_DEFINITION
 
 type User  {
   id: ID! @unique @visibility(type: OWNER)
-  createdAt: DateTime! @private
-  updatedAt: DateTime! @private
+  createdAt: DateTime! @visibility(type: OWNER)
+  updatedAt: DateTime! @visibility(type: OWNER)
   email: String! @unique @visibility(type: OWNER)
   password: String! @private
   tokens: Int! @visibility(type: OWNER)
@@ -55,13 +55,13 @@ type TokenTransaction {
 }
 
 type AssessmentInfo {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  user: User!
-  assessment: Assessment!
-  answeredCorrectly: Boolean!
-  solutionViewed: Boolean!
+  id: ID! @unique @visibility(type: OWNER)
+  createdAt: DateTime! @visibility(type: OWNER)
+  updatedAt: DateTime! @visibility(type: OWNER)
+  user: User! @visibility(type: OWNER)
+  assessment: Assessment! @visibility(type: OWNER)
+  answeredCorrectly: Boolean! @visibility(type: OWNER)
+  solutionViewed: Boolean! @visibility(type: OWNER)
 }
 
 enum TokenTransactionType {

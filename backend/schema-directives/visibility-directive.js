@@ -15,6 +15,7 @@ export class VisibilityDirective extends SchemaDirectiveVisitor {
                     }
                 }
 
+                //TODO this is essentially repeated
                 if (details.objectType.name === 'TokenTransaction') {
                     const tokenTransaction = await prisma.query.tokenTransaction({
                         where: {
@@ -29,6 +30,25 @@ export class VisibilityDirective extends SchemaDirectiveVisitor {
                     `);
 
                     if (tokenTransaction.user.id !== getUserId(context, 'Not authorized')) {
+                        throw new Error('Not authorized');
+                    }
+                }
+
+                //TODO this is essentially repeated
+                if (details.objectType.name === 'AssessmentInfo') {
+                    const assessmentInfo = await prisma.query.assessmentInfo({
+                        where: {
+                            id: parent.id
+                        }
+                    }, `
+                        {
+                            user {
+                                id
+                            }
+                        }
+                    `);
+
+                    if (assessmentInfo.user.id !== getUserId(context, 'Not authorized')) {
                         throw new Error('Not authorized');
                     }
                 }
