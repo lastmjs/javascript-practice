@@ -16,6 +16,7 @@ export async function login(parent, args, context, info) {
             password
             tokens
             assessmentInfos {
+                id
                 assessment {
                     concept {
                         id

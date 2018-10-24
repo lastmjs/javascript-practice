@@ -29,6 +29,7 @@ export async function signup(parent, args, context, info) {
             email
             tokens
             assessmentInfos {
+                id
                 assessment {
                     concept {
                         id
