@@ -63,3 +63,5 @@ export const jpContainerCSSClass = (state: any) => `
         margin-right: ${state.desktopScreen ? 'auto' : '2%'};
     }
 `;
+
+export const NO_MORE_EXERCISES = 'NO_MORE_EXERCISES';
