@@ -81,6 +81,7 @@ class JPSignup extends HTMLElement {
                         email
                         tokens
                         assessmentInfos {
+                            id
                             assessment {
                                 concept {
                                     id

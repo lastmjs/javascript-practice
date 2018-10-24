@@ -52,6 +52,7 @@ type TokenTransaction {
   user: User! @visibility(type: OWNER)
   amount: Int! @visibility(type: OWNER)
   type: TokenTransactionType! @visibility(type: OWNER)
+  description: String! @visibility(type: OWNER)
 }
 
 type AssessmentInfo {
@@ -64,6 +65,12 @@ type AssessmentInfo {
   solutionViewed: Boolean! @visibility(type: OWNER)
 }
 
+type TokenReward {
+  id: ID! @unique
+  type: TokenTransactionType! @unique
+  amount: Int!
+}
+
 enum TokenTransactionType {
   ANSWER_CORRECT
   ANSWER_INCORRECT
@@ -71,7 +78,6 @@ enum TokenTransactionType {
   EXERCISE_CREATED_AND_ACCEPTED
   INITIAL_ENDOWMENT
 }
-
 
 enum VisibilityType {
   OWNER

@@ -16,6 +16,7 @@ export async function loadUser() {
                     email
                     tokens
                     assessmentInfos {
+                        id
                         assessment {
                             concept {
                                 id

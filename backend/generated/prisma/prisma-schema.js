@@ -15,6 +15,10 @@ type AggregateCourse {
   count: Int!
 }
 
+type AggregateTokenReward {
+  count: Int!
+}
+
 type AggregateTokenTransaction {
   count: Int!
 }
@@ -797,6 +801,12 @@ type Mutation {
   upsertCourse(where: CourseWhereUniqueInput!, create: CourseCreateInput!, update: CourseUpdateInput!): Course!
   deleteCourse(where: CourseWhereUniqueInput!): Course
   deleteManyCourses(where: CourseWhereInput): BatchPayload!
+  createTokenReward(data: TokenRewardCreateInput!): TokenReward!
+  updateTokenReward(data: TokenRewardUpdateInput!, where: TokenRewardWhereUniqueInput!): TokenReward
+  updateManyTokenRewards(data: TokenRewardUpdateInput!, where: TokenRewardWhereInput): BatchPayload!
+  upsertTokenReward(where: TokenRewardWhereUniqueInput!, create: TokenRewardCreateInput!, update: TokenRewardUpdateInput!): TokenReward!
+  deleteTokenReward(where: TokenRewardWhereUniqueInput!): TokenReward
+  deleteManyTokenRewards(where: TokenRewardWhereInput): BatchPayload!
   createTokenTransaction(data: TokenTransactionCreateInput!): TokenTransaction!
   updateTokenTransaction(data: TokenTransactionUpdateInput!, where: TokenTransactionWhereUniqueInput!): TokenTransaction
   updateManyTokenTransactions(data: TokenTransactionUpdateInput!, where: TokenTransactionWhereInput): BatchPayload!
@@ -841,6 +851,9 @@ type Query {
   course(where: CourseWhereUniqueInput!): Course
   courses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course]!
   coursesConnection(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseConnection!
+  tokenReward(where: TokenRewardWhereUniqueInput!): TokenReward
+  tokenRewards(where: TokenRewardWhereInput, orderBy: TokenRewardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TokenReward]!
+  tokenRewardsConnection(where: TokenRewardWhereInput, orderBy: TokenRewardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TokenRewardConnection!
   tokenTransaction(where: TokenTransactionWhereUniqueInput!): TokenTransaction
   tokenTransactions(where: TokenTransactionWhereInput, orderBy: TokenTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TokenTransaction]!
   tokenTransactionsConnection(where: TokenTransactionWhereInput, orderBy: TokenTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TokenTransactionConnection!
@@ -855,8 +868,110 @@ type Subscription {
   assessmentInfo(where: AssessmentInfoSubscriptionWhereInput): AssessmentInfoSubscriptionPayload
   concept(where: ConceptSubscriptionWhereInput): ConceptSubscriptionPayload
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
+  tokenReward(where: TokenRewardSubscriptionWhereInput): TokenRewardSubscriptionPayload
   tokenTransaction(where: TokenTransactionSubscriptionWhereInput): TokenTransactionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type TokenReward {
+  id: ID!
+  type: TokenTransactionType!
+  amount: Int!
+}
+
+type TokenRewardConnection {
+  pageInfo: PageInfo!
+  edges: [TokenRewardEdge]!
+  aggregate: AggregateTokenReward!
+}
+
+input TokenRewardCreateInput {
+  type: TokenTransactionType!
+  amount: Int!
+}
+
+type TokenRewardEdge {
+  node: TokenReward!
+  cursor: String!
+}
+
+enum TokenRewardOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  amount_ASC
+  amount_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TokenRewardPreviousValues {
+  id: ID!
+  type: TokenTransactionType!
+  amount: Int!
+}
+
+type TokenRewardSubscriptionPayload {
+  mutation: MutationType!
+  node: TokenReward
+  updatedFields: [String!]
+  previousValues: TokenRewardPreviousValues
+}
+
+input TokenRewardSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TokenRewardWhereInput
+  AND: [TokenRewardSubscriptionWhereInput!]
+  OR: [TokenRewardSubscriptionWhereInput!]
+  NOT: [TokenRewardSubscriptionWhereInput!]
+}
+
+input TokenRewardUpdateInput {
+  type: TokenTransactionType
+  amount: Int
+}
+
+input TokenRewardWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: TokenTransactionType
+  type_not: TokenTransactionType
+  type_in: [TokenTransactionType!]
+  type_not_in: [TokenTransactionType!]
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  AND: [TokenRewardWhereInput!]
+  OR: [TokenRewardWhereInput!]
+  NOT: [TokenRewardWhereInput!]
+}
+
+input TokenRewardWhereUniqueInput {
+  id: ID
+  type: TokenTransactionType
 }
 
 type TokenTransaction {
@@ -866,6 +981,7 @@ type TokenTransaction {
   user: User!
   amount: Int!
   type: TokenTransactionType!
+  description: String!
 }
 
 type TokenTransactionConnection {
@@ -878,6 +994,7 @@ input TokenTransactionCreateInput {
   user: UserCreateOneInput!
   amount: Int!
   type: TokenTransactionType!
+  description: String!
 }
 
 type TokenTransactionEdge {
@@ -896,6 +1013,8 @@ enum TokenTransactionOrderByInput {
   amount_DESC
   type_ASC
   type_DESC
+  description_ASC
+  description_DESC
 }
 
 type TokenTransactionPreviousValues {
@@ -904,6 +1023,7 @@ type TokenTransactionPreviousValues {
   updatedAt: DateTime!
   amount: Int!
   type: TokenTransactionType!
+  description: String!
 }
 
 type TokenTransactionSubscriptionPayload {
@@ -936,6 +1056,7 @@ input TokenTransactionUpdateInput {
   user: UserUpdateOneRequiredInput
   amount: Int
   type: TokenTransactionType
+  description: String
 }
 
 input TokenTransactionWhereInput {
@@ -982,6 +1103,20 @@ input TokenTransactionWhereInput {
   type_not: TokenTransactionType
   type_in: [TokenTransactionType!]
   type_not_in: [TokenTransactionType!]
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [TokenTransactionWhereInput!]
   OR: [TokenTransactionWhereInput!]
   NOT: [TokenTransactionWhereInput!]

@@ -74,7 +74,8 @@ export async function checkAnswer(parent, args, context, info) {
                         }
                     },
                     amount: tokenReward,
-                    type: args.correct ? 'ANSWER_CORRECT' : 'ANSWER_INCORRECT'
+                    type: args.correct ? 'ANSWER_CORRECT' : 'ANSWER_INCORRECT',
+                    description: `Exercise ${args.assessmentId} answered ${args.correct ? 'correctly' : 'incorrectly'}`
                 }
             });
 

@@ -48,7 +48,8 @@ export async function signup(parent, args, context, info) {
                 }
             },
             amount: initialTokenAmount,
-            type: 'INITIAL_ENDOWMENT'
+            type: 'INITIAL_ENDOWMENT',
+            description: `User ${user.id} received ${initialTokenAmount} ${initialTokenAmount === 1 ? 'token' : 'tokens'} from the system`
         }
     });
 

@@ -60,7 +60,8 @@ export async function viewSolution(parent, args, context, info) {
                         }
                     },
                     amount: tokenReward,
-                    type: 'VIEW_SOLUTION'
+                    type: 'VIEW_SOLUTION',
+                    description: `Exercise ${args.assessmentId} solution viewed`
                 }
             });
 

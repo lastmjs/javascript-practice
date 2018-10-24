@@ -47,6 +47,7 @@ class JPAssessment extends HTMLElement {
                         id: $assessmentId
                     }
                 }) {
+                    id
                     answeredCorrectly
                 }
             }
