@@ -27,9 +27,9 @@ export async function viewSolution(parent, args, context, info) {
             where: {
                 type: 'VIEW_SOLUTION'
             }
-        }, {
+        }, `{
             amount
-        });
+        }`);
 
         const allowed = user.tokens >= Math.abs(viewSolutionTokenReward.amount);
 

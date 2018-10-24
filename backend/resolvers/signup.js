@@ -19,9 +19,9 @@ export async function signup(parent, args, context, info) {
         where: {
             type: 'INITIAL_ENDOWMENT'
         }
-    }, {
+    }, `{
         amount
-    });
+    }`);
 
     const user = await prisma.mutation.createUser({
         data: {

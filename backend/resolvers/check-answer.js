@@ -26,17 +26,17 @@ export async function checkAnswer(parent, args, context, info) {
             where: {
                 type: 'ANSWER_CORRECT'
             }
-        }, {
+        }, `{
             amount
-        });
+        }`);
 
         const answerIncorrectTokenReward = await prisma.query.tokenReward({
             where: {
                 type: 'ANSWER_INCORRECT'
             }
-        }, {
+        }, `{
             amount
-        });
+        }`);
 
         const maximum = Math.max(answerCorrectTokenReward.amount < 0 ? Math.abs(answerCorrectTokenReward.amount) : 0, answerIncorrectTokenReward.amount < 0 ? Math.abs(answerIncorrectTokenReward.amount) : 0);
 
