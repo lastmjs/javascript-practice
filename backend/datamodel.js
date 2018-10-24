@@ -1,3 +1,4 @@
+export const datamodelTypeDefs = `
 directive @unique on FIELD | FIELD_DEFINITION
 directive @private on FIELD | FIELD_DEFINITION
 directive @visibility(type: VisibilityType!) on FIELD | FIELD_DEFINITION
@@ -75,3 +76,4 @@ enum TokenTransactionType {
 enum VisibilityType {
   OWNER
 }
+`;
