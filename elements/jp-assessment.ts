@@ -4,10 +4,17 @@ import { Store } from '../services/store';
 import { request } from '../services/graphql';
 import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
 import { loadUser } from '../services/init';
+import page from 'page';
+import { NO_MORE_EXERCISES } from '../services/constants';
 
 class JPAssessment extends HTMLElement {
     set assessmentId(val: string) {
         this._assessmentId = val;
+
+        if (val === NO_MORE_EXERCISES) {
+            return;
+        }
+
         this.loadAssessment(val);
     }
 
@@ -154,23 +161,35 @@ class JPAssessment extends HTMLElement {
     }
 
     nextAssessmentClick() {
-        Store.dispatch({
-            type: 'NEXT_QUESTION'
-        });
-
-        //TODO this is evil
-        this.querySelector('#solution-button').innerHTML = `Solution`;
-        this.querySelector('#submit-button').removeAttribute('disabled');
+        const state = Store.getState();
+        if (state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1) {
+            page(`/assessment/${NO_MORE_EXERCISES}/view`);
+        }
+        else {
+            Store.dispatch({
+                type: 'NEXT_QUESTION'
+            });
+         
+            //TODO this is evil
+            this.querySelector('#solution-button').innerHTML = `Solution`;
+            this.querySelector('#submit-button').removeAttribute('disabled');
+        }
     }
 
     previousAssessmentClick() {
-        Store.dispatch({
-            type: 'PREVIOUS_QUESTION'
-        });
-
-        //TODO this is evil
-        this.querySelector('#solution-button').innerHTML = `Solution`;
-        this.querySelector('#submit-button').removeAttribute('disabled');
+        const state = Store.getState();
+        if (this.assessmentId === NO_MORE_EXERCISES) {
+            page(`/assessment/${state.currentAssessment.id}/view`);
+        }
+        else {
+            Store.dispatch({
+                type: 'PREVIOUS_QUESTION'
+            });
+    
+            //TODO this is evil
+            this.querySelector('#solution-button').innerHTML = `Solution`;
+            this.querySelector('#submit-button').removeAttribute('disabled');
+        }
     }
 
     async showSolution() {
@@ -304,13 +323,16 @@ class JPAssessment extends HTMLElement {
             <div class="assessment-container">
                     <div id="question-container" class="jp-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
-                        <h2>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
+                        <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
+                        <h2 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Looks like there are no more exercises</h2>
+                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="/">create an exercise</a>? You'll learn something new and earn some tokens</h3>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
                             @question-response=${(e: any) => this.questionResponse(e)}
                             @question-changed=${() => this.questionChanged()}
                             @question-built=${() => this.questionBuilt()}
+                            ?hidden=${this.assessmentId === NO_MORE_EXERCISES}
                         >
                             Loading...
                         </prendus-view-question>
@@ -330,6 +352,7 @@ class JPAssessment extends HTMLElement {
                             id="solution-button"
                             class="bottom-button"
                             @click=${() => this.showSolution()}
+                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
                         >
                             Solution
                         </button>
@@ -338,6 +361,7 @@ class JPAssessment extends HTMLElement {
                             id="submit-button"
                             class="bottom-button"
                             @click=${() => this.submitAnswer()}
+                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
                         >
                             Submit
                         </button>
@@ -346,7 +370,7 @@ class JPAssessment extends HTMLElement {
                             id="next-button"
                             class="bottom-button"
                             @click=${() => this.nextAssessmentClick()}
-                            ?disabled=${state.currentAssessment && state.currentConcept && state.currentAssessment.order === state.currentConcept.assessments.length - 1}
+                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
                         >
                             Next
                         </button>
