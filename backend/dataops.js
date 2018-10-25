@@ -4,6 +4,7 @@ export const dataopsTypeDefs = `
         login(email: String!, password: String!): AuthPayload!
         checkAnswer(assessmentId: ID!, correct: Boolean!): CheckAnswerPayload!
         viewSolution(assessmentId: ID!): ViewSolutionPayload!
+        createAssessment(data: AssessmentCreateInput!): Assessment!
     }
     
     type AuthPayload {

@@ -2,7 +2,7 @@ import {html, render} from 'lit-html';
 import {Store} from '../services/store';
 import page from 'page';
 import './jp-assessment';
-import './jp-assessment-create';
+import './jp-assessment-edit';
 import './jp-login';
 import './jp-signup';
 import './jp-profile';
@@ -40,7 +40,8 @@ class JPRouter extends HTMLElement {
         const routes = {
             assessment: {
                 view: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`,
-                create: html`<jp-assessment-create></jp-assessment-create>`
+                create: html`<jp-assessment-edit></jp-assessment-edit>`,
+                edit: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`
             },
             user: {
                 login: html`<jp-login></jp-login>`,

@@ -10,6 +10,8 @@ import { dataopsTypeDefs } from './dataops.js';
 import { datamodelTypeDefs } from './datamodel.js';
 import { PrivateDirective } from './schema-directives/private-directive.js';
 import { VisibilityDirective } from './schema-directives/visibility-directive.js';
+import { createAssessment } from './resolvers/create-assessment.js';
+import { updateAssessment } from './resolvers/update-assessment.js';
 
 export const prisma = new Prisma({
     typeDefs,
@@ -29,7 +31,9 @@ const resolvers = {
         signup,
         login,
         checkAnswer,
-        viewSolution
+        viewSolution,
+        createAssessment,
+        updateAssessment
     }
 };
 
