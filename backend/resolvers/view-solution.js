@@ -60,6 +60,7 @@ export async function viewSolution(parent, args, context, info) {
         const tokenReward = calculateTokenReward(assessmentInfo, viewSolutionTokenReward.amount);
 
         if (tokenReward !== 0) {
+            //TODO the following two calls must be made atomic
             await prisma.mutation.createTokenTransaction({
                 data: {
                     user: {

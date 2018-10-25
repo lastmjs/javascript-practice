@@ -23,6 +23,7 @@ export async function signup(parent, args, context, info) {
         amount
     }`);
 
+    //TODO the following two calls must be made atomic
     const user = await prisma.mutation.createUser({
         data: {
             email: args.email,

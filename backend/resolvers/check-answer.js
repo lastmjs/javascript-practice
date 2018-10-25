@@ -84,6 +84,7 @@ export async function checkAnswer(parent, args, context, info) {
         const tokenReward = calculateTokenReward(assessmentInfo, args.correct, answerCorrectTokenReward.amount, answerIncorrectTokenReward.amount);
 
         if (tokenReward !== 0) {
+            //TODO the following two calls must be made atomic
             await prisma.mutation.createTokenTransaction({
                 data: {
                     user: {

@@ -12,6 +12,7 @@ import { PrivateDirective } from './schema-directives/private-directive.js';
 import { VisibilityDirective } from './schema-directives/visibility-directive.js';
 import { createAssessment } from './resolvers/create-assessment.js';
 import { updateAssessment } from './resolvers/update-assessment.js';
+import { buyTokens } from './resolvers/buy-tokens.js';
 
 export const prisma = new Prisma({
     typeDefs,
@@ -33,7 +34,8 @@ const resolvers = {
         checkAnswer,
         viewSolution,
         createAssessment,
-        updateAssessment
+        updateAssessment,
+        buyTokens
     }
 };
 
