@@ -49,6 +49,10 @@ class JPConceptMap extends HTMLElement {
         page('/token/buy');
     }
 
+    legalClicked() {
+        page('/legal/terms-and-privacy');
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -100,6 +104,7 @@ class JPConceptMap extends HTMLElement {
                 <hr style="width: 90%">
                 <div class="menu-item" @click=${() => this.earnTokensClicked()}>Earn tokens</div>
                 <div class="menu-item" @click=${() => this.buyTokensClicked()}>Buy tokens</div>
+                <div class="menu-item" @click=${() => this.legalClicked()}>Legal</div>
                 <hr style="width: 90%">
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item

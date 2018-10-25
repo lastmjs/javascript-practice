@@ -61,6 +61,7 @@ export const jpContainerCSSClass = (state: any) => `
         width: ${state.desktopScreen ? '75%' : '96%'};
         margin-left: ${state.desktopScreen ? 'auto' : '2%'};
         margin-right: ${state.desktopScreen ? 'auto' : '2%'};
+        height: 100%;
     }
 `;
 
