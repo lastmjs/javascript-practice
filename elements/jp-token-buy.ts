@@ -3,11 +3,15 @@ import { Store } from '../services/store';
 import { jpContainerCSSClass } from '../services/constants';
 import './jp-button';
 import { request } from '../services/graphql';
+import { loadUser } from '../services/init';
+// TODO it would be nice to have this be an es module, perhaps bring it up with Stripe
+// import 'https://checkout.stripe.com/checkout.js';
 
 class JPTokenBuy extends HTMLElement {
     totalPrice: string = '$5.00';
     pricePerToken: number = 0;
     minTokens: number = 0;
+    numTokens: number = 0;
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
@@ -24,7 +28,54 @@ class JPTokenBuy extends HTMLElement {
 
         //TODO local redux store
         this.minTokens = 500 / response.tokenReward.price;
+        this.numTokens = this.minTokens;
         this.pricePerToken = response.tokenReward.price;
+
+        this.stripeHandler = window.StripeCheckout.configure({
+            key: 'pk_test_Deq4Kig1vsbwSZmXc3yBn2wf',
+            image: 'javascript-logo.png',
+            locale: 'auto',
+            token: async (token: any) => {
+                Store.dispatch({
+                    type: 'SHOW_LOAD_INDICATOR'
+                });
+
+                const response = await request(`
+                    mutation($stripeTokenId: String!, $numTokens: Int!, $pricePerToken: Int!) {
+                        buyTokens(stripeTokenId: $stripeTokenId, numTokens: $numTokens, pricePerToken: $pricePerToken) {
+                            success
+                        }
+                    }
+                `, {
+                    stripeTokenId: token.id,
+                    numTokens: this.numTokens,
+                    pricePerToken: this.pricePerToken
+                });
+
+                if (response && response.buyTokens.success) {
+                    await loadUser();
+
+                    Store.dispatch({
+                        type: 'HIDE_LOAD_INDICATOR'
+                    });
+
+                    Store.dispatch({
+                        type: 'ADD_NOTIFICATION',
+                        notification: 'Payment successful'
+                    });
+                }
+                else {
+                    Store.dispatch({
+                        type: 'HIDE_LOAD_INDICATOR'
+                    });
+
+                    Store.dispatch({
+                        type: 'ADD_NOTIFICATION',
+                        notification: 'Payment unsuccessful, try again'
+                    });
+                }
+            }
+        });
 
         setTimeout(() => {
             Store.dispatch({
@@ -38,16 +89,22 @@ class JPTokenBuy extends HTMLElement {
     }
 
     buyNowClick() {
-        Store.dispatch({
-            type: 'ADD_NOTIFICATION',
-            notification: 'Your credit card has been charged $100,000,000...thank you'
+        if (this.numTokens < this.minTokens) {
+            return;
+        }
+
+        this.stripeHandler.open({
+            name: `javascriptpractice.com`,
+            description: `${this.numTokens} tokens`,
+            amount: this.numTokens * this.pricePerToken,
+            zipCode: true
         });
     }
 
     numTokenInput(e: any) {
         const value = parseInt(e.target.value);
-        const numTokens = isNaN(value) ? 0 : value;
-        const totalPriceInt = numTokens * this.pricePerToken;
+        this.numTokens = isNaN(value) ? 0 : value;
+        const totalPriceInt = this.numTokens * this.pricePerToken;
 
         this.totalPrice = totalPriceInt === 0 || totalPriceInt < 500 ? '' : `$${(totalPriceInt / 100).toFixed(2)}`;
         

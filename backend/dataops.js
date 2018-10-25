@@ -5,6 +5,7 @@ export const dataopsTypeDefs = `
         checkAnswer(assessmentId: ID!, correct: Boolean!): CheckAnswerPayload!
         viewSolution(assessmentId: ID!): ViewSolutionPayload!
         createAssessment(data: AssessmentCreateInput!): Assessment!
+        buyTokens(stripeTokenId: String!, numTokens: Int!, pricePerToken: Int!): BuyTokensPayload!
     }
     
     type AuthPayload {
@@ -21,5 +22,9 @@ export const dataopsTypeDefs = `
     type ViewSolutionPayload {
         tokenReward: Int
         allowed: Boolean!
+    }
+
+    type BuyTokensPayload {
+        success: Boolean!
     }
 `;
