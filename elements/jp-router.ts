@@ -9,6 +9,7 @@ import './jp-profile';
 import './jp-token-overview';
 import './jp-token-earn';
 import './jp-token-buy';
+import './jp-legal';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -52,6 +53,9 @@ class JPRouter extends HTMLElement {
                 overview: html`<jp-token-overview></jp-token-overview>`,
                 buy: html`<jp-token-buy></jp-token-buy>`,
                 earn: html`<jp-token-earn></jp-token-earn>`
+            },
+            legal: {
+                'terms-and-privacy': html`<jp-legal></jp-legal>`
             }
         };
 

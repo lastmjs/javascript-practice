@@ -72,13 +72,6 @@ class JPApp extends HTMLElement {
                     grid-template-columns: ${state.showMainMenu ? '20' : '0'}% ${state.showMainMenu ? '80' : '100'}%;
                 }
 
-                .privacy-anchor {
-                    color: black;
-                    position: fixed;
-                    top: 11vh;
-                    right: 1em;
-                }
-
                 .router-area {
                     height: ${window.innerHeight}px;
                     overflow: hidden;
@@ -187,8 +180,6 @@ class JPApp extends HTMLElement {
                 </div>
 
             </div>
-
-            <a class="privacy-anchor" href="privacy.html">Privacy</a>
         `;
     }
 }
