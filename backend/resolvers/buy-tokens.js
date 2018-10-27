@@ -16,34 +16,34 @@ export async function buyTokens(parent, args, context, info) {
         }
     `);
 
-    const tokenPurchaseTokenReward = await prisma.query.tokenReward({
+    const tokenPriceConstant = await prisma.query.constant({
         where: {
-            type: 'TOKEN_PURCHASE'
+            key: 'TOKEN_PRICE'
         }
     }, `
         {
-            price
+            value
         }
     `);
 
-    const minTokens = 500 / tokenPurchaseTokenReward.price;
+    const minTokens = 500 / parseInt(tokenPriceConstant.value);
     if (args.numTokens < minTokens) {
         throw new Error(`You must buy at least ${minTokens} ${minTokens === 1 ? 'token' : 'tokens'}`);
     }
 
-    if (args.pricePerToken !== tokenPurchaseTokenReward.price) {
+    if (args.pricePerToken !== parseInt(tokenPriceConstant.value)) {
         throw new Error('The token price you attempted to pay with is incorrect, try again');
     }
 
     // I'm going to say that purchases greater than or equal to $1000 are suspicious
     // Per Stripe terms, we need to block this transaction and research it and potentially contact the user before
     // accepting the transaction
-    if (args.numTokens * tokenPurchaseTokenReward.price >= 100000) {
+    if (args.numTokens * parseInt(tokenPriceConstant.value) >= 100000) {
         throw new Error('You are requesting to purchase $1000 or more in tokens. Contact jordan.michael.last@gmail.com if this is not a mistake');
     }
 
     //TODO the following calls must be made atomic
-    await stripeCharge(args.stripeTokenId, args.numTokens, tokenPurchaseTokenReward.price, user.email);
+    await stripeCharge(args.stripeTokenId, args.numTokens, parseInt(tokenPriceConstant.value), user.email);
 
     await prisma.mutation.createTokenTransaction({
         data: {

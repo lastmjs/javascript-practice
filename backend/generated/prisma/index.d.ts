@@ -473,7 +473,7 @@ export type AssessmentInfoOrderByInput =
   | "solutionViewed_ASC"
   | "solutionViewed_DESC";
 
-export type ConstantKey = "TERMS_AND_PRIVACY_VERSION";
+export type ConstantKey = "TERMS_AND_PRIVACY_VERSION" | "TOKEN_PRICE";
 
 export type ConstantOrderByInput =
   | "id_ASC"
@@ -508,9 +508,7 @@ export type TokenRewardOrderByInput =
   | "type_ASC"
   | "type_DESC"
   | "amount_ASC"
-  | "amount_DESC"
-  | "price_ASC"
-  | "price_DESC";
+  | "amount_DESC";
 
 export type TokenTransactionOrderByInput =
   | "id_ASC"
@@ -1073,7 +1071,6 @@ export interface ConceptUpdateWithoutAssessmentsDataInput {
 export interface TokenRewardCreateInput {
   type: TokenTransactionType;
   amount: Int;
-  price: Int;
 }
 
 export interface CourseUpdateOneRequiredWithoutConceptsInput {
@@ -1365,14 +1362,6 @@ export interface TokenRewardWhereInput {
   amount_lte?: Int;
   amount_gt?: Int;
   amount_gte?: Int;
-  price?: Int;
-  price_not?: Int;
-  price_in?: Int[] | Int;
-  price_not_in?: Int[] | Int;
-  price_lt?: Int;
-  price_lte?: Int;
-  price_gt?: Int;
-  price_gte?: Int;
   AND?: TokenRewardWhereInput[] | TokenRewardWhereInput;
   OR?: TokenRewardWhereInput[] | TokenRewardWhereInput;
   NOT?: TokenRewardWhereInput[] | TokenRewardWhereInput;
@@ -1468,7 +1457,6 @@ export interface AssessmentUpdateDataInput {
 export interface TokenRewardUpdateInput {
   type?: TokenTransactionType;
   amount?: Int;
-  price?: Int;
 }
 
 export interface AssessmentCreateWithoutConceptInput {
@@ -2448,7 +2436,6 @@ export interface TokenRewardNode {
   updatedAt: DateTimeOutput;
   type: TokenTransactionType;
   amount: Int;
-  price: Int;
 }
 
 export interface TokenReward extends Promise<TokenRewardNode>, Fragmentable {
@@ -2457,7 +2444,6 @@ export interface TokenReward extends Promise<TokenRewardNode>, Fragmentable {
   updatedAt: () => Promise<DateTimeOutput>;
   type: () => Promise<TokenTransactionType>;
   amount: () => Promise<Int>;
-  price: () => Promise<Int>;
 }
 
 export interface TokenRewardSubscription
@@ -2468,7 +2454,6 @@ export interface TokenRewardSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   type: () => Promise<AsyncIterator<TokenTransactionType>>;
   amount: () => Promise<AsyncIterator<Int>>;
-  price: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface CourseSubscriptionPayloadNode {
@@ -2549,7 +2534,6 @@ export interface TokenRewardPreviousValuesNode {
   updatedAt: DateTimeOutput;
   type: TokenTransactionType;
   amount: Int;
-  price: Int;
 }
 
 export interface TokenRewardPreviousValues
@@ -2560,7 +2544,6 @@ export interface TokenRewardPreviousValues
   updatedAt: () => Promise<DateTimeOutput>;
   type: () => Promise<TokenTransactionType>;
   amount: () => Promise<Int>;
-  price: () => Promise<Int>;
 }
 
 export interface TokenRewardPreviousValuesSubscription
@@ -2571,7 +2554,6 @@ export interface TokenRewardPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   type: () => Promise<AsyncIterator<TokenTransactionType>>;
   amount: () => Promise<AsyncIterator<Int>>;
-  price: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface TokenRewardSubscriptionPayloadNode {

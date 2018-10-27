@@ -18,18 +18,18 @@ class JPTokenBuy extends HTMLElement {
 
         const response = await request(`
             query {
-                tokenReward(where: {
-                    type: TOKEN_PURCHASE
+                constant(where: {
+                    key: TOKEN_PRICE
                 }) {
-                    price
+                    value
                 }
             }
         `);
 
         //TODO local redux store
-        this.minTokens = 500 / response.tokenReward.price;
+        this.minTokens = 500 / parseInt(response.constant.value);
         this.numTokens = this.minTokens;
-        this.pricePerToken = response.tokenReward.price;
+        this.pricePerToken = parseInt(response.constant.value);
 
         this.stripeHandler = window.StripeCheckout.configure({
             key: 'pk_test_Deq4Kig1vsbwSZmXc3yBn2wf',

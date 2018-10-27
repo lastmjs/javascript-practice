@@ -73,10 +73,8 @@ type TokenReward {
   updatedAt: DateTime!
   type: TokenTransactionType! @unique
   amount: Int!
-  price: Int!
 }
 
-# TODO add token price here, get rid of token price in tokenreward
 type Constant {
   id: ID! @unique
   createdAt: DateTime!
@@ -101,5 +99,6 @@ enum VisibilityType {
 
 enum ConstantKey {
   TERMS_AND_PRIVACY_VERSION
+  TOKEN_PRICE
 }
 `;
