@@ -26,7 +26,7 @@ export async function buyTokens(parent, args, context, info) {
         }
     `);
 
-    const minTokens = 500 / parseInt(tokenPriceConstant.value);
+    const minTokens = 50 / parseInt(tokenPriceConstant.value);
     if (args.numTokens < minTokens) {
         throw new Error(`You must buy at least ${minTokens} ${minTokens === 1 ? 'token' : 'tokens'}`);
     }

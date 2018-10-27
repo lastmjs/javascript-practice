@@ -89,7 +89,8 @@ class JPTokenBuy extends HTMLElement {
     }
 
     buyNowClick() {
-        if (this.numTokens < this.minTokens) {
+        const totalPriceInt = this.numTokens * this.pricePerToken;
+        if (totalPriceInt < 50) {
             return;
         }
 
@@ -106,7 +107,7 @@ class JPTokenBuy extends HTMLElement {
         this.numTokens = isNaN(value) ? 0 : value;
         const totalPriceInt = this.numTokens * this.pricePerToken;
 
-        this.totalPrice = totalPriceInt === 0 || totalPriceInt < 500 ? '' : `$${(totalPriceInt / 100).toFixed(2)}`;
+        this.totalPrice = totalPriceInt === 0 || totalPriceInt < 50 ? '' : `$${(totalPriceInt / 100).toFixed(2)}`;
         
         Store.dispatch({
             type: 'TRIGGER_RENDER'
@@ -127,7 +128,7 @@ class JPTokenBuy extends HTMLElement {
                         type="number"
                         value="${this.minTokens}"
                         style="font-size: calc(12px + 1vmin); width: ${this.querySelector('#tokens-input') ? `${this.querySelector('#tokens-input').value.length * 10 + 50}px` : '50px'}"
-                        min="${this.minTokens}"
+                        min="5"
                         @input=${(e: any) => this.numTokenInput(e)}
                     >
                 </div>
