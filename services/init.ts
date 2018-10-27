@@ -1,5 +1,6 @@
 import { Store } from './store';
 import { request } from './graphql';
+import page from 'page';
 
 loadUser();
 
@@ -15,6 +16,7 @@ export async function loadUser() {
                     id
                     email
                     tokens
+                    termsAcceptedVersion
                     assessmentInfos {
                         id
                         assessment {
@@ -25,10 +27,21 @@ export async function loadUser() {
                         answeredCorrectly
                     }
                 }
+
+                constant(where: {
+                    key: TERMS_AND_PRIVACY_VERSION
+                }) {
+                    value
+                }
             }
         `, {
             id: user.id
         });
+
+        if (response.user.termsAcceptedVersion !== response.constant.value && window.location.pathname !== '/legal/terms-and-privacy') {
+            page('/legal/accept-new-terms');
+            return;
+        }
 
         Store.dispatch({
             type: 'LOGIN_USER',

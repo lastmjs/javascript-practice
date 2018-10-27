@@ -32,8 +32,14 @@ export async function buyTokens(parent, args, context, info) {
     }
 
     if (args.pricePerToken !== tokenPurchaseTokenReward.price) {
-        //TODO we might need to flag this and investigate it before allowing the user to pay, per Stripe terms
         throw new Error('The token price you attempted to pay with is incorrect, try again');
+    }
+
+    // I'm going to say that purchases greater than or equal to $1000 are suspicious
+    // Per Stripe terms, we need to block this transaction and research it and potentially contact the user before
+    // accepting the transaction
+    if (args.numTokens * tokenPurchaseTokenReward.price >= 100000) {
+        throw new Error('You are requesting to purchase $1000 or more in tokens. Contact jordan.michael.last@gmail.com if this is not a mistake');
     }
 
     //TODO the following calls must be made atomic

@@ -11,6 +11,10 @@ type AggregateConcept {
   count: Int!
 }
 
+type AggregateConstant {
+  count: Int!
+}
+
 type AggregateCourse {
   count: Int!
 }
@@ -609,6 +613,137 @@ input ConceptWhereUniqueInput {
   id: ID
 }
 
+type Constant {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  key: ConstantKey!
+  value: String!
+}
+
+type ConstantConnection {
+  pageInfo: PageInfo!
+  edges: [ConstantEdge]!
+  aggregate: AggregateConstant!
+}
+
+input ConstantCreateInput {
+  key: ConstantKey!
+  value: String!
+}
+
+type ConstantEdge {
+  node: Constant!
+  cursor: String!
+}
+
+enum ConstantKey {
+  TERMS_AND_PRIVACY_VERSION
+}
+
+enum ConstantOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  key_ASC
+  key_DESC
+  value_ASC
+  value_DESC
+}
+
+type ConstantPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  key: ConstantKey!
+  value: String!
+}
+
+type ConstantSubscriptionPayload {
+  mutation: MutationType!
+  node: Constant
+  updatedFields: [String!]
+  previousValues: ConstantPreviousValues
+}
+
+input ConstantSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ConstantWhereInput
+  AND: [ConstantSubscriptionWhereInput!]
+  OR: [ConstantSubscriptionWhereInput!]
+  NOT: [ConstantSubscriptionWhereInput!]
+}
+
+input ConstantUpdateInput {
+  key: ConstantKey
+  value: String
+}
+
+input ConstantWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  key: ConstantKey
+  key_not: ConstantKey
+  key_in: [ConstantKey!]
+  key_not_in: [ConstantKey!]
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  AND: [ConstantWhereInput!]
+  OR: [ConstantWhereInput!]
+  NOT: [ConstantWhereInput!]
+}
+
+input ConstantWhereUniqueInput {
+  id: ID
+  key: ConstantKey
+}
+
 type Course {
   id: ID!
   createdAt: DateTime!
@@ -795,6 +930,12 @@ type Mutation {
   upsertConcept(where: ConceptWhereUniqueInput!, create: ConceptCreateInput!, update: ConceptUpdateInput!): Concept!
   deleteConcept(where: ConceptWhereUniqueInput!): Concept
   deleteManyConcepts(where: ConceptWhereInput): BatchPayload!
+  createConstant(data: ConstantCreateInput!): Constant!
+  updateConstant(data: ConstantUpdateInput!, where: ConstantWhereUniqueInput!): Constant
+  updateManyConstants(data: ConstantUpdateInput!, where: ConstantWhereInput): BatchPayload!
+  upsertConstant(where: ConstantWhereUniqueInput!, create: ConstantCreateInput!, update: ConstantUpdateInput!): Constant!
+  deleteConstant(where: ConstantWhereUniqueInput!): Constant
+  deleteManyConstants(where: ConstantWhereInput): BatchPayload!
   createCourse(data: CourseCreateInput!): Course!
   updateCourse(data: CourseUpdateInput!, where: CourseWhereUniqueInput!): Course
   updateManyCourses(data: CourseUpdateInput!, where: CourseWhereInput): BatchPayload!
@@ -848,6 +989,9 @@ type Query {
   concept(where: ConceptWhereUniqueInput!): Concept
   concepts(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Concept]!
   conceptsConnection(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConceptConnection!
+  constant(where: ConstantWhereUniqueInput!): Constant
+  constants(where: ConstantWhereInput, orderBy: ConstantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Constant]!
+  constantsConnection(where: ConstantWhereInput, orderBy: ConstantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConstantConnection!
   course(where: CourseWhereUniqueInput!): Course
   courses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course]!
   coursesConnection(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseConnection!
@@ -867,6 +1011,7 @@ type Subscription {
   assessment(where: AssessmentSubscriptionWhereInput): AssessmentSubscriptionPayload
   assessmentInfo(where: AssessmentInfoSubscriptionWhereInput): AssessmentInfoSubscriptionPayload
   concept(where: ConceptSubscriptionWhereInput): ConceptSubscriptionPayload
+  constant(where: ConstantSubscriptionWhereInput): ConstantSubscriptionPayload
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
   tokenReward(where: TokenRewardSubscriptionWhereInput): TokenRewardSubscriptionPayload
   tokenTransaction(where: TokenTransactionSubscriptionWhereInput): TokenTransactionSubscriptionPayload
@@ -875,6 +1020,8 @@ type Subscription {
 
 type TokenReward {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   type: TokenTransactionType!
   amount: Int!
   price: Int!
@@ -900,20 +1047,22 @@ type TokenRewardEdge {
 enum TokenRewardOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   type_ASC
   type_DESC
   amount_ASC
   amount_DESC
   price_ASC
   price_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type TokenRewardPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   type: TokenTransactionType!
   amount: Int!
   price: Int!
@@ -958,6 +1107,22 @@ input TokenRewardWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   type: TokenTransactionType
   type_not: TokenTransactionType
   type_in: [TokenTransactionType!]
@@ -1150,6 +1315,8 @@ type User {
   password: String!
   tokens: Int!
   assessmentInfos(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentInfo!]
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 type UserConnection {
@@ -1163,6 +1330,8 @@ input UserCreateInput {
   password: String!
   tokens: Int!
   assessmentInfos: AssessmentInfoCreateManyWithoutUserInput
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 input UserCreateOneInput {
@@ -1179,6 +1348,8 @@ input UserCreateWithoutAssessmentInfosInput {
   email: String!
   password: String!
   tokens: Int!
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 type UserEdge {
@@ -1199,6 +1370,10 @@ enum UserOrderByInput {
   password_DESC
   tokens_ASC
   tokens_DESC
+  termsAcceptedDate_ASC
+  termsAcceptedDate_DESC
+  termsAcceptedVersion_ASC
+  termsAcceptedVersion_DESC
 }
 
 type UserPreviousValues {
@@ -1208,6 +1383,8 @@ type UserPreviousValues {
   email: String!
   password: String!
   tokens: Int!
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 type UserSubscriptionPayload {
@@ -1233,6 +1410,8 @@ input UserUpdateDataInput {
   password: String
   tokens: Int
   assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 input UserUpdateInput {
@@ -1240,6 +1419,8 @@ input UserUpdateInput {
   password: String
   tokens: Int
   assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -1260,6 +1441,8 @@ input UserUpdateWithoutAssessmentInfosDataInput {
   email: String
   password: String
   tokens: Int
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 input UserUpsertNestedInput {
@@ -1342,6 +1525,28 @@ input UserWhereInput {
   assessmentInfos_every: AssessmentInfoWhereInput
   assessmentInfos_some: AssessmentInfoWhereInput
   assessmentInfos_none: AssessmentInfoWhereInput
+  termsAcceptedDate: DateTime
+  termsAcceptedDate_not: DateTime
+  termsAcceptedDate_in: [DateTime!]
+  termsAcceptedDate_not_in: [DateTime!]
+  termsAcceptedDate_lt: DateTime
+  termsAcceptedDate_lte: DateTime
+  termsAcceptedDate_gt: DateTime
+  termsAcceptedDate_gte: DateTime
+  termsAcceptedVersion: String
+  termsAcceptedVersion_not: String
+  termsAcceptedVersion_in: [String!]
+  termsAcceptedVersion_not_in: [String!]
+  termsAcceptedVersion_lt: String
+  termsAcceptedVersion_lte: String
+  termsAcceptedVersion_gt: String
+  termsAcceptedVersion_gte: String
+  termsAcceptedVersion_contains: String
+  termsAcceptedVersion_not_contains: String
+  termsAcceptedVersion_starts_with: String
+  termsAcceptedVersion_not_starts_with: String
+  termsAcceptedVersion_ends_with: String
+  termsAcceptedVersion_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

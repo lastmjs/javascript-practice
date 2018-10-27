@@ -59,13 +59,14 @@ class JPLogin extends HTMLElement {
         }
 
         //TODO we should somehow combine this with init/load-user, because we're repeating the user selection/loading in 3 places
-        const response = await request(`
+        const loginResponse = await request(`
             mutation($email: String!, $password: String!) {
                 login(email: $email, password: $password) {
                     user {
                         id
                         email
                         tokens
+                        termsAcceptedVersion
                         assessmentInfos {
                             assessment {
                                 concept {
@@ -81,14 +82,30 @@ class JPLogin extends HTMLElement {
         `, {
             email,
             password
-        })
+        });
 
-        if (response && response.login.jwt) {
+        if (loginResponse && loginResponse.login.jwt) {
             Store.dispatch({
                 type: 'LOGIN_USER',
-                user: response.login.user,
-                userJWT: response.login.jwt
+                user: loginResponse.login.user,
+                userJWT: loginResponse.login.jwt
             });
+
+            const termsAndPrivacyVersionResponse = await request(`
+                query {
+                    constant(where: {
+                        key: TERMS_AND_PRIVACY_VERSION
+                    }) {
+                        value
+                    }
+                }
+            `);
+
+
+            if (loginResponse.login.termsAcceptedVersion !== termsAndPrivacyVersionResponse.constant.value) {
+                page('/legal/accept-new-terms');
+                return;
+            }
 
             page(`/assessment/${Store.getState().currentAssessment.id}/view`);
         }
