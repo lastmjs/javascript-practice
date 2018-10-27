@@ -26,16 +26,27 @@ class JPLegal extends HTMLElement {
             <div class="jp-container">
                 <h1>Terms</h1>
 
-                <p>All data uploaded by you or recorded or created by the system is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">CC0 1.0 Universal</a>.</p>
+                <p>Hey everyone, we are Demergence, the company behind javascrippractice.com</p>
+                
+                <p>Thanks for using the site, we'll try to keep the legalese to a minimum.</p>
+
+                <p>All data and content uploaded through the system by you, sent to us outside of the system (such as through email or other messaging services) by you, or recorded or created by the system is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">CC0 1.0 Universal</a>.</p>
 
                 <p>You cannot sign up for an account unless you are of the appropriate age. In the United States this is 13 years or older. You are responsible for ensuring you are of the appropriate age in your jurisdiction.</p>
                 <p>Please do not put personal information in content that you upload.</p>
+
+                <p>You may not use the system if you are a country, organization, entity, or person embargoed or blocked by any government, including those on sanctions lists identified by the United States Office of Foreign Asset Control (OFAC).</p>
+
+                <p>If there are issues with your purchase of tokens, contact jordan.michael.last@gmail.com. Incorrect charges will be refunded appropriately. There will be no other refunds of purchased tokens.</p>
+
+                <p>Tokens are only to be used on javascriptpractice.com.</p>
 
                 <h1>Privacy</h1>
 
                 <h3>Personal information we collect</h3>
                 <p>Email is essentially the only personally identifiable information that we collect.</p>
-                <p>We also use cookies to collect data in conjunction with Google Analytics.</p>
+                <p>We use cookies to collect data in conjunction with Google Analytics.</p>
+                <p>Stripe and its affiliates process Transactions (including payment Transactions) for us. You may be required to provide personally identifiable data to Stripe, including but not limited to credit card information. We may also share some information with Stripe, such as your email address, to facilitate payments (receipts and such).</p>
 
                 <h3>How we use personal information</h3>
                 <p>Much of our platform is open source. You may review most if not all of the types of information that we collect <a href="https://github.com/lastmjs/javascript-practice/blob/master/backend/datamodel.prisma" target="_blank">starting here</a>.</p>
@@ -55,6 +66,7 @@ class JPLegal extends HTMLElement {
                 <p>Besides access by Netlify or Prisma in accordance with their privacy practices, all access to personal information is protected by cryptographic secrets and restricted to Demergence personnel with a legitimate need to know..</p>
                 <p>We utilize Netlify to process and/or store personal information. Review their privacy practices <a href="https://www.netlify.com/privacy/" target="_blank">here</a>.</p>
                 <p>We utilize Prisma to process and/or store personal information. Review their privacy practices <a href="https://github.com/prisma/content/blob/master/static/legal/terms.md#privacy-policy" target="_blank">here</a>.</p>
+                <p>We utilize Stripe to process and/or store personal information. Review their privacy practices <a href="https://stripe.com/us/privacy/" target="_blank">here</a>.</p>
 
                 <h2>Questions?</h2>
                 <p>
