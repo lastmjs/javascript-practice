@@ -11,8 +11,8 @@ type User  {
   password: String! @private
   tokens: Int! @visibility(type: OWNER)
   assessmentInfos: [AssessmentInfo!]! @visibility(type: OWNER)
-  termsAcceptedDate: DateTime @visibility(type: OWNER) #TODO make this mandatory once everyone accepts
-  termsAcceptedVersion: String #TODO make this mandatory once everyone accepts
+  termsAcceptedDate: DateTime @visibility(type: OWNER) #TODO there is an internal server error from prisma when I try to make this field required
+  termsAcceptedVersion: String @visibility(type: OWNER) #TODO there is an internal server error from prisma when I try to make this field required
 }
 
 type Course {
@@ -73,10 +73,8 @@ type TokenReward {
   updatedAt: DateTime!
   type: TokenTransactionType! @unique
   amount: Int!
-  price: Int!
 }
 
-# TODO add token price here, get rid of token price in tokenreward
 type Constant {
   id: ID! @unique
   createdAt: DateTime!
@@ -101,5 +99,6 @@ enum VisibilityType {
 
 enum ConstantKey {
   TERMS_AND_PRIVACY_VERSION
+  TOKEN_PRICE
 }
 `;

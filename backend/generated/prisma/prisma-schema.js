@@ -639,6 +639,7 @@ type ConstantEdge {
 
 enum ConstantKey {
   TERMS_AND_PRIVACY_VERSION
+  TOKEN_PRICE
 }
 
 enum ConstantOrderByInput {
@@ -1024,7 +1025,6 @@ type TokenReward {
   updatedAt: DateTime!
   type: TokenTransactionType!
   amount: Int!
-  price: Int!
 }
 
 type TokenRewardConnection {
@@ -1036,7 +1036,6 @@ type TokenRewardConnection {
 input TokenRewardCreateInput {
   type: TokenTransactionType!
   amount: Int!
-  price: Int!
 }
 
 type TokenRewardEdge {
@@ -1055,8 +1054,6 @@ enum TokenRewardOrderByInput {
   type_DESC
   amount_ASC
   amount_DESC
-  price_ASC
-  price_DESC
 }
 
 type TokenRewardPreviousValues {
@@ -1065,7 +1062,6 @@ type TokenRewardPreviousValues {
   updatedAt: DateTime!
   type: TokenTransactionType!
   amount: Int!
-  price: Int!
 }
 
 type TokenRewardSubscriptionPayload {
@@ -1089,7 +1085,6 @@ input TokenRewardSubscriptionWhereInput {
 input TokenRewardUpdateInput {
   type: TokenTransactionType
   amount: Int
-  price: Int
 }
 
 input TokenRewardWhereInput {
@@ -1135,14 +1130,6 @@ input TokenRewardWhereInput {
   amount_lte: Int
   amount_gt: Int
   amount_gte: Int
-  price: Int
-  price_not: Int
-  price_in: [Int!]
-  price_not_in: [Int!]
-  price_lt: Int
-  price_lte: Int
-  price_gt: Int
-  price_gte: Int
   AND: [TokenRewardWhereInput!]
   OR: [TokenRewardWhereInput!]
   NOT: [TokenRewardWhereInput!]
