@@ -11,6 +11,8 @@ type User  {
   password: String! @private
   tokens: Int! @visibility(type: OWNER)
   assessmentInfos: [AssessmentInfo!]! @visibility(type: OWNER)
+  termsAcceptedDate: DateTime @visibility(type: OWNER) #TODO make this mandatory once everyone accepts
+  termsAcceptedVersion: String #TODO make this mandatory once everyone accepts
 }
 
 type Course {
@@ -67,8 +69,20 @@ type AssessmentInfo {
 
 type TokenReward {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   type: TokenTransactionType! @unique
   amount: Int!
+  price: Int!
+}
+
+# TODO add token price here, get rid of token price in tokenreward
+type Constant {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  key: ConstantKey! @unique
+  value: String!
 }
 
 enum TokenTransactionType {
@@ -78,9 +92,14 @@ enum TokenTransactionType {
   EXERCISE_CREATED_AND_ACCEPTED
   FEEDBACK_RECEIVED
   INITIAL_ENDOWMENT
+  TOKEN_PURCHASE
 }
 
 enum VisibilityType {
   OWNER
+}
+
+enum ConstantKey {
+  TERMS_AND_PRIVACY_VERSION
 }
 `;

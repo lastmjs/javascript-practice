@@ -1,11 +1,12 @@
 export const dataopsTypeDefs = `
     type Mutation {
-        signup(email: String!, password: String!): AuthPayload!
+        signup(email: String!, password: String!, termsAccepted: Boolean!): AuthPayload!
         login(email: String!, password: String!): AuthPayload!
         checkAnswer(assessmentId: ID!, correct: Boolean!): CheckAnswerPayload!
         viewSolution(assessmentId: ID!): ViewSolutionPayload!
         createAssessment(data: AssessmentCreateInput!): Assessment!
         buyTokens(stripeTokenId: String!, numTokens: Int!, pricePerToken: Int!): BuyTokensPayload!
+        acceptNewTerms: AcceptNewTermsPayload!
     }
     
     type AuthPayload {
@@ -25,6 +26,10 @@ export const dataopsTypeDefs = `
     }
 
     type BuyTokensPayload {
+        success: Boolean!
+    }
+
+    type AcceptNewTermsPayload {
         success: Boolean!
     }
 `;

@@ -9,7 +9,8 @@ import './jp-profile';
 import './jp-token-overview';
 import './jp-token-earn';
 import './jp-token-buy';
-import './jp-legal';
+import './jp-legal-terms-and-privacy';
+import './jp-legal-accept-new-terms';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -55,7 +56,8 @@ class JPRouter extends HTMLElement {
                 earn: html`<jp-token-earn></jp-token-earn>`
             },
             legal: {
-                'terms-and-privacy': html`<jp-legal></jp-legal>`
+                'terms-and-privacy': html`<jp-legal-terms-and-privacy></jp-legal-terms-and-privacy>`,
+                'accept-new-terms': html`<jp-legal-accept-new-terms></jp-legal-accept-new-terms>`
             }
         };
 

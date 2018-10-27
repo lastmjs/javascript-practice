@@ -15,6 +15,10 @@ export async function signup(parent, args, context, info) {
         throw new Error('That email address has already been registered');
     }
 
+    if (!args.termsAccepted) {
+        throw new Error('You must agree to the terms of use and the privacy policy');
+    }
+
     const initialEndowmentTokenReward = await prisma.query.tokenReward({
         where: {
             type: 'INITIAL_ENDOWMENT'
@@ -23,12 +27,24 @@ export async function signup(parent, args, context, info) {
         amount
     }`);
 
+    const termsAndPrivacyConstant = await prisma.query.constant({
+        where: {
+            key: 'TERMS_AND_PRIVACY_VERSION'
+        }
+    }, `
+        {
+            value
+        }
+    `);
+
     //TODO the following two calls must be made atomic
     const user = await prisma.mutation.createUser({
         data: {
             email: args.email,
             password,
-            tokens: initialEndowmentTokenReward.amount
+            tokens: initialEndowmentTokenReward.amount,
+            termsAcceptedDate: new Date(),
+            termsAcceptedVersion: termsAndPrivacyConstant.value
         }
     }, `
         {
@@ -56,7 +72,7 @@ export async function signup(parent, args, context, info) {
             },
             amount: initialEndowmentTokenReward.amount,
             type: 'INITIAL_ENDOWMENT',
-            description: `User ${user.id} received ${initialEndowmentTokenReward.amount} ${initialEndowmentTokenReward.amount === 1 ? 'token' : 'tokens'} from the system`
+            description: `Received ${initialEndowmentTokenReward.amount} ${initialEndowmentTokenReward.amount === 1 ? 'token' : 'tokens'} from the system`
         }
     });
 

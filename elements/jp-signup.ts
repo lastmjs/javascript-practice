@@ -32,6 +32,7 @@ class JPSignup extends HTMLElement {
         const email = this.querySelector('#signup-email-input').value;
         const password1 = this.querySelector('#signup-password-input-1').value;
         const password2 = this.querySelector('#signup-password-input-2').value;
+        const termsAccepted = this.querySelector('#terms-checkbox').checked;
 
         if (email === '') {
             Store.dispatch({
@@ -72,10 +73,23 @@ class JPSignup extends HTMLElement {
             return;
         }
 
+        if (!termsAccepted) {
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'You must agree to the terms of use and the privacy policy'
+            });
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+
+            return;
+        }
+
         //TODO we should somehow combine this with init/load-user, because we're repeating the user selection/loading in 3 places
         const response = await request(`
-            mutation($email: String!, $password: String!) {
-                signup(email: $email, password: $password) {
+            mutation($email: String!, $password: String!, $termsAccepted: Boolean!) {
+                signup(email: $email, password: $password, termsAccepted: $termsAccepted) {
                     user {
                         id
                         email
@@ -95,7 +109,8 @@ class JPSignup extends HTMLElement {
             }
         `, {
             email,
-            password: password1
+            password: password1,
+            termsAccepted
         })
 
         if (response && response.signup.jwt) {
@@ -144,6 +159,10 @@ class JPSignup extends HTMLElement {
                         placeholder="re-enter password"
                         @keydown=${(e: any) => this.passwordInputKeydown(e)}
                     >
+                </div>
+
+                <div class="authentication-input-row">
+                    <input id="terms-checkbox" type="checkbox"> I agree to the <a href="legal/terms-and-privacy" target="_blank">terms of use</a> and the <a href="legal/terms-and-privacy" target="_blank">privacy policy</a>
                 </div>
 
                 <div class="authentication-input-row">

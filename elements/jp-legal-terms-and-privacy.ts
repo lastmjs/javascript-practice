@@ -1,11 +1,26 @@
 import { html, render } from 'lit-html';
 import { Store } from '../services/store';
 import { jpContainerCSSClass } from '../services/constants';
+import { request } from '../services/graphql';
 
-class JPLegal extends HTMLElement {
-    connectedCallback() {
+class JPLegalTermsAndPrivacy extends HTMLElement {
+    version: number = 0;
+
+    async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));    
         
+        const termsAndPrivacyVersionResponse = await request(`
+            query {
+                constant(where: {
+                    key: TERMS_AND_PRIVACY_VERSION
+                }) {
+                    value
+                }
+            }
+        `);
+
+        this.version = termsAndPrivacyVersionResponse.constant.value;
+
         setTimeout(() => {
             Store.dispatch({
                 type: 'HIDE_GLOBAL_LOAD_INDICATOR'
@@ -24,15 +39,17 @@ class JPLegal extends HTMLElement {
             </style>
 
             <div class="jp-container">
+                <h3>Version ${this.version}</h3>
+
                 <h1>Terms of use</h1>
 
                 <p>Hey everyone, we are Demergence, the company behind javascriptpractice.com. Thanks for using the site, we'll try to keep the legalese to a minimum.</p>
                 
                 <p>By using javascriptpractice.com, you agree to the terms of use and the privacy policy.</p>
                 
-                <p>Changes to the terms of use and privacy policy are effective immediately. After any changes, you will be required to accept the new terms of use and privacy policy before continuing to use your account.</p>
+                <p>Changes to the terms of use and privacy policy are effective immediately. After any changes, you will have the opportunity to explicitly accept the new terms of use and privacy policy before continuing to use your account. If you choose to continue using your account without explicitly accepting the new terms, that will constitute as acceptance of the new terms.</p>
 
-                <p>All data and content uploaded through the system by you, sent to us outside of the system (such as through email or other messaging services) by you, or recorded or created by the system is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">CC0 1.0 Universal</a>.</p>
+                <p>All data and content uploaded through the system by you (including any previously uploaded data or content), sent to us outside of the system (such as through email or other messaging services) by you, or recorded or created by the system is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">CC0 1.0 Universal</a>.</p>
 
                 <p>You must adhere to this <a href="https://github.com/prisma/content/blob/master/static/legal/terms.md#acceptable-use-policy" target="_blank">acceptable use policy</a>.</p>
 
@@ -59,7 +76,7 @@ class JPLegal extends HTMLElement {
                 <h1>Privacy policy</h1>
 
                 <h3>Personal information we collect</h3>
-                <p>Email is essentially the only personally identifiable information that we collect.</p>
+                <p>Email is essentially the only personally identifiable information that we collect and store on our own systems.</p>
                 <p>We use cookies to collect data in conjunction with Google Analytics.</p>
                 <p>Stripe and its affiliates process Transactions (including payment Transactions) for us. You may be required to provide personally identifiable data to Stripe, including but not limited to credit card information. We may also share some information with Stripe, such as your email address, to facilitate payments (receipts and such).</p>
 
@@ -72,13 +89,14 @@ class JPLegal extends HTMLElement {
                 </p>
                 <p>We use information recorded by the system to develop, improve, and understand the system, perform research and analysis, solicit feedback, perform marketing, and communicate with you about current, potential, and future services, and to assist you in any necessary way related to the services.</p>
                 <p>For some of our research and analysis, we use Google Analytics. We anonymize the IP addresses that are collected. Click <a href="https://policies.google.com/technologies/partner-sites" target="_blank">here</a> to see how Google collects and processes data.</p>
-                <p>We may use MailChimp to communicate with you. In this case, we would transfer your email address to MailChimp. You can view MailChimp's privacy policy <a href="https://mailchimp.com/legal/privacy/" target="_blank">here</a>.</p>
-                <p>We also may use other email or messaging/communication providers to initiate communications with you that utilize your email address, only for the purposes described in this privacy policy.</p>
+                <p>We may use MailChimp to communicate with you. In this case, we would transfer your personal information to MailChimp.</p>
+                <p>We also may use other email or messaging/communication providers to initiate communications with you, Demergence personnel, or others, that utilize your personal information, only for the purposes described in this privacy policy.</p>
 
                 <h3>How we protect personal information</h3>
 
                 <p>We strive for reasonably strong security practices to maintain the integrity of your personal information.</p>
-                <p>Besides access by Netlify or Prisma in accordance with their privacy practices, all access to personal information is protected by cryptographic secrets and restricted to Demergence personnel with a legitimate need to know..</p>
+                <p>Besides access by MailChimp, Netlify, Prisma, and Stripe in accordance with their privacy practices, all access to personal information is protected by cryptographic secrets and restricted to Demergence personnel with a legitimate need to know.</p>
+                <p>We utilize MailChimp to process and/or store personal information. Review their privacy practices <a href="https://mailchimp.com/legal/privacy/" target="_blank">here</a>.</p>
                 <p>We utilize Netlify to process and/or store personal information. Review their privacy practices <a href="https://www.netlify.com/privacy/" target="_blank">here</a>.</p>
                 <p>We utilize Prisma to process and/or store personal information. Review their privacy practices <a href="https://github.com/prisma/content/blob/master/static/legal/terms.md#privacy-policy" target="_blank">here</a>.</p>
                 <p>We utilize Stripe to process and/or store personal information. Review their privacy practices <a href="https://stripe.com/us/privacy/" target="_blank">here</a>.</p>
@@ -101,4 +119,4 @@ class JPLegal extends HTMLElement {
     }
 }
 
-window.customElements.define('jp-legal', JPLegal);
+window.customElements.define('jp-legal-terms-and-privacy', JPLegalTermsAndPrivacy);
