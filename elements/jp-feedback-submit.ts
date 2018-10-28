@@ -3,9 +3,18 @@ import { Store } from '../services/store';
 import { jpContainerCSSClass} from '../services/constants';
 import { request } from '../services/graphql';
 import './jp-button';
+import '@vaadin/vaadin-tabs/vaadin-tabs.js';
+import DOMPurify from 'dompurify';
+
+const SUBMIT_TAB = 'SUBMIT_TAB';
+const OPEN_TAB = 'OPEN_TAB';
+const CLOSED_TAB = 'CLOSED_TAB';
 
 class JPFeedbackSubmit extends HTMLElement {
     provideFeedbackTokenReward: number = 0;
+    openFeedbackSubmissions: any[] = [];
+    closedFeedbackSubmissions: any[] = [];
+    tabSelected: string = SUBMIT_TAB;
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
@@ -17,10 +26,28 @@ class JPFeedbackSubmit extends HTMLElement {
                 }) {
                     amount
                 }
+
+                openFeedbackSubmissions: feedbackSubmissions(where: {
+                    open: true
+                }) {
+                    createdAt
+                    text
+                    description
+                }
+
+                closedFeedbackSubmissions: feedbackSubmissions(where: {
+                    open: false
+                }) {
+                    createdAt
+                    text
+                    description
+                }
             }
         `);
 
         this.provideFeedbackTokenReward = response.feedbackReceivedTokenReward.amount;
+        this.openFeedbackSubmissions = response.openFeedbackSubmissions;
+        this.closedFeedbackSubmissions = response.closedFeedbackSubmissions;
 
         setTimeout(() => {
             Store.dispatch({
@@ -54,6 +81,30 @@ class JPFeedbackSubmit extends HTMLElement {
         }
     }
 
+    submitTabClicked() {
+        this.tabSelected = SUBMIT_TAB;
+        
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
+    openTabClicked() {
+        this.tabSelected = OPEN_TAB;
+
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
+    closedTabClicked() {
+        this.tabSelected = CLOSED_TAB;
+
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -76,14 +127,59 @@ class JPFeedbackSubmit extends HTMLElement {
 
             <div class="jp-container">
                 <h1>Submit feedback</h1>
-                <h2>+${this.provideFeedbackTokenReward} ${this.provideFeedbackTokenReward === 1 ? 'token' : 'tokens'}</h2>
-                <p>Provide any kind of constructive feedback.</p>
-                <p>Bugs, missing concepts, incorrect concept order...anything that you think could be improved.</p>
-                <div>
-                    <textarea id="feedback-textarea" class="feedback-textarea"></textarea>
+
+                <vaadin-tabs>
+                    <vaadin-tab @click=${() => this.submitTabClicked()}>Submit</vaadin-tab>
+                    <vaadin-tab @click=${() => this.openTabClicked()}>Open</vaadin-tab>
+                    <vaadin-tab @click=${() => this.closedTabClicked()}>Closed</vaadin-tab>
+                </vaadin-tabs>
+
+
+                <div ?hidden=${this.tabSelected !== SUBMIT_TAB}>
+                    <h2>+${this.provideFeedbackTokenReward} ${this.provideFeedbackTokenReward === 1 ? 'token' : 'tokens'}</h2>
+                    <p>Provide any kind of constructive feedback.</p>
+                    <p>Bugs, missing concepts, incorrect concept order...anything that you think could be improved.</p>
+                    <p>Feedback that you give will be publicly available.</p>
+                    <div>
+                        <textarea id="feedback-textarea" class="feedback-textarea"></textarea>
+                    </div>
+                    <br>
+                    <jp-button .text=${'Submit'} @click=${() => this.submitClicked()}></jp-button>
                 </div>
-                <br>
-                <jp-button .text=${'Submit'} @click=${() => this.submitClicked()}></jp-button>
+
+                <div ?hidden=${this.tabSelected !== OPEN_TAB}>
+                    <h2>Open feedback</h2>
+                    ${this.openFeedbackSubmissions.map((feedbackSubmission) => {
+                        return html`
+                            <div style="box-shadow: 0px 0px 5px grey; margin: 10px; padding: 25px">
+                                <div>Submitted: ${new Date(feedbackSubmission.createdAt)}</div>
+                                <br>
+                                <div>Feedback: ${DOMPurify.sanitize(feedbackSubmission.text)}
+                                </div>
+                                <br>
+                                <div>Comments: ${DOMPurify.sanitize(feedbackSubmission.description)}</div>
+                            </div>
+                            <br>
+                        `;
+                    })}
+                </div>
+
+                <div ?hidden=${this.tabSelected !== CLOSED_TAB}>
+                    <h2>Closed feedback</h2>
+                    ${this.closedFeedbackSubmissions.map((feedbackSubmission) => {
+                        return html`
+                            <div style="box-shadow: 0px 0px 5px grey; margin: 10px; padding: 25px">
+                                <div>Submitted: ${new Date(feedbackSubmission.createdAt)}</div>
+                                <br>
+                                <div>Feedback: ${DOMPurify.sanitize(feedbackSubmission.text)}
+                                </div>
+                                <br>
+                                <div>Comments: ${DOMPurify.sanitize(feedbackSubmission.description)}</div>
+                            </div>
+                            <br>
+                        `;
+                    })}
+                </div>
             </div>
         `;
     }
