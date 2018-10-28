@@ -12,6 +12,7 @@ import './jp-token-buy';
 import './jp-legal-terms-and-privacy';
 import './jp-legal-accept-new-terms';
 import './jp-feedback-submit';
+import './jp-assessment-submit';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
