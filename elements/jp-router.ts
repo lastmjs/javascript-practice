@@ -11,6 +11,7 @@ import './jp-token-earn';
 import './jp-token-buy';
 import './jp-legal-terms-and-privacy';
 import './jp-legal-accept-new-terms';
+import './jp-feedback-submit';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -43,7 +44,8 @@ class JPRouter extends HTMLElement {
             assessment: {
                 view: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`,
                 create: html`<jp-assessment-edit></jp-assessment-edit>`,
-                edit: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`
+                edit: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`,
+                submit: html`<jp-assessment-submit></jp-assessment-submit>`
             },
             user: {
                 login: html`<jp-login></jp-login>`,
@@ -58,6 +60,9 @@ class JPRouter extends HTMLElement {
             legal: {
                 'terms-and-privacy': html`<jp-legal-terms-and-privacy></jp-legal-terms-and-privacy>`,
                 'accept-new-terms': html`<jp-legal-accept-new-terms></jp-legal-accept-new-terms>`
+            },
+            feedback: {
+                submit: html`<jp-feedback-submit></jp-feedback-submit>`
             }
         };
 
