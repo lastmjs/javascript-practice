@@ -4,7 +4,8 @@ import { jpContainerCSSClass } from '../services/constants';
 import { request } from '../services/graphql';
 
 class JPTokenOverview extends HTMLElement {
-    createExerciseTokenReward: number = 0;
+    submitAssessmentTokenReward: number = 0;
+    submitFeedbackTokenReward: number = 0;
     answerIncorrectTokenReward: number = 0;
     viewSolutionTokenReward: number = 0;
 
@@ -13,8 +14,14 @@ class JPTokenOverview extends HTMLElement {
         
         const response = await request(`
             query {
-                createExerciseTokenReward: tokenReward(where: {
-                    type: EXERCISE_CREATED_AND_ACCEPTED
+                submitAssessmentTokenReward: tokenReward(where: {
+                    type: ASSESSMENT_SUBMITTED
+                }) {
+                    amount
+                }
+
+                submitFeedbackTokenReward: tokenReward(where: {
+                    type: FEEDBACK_SUBMITTED
                 }) {
                     amount
                 }
@@ -34,7 +41,8 @@ class JPTokenOverview extends HTMLElement {
         `);
 
         //TODO local redux store
-        this.createExerciseTokenReward = response.createExerciseTokenReward.amount;
+        this.submitAssessmentTokenReward = response.submitAssessmentTokenReward.amount;
+        this.submitFeedbackTokenReward = response.submitFeedbackTokenReward.amount;
         this.answerIncorrectTokenReward = response.answerIncorrectTokenReward.amount;
         this.viewSolutionTokenReward = response.viewSolutionTokenReward.amount;
 
@@ -58,7 +66,8 @@ class JPTokenOverview extends HTMLElement {
             <div class="jp-container">
                 <h1>Tokenomics</h1>
                 <h2>You have ${state.user ? state.user.tokens : 0} ${state.user ? state.user.tokens === 1 ? 'token, use it wisely' : 'tokens, use them wisely' : 'tokens, signup to get some'}</h2>
-                <h3>+${this.createExerciseTokenReward}: Create an exercise that is accepted into the course</h3>
+                <h3>+${this.submitAssessmentTokenReward}: <a href="assessment/submit">Create an exercise</a> that is accepted into the course</h3>
+                <h3>+${this.submitFeedbackTokenReward}: <a href="feedback/submit">Provide constructive feedback</a></h3>
                 <h3>-1: Answer incorrectly (only applies once per exercise and before answering correctly)</h3>
                 <h3>-1: View solution (only applies once per exercise, before answering correctly, and after attempting an answer)</h3>
             </div>

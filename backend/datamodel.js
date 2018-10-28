@@ -83,12 +83,30 @@ type Constant {
   value: String!
 }
 
+type FeedbackSubmission {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  text: String!
+  open: Boolean!
+  description: String!
+}
+
+type AssessmentSubmission {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  text: String!
+  open: Boolean!
+  description: String!
+}
+
 enum TokenTransactionType {
   ANSWER_CORRECT
   ANSWER_INCORRECT
   VIEW_SOLUTION
-  EXERCISE_CREATED_AND_ACCEPTED
-  FEEDBACK_RECEIVED
+  ASSESSMENT_SUBMITTED
+  FEEDBACK_SUBMITTED
   INITIAL_ENDOWMENT
   TOKEN_PURCHASE
 }

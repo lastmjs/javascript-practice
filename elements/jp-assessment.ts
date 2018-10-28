@@ -325,7 +325,7 @@ class JPAssessment extends HTMLElement {
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
                         <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
                         <h2 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Looks like there are no more exercises</h2>
-                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="/">create an exercise</a>? You'll learn something new and earn some tokens</h3>
+                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>? You'll learn something new and earn some tokens</h3>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
