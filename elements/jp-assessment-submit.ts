@@ -10,16 +10,16 @@ const SUBMIT_TAB = 'SUBMIT_TAB';
 const OPEN_TAB = 'OPEN_TAB';
 const CLOSED_TAB = 'CLOSED_TAB';
 
-class JPFeedbackSubmit extends HTMLElement {
-    provideFeedbackTokenReward: number = 0;
-    openFeedbackSubmissions: any[] = [];
-    closedFeedbackSubmissions: any[] = [];
+class JPAssessmentSubmit extends HTMLElement {
+    assessmentSubmittedTokenReward: number = 0;
+    openAssessmentSubmissions: any[] = [];
+    closedAssessmentSubmissions: any[] = [];
     tabSelected: string = SUBMIT_TAB;
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
 
-        await this.initalLoad();
+        await this.initialLoad();
 
         setTimeout(() => {
             Store.dispatch({
@@ -32,16 +32,16 @@ class JPFeedbackSubmit extends HTMLElement {
         });
     }
 
-    async initalLoad() {
+    async initialLoad() {
         const response = await request(`
             query {
-                feedbackReceivedTokenReward: tokenReward(where: {
-                    type: FEEDBACK_SUBMITTED
+                assessmentSubmittedTokenReward: tokenReward(where: {
+                    type: ASSESSMENT_SUBMITTED
                 }) {
                     amount
                 }
 
-                openFeedbackSubmissions: feedbackSubmissions(where: {
+                openAssessmentSubmissions: assessmentSubmissions(where: {
                     open: true
                 }) {
                     createdAt
@@ -49,7 +49,7 @@ class JPFeedbackSubmit extends HTMLElement {
                     description
                 }
 
-                closedFeedbackSubmissions: feedbackSubmissions(where: {
+                closedAssessmentSubmissions: assessmentSubmissions(where: {
                     open: false
                 }) {
                     createdAt
@@ -59,30 +59,30 @@ class JPFeedbackSubmit extends HTMLElement {
             }
         `);
 
-        this.provideFeedbackTokenReward = response.feedbackReceivedTokenReward.amount;
-        this.openFeedbackSubmissions = response.openFeedbackSubmissions;
-        this.closedFeedbackSubmissions = response.closedFeedbackSubmissions;
+        this.assessmentSubmittedTokenReward = response.assessmentSubmittedTokenReward.amount;
+        this.openAssessmentSubmissions = response.openAssessmentSubmissions;
+        this.closedAssessmentSubmissions = response.closedAssessmentSubmissions;
     }
 
     async submitClicked() {
-        const feedbackTextarea = this.querySelector('#feedback-textarea');
+        const assessmentTextarea = this.querySelector('#assessment-textarea');
 
         const response = await request(`
             mutation($text: String!) {
-                submitFeedback(text: $text) {
+                submitAssessment(text: $text) {
                     success
                 }
             }
         `, {
-            text: feedbackTextarea.value
+            text: assessmentTextarea.value
         });
 
-        if (response.submitFeedback.success) {
-            await this.initalLoad();
+        if (response.submitAssessment.success) {
+            await this.initialLoad();
 
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
-                notification: 'Feedback submitted'
+                notification: 'Exercise submitted'
             });
         }
     }
@@ -120,7 +120,7 @@ class JPFeedbackSubmit extends HTMLElement {
                     display: none;
                 }
 
-                .feedback-textarea {
+                .assessment-textarea {
                     width: 100%;
                     height: 25vh;
                     resize: none;
@@ -132,7 +132,7 @@ class JPFeedbackSubmit extends HTMLElement {
             </style>
 
             <div class="jp-container">
-                <h1>Submit feedback</h1>
+                <h1>Submit an exercise</h1>
 
                 <vaadin-tabs>
                     <vaadin-tab @click=${() => this.submitTabClicked()}>Submit</vaadin-tab>
@@ -142,28 +142,28 @@ class JPFeedbackSubmit extends HTMLElement {
 
 
                 <div ?hidden=${this.tabSelected !== SUBMIT_TAB}>
-                    <h2>+${this.provideFeedbackTokenReward} ${this.provideFeedbackTokenReward === 1 ? 'token' : 'tokens'}</h2>
-                    <p>Provide any kind of constructive feedback.</p>
-                    <p>Bugs, missing concepts, incorrect concept order...anything that you think could be improved.</p>
-                    <p>Feedback that you give will be publicly available.</p>
+                    <h2>+${this.assessmentSubmittedTokenReward} ${this.assessmentSubmittedTokenReward === 1 ? 'token' : 'tokens'}</h2>
+                    <p>The full exercise creation editor is not available. Submit the text of your exercise and we will do the rest.</p>
+                    <p>Exercises that you create will be publicly available.</p>
+                    <p>Obey all copyright laws (get the rights, utilize fair use, or create an original...you know).</p>
                     <div>
-                        <textarea id="feedback-textarea" class="feedback-textarea"></textarea>
+                        <textarea id="assessment-textarea" class="assessment-textarea"></textarea>
                     </div>
                     <br>
                     <jp-button .text=${'Submit'} @click=${() => this.submitClicked()}></jp-button>
                 </div>
 
                 <div ?hidden=${this.tabSelected !== OPEN_TAB}>
-                    <h2>Open feedback</h2>
-                    ${this.openFeedbackSubmissions.map((feedbackSubmission) => {
+                    <h2>Open exercises</h2>
+                    ${this.openAssessmentSubmissions.map((assessmentSubmission) => {
                         return html`
                             <div style="box-shadow: 0px 0px 5px grey; margin: 10px; padding: 25px">
-                                <div>Submitted: ${new Date(feedbackSubmission.createdAt)}</div>
+                                <div>Submitted: ${new Date(assessmentSubmission.createdAt)}</div>
                                 <br>
-                                <div>Feedback: ${DOMPurify.sanitize(feedbackSubmission.text)}
+                                <div>Exercise text: ${DOMPurify.sanitize(assessmentSubmission.text)}
                                 </div>
                                 <br>
-                                <div>Comments: ${DOMPurify.sanitize(feedbackSubmission.description)}</div>
+                                <div>Comments: ${DOMPurify.sanitize(assessmentSubmission.description)}</div>
                             </div>
                             <br>
                         `;
@@ -171,16 +171,16 @@ class JPFeedbackSubmit extends HTMLElement {
                 </div>
 
                 <div ?hidden=${this.tabSelected !== CLOSED_TAB}>
-                    <h2>Closed feedback</h2>
-                    ${this.closedFeedbackSubmissions.map((feedbackSubmission) => {
+                    <h2>Closed exercises</h2>
+                    ${this.closedAssessmentSubmissions.map((assessmentSubmission) => {
                         return html`
                             <div style="box-shadow: 0px 0px 5px grey; margin: 10px; padding: 25px">
-                                <div>Submitted: ${new Date(feedbackSubmission.createdAt)}</div>
+                                <div>Submitted: ${new Date(assessmentSubmission.createdAt)}</div>
                                 <br>
-                                <div>Feedback: ${DOMPurify.sanitize(feedbackSubmission.text)}
+                                <div>Exercise text: ${DOMPurify.sanitize(assessmentSubmission.text)}
                                 </div>
                                 <br>
-                                <div>Comments: ${DOMPurify.sanitize(feedbackSubmission.description)}</div>
+                                <div>Comments: ${DOMPurify.sanitize(assessmentSubmission.description)}</div>
                             </div>
                             <br>
                         `;
@@ -191,4 +191,4 @@ class JPFeedbackSubmit extends HTMLElement {
     }
 }
 
-window.customElements.define('jp-feedback-submit', JPFeedbackSubmit);
+window.customElements.define('jp-assessment-submit', JPAssessmentSubmit);
