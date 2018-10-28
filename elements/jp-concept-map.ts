@@ -35,10 +35,6 @@ class JPConceptMap extends HTMLElement {
             type: 'SWITCH_SELECTED_CONCEPT',
             concept: e.currentTarget.concept
         });
-
-        // TODO this is extremely evil
-        document.querySelector('#solution-button').innerHTML = `Solution`;
-        document.querySelector('#submit-button').removeAttribute('disabled');
     }
 
     earnTokensClicked() {
