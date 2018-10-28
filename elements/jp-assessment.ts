@@ -6,8 +6,11 @@ import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
 import { loadUser } from '../services/init';
 import page from 'page';
 import { NO_MORE_EXERCISES } from '../services/constants';
+import '@vaadin/vaadin-tabs/vaadin-tabs.js';
 
 class JPAssessment extends HTMLElement {
+    tabIndex: number = 0;
+
     set assessmentId(val: string) {
         this._assessmentId = val;
 
@@ -77,6 +80,8 @@ class JPAssessment extends HTMLElement {
             type: 'SET_CURRENT_CONCEPT',
             concept: response.assessment.concept
         });
+
+        this.tabIndex = 0;
     }
 
     async questionResponse(e: any) {
@@ -169,10 +174,6 @@ class JPAssessment extends HTMLElement {
             Store.dispatch({
                 type: 'NEXT_QUESTION'
             });
-         
-            //TODO this is evil
-            this.querySelector('#solution-button').innerHTML = `Solution`;
-            this.querySelector('#submit-button').removeAttribute('disabled');
         }
     }
 
@@ -185,18 +186,43 @@ class JPAssessment extends HTMLElement {
             Store.dispatch({
                 type: 'PREVIOUS_QUESTION'
             });
-    
-            //TODO this is evil
-            this.querySelector('#solution-button').innerHTML = `Solution`;
-            this.querySelector('#submit-button').removeAttribute('disabled');
         }
     }
 
-    async showSolution() {
+    showExercise(e: any) {
+        e.stopPropagation();
+
+        //TODO everything below here is evil
+        //TODO rendering of this component really needs to be redone
+        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
+        const showingExercise = solutionTemplate;
+
+        if (showingExercise) {
+            return;
+        }
+
+        this.tabIndex = 0;
+
+        //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
+        // TODO and the question is shown again
+        const prendusViewQuestion = this.querySelector('#prendus-view-question');
+        prendusViewQuestion.showSolutionClick();
+    }
+
+    async showSolution(e: any) {
+        e.stopPropagation();
+
+        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
+        const showingSolution = !solutionTemplate;
+        
+        if (showingSolution) {
+            return;
+        }
+        
         Store.dispatch({
             type: 'SHOW_LOAD_INDICATOR'
         });
-
+        
         const showSolutionResponse = await request(`
             mutation($assessmentId: ID!) {
                 viewSolution(assessmentId: $assessmentId) {
@@ -207,35 +233,35 @@ class JPAssessment extends HTMLElement {
         `, {
             assessmentId: Store.getState().currentAssessment.id
         });
-
+        
         if (!showSolutionResponse) {
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
             });
-
+            
             return;
         }
-
+        
         if (!showSolutionResponse.viewSolution.allowed) {
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
                 notification: 'You do not have enough tokens to view the solution'
             });
-
+            
             Store.dispatch({
                 type: 'HIDE_LOAD_INDICATOR'
             });
-
+            
             return;
         }
-
+        
         if (showSolutionResponse.viewSolution.tokenReward < 0) {
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
                 notification: `${showSolutionResponse.viewSolution.tokenReward} ${showSolutionResponse.viewSolution.tokenReward === -1 ? 'token' : 'tokens'}`
             });
         }
-
+        
         const updateUserResponse = await request(`
             query($userId: ID!) {
                 user(where: {
@@ -247,23 +273,17 @@ class JPAssessment extends HTMLElement {
         `, {
             userId: Store.getState().user.id
         });
+        
+        this.tabIndex = 1;
 
         //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
         //TODO and the question is shown again
         const prendusViewQuestion = this.querySelector('#prendus-view-question');
-        prendusViewQuestion.showSolutionClick();
-
+        
         //TODO everything below here is evil
         //TODO rendering of this component really needs to be redone
-        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
-
-        if (solutionTemplate) {
-            this.querySelector('#solution-button').innerHTML = `Solution`;
-            this.querySelector('#submit-button').removeAttribute('disabled');
-        }
-        else {
-            this.querySelector('#solution-button').innerHTML = `Exercise`;
-            this.querySelector('#submit-button').setAttribute('disabled', true);
+        if (!showingSolution) {
+            prendusViewQuestion.showSolutionClick();
         }
 
         Store.dispatch({
@@ -324,6 +344,10 @@ class JPAssessment extends HTMLElement {
                     <div id="question-container" class="jp-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
                         <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
+                        <vaadin-tabs .selected="${this.tabIndex}">
+                            <vaadin-tab @click=${(e: any) => this.showExercise(e)}>Exercise</vaadin-tab>
+                            <vaadin-tab @click=${(e: any) => this.showSolution(e)}>Solution</vaadin-tab>
+                        </vaadin-tabs>
                         <h2 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Looks like there are no more exercises</h2>
                         <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>? You'll learn something new and earn some tokens</h3>
                         <prendus-view-question
@@ -343,25 +367,16 @@ class JPAssessment extends HTMLElement {
                             id="prev-button"
                             class="bottom-button"
                             @click=${() => this.previousAssessmentClick()}
-                            ?disabled=${state.currentAssessment && state.currentAssessment.order === 0}
+                            ?disabled=${(state.currentAssessment && state.currentAssessment.order === 0) || this.tabIndex === 1}
                         >
                             Prev
-                        </button>
-
-                        <button
-                            id="solution-button"
-                            class="bottom-button"
-                            @click=${() => this.showSolution()}
-                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
-                        >
-                            Solution
                         </button>
 
                         <button
                             id="submit-button"
                             class="bottom-button"
                             @click=${() => this.submitAnswer()}
-                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
+                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex === 1}
                         >
                             Submit
                         </button>
@@ -370,7 +385,7 @@ class JPAssessment extends HTMLElement {
                             id="next-button"
                             class="bottom-button"
                             @click=${() => this.nextAssessmentClick()}
-                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
+                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex === 1}
                         >
                             Next
                         </button>
