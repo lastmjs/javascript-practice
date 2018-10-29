@@ -49,6 +49,8 @@ class JPTokenEarn extends HTMLElement {
 
             <div class="jp-container">
                 <h1>Earn tokens</h1>
+                <p>We are building this course together.</p>
+                <p>Lend your expertise and help create the most comprehensive core JavaScript learning resource available.</p>
                 <h2>+${this.submitAssessmentTokenReward} tokens: <a href="assessment/submit">Create an exercise</a></h2>
                 <h2>+${this.submitFeedbackTokenReward} tokens: <a href="feedback/submit">Provide feedback</a></h2>
             </div>
