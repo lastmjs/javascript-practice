@@ -101,8 +101,7 @@ class JPLogin extends HTMLElement {
                 }
             `);
 
-
-            if (loginResponse.login.termsAcceptedVersion !== termsAndPrivacyVersionResponse.constant.value) {
+            if (loginResponse.login.user.termsAcceptedVersion !== termsAndPrivacyVersionResponse.constant.value) {
                 page('/legal/accept-new-terms');
                 return;
             }
