@@ -11,6 +11,12 @@ const SUBMIT_TAB = 'SUBMIT_TAB';
 const OPEN_TAB = 'OPEN_TAB';
 const CLOSED_TAB = 'CLOSED_TAB';
 
+const tabIndeces = {
+    [SUBMIT_TAB]: 0,
+    [OPEN_TAB]: 1,
+    [CLOSED_TAB]: 2
+};
+
 class JPAssessmentSubmit extends HTMLElement {
     assessmentSubmittedTokenReward: number = 0;
     openAssessmentSubmissions: any[] = [];
@@ -86,6 +92,12 @@ class JPAssessmentSubmit extends HTMLElement {
             await this.initialLoad();
             await loadUser();
 
+            // Local Redux store
+            this.tabSelected = OPEN_TAB;
+
+            // evil
+            this.querySelector('#assessment-textarea').value = '';
+
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
                 notification: `+${this.assessmentSubmittedTokenReward} ${this.assessmentSubmittedTokenReward === 1 ? 'token' : 'tokens'}`
@@ -144,12 +156,11 @@ class JPAssessmentSubmit extends HTMLElement {
             <div class="jp-container">
                 <h1>Submit an exercise</h1>
 
-                <vaadin-tabs>
+                <vaadin-tabs .selected="${tabIndeces[this.tabSelected]}">
                     <vaadin-tab @click=${() => this.submitTabClicked()}>Submit</vaadin-tab>
                     <vaadin-tab @click=${() => this.openTabClicked()}>Open</vaadin-tab>
                     <vaadin-tab @click=${() => this.closedTabClicked()}>Closed</vaadin-tab>
                 </vaadin-tabs>
-
 
                 <div ?hidden=${this.tabSelected !== SUBMIT_TAB}>
                     <h2>+${this.assessmentSubmittedTokenReward} ${this.assessmentSubmittedTokenReward === 1 ? 'token' : 'tokens'}</h2>
