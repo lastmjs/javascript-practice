@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "@kuscamara/code-sample": "^3.0.1",
+    "@kuscamara/code-sample": "^3.0.2",
     "@polymer/iron-validator-behavior": "^3.0.1",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-toast": "^3.0.1",
