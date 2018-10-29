@@ -31,15 +31,15 @@ export async function viewSolution(parent, args, context, info) {
             amount
         }`);
 
-        const allowed = user.tokens >= Math.abs(viewSolutionTokenReward.amount);
+        const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
+
+        const allowed = user.tokens >= Math.abs(viewSolutionTokenReward.amount) || (assessmentInfo !== undefined && (assessmentInfo.answeredCorrectly || assessmentInfo.solutionViewed));
 
         if (!allowed) {
             return {
                 allowed
             };
         }
-
-        const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
 
         if (assessmentInfo) {
             if (assessmentInfo.solutionViewed === false) {

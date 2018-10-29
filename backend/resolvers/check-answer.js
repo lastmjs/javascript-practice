@@ -40,15 +40,15 @@ export async function checkAnswer(parent, args, context, info) {
 
         const maximum = Math.max(answerCorrectTokenReward.amount < 0 ? Math.abs(answerCorrectTokenReward.amount) : 0, answerIncorrectTokenReward.amount < 0 ? Math.abs(answerIncorrectTokenReward.amount) : 0);
 
-        const allowed = user.tokens >= maximum;
+        const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
+
+        const allowed = user.tokens >= maximum || assessmentInfo !== undefined;
 
         if (!allowed) {
             return {
                 allowed
             };
         }
-
-        const assessmentInfo = user.assessmentInfos.find((assessmentInfo) => assessmentInfo.assessment.id === args.assessmentId);
 
         if (assessmentInfo) {
             if (assessmentInfo.answeredCorrectly === false && args.correct === true) {
