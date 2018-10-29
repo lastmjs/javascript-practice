@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export async function login(parent, args, context, info) {
+    // The reason we are manually putting a selection set in is
+    // because by default prisma will not return fields from relations
     const user = await prisma.query.user({
         where: {
             email: args.email
@@ -15,6 +17,7 @@ export async function login(parent, args, context, info) {
             email
             password
             tokens
+            termsAcceptedVersion
             assessmentInfos {
                 id
                 assessment {

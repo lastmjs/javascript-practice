@@ -38,6 +38,8 @@ export async function signup(parent, args, context, info) {
     `);
 
     //TODO the following two calls must be made atomic
+    // The reason we are manually putting a selection set in is
+    // because by default prisma will not return fields from relations
     const user = await prisma.mutation.createUser({
         data: {
             email: args.email,
