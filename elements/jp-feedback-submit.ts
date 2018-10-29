@@ -48,7 +48,7 @@ class JPFeedbackSubmit extends HTMLElement {
                     amount
                 }
 
-                openFeedbackSubmissions: feedbackSubmissions(where: {
+                openFeedbackSubmissions: feedbackSubmissions(orderBy: createdAt_DESC, where: {
                     open: true
                 }) {
                     createdAt
@@ -56,7 +56,7 @@ class JPFeedbackSubmit extends HTMLElement {
                     description
                 }
 
-                closedFeedbackSubmissions: feedbackSubmissions(where: {
+                closedFeedbackSubmissions: feedbackSubmissions(orderBy: createdAt_DESC, where: {
                     open: false
                 }) {
                     createdAt
