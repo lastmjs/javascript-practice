@@ -4,6 +4,20 @@ import { prisma } from '../lambda.js';
 //TODO figure out how to use directive permissions for automatically generated mutations
 export async function submitAssessment(parent, args, context, info) {
     const userId = getUserId(context, 'You must log in or sign up to submit an exercise');
+
+    const openAssessmentSubmissions = await prisma.query.assessmentSubmissions({
+        where: {
+            user: {
+                id: userId
+            },
+            open: true
+        }
+    });
+
+    if (openAssessmentSubmissions.length !== 0) {
+        throw new Error('Your current submission must become closed before submitting another');
+    }
+
     const user = await prisma.query.user({
         where: {
             id: userId

@@ -88,7 +88,7 @@ class JPFeedbackSubmit extends HTMLElement {
             text: feedbackTextarea.value
         });
 
-        if (response.submitFeedback.success) {
+        if (response && response.submitFeedback.success) {
             await this.initalLoad();
             await loadUser();
 
@@ -102,11 +102,11 @@ class JPFeedbackSubmit extends HTMLElement {
                 type: 'ADD_NOTIFICATION',
                 notification: `+${this.provideFeedbackTokenReward} ${this.provideFeedbackTokenReward === 1 ? 'token' : 'tokens'}`
             });
-
-            Store.dispatch({
-                type: 'HIDE_LOAD_INDICATOR'
-            });
         }
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
     }
 
     submitTabClicked() {
