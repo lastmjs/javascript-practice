@@ -5,6 +5,7 @@ import { request } from '../services/graphql';
 import './jp-button';
 import '@vaadin/vaadin-tabs/vaadin-tabs.js';
 import DOMPurify from 'dompurify';
+import { loadUser } from '../services/init';
 
 const SUBMIT_TAB = 'SUBMIT_TAB';
 const OPEN_TAB = 'OPEN_TAB';
@@ -65,6 +66,10 @@ class JPAssessmentSubmit extends HTMLElement {
     }
 
     async submitClicked() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
         const assessmentTextarea = this.querySelector('#assessment-textarea');
 
         const response = await request(`
@@ -79,10 +84,15 @@ class JPAssessmentSubmit extends HTMLElement {
 
         if (response.submitAssessment.success) {
             await this.initialLoad();
+            await loadUser();
 
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
-                notification: 'Exercise submitted'
+                notification: `+${this.assessmentSubmittedTokenReward} ${this.assessmentSubmittedTokenReward === 1 ? 'token' : 'tokens'}`
+            });
+
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
             });
         }
     }
