@@ -746,16 +746,14 @@ export interface TokenRewardWhereInput {
   NOT?: TokenRewardWhereInput[] | TokenRewardWhereInput;
 }
 
-export interface AssessmentSubmissionUpdateInput {
-  text?: String;
-  open?: Boolean;
-  description?: String;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export interface ConceptUpdateWithoutCourseDataInput {
-  title?: String;
-  assessments?: AssessmentUpdateManyWithoutConceptInput;
-  order?: Int;
+export interface AssessmentUpdateWithWhereUniqueWithoutConceptInput {
+  where: AssessmentWhereUniqueInput;
+  data: AssessmentUpdateWithoutConceptDataInput;
 }
 
 export interface UserCreateOneWithoutAssessmentInfosInput {
@@ -763,26 +761,30 @@ export interface UserCreateOneWithoutAssessmentInfosInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface ConceptUpdateWithWhereUniqueWithoutCourseInput {
-  where: ConceptWhereUniqueInput;
-  data: ConceptUpdateWithoutCourseDataInput;
+export interface AssessmentUpdateManyWithoutConceptInput {
+  create?:
+    | AssessmentCreateWithoutConceptInput[]
+    | AssessmentCreateWithoutConceptInput;
+  delete?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+  disconnect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+  update?:
+    | AssessmentUpdateWithWhereUniqueWithoutConceptInput[]
+    | AssessmentUpdateWithWhereUniqueWithoutConceptInput;
+  upsert?:
+    | AssessmentUpsertWithWhereUniqueWithoutConceptInput[]
+    | AssessmentUpsertWithWhereUniqueWithoutConceptInput;
 }
 
 export type AssessmentInfoWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface ConceptUpdateManyWithoutCourseInput {
-  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
-  delete?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-  disconnect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
-  update?:
-    | ConceptUpdateWithWhereUniqueWithoutCourseInput[]
-    | ConceptUpdateWithWhereUniqueWithoutCourseInput;
-  upsert?:
-    | ConceptUpsertWithWhereUniqueWithoutCourseInput[]
-    | ConceptUpsertWithWhereUniqueWithoutCourseInput;
+export interface ConceptUpdateInput {
+  title?: String;
+  course?: CourseUpdateOneRequiredWithoutConceptsInput;
+  assessments?: AssessmentUpdateManyWithoutConceptInput;
+  order?: Int;
 }
 
 export interface TokenRewardSubscriptionWhereInput {
@@ -796,10 +798,10 @@ export interface TokenRewardSubscriptionWhereInput {
   NOT?: TokenRewardSubscriptionWhereInput[] | TokenRewardSubscriptionWhereInput;
 }
 
-export interface CourseUpdateInput {
-  title?: String;
-  concepts?: ConceptUpdateManyWithoutCourseInput;
-  order?: Int;
+export interface AssessmentCreateWithoutConceptInput {
+  assessML: String;
+  javaScript: String;
+  order: Int;
 }
 
 export interface UserWhereInput {
@@ -914,10 +916,11 @@ export interface CourseSubscriptionWhereInput {
   NOT?: CourseSubscriptionWhereInput[] | CourseSubscriptionWhereInput;
 }
 
-export interface ConceptCreateWithoutCourseInput {
-  title: String;
-  assessments?: AssessmentCreateManyWithoutConceptInput;
-  order: Int;
+export interface AssessmentCreateManyWithoutConceptInput {
+  create?:
+    | AssessmentCreateWithoutConceptInput[]
+    | AssessmentCreateWithoutConceptInput;
+  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
 }
 
 export interface ConceptSubscriptionWhereInput {
@@ -1011,9 +1014,11 @@ export interface AssessmentSubmissionSubscriptionWhereInput {
     | AssessmentSubmissionSubscriptionWhereInput;
 }
 
-export interface ConceptCreateManyWithoutCourseInput {
-  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
-  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+export interface ConceptCreateInput {
+  title: String;
+  course: CourseCreateOneWithoutConceptsInput;
+  assessments?: AssessmentCreateManyWithoutConceptInput;
+  order: Int;
 }
 
 export interface AssessmentInfoSubscriptionWhereInput {
@@ -1033,10 +1038,9 @@ export interface AssessmentInfoSubscriptionWhereInput {
     | AssessmentInfoSubscriptionWhereInput;
 }
 
-export interface CourseCreateInput {
-  title: String;
-  concepts?: ConceptCreateManyWithoutCourseInput;
-  order: Int;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
 export interface UserUpdateInput {
@@ -1048,24 +1052,25 @@ export interface UserUpdateInput {
   termsAcceptedVersion?: String;
 }
 
-export interface ConstantUpdateInput {
-  key?: ConstantKey;
-  value?: String;
+export interface AssessmentInfoUpsertWithWhereUniqueWithoutUserInput {
+  where: AssessmentInfoWhereUniqueInput;
+  update: AssessmentInfoUpdateWithoutUserDataInput;
+  create: AssessmentInfoCreateWithoutUserInput;
 }
 
 export type ConceptWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface ConstantCreateInput {
-  key: ConstantKey;
-  value: String;
-}
-
 export interface AssessmentInfoUpdateWithoutUserDataInput {
   assessment?: AssessmentUpdateOneRequiredInput;
   answeredCorrectly?: Boolean;
   solutionViewed?: Boolean;
+}
+
+export interface TokenRewardUpdateInput {
+  type?: TokenTransactionType;
+  amount?: Int;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -1078,10 +1083,16 @@ export type ConstantWhereUniqueInput = AtLeastOne<{
   key?: ConstantKey;
 }>;
 
-export interface AssessmentUpsertWithWhereUniqueWithoutConceptInput {
-  where: AssessmentWhereUniqueInput;
-  update: AssessmentUpdateWithoutConceptDataInput;
-  create: AssessmentCreateWithoutConceptInput;
+export interface AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
+  where: AssessmentInfoWhereUniqueInput;
+  data: AssessmentInfoUpdateWithoutUserDataInput;
+}
+
+export interface FeedbackSubmissionUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  text?: String;
+  open?: Boolean;
+  description?: String;
 }
 
 export interface AssessmentInfoUpdateManyWithoutUserInput {
@@ -1101,10 +1112,11 @@ export interface AssessmentInfoUpdateManyWithoutUserInput {
     | AssessmentInfoUpsertWithWhereUniqueWithoutUserInput;
 }
 
-export interface AssessmentUpdateWithoutConceptDataInput {
-  assessML?: String;
-  javaScript?: String;
-  order?: Int;
+export interface FeedbackSubmissionCreateInput {
+  user: UserCreateOneInput;
+  text: String;
+  open: Boolean;
+  description: String;
 }
 
 export interface UserUpdateDataInput {
@@ -1116,47 +1128,40 @@ export interface UserUpdateDataInput {
   termsAcceptedVersion?: String;
 }
 
-export interface AssessmentUpdateWithWhereUniqueWithoutConceptInput {
-  where: AssessmentWhereUniqueInput;
-  data: AssessmentUpdateWithoutConceptDataInput;
+export interface ConceptUpdateWithoutCourseDataInput {
+  title?: String;
+  assessments?: AssessmentUpdateManyWithoutConceptInput;
+  order?: Int;
 }
 
-export interface TokenTransactionUpdateInput {
-  user?: UserUpdateOneRequiredInput;
-  amount?: Int;
-  type?: TokenTransactionType;
-  description?: String;
-}
-
-export interface AssessmentUpdateManyWithoutConceptInput {
-  create?:
-    | AssessmentCreateWithoutConceptInput[]
-    | AssessmentCreateWithoutConceptInput;
-  delete?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-  disconnect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
-  update?:
-    | AssessmentUpdateWithWhereUniqueWithoutConceptInput[]
-    | AssessmentUpdateWithWhereUniqueWithoutConceptInput;
-  upsert?:
-    | AssessmentUpsertWithWhereUniqueWithoutConceptInput[]
-    | AssessmentUpsertWithWhereUniqueWithoutConceptInput;
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export type CourseWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface AssessmentInfoCreateManyWithoutUserInput {
-  create?:
-    | AssessmentInfoCreateWithoutUserInput[]
-    | AssessmentInfoCreateWithoutUserInput;
-  connect?: AssessmentInfoWhereUniqueInput[] | AssessmentInfoWhereUniqueInput;
+export interface ConceptUpdateManyWithoutCourseInput {
+  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
+  delete?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+  disconnect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
+  update?:
+    | ConceptUpdateWithWhereUniqueWithoutCourseInput[]
+    | ConceptUpdateWithWhereUniqueWithoutCourseInput;
+  upsert?:
+    | ConceptUpsertWithWhereUniqueWithoutCourseInput[]
+    | ConceptUpsertWithWhereUniqueWithoutCourseInput;
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
+export interface ConceptCreateWithoutCourseInput {
+  title: String;
+  assessments?: AssessmentCreateManyWithoutConceptInput;
+  order: Int;
 }
 
 export interface AssessmentCreateInput {
@@ -1166,11 +1171,9 @@ export interface AssessmentCreateInput {
   order: Int;
 }
 
-export interface TokenTransactionCreateInput {
-  user: UserCreateOneInput;
-  amount: Int;
-  type: TokenTransactionType;
-  description: String;
+export interface ConceptCreateManyWithoutCourseInput {
+  create?: ConceptCreateWithoutCourseInput[] | ConceptCreateWithoutCourseInput;
+  connect?: ConceptWhereUniqueInput[] | ConceptWhereUniqueInput;
 }
 
 export interface ConceptCreateOneWithoutAssessmentsInput {
@@ -1246,9 +1249,9 @@ export interface ConceptCreateWithoutAssessmentsInput {
   order: Int;
 }
 
-export interface TokenRewardCreateInput {
-  type: TokenTransactionType;
-  amount: Int;
+export interface ConstantUpdateInput {
+  key?: ConstantKey;
+  value?: String;
 }
 
 export interface CourseCreateOneWithoutConceptsInput {
@@ -1266,10 +1269,10 @@ export interface CourseCreateWithoutConceptsInput {
   order: Int;
 }
 
-export interface ConceptUpsertWithWhereUniqueWithoutCourseInput {
-  where: ConceptWhereUniqueInput;
-  update: ConceptUpdateWithoutCourseDataInput;
-  create: ConceptCreateWithoutCourseInput;
+export interface AssessmentUpdateWithoutConceptDataInput {
+  assessML?: String;
+  javaScript?: String;
+  order?: Int;
 }
 
 export interface AssessmentUpdateInput {
@@ -1320,11 +1323,11 @@ export interface FeedbackSubmissionSubscriptionWhereInput {
     | FeedbackSubmissionSubscriptionWhereInput;
 }
 
-export interface ConceptUpdateInput {
-  title?: String;
-  course?: CourseUpdateOneRequiredWithoutConceptsInput;
-  assessments?: AssessmentUpdateManyWithoutConceptInput;
-  order?: Int;
+export interface AssessmentSubmissionUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  text?: String;
+  open?: Boolean;
+  description?: String;
 }
 
 export type AssessmentSubmissionWhereUniqueInput = AtLeastOne<{
@@ -1354,10 +1357,11 @@ export interface CourseUpdateWithoutConceptsDataInput {
   order?: Int;
 }
 
-export interface AssessmentInfoUpsertWithWhereUniqueWithoutUserInput {
-  where: AssessmentInfoWhereUniqueInput;
-  update: AssessmentInfoUpdateWithoutUserDataInput;
-  create: AssessmentInfoCreateWithoutUserInput;
+export interface TokenTransactionCreateInput {
+  user: UserCreateOneInput;
+  amount: Int;
+  type: TokenTransactionType;
+  description: String;
 }
 
 export interface CourseUpsertWithoutConceptsInput {
@@ -1443,17 +1447,16 @@ export interface ConceptUpsertWithoutAssessmentsInput {
   create: ConceptCreateWithoutAssessmentsInput;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
+export interface ConceptUpsertWithWhereUniqueWithoutCourseInput {
+  where: ConceptWhereUniqueInput;
+  update: ConceptUpdateWithoutCourseDataInput;
+  create: ConceptCreateWithoutCourseInput;
 }
 
-export interface AssessmentCreateWithoutConceptInput {
-  assessML: String;
-  javaScript: String;
-  order: Int;
+export interface AssessmentInfoCreateWithoutUserInput {
+  assessment: AssessmentCreateOneInput;
+  answeredCorrectly: Boolean;
+  solutionViewed: Boolean;
 }
 
 export interface CourseWhereInput {
@@ -1517,11 +1520,11 @@ export interface CourseWhereInput {
   NOT?: CourseWhereInput[] | CourseWhereInput;
 }
 
-export interface AssessmentCreateManyWithoutConceptInput {
+export interface AssessmentInfoCreateManyWithoutUserInput {
   create?:
-    | AssessmentCreateWithoutConceptInput[]
-    | AssessmentCreateWithoutConceptInput;
-  connect?: AssessmentWhereUniqueInput[] | AssessmentWhereUniqueInput;
+    | AssessmentInfoCreateWithoutUserInput[]
+    | AssessmentInfoCreateWithoutUserInput;
+  connect?: AssessmentInfoWhereUniqueInput[] | AssessmentInfoWhereUniqueInput;
 }
 
 export type FeedbackSubmissionWhereUniqueInput = AtLeastOne<{
@@ -1535,22 +1538,25 @@ export interface AssessmentInfoCreateInput {
   solutionViewed: Boolean;
 }
 
-export interface TokenRewardUpdateInput {
-  type?: TokenTransactionType;
-  amount?: Int;
-}
-
-export interface ConceptCreateInput {
+export interface CourseCreateInput {
   title: String;
-  course: CourseCreateOneWithoutConceptsInput;
-  assessments?: AssessmentCreateManyWithoutConceptInput;
+  concepts?: ConceptCreateManyWithoutCourseInput;
   order: Int;
 }
 
-export interface FeedbackSubmissionCreateInput {
-  text: String;
-  open: Boolean;
-  description: String;
+export interface UserCreateInput {
+  email: String;
+  password: String;
+  tokens: Int;
+  assessmentInfos?: AssessmentInfoCreateManyWithoutUserInput;
+  termsAcceptedDate?: DateTimeInput;
+  termsAcceptedVersion?: String;
+}
+
+export interface AssessmentUpsertWithWhereUniqueWithoutConceptInput {
+  where: AssessmentWhereUniqueInput;
+  update: AssessmentUpdateWithoutConceptDataInput;
+  create: AssessmentCreateWithoutConceptInput;
 }
 
 export interface UserCreateWithoutAssessmentInfosInput {
@@ -1639,6 +1645,7 @@ export interface AssessmentSubmissionWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
+  user?: UserWhereInput;
   text?: String;
   text_not?: String;
   text_in?: String[] | String;
@@ -1681,9 +1688,9 @@ export interface AssessmentInfoUpdateInput {
   solutionViewed?: Boolean;
 }
 
-export interface AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
-  where: AssessmentInfoWhereUniqueInput;
-  data: AssessmentInfoUpdateWithoutUserDataInput;
+export interface TokenRewardCreateInput {
+  type: TokenTransactionType;
+  amount: Int;
 }
 
 export interface UserUpdateOneRequiredWithoutAssessmentInfosInput {
@@ -1693,10 +1700,9 @@ export interface UserUpdateOneRequiredWithoutAssessmentInfosInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface AssessmentInfoCreateWithoutUserInput {
-  assessment: AssessmentCreateOneInput;
-  answeredCorrectly: Boolean;
-  solutionViewed: Boolean;
+export interface ConceptUpdateWithWhereUniqueWithoutCourseInput {
+  where: ConceptWhereUniqueInput;
+  data: ConceptUpdateWithoutCourseDataInput;
 }
 
 export interface UserUpdateWithoutAssessmentInfosDataInput {
@@ -1738,6 +1744,7 @@ export interface FeedbackSubmissionWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
+  user?: UserWhereInput;
   text?: String;
   text_not?: String;
   text_in?: String[] | String;
@@ -1790,6 +1797,7 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface AssessmentSubmissionCreateInput {
+  user: UserCreateOneInput;
   text: String;
   open: Boolean;
   description: String;
@@ -1825,19 +1833,15 @@ export interface ConstantSubscriptionWhereInput {
   NOT?: ConstantSubscriptionWhereInput[] | ConstantSubscriptionWhereInput;
 }
 
-export interface FeedbackSubmissionUpdateInput {
-  text?: String;
-  open?: Boolean;
-  description?: String;
+export interface ConstantCreateInput {
+  key: ConstantKey;
+  value: String;
 }
 
-export interface UserCreateInput {
-  email: String;
-  password: String;
-  tokens: Int;
-  assessmentInfos?: AssessmentInfoCreateManyWithoutUserInput;
-  termsAcceptedDate?: DateTimeInput;
-  termsAcceptedVersion?: String;
+export interface CourseUpdateInput {
+  title?: String;
+  concepts?: ConceptUpdateManyWithoutCourseInput;
+  order?: Int;
 }
 
 export interface ConstantWhereInput {
@@ -1894,9 +1898,11 @@ export interface ConstantWhereInput {
   NOT?: ConstantWhereInput[] | ConstantWhereInput;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface TokenTransactionUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  amount?: Int;
+  type?: TokenTransactionType;
+  description?: String;
 }
 
 export interface NodeNode {
@@ -2460,6 +2466,7 @@ export interface AssessmentSubmission
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = User>() => T;
   text: () => Promise<String>;
   open: () => Promise<Boolean>;
   description: () => Promise<String>;
@@ -2471,6 +2478,7 @@ export interface AssessmentSubmissionSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
   text: () => Promise<AsyncIterator<String>>;
   open: () => Promise<AsyncIterator<Boolean>>;
   description: () => Promise<AsyncIterator<String>>;
@@ -2886,6 +2894,7 @@ export interface FeedbackSubmission
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = User>() => T;
   text: () => Promise<String>;
   open: () => Promise<Boolean>;
   description: () => Promise<String>;
@@ -2897,6 +2906,7 @@ export interface FeedbackSubmissionSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
   text: () => Promise<AsyncIterator<String>>;
   open: () => Promise<AsyncIterator<Boolean>>;
   description: () => Promise<AsyncIterator<String>>;

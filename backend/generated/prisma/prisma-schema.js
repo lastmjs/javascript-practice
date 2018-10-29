@@ -268,6 +268,7 @@ type AssessmentSubmission {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User!
   text: String!
   open: Boolean!
   description: String!
@@ -280,6 +281,7 @@ type AssessmentSubmissionConnection {
 }
 
 input AssessmentSubmissionCreateInput {
+  user: UserCreateOneInput!
   text: String!
   open: Boolean!
   description: String!
@@ -333,6 +335,7 @@ input AssessmentSubmissionSubscriptionWhereInput {
 }
 
 input AssessmentSubmissionUpdateInput {
+  user: UserUpdateOneRequiredInput
   text: String
   open: Boolean
   description: String
@@ -369,6 +372,7 @@ input AssessmentSubmissionWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  user: UserWhereInput
   text: String
   text_not: String
   text_in: [String!]
@@ -1066,6 +1070,7 @@ type FeedbackSubmission {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User!
   text: String!
   open: Boolean!
   description: String!
@@ -1078,6 +1083,7 @@ type FeedbackSubmissionConnection {
 }
 
 input FeedbackSubmissionCreateInput {
+  user: UserCreateOneInput!
   text: String!
   open: Boolean!
   description: String!
@@ -1131,6 +1137,7 @@ input FeedbackSubmissionSubscriptionWhereInput {
 }
 
 input FeedbackSubmissionUpdateInput {
+  user: UserUpdateOneRequiredInput
   text: String
   open: Boolean
   description: String
@@ -1167,6 +1174,7 @@ input FeedbackSubmissionWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  user: UserWhereInput
   text: String
   text_not: String
   text_in: [String!]

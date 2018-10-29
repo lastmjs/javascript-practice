@@ -87,6 +87,7 @@ type FeedbackSubmission {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User! @visibility(type: OWNER)
   text: String!
   open: Boolean!
   description: String!
@@ -96,6 +97,7 @@ type AssessmentSubmission {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User! @visibility(type: OWNER)
   text: String!
   open: Boolean!
   description: String!
