@@ -178,8 +178,8 @@ const RootReducer = (state=InitialState, action: any) => {
 
     if (action.type === 'NEXT_QUESTION') {
         const currentOrder = state.currentAssessment.order;
-        const sortedConceptQuestions = state.currentConcept.assessments.sort((a, b) => a.order < b.order);
-        const lastOrder = sortedConceptQuestions[0].order;
+        const sortedConceptAssessments = state.currentConcept.assessments.sort((a, b) => a.order < b.order ? 1 : -1);
+        const lastOrder = sortedConceptAssessments[0].order;
         const nextOrder = currentOrder < lastOrder ? currentOrder + 1 : currentOrder;
         const nextOrderAssessmentId = state.currentConcept.assessments.find((assessment) => assessment.order === nextOrder).id;
 

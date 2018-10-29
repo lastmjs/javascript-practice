@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "dependencies": {
-    "@kuscamara/code-sample": "^3.0.1",
+    "@kuscamara/code-sample": "^3.0.2",
     "@polymer/iron-validator-behavior": "^3.0.1",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-toast": "^3.0.1",
@@ -32,9 +32,9 @@
     "zwitterion": "^0.27.3"
   },
   "scripts": {
-    "start": "source ./.dev-environment-variables && concurrently \"zwitterion\" \"npm run lambda-proxy\" \"npm run lambda-serve\"",
+    "start": "source ./.development-environment-variables && concurrently \"zwitterion\" \"npm run lambda-proxy\" \"npm run lambda-serve\"",
     "prisma-up": "cd backend && docker-compose up --build",
-    "prisma-deploy-development": "source ./.dev-environment-variables && cd backend && prisma deploy",
+    "prisma-deploy-development": "source ./.development-environment-variables && cd backend && prisma deploy",
     "prisma-deploy-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma deploy",
     "prisma-export": "cd backend && prisma export --path database.zip",
     "prisma-import": "cd backend && prisma import --data database.zip",
