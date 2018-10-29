@@ -89,6 +89,13 @@ class JPTokenBuy extends HTMLElement {
     }
 
     buyNowClick() {
+        Store.dispatch({
+            type: 'ADD_NOTIFICATION',
+            notification: 'Payment integration coming soon'
+        });
+
+        return;
+
         const totalPriceInt = this.numTokens * this.pricePerToken;
         if (totalPriceInt < 50) {
             return;
