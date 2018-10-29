@@ -2,3 +2,4 @@
 /dist
 /backend/database.zip
 /backend/dist
+.development-environment-variables
