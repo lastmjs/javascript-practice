@@ -48,7 +48,7 @@ class JPAssessmentSubmit extends HTMLElement {
                     amount
                 }
 
-                openAssessmentSubmissions: assessmentSubmissions(where: {
+                openAssessmentSubmissions: assessmentSubmissions(orderBy: createdAt_DESC, where: {
                     open: true
                 }) {
                     createdAt
@@ -56,7 +56,7 @@ class JPAssessmentSubmit extends HTMLElement {
                     description
                 }
 
-                closedAssessmentSubmissions: assessmentSubmissions(where: {
+                closedAssessmentSubmissions: assessmentSubmissions(orderBy: createdAt_DESC, where: {
                     open: false
                 }) {
                     createdAt
