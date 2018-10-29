@@ -11,6 +11,12 @@ const SUBMIT_TAB = 'SUBMIT_TAB';
 const OPEN_TAB = 'OPEN_TAB';
 const CLOSED_TAB = 'CLOSED_TAB';
 
+const tabIndeces = {
+    [SUBMIT_TAB]: 0,
+    [OPEN_TAB]: 1,
+    [CLOSED_TAB]: 2
+};
+
 class JPFeedbackSubmit extends HTMLElement {
     provideFeedbackTokenReward: number = 0;
     openFeedbackSubmissions: any[] = [];
@@ -86,6 +92,12 @@ class JPFeedbackSubmit extends HTMLElement {
             await this.initalLoad();
             await loadUser();
 
+            // Local Redux store
+            this.tabSelected = OPEN_TAB;
+
+            // evil
+            this.querySelector('#feedback-textarea').value = '';
+
             Store.dispatch({
                 type: 'ADD_NOTIFICATION',
                 notification: `+${this.provideFeedbackTokenReward} ${this.provideFeedbackTokenReward === 1 ? 'token' : 'tokens'}`
@@ -144,12 +156,11 @@ class JPFeedbackSubmit extends HTMLElement {
             <div class="jp-container">
                 <h1>Submit feedback</h1>
 
-                <vaadin-tabs>
+                <vaadin-tabs .selected="${tabIndeces[this.tabSelected]}">
                     <vaadin-tab @click=${() => this.submitTabClicked()}>Submit</vaadin-tab>
                     <vaadin-tab @click=${() => this.openTabClicked()}>Open</vaadin-tab>
                     <vaadin-tab @click=${() => this.closedTabClicked()}>Closed</vaadin-tab>
                 </vaadin-tabs>
-
 
                 <div ?hidden=${this.tabSelected !== SUBMIT_TAB}>
                     <h2>+${this.provideFeedbackTokenReward} ${this.provideFeedbackTokenReward === 1 ? 'token' : 'tokens'}</h2>
