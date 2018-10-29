@@ -9,6 +9,7 @@ export const dataopsTypeDefs = `
         acceptNewTerms: AcceptNewTermsPayload!
         submitFeedback(text: String!): SubmitFeedbackPayload!
         submitAssessment(text: String!): SubmitAssessmentPayload!
+        buyNowClick: Boolean!
     }
     
     type AuthPayload {

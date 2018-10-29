@@ -89,6 +89,12 @@ class JPTokenBuy extends HTMLElement {
     }
 
     buyNowClick() {
+        request(`
+            mutation {
+                buyNowClick
+            }
+        `);
+
         Store.dispatch({
             type: 'ADD_NOTIFICATION',
             notification: 'Payment integration coming soon'

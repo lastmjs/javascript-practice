@@ -11,6 +11,10 @@ type AggregateAssessmentSubmission {
   count: Int!
 }
 
+type AggregateBuyNowClick {
+  count: Int!
+}
+
 type AggregateConcept {
   count: Int!
 }
@@ -561,6 +565,106 @@ input AssessmentWhereUniqueInput {
 
 type BatchPayload {
   count: Long!
+}
+
+type BuyNowClick {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type BuyNowClickConnection {
+  pageInfo: PageInfo!
+  edges: [BuyNowClickEdge]!
+  aggregate: AggregateBuyNowClick!
+}
+
+input BuyNowClickCreateInput {
+  user: UserCreateOneInput!
+}
+
+type BuyNowClickEdge {
+  node: BuyNowClick!
+  cursor: String!
+}
+
+enum BuyNowClickOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type BuyNowClickPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type BuyNowClickSubscriptionPayload {
+  mutation: MutationType!
+  node: BuyNowClick
+  updatedFields: [String!]
+  previousValues: BuyNowClickPreviousValues
+}
+
+input BuyNowClickSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BuyNowClickWhereInput
+  AND: [BuyNowClickSubscriptionWhereInput!]
+  OR: [BuyNowClickSubscriptionWhereInput!]
+  NOT: [BuyNowClickSubscriptionWhereInput!]
+}
+
+input BuyNowClickUpdateInput {
+  user: UserUpdateOneRequiredInput
+}
+
+input BuyNowClickWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  AND: [BuyNowClickWhereInput!]
+  OR: [BuyNowClickWhereInput!]
+  NOT: [BuyNowClickWhereInput!]
+}
+
+input BuyNowClickWhereUniqueInput {
+  id: ID
 }
 
 type Concept {
@@ -1235,6 +1339,12 @@ type Mutation {
   upsertAssessmentSubmission(where: AssessmentSubmissionWhereUniqueInput!, create: AssessmentSubmissionCreateInput!, update: AssessmentSubmissionUpdateInput!): AssessmentSubmission!
   deleteAssessmentSubmission(where: AssessmentSubmissionWhereUniqueInput!): AssessmentSubmission
   deleteManyAssessmentSubmissions(where: AssessmentSubmissionWhereInput): BatchPayload!
+  createBuyNowClick(data: BuyNowClickCreateInput!): BuyNowClick!
+  updateBuyNowClick(data: BuyNowClickUpdateInput!, where: BuyNowClickWhereUniqueInput!): BuyNowClick
+  updateManyBuyNowClicks(data: BuyNowClickUpdateInput!, where: BuyNowClickWhereInput): BatchPayload!
+  upsertBuyNowClick(where: BuyNowClickWhereUniqueInput!, create: BuyNowClickCreateInput!, update: BuyNowClickUpdateInput!): BuyNowClick!
+  deleteBuyNowClick(where: BuyNowClickWhereUniqueInput!): BuyNowClick
+  deleteManyBuyNowClicks(where: BuyNowClickWhereInput): BatchPayload!
   createConcept(data: ConceptCreateInput!): Concept!
   updateConcept(data: ConceptUpdateInput!, where: ConceptWhereUniqueInput!): Concept
   updateManyConcepts(data: ConceptUpdateInput!, where: ConceptWhereInput): BatchPayload!
@@ -1306,6 +1416,9 @@ type Query {
   assessmentSubmission(where: AssessmentSubmissionWhereUniqueInput!): AssessmentSubmission
   assessmentSubmissions(where: AssessmentSubmissionWhereInput, orderBy: AssessmentSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentSubmission]!
   assessmentSubmissionsConnection(where: AssessmentSubmissionWhereInput, orderBy: AssessmentSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssessmentSubmissionConnection!
+  buyNowClick(where: BuyNowClickWhereUniqueInput!): BuyNowClick
+  buyNowClicks(where: BuyNowClickWhereInput, orderBy: BuyNowClickOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BuyNowClick]!
+  buyNowClicksConnection(where: BuyNowClickWhereInput, orderBy: BuyNowClickOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BuyNowClickConnection!
   concept(where: ConceptWhereUniqueInput!): Concept
   concepts(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Concept]!
   conceptsConnection(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConceptConnection!
@@ -1334,6 +1447,7 @@ type Subscription {
   assessment(where: AssessmentSubscriptionWhereInput): AssessmentSubscriptionPayload
   assessmentInfo(where: AssessmentInfoSubscriptionWhereInput): AssessmentInfoSubscriptionPayload
   assessmentSubmission(where: AssessmentSubmissionSubscriptionWhereInput): AssessmentSubmissionSubscriptionPayload
+  buyNowClick(where: BuyNowClickSubscriptionWhereInput): BuyNowClickSubscriptionPayload
   concept(where: ConceptSubscriptionWhereInput): ConceptSubscriptionPayload
   constant(where: ConstantSubscriptionWhereInput): ConstantSubscriptionPayload
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
