@@ -52,6 +52,44 @@ export class VisibilityDirective extends SchemaDirectiveVisitor {
                         throw new Error('Not authorized');
                     }
                 }
+
+                //TODO this is essentially repeated
+                if (details.objectType.name === 'FeedbackSubmission') {
+                    const feedbackSubmission = await prisma.query.feedbackSubmission({
+                        where: {
+                            id: parent.id
+                        }
+                    }, `
+                        {
+                            user {
+                                id
+                            }
+                        }
+                    `);
+
+                    if (feedbackSubmission.user.id !== getUserId(context, 'Not authorized')) {
+                        throw new Error('Not authorized');
+                    }
+                }
+
+                //TODO this is essentially repeated
+                if (details.objectType.name === 'AssessmentSubmission') {
+                    const assessmentSubmission = await prisma.query.assessmentSubmission({
+                        where: {
+                            id: parent.id
+                        }
+                    }, `
+                        {
+                            user {
+                                id
+                            }
+                        }
+                    `);
+
+                    if (assessmentSubmission.user.id !== getUserId(context, 'Not authorized')) {
+                        throw new Error('Not authorized');
+                    }
+                }
             }
 
             return await originalResolver(parent, args, context, info);

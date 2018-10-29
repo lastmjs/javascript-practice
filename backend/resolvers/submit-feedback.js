@@ -28,7 +28,12 @@ export async function submitFeedback(parent, args, context, info) {
         data: {
             text: args.text,
             open: true,
-            description: 'Thanks for submitting feedback, we will get to this soon'
+            description: 'Thanks for submitting feedback, we will get to this soon',
+            user: {
+                connect: {
+                    id: userId
+                }
+            }
         }
     });
 

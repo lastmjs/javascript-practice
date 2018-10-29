@@ -28,7 +28,12 @@ export async function submitAssessment(parent, args, context, info) {
         data: {
             text: args.text,
             open: true,
-            description: 'Thanks for submitting an exercise, we will get to this soon'
+            description: 'Thanks for submitting an exercise, we will get to this soon',
+            user: {
+                connect: {
+                    id: userId
+                }
+            }
         }
     });
 
