@@ -15,6 +15,11 @@ class JPAssessment extends HTMLElement {
         this._assessmentId = val;
 
         if (val === NO_MORE_EXERCISES) {
+            setTimeout(() => {
+                Store.dispatch({
+                    type: 'TRIGGER_RENDER'
+                });
+            });
             return;
         }
 
@@ -344,12 +349,14 @@ class JPAssessment extends HTMLElement {
                     <div id="question-container" class="jp-container">
                         <h1>${state.currentConcept && state.currentConcept.title}</h1>
                         <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
-                        <vaadin-tabs .selected="${this.tabIndex}">
+                        <vaadin-tabs .selected="${this.tabIndex}" ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>
                             <vaadin-tab @click=${(e: any) => this.showExercise(e)}>Exercise</vaadin-tab>
                             <vaadin-tab @click=${(e: any) => this.showSolution(e)}>Solution</vaadin-tab>
                         </vaadin-tabs>
                         <h2 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Looks like there are no more exercises</h2>
-                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>? You'll learn something new and earn some tokens</h3>
+                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>?</h3>
+                        <p ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>We are building this course together, so help shape it!</p>
+                        <p ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>You might learn something new and help others learn from your unique point of view.</p>
                         <prendus-view-question
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
