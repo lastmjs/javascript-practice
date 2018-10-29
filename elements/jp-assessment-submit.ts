@@ -88,7 +88,7 @@ class JPAssessmentSubmit extends HTMLElement {
             text: assessmentTextarea.value
         });
 
-        if (response.submitAssessment.success) {
+        if (response && response.submitAssessment.success) {
             await this.initialLoad();
             await loadUser();
 
@@ -102,11 +102,11 @@ class JPAssessmentSubmit extends HTMLElement {
                 type: 'ADD_NOTIFICATION',
                 notification: `+${this.assessmentSubmittedTokenReward} ${this.assessmentSubmittedTokenReward === 1 ? 'token' : 'tokens'}`
             });
-
-            Store.dispatch({
-                type: 'HIDE_LOAD_INDICATOR'
-            });
         }
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
     }
 
     submitTabClicked() {
@@ -164,7 +164,7 @@ class JPAssessmentSubmit extends HTMLElement {
 
                 <div ?hidden=${this.tabSelected !== SUBMIT_TAB}>
                     <h2>+${this.assessmentSubmittedTokenReward} ${this.assessmentSubmittedTokenReward === 1 ? 'token' : 'tokens'}</h2>
-                    <p>The full exercise creation editor is not available. Submit the text of your exercise and we will do the rest.</p>
+                    <p>The full exercise creation editor is not available. Submit the text and solution of your exercise and we will do the rest.</p>
                     <p>Exercises that you create will be publicly available.</p>
                     <p>Obey all copyright laws (get the rights, utilize fair use, or create an original...you know).</p>
                     <div>
