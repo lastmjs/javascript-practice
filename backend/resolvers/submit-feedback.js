@@ -14,8 +14,8 @@ export async function submitFeedback(parent, args, context, info) {
         }
     });
 
-    if (openFeedbackSubmissions.length !== 0) {
-        throw new Error('Your current submission must become closed before submitting another');
+    if (openFeedbackSubmissions.length > 0) {
+        throw new Error('Your current submissions must become closed before submitting more');
     }
 
     const user = await prisma.query.user({
