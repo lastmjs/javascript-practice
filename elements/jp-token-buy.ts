@@ -89,6 +89,14 @@ class JPTokenBuy extends HTMLElement {
     }
 
     buyNowClick() {
+        if (!Store.getState().user) {
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'You must log in or sign up to purchase tokens'
+            });
+            return;
+        }
+
         const totalPriceInt = this.numTokens * this.pricePerToken;
         if (totalPriceInt < 50) {
             return;
