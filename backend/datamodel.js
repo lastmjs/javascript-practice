@@ -103,13 +103,6 @@ type AssessmentSubmission {
   description: String!
 }
 
-type BuyNowClick {
-  id: ID! @unique @private
-  createdAt: DateTime! @private
-  updatedAt: DateTime! @private
-  user: User! @private
-}
-
 enum TokenTransactionType {
   ANSWER_CORRECT
   ANSWER_INCORRECT

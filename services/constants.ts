@@ -4,6 +4,12 @@ export const GRAPHQL_HTTP_ENDPOINT = {
     development: 'http://localhost:8080/lambda'
 }[window.process.env.NODE_ENV];
 
+export const STRIPE_PUBLIC_KEY = {
+    production: 'pk_live_DedmZk7SWzaSAFSKCCDlFyZi',
+    staging: 'pk_live_DedmZk7SWzaSAFSKCCDlFyZi',
+    development: 'pk_test_Deq4Kig1vsbwSZmXc3yBn2wf'
+}[window.process.env.NODE_ENV];
+
 export const highlightColorCSSValue = `rgba(240, 219, 79, 1)`;
 export const backgroundColorCSSValue = `rgba(229, 229, 229, 1)`;
 export const selectedColorCSSValue = `rgba(200, 200, 200, 1)`;

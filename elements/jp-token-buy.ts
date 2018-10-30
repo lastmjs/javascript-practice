@@ -1,6 +1,6 @@
 import { html, render } from 'lit-html';
 import { Store } from '../services/store';
-import { jpContainerCSSClass } from '../services/constants';
+import { jpContainerCSSClass, STRIPE_PUBLIC_KEY } from '../services/constants';
 import './jp-button';
 import { request } from '../services/graphql';
 import { loadUser } from '../services/init';
@@ -32,7 +32,7 @@ class JPTokenBuy extends HTMLElement {
         this.pricePerToken = parseInt(response.constant.value);
 
         this.stripeHandler = window.StripeCheckout.configure({
-            key: 'pk_test_Deq4Kig1vsbwSZmXc3yBn2wf',
+            key: STRIPE_PUBLIC_KEY,
             image: 'javascript-logo.png',
             locale: 'auto',
             token: async (token: any) => {
@@ -89,19 +89,6 @@ class JPTokenBuy extends HTMLElement {
     }
 
     buyNowClick() {
-        request(`
-            mutation {
-                buyNowClick
-            }
-        `);
-
-        Store.dispatch({
-            type: 'ADD_NOTIFICATION',
-            notification: 'Payment integration coming soon'
-        });
-
-        return;
-
         const totalPriceInt = this.numTokens * this.pricePerToken;
         if (totalPriceInt < 50) {
             return;
