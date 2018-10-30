@@ -374,7 +374,7 @@ class JPAssessment extends HTMLElement {
                             id="prev-button"
                             class="bottom-button"
                             @click=${() => this.previousAssessmentClick()}
-                            ?disabled=${(state.currentAssessment && state.currentAssessment.order === 0) || this.tabIndex === 1}
+                            ?disabled=${(state.currentAssessment && state.currentAssessment.order === 0)}
                         >
                             Prev
                         </button>
@@ -392,7 +392,7 @@ class JPAssessment extends HTMLElement {
                             id="next-button"
                             class="bottom-button"
                             @click=${() => this.nextAssessmentClick()}
-                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex === 1}
+                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
                         >
                             Next
                         </button>
