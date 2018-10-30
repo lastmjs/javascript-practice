@@ -186,8 +186,8 @@ class JPFeedbackSubmit extends HTMLElement {
                                 </div>
                                 <br>
                                 <div>Comments: ${unsafeHTML(DOMPurify.sanitize(feedbackSubmission.description, {
-                                    ADD_ATTR: ['href'],
-                                    ADD_TAGS: ['a'],
+                                    // ADD_ATTR: ['href'],
+                                    // ADD_TAGS: ['a'],
                                 }))}</div>
                             </div>
                             <br>
@@ -206,8 +206,8 @@ class JPFeedbackSubmit extends HTMLElement {
                                 </div>
                                 <br>
                                 <div>Comments: ${unsafeHTML(DOMPurify.sanitize(feedbackSubmission.description, {
-                                    ADD_ATTR: ['href'],
-                                    ADD_TAGS: ['a'],
+                                    // ADD_ATTR: ['href'],
+                                    // ADD_TAGS: ['a'],
                                 }))}</div>
                             </div>
                             <br>

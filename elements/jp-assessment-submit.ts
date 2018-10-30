@@ -186,8 +186,8 @@ class JPAssessmentSubmit extends HTMLElement {
                                 </div>
                                 <br>
                                 <div>Comments: ${unsafeHTML(DOMPurify.sanitize(assessmentSubmission.description, {
-                                    ADD_ATTR: ['href'],
-                                    ADD_TAGS: ['a'],
+                                    // ADD_ATTR: ['href'],
+                                    // ADD_TAGS: ['a'],
                                 }))}</div>
                             </div>
                             <br>
@@ -206,8 +206,8 @@ class JPAssessmentSubmit extends HTMLElement {
                                 </div>
                                 <br>
                                 <div>Comments: ${unsafeHTML(DOMPurify.sanitize(assessmentSubmission.description, {
-                                    ADD_ATTR: ['href'],
-                                    ADD_TAGS: ['a'],
+                                    // ADD_ATTR: ['href'],
+                                    // ADD_TAGS: ['a'],
                                 }))}</div>
                             </div>
                             <br>
