@@ -16,7 +16,6 @@ import { buyTokens } from './resolvers/buy-tokens.js';
 import { acceptNewTerms } from './resolvers/accept-new-terms.js';
 import { submitFeedback } from './resolvers/submit-feedback.js';
 import { submitAssessment } from './resolvers/submit-assessment.js';
-import { buyNowClick } from './resolvers/buy-now-click.js';
 
 export const prisma = new Prisma({
     typeDefs,
@@ -42,8 +41,7 @@ const resolvers = {
         buyTokens,
         acceptNewTerms,
         submitFeedback,
-        submitAssessment,
-        buyNowClick
+        submitAssessment
     }
 };
 
