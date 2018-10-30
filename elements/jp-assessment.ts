@@ -197,30 +197,18 @@ class JPAssessment extends HTMLElement {
     showExercise(e: any) {
         e.stopPropagation();
 
-        //TODO everything below here is evil
-        //TODO rendering of this component really needs to be redone
-        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
-        const showingExercise = solutionTemplate;
-
-        if (showingExercise) {
-            return;
-        }
-
         this.tabIndex = 0;
 
-        //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
-        // TODO and the question is shown again
         const prendusViewQuestion = this.querySelector('#prendus-view-question');
-        prendusViewQuestion.showSolutionClick();
+        prendusViewQuestion.showExercise();
     }
 
     async showSolution(e: any) {
         e.stopPropagation();
 
-        const solutionTemplate = <HTMLTemplateElement> this.querySelector('#solution1');
-        const showingSolution = !solutionTemplate;
+        const prendusViewQuestion = this.querySelector('#prendus-view-question');
         
-        if (showingSolution) {
+        if (prendusViewQuestion.showingSolution) {
             return;
         }
         
@@ -281,15 +269,7 @@ class JPAssessment extends HTMLElement {
         
         this.tabIndex = 1;
 
-        //TODO we need to figure out the rendering for the solution, any state changes erase the state of the solution
-        //TODO and the question is shown again
-        const prendusViewQuestion = this.querySelector('#prendus-view-question');
-        
-        //TODO everything below here is evil
-        //TODO rendering of this component really needs to be redone
-        if (!showingSolution) {
-            prendusViewQuestion.showSolutionClick();
-        }
+        prendusViewQuestion.showSolution();
 
         Store.dispatch({
             type: 'SET_USER_TOKENS',
