@@ -1,4 +1,5 @@
 import { html, render } from 'lit-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { Store } from '../services/store';
 import { jpContainerCSSClass} from '../services/constants';
 import { request } from '../services/graphql';
@@ -184,7 +185,10 @@ class JPAssessmentSubmit extends HTMLElement {
                                 <div>Exercise text: ${DOMPurify.sanitize(assessmentSubmission.text)}
                                 </div>
                                 <br>
-                                <div>Comments: ${DOMPurify.sanitize(assessmentSubmission.description)}</div>
+                                <div>Comments: ${unsafeHTML(DOMPurify.sanitize(assessmentSubmission.description, {
+                                    ADD_ATTR: ['href'],
+                                    ADD_TAGS: ['a'],
+                                }))}</div>
                             </div>
                             <br>
                         `;
@@ -201,7 +205,10 @@ class JPAssessmentSubmit extends HTMLElement {
                                 <div>Exercise text: ${DOMPurify.sanitize(assessmentSubmission.text)}
                                 </div>
                                 <br>
-                                <div>Comments: ${DOMPurify.sanitize(assessmentSubmission.description)}</div>
+                                <div>Comments: ${unsafeHTML(DOMPurify.sanitize(assessmentSubmission.description, {
+                                    ADD_ATTR: ['href'],
+                                    ADD_TAGS: ['a'],
+                                }))}</div>
                             </div>
                             <br>
                         `;
