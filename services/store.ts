@@ -1,4 +1,5 @@
 import {createStore} from 'redux';
+import { DEFAULT_ASSESSMENT_ID } from './constants';
 import page from 'page';
 
 let persistedState = JSON.parse(window.localStorage.getItem('state'));
@@ -15,7 +16,7 @@ const InitialState = persistedState ?  {
     version: 2,
     currentConcept: null,
     currentEntity: 'assessment',
-    currentEntityId: 'cjmjovn4p00hi0a58cfsjusdq',
+    currentEntityId: DEFAULT_ASSESSMENT_ID,
     currentEntityBehavior: 'view',
     currentAssessment: null,
     concepts: [],
