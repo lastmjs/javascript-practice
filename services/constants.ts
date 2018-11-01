@@ -14,7 +14,7 @@ export const DEFAULT_ASSESSMENT_ID = {
     production: 'cjnwajfsl5y740995lkooz1up',
     staging: 'cjnwajfsl5y740995lkooz1up',
     development: 'cjmjovn4p00hi0a58cfsjusdq'
-}[window.process.NODE_ENV];
+}[window.process.env.NODE_ENV];
 
 export const highlightColorCSSValue = `rgba(240, 219, 79, 1)`;
 export const backgroundColorCSSValue = `rgba(229, 229, 229, 1)`;
