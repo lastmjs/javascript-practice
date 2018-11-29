@@ -3,6 +3,7 @@ import { Store } from '../services/store';
 import { request } from '../services/graphql';
 import { jpContainerCSSClass } from '../services/constants';
 import page from 'page';
+import 'assess-elements/assess-item-editor.ts';
 
 class JPAssessmentEdit extends HTMLElement {
     _assessmentId: string = '';
@@ -63,13 +64,12 @@ class JPAssessmentEdit extends HTMLElement {
     async submit() {
         const conceptSelect = this.querySelector(`#concept-select`);
         const orderInput = this.querySelector(`#order-input`);
-        const assessMLTextarea = this.querySelector(`#assessml-textarea`);
-        const javaScriptTextarea = this.querySelector(`#javascript-textarea`);
+        const assessItemEditor = this.querySelector('#assess-item-editor');
 
         const conceptId = conceptSelect ? conceptSelect.value : null;
         const order = orderInput ? parseInt(orderInput.value) : null;
-        const assessML = assessMLTextarea ? assessMLTextarea.value : null;
-        const javaScript = javaScriptTextarea ? javaScriptTextarea.value : null;
+        const assessML = assessItemEditor.assessML;
+        const javaScript = assessItemEditor.javaScript;
 
         const response = await request(`
             mutation(${this.assessmentId ? `$assessmentId: ID!, ` : ''}$conceptId: ID!, $order: Int!, $assessML: String!, $javaScript: String!) {
@@ -145,18 +145,20 @@ class JPAssessmentEdit extends HTMLElement {
                     order: <input id="order-input" type="number" value=${this.order}>
                 </div>
 
-                <div>
-                    <h1>AssessML</h1>
-                    <textarea id="assessml-textarea" style="width: 100%; height: 50vh; font-size: 2em">${this.assessML}</textarea>
+                <br>
+
+                <div style="background-color: white">
+                    <assess-item-editor
+                        id="assess-item-editor"
+                        .assessML=${this.assessML}
+                        .javaScript=${this.javaScript}
+                    ></assess-item-editor>
                 </div>
 
-                <div>
-                    <h1>JavaScript</h1>
-                    <textarea id="javascript-textarea" style="width: 100%; height: 50vh; font-size: 2em">${this.javaScript}</textarea>
-                </div>
+                <br>
 
                 <div>
-                    <button @click=${(e: any) => this.viewClick()}>View</button>
+                    <button ?hidden=${!this.assessmentId} @click=${(e: any) => this.viewClick()}>View</button>
                     <button @click=${(e: any) => this.submit()}>Submit</button>
                 </div>
             </div>
