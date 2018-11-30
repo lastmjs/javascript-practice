@@ -1,5 +1,5 @@
 import { html, render } from 'lit-html';
-import 'prendus-question-elements/prendus-view-question.ts';
+import 'assess-elements/assess-item.ts';
 import { Store } from '../services/store';
 import { request } from '../services/graphql';
 import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
@@ -337,7 +337,7 @@ class JPAssessment extends HTMLElement {
                         <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>?</h3>
                         <p ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>We are building this course together, so help shape it!</p>
                         <p ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>You might learn something new and help others learn from your unique point of view.</p>
-                        <prendus-view-question
+                        <assess-item
                             id="prendus-view-question"
                             .question=${state.currentAssessment}
                             @question-response=${(e: any) => this.questionResponse(e)}
@@ -346,7 +346,7 @@ class JPAssessment extends HTMLElement {
                             ?hidden=${this.assessmentId === NO_MORE_EXERCISES}
                         >
                             Loading...
-                        </prendus-view-question>
+                        </assess-item>
                     </div>
         
                     <div class="bottom-buttons-container">

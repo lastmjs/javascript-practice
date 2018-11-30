@@ -14,6 +14,8 @@ export async function updateAssessment(parent, args, context, info) {
         }
     `);
 
+    //TODO automatic reording of all assessments
+
     if (user.email === 'jordan.michael.last@gmail.com') {
         return await prisma.mutation.updateAssessment(args, info);
     }
