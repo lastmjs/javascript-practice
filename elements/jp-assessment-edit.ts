@@ -4,6 +4,7 @@ import { request } from '../services/graphql';
 import { jpContainerCSSClass } from '../services/constants';
 import page from 'page';
 import 'assess-elements/assess-item-editor.ts';
+import 'assess-elements/assess-item.ts';
 
 class JPAssessmentEdit extends HTMLElement {
     _assessmentId: string = '';
@@ -61,7 +62,7 @@ class JPAssessmentEdit extends HTMLElement {
         });
     }
 
-    async submit() {
+    async save() {
         const conceptSelect = this.querySelector(`#concept-select`);
         const orderInput = this.querySelector(`#order-input`);
         const assessItemEditor = this.querySelector('#assess-item-editor');
@@ -125,6 +126,50 @@ class JPAssessmentEdit extends HTMLElement {
         page(`/assessment/${this.assessmentId}/view`);
     }
 
+    assessMLChanged(e) {
+        this.assessML = e.detail.value;
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
+    javaScriptChanged(e) {
+        this.javaScript = e.detail.value;
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
+    submit() {
+        const assessItem = this.querySelector('#assess-item');
+        assessItem.checkAnswer();
+    }
+
+    questionResponse(e) {
+        Store.dispatch({
+            type: 'ADD_NOTIFICATION',
+            notification: e.detail.checkAnswerResponse
+        });
+    }
+
+    showExercise() {
+        const assessItem = this.querySelector('#assess-item');
+        assessItem.showExercise();
+
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
+    showSolution() {
+        const assessItem = this.querySelector('#assess-item');
+        assessItem.showSolution();
+
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -150,16 +195,33 @@ class JPAssessmentEdit extends HTMLElement {
                 <div style="background-color: white">
                     <assess-item-editor
                         id="assess-item-editor"
-                        .assessML=${this.assessML}
-                        .javaScript=${this.javaScript}
+                        .assessML=${this.assessML || ''}
+                        .javaScript=${this.javaScript || ''}
+                        @assessml-changed=${(e) => this.assessMLChanged(e)}
+                        @java-script-changed=${(e) => this.javaScriptChanged(e)}
                     ></assess-item-editor>
                 </div>
 
                 <br>
 
+                <assess-item
+                    id="assess-item"
+                    @question-response=${(e) => this.questionResponse(e)}
+                    .question=${{
+                        assessML: this.assessML || '',
+                        javaScript: this.javaScript || ''
+                    }}
+                ></assess-item>
+
+                <button @click=${() => this.submit()}>Submit</button>
+                <button ?hidden=${this.querySelector('#assess-item') && this.querySelector('#assess-item').showingExercise} @click=${() => this.showExercise()}>Show exercise</button>
+                <button ?hidden=${this.querySelector('#assess-item')&& this.querySelector('#assess-item').showingSolution} @click=${() => this.showSolution()}>Show solution</button>
+
+                <br>
+
                 <div>
                     <button ?hidden=${!this.assessmentId} @click=${(e: any) => this.viewClick()}>View</button>
-                    <button @click=${(e: any) => this.submit()}>Submit</button>
+                    <button @click=${(e: any) => this.save()}>Save</button>
                 </div>
             </div>
         `;
