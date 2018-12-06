@@ -76,7 +76,8 @@ export async function checkAnswer(parent, args, context, info) {
                         }
                     },
                     answeredCorrectly: args.correct,
-                    solutionViewed: false
+                    solutionViewed: false,
+                    sourceCodeViewed: false
                 }
             });
         }

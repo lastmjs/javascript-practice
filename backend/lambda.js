@@ -5,6 +5,7 @@ import { signup } from './resolvers/signup.js';
 import { login } from './resolvers/login.js';
 import { checkAnswer } from './resolvers/check-answer.js';
 import { viewSolution } from './resolvers/view-solution.js';
+import { viewSourceCode } from './resolvers/view-source-code.js';
 import { mergeTypes } from 'merge-graphql-schemas';
 import { dataopsTypeDefs } from './dataops.js';
 import { datamodelTypeDefs } from './datamodel.js';
@@ -41,7 +42,8 @@ const resolvers = {
         buyTokens,
         acceptNewTerms,
         submitFeedback,
-        submitAssessment
+        submitAssessment,
+        viewSourceCode
     }
 };
 

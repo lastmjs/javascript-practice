@@ -91,6 +91,7 @@ type AssessmentInfo {
   assessment: Assessment!
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
+  sourceCodeViewed: Boolean!
 }
 
 type AssessmentInfoConnection {
@@ -104,6 +105,7 @@ input AssessmentInfoCreateInput {
   assessment: AssessmentCreateOneInput!
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
+  sourceCodeViewed: Boolean!
 }
 
 input AssessmentInfoCreateManyWithoutUserInput {
@@ -115,6 +117,7 @@ input AssessmentInfoCreateWithoutUserInput {
   assessment: AssessmentCreateOneInput!
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
+  sourceCodeViewed: Boolean!
 }
 
 type AssessmentInfoEdge {
@@ -133,6 +136,8 @@ enum AssessmentInfoOrderByInput {
   answeredCorrectly_DESC
   solutionViewed_ASC
   solutionViewed_DESC
+  sourceCodeViewed_ASC
+  sourceCodeViewed_DESC
 }
 
 type AssessmentInfoPreviousValues {
@@ -141,6 +146,7 @@ type AssessmentInfoPreviousValues {
   updatedAt: DateTime!
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
+  sourceCodeViewed: Boolean!
 }
 
 type AssessmentInfoSubscriptionPayload {
@@ -166,6 +172,7 @@ input AssessmentInfoUpdateInput {
   assessment: AssessmentUpdateOneRequiredInput
   answeredCorrectly: Boolean
   solutionViewed: Boolean
+  sourceCodeViewed: Boolean
 }
 
 input AssessmentInfoUpdateManyWithoutUserInput {
@@ -181,6 +188,7 @@ input AssessmentInfoUpdateWithoutUserDataInput {
   assessment: AssessmentUpdateOneRequiredInput
   answeredCorrectly: Boolean
   solutionViewed: Boolean
+  sourceCodeViewed: Boolean
 }
 
 input AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
@@ -231,6 +239,8 @@ input AssessmentInfoWhereInput {
   answeredCorrectly_not: Boolean
   solutionViewed: Boolean
   solutionViewed_not: Boolean
+  sourceCodeViewed: Boolean
+  sourceCodeViewed_not: Boolean
   AND: [AssessmentInfoWhereInput!]
   OR: [AssessmentInfoWhereInput!]
   NOT: [AssessmentInfoWhereInput!]
@@ -1538,6 +1548,7 @@ enum TokenTransactionType {
   ANSWER_CORRECT
   ANSWER_INCORRECT
   VIEW_SOLUTION
+  VIEW_SOURCE_CODE
   ASSESSMENT_SUBMITTED
   FEEDBACK_SUBMITTED
   INITIAL_ENDOWMENT

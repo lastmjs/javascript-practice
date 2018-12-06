@@ -563,7 +563,9 @@ export type AssessmentInfoOrderByInput =
   | "answeredCorrectly_ASC"
   | "answeredCorrectly_DESC"
   | "solutionViewed_ASC"
-  | "solutionViewed_DESC";
+  | "solutionViewed_DESC"
+  | "sourceCodeViewed_ASC"
+  | "sourceCodeViewed_DESC";
 
 export type ConstantOrderByInput =
   | "id_ASC"
@@ -671,6 +673,7 @@ export type TokenTransactionType =
   | "ANSWER_CORRECT"
   | "ANSWER_INCORRECT"
   | "VIEW_SOLUTION"
+  | "VIEW_SOURCE_CODE"
   | "ASSESSMENT_SUBMITTED"
   | "FEEDBACK_SUBMITTED"
   | "INITIAL_ENDOWMENT"
@@ -1066,6 +1069,7 @@ export interface AssessmentInfoUpdateWithoutUserDataInput {
   assessment?: AssessmentUpdateOneRequiredInput;
   answeredCorrectly?: Boolean;
   solutionViewed?: Boolean;
+  sourceCodeViewed?: Boolean;
 }
 
 export interface TokenRewardUpdateInput {
@@ -1457,6 +1461,7 @@ export interface AssessmentInfoCreateWithoutUserInput {
   assessment: AssessmentCreateOneInput;
   answeredCorrectly: Boolean;
   solutionViewed: Boolean;
+  sourceCodeViewed: Boolean;
 }
 
 export interface CourseWhereInput {
@@ -1536,6 +1541,7 @@ export interface AssessmentInfoCreateInput {
   assessment: AssessmentCreateOneInput;
   answeredCorrectly: Boolean;
   solutionViewed: Boolean;
+  sourceCodeViewed: Boolean;
 }
 
 export interface CourseCreateInput {
@@ -1604,6 +1610,8 @@ export interface AssessmentInfoWhereInput {
   answeredCorrectly_not?: Boolean;
   solutionViewed?: Boolean;
   solutionViewed_not?: Boolean;
+  sourceCodeViewed?: Boolean;
+  sourceCodeViewed_not?: Boolean;
   AND?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
   OR?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
   NOT?: AssessmentInfoWhereInput[] | AssessmentInfoWhereInput;
@@ -1686,6 +1694,7 @@ export interface AssessmentInfoUpdateInput {
   assessment?: AssessmentUpdateOneRequiredInput;
   answeredCorrectly?: Boolean;
   solutionViewed?: Boolean;
+  sourceCodeViewed?: Boolean;
 }
 
 export interface TokenRewardCreateInput {
@@ -2294,6 +2303,7 @@ export interface AssessmentInfoNode {
   updatedAt: DateTimeOutput;
   answeredCorrectly: Boolean;
   solutionViewed: Boolean;
+  sourceCodeViewed: Boolean;
 }
 
 export interface AssessmentInfo
@@ -2306,6 +2316,7 @@ export interface AssessmentInfo
   assessment: <T = Assessment>() => T;
   answeredCorrectly: () => Promise<Boolean>;
   solutionViewed: () => Promise<Boolean>;
+  sourceCodeViewed: () => Promise<Boolean>;
 }
 
 export interface AssessmentInfoSubscription
@@ -2318,6 +2329,7 @@ export interface AssessmentInfoSubscription
   assessment: <T = AssessmentSubscription>() => T;
   answeredCorrectly: () => Promise<AsyncIterator<Boolean>>;
   solutionViewed: () => Promise<AsyncIterator<Boolean>>;
+  sourceCodeViewed: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface TokenRewardConnectionNode {}
@@ -2409,6 +2421,7 @@ export interface AssessmentInfoPreviousValuesNode {
   updatedAt: DateTimeOutput;
   answeredCorrectly: Boolean;
   solutionViewed: Boolean;
+  sourceCodeViewed: Boolean;
 }
 
 export interface AssessmentInfoPreviousValues
@@ -2419,6 +2432,7 @@ export interface AssessmentInfoPreviousValues
   updatedAt: () => Promise<DateTimeOutput>;
   answeredCorrectly: () => Promise<Boolean>;
   solutionViewed: () => Promise<Boolean>;
+  sourceCodeViewed: () => Promise<Boolean>;
 }
 
 export interface AssessmentInfoPreviousValuesSubscription
@@ -2429,6 +2443,7 @@ export interface AssessmentInfoPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   answeredCorrectly: () => Promise<AsyncIterator<Boolean>>;
   solutionViewed: () => Promise<AsyncIterator<Boolean>>;
+  sourceCodeViewed: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface FeedbackSubmissionConnectionNode {}

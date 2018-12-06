@@ -172,12 +172,7 @@ class JPAssessmentEdit extends HTMLElement {
 
     render(state: any) {
         return html`
-            <style>
-                ${jpContainerCSSClass(state)}
-            </style>
-
-            <!--TODO fix scrollbars, make this all responsive-->
-            <div class="jp-container" style="height: 100%">
+            <div>
                 <div>
                     <select id="concept-select" .value=${this.concept ? this.concept.id : ''}>
                         ${state.concepts.map((concept: any) => {
