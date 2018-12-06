@@ -66,7 +66,7 @@ class JPTokenOverview extends HTMLElement {
             <div class="jp-container">
                 <h1>Tokenomics</h1>
                 <h2>You have ${state.user ? state.user.tokens : 0} ${state.user ? state.user.tokens === 1 ? 'token, use it wisely' : 'tokens, use them wisely' : 'tokens, signup to get some'}</h2>
-                <h3>+${this.submitAssessmentTokenReward}: <a href="assessment/submit">Create an exercise</a> that is accepted into the course</h3>
+                <h3>+${this.submitAssessmentTokenReward}: <a href="assessment/create">Create an exercise</a> that is accepted into the course</h3>
                 <h3>+${this.submitFeedbackTokenReward}: <a href="feedback/submit">Provide constructive feedback</a></h3>
                 <h3>-1: Answer incorrectly (only applies once per exercise and before answering correctly)</h3>
                 <h3>-1: View solution (only applies once per exercise, before answering correctly, and after attempting an answer)</h3>

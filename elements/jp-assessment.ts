@@ -6,6 +6,7 @@ import { jpContainerCSSClass, zIndexLayer6 } from '../services/constants';
 import { loadUser } from '../services/init';
 import page from 'page';
 import { NO_MORE_EXERCISES } from '../services/constants';
+import { CREATE_ASSESSMENT } from '../services/constants';
 import '@vaadin/vaadin-tabs/vaadin-tabs.js';
 import './jp-assessment-edit';
 
@@ -16,6 +17,16 @@ class JPAssessment extends HTMLElement {
         this._assessmentId = val;
 
         if (val === NO_MORE_EXERCISES) {
+            setTimeout(() => {
+                Store.dispatch({
+                    type: 'TRIGGER_RENDER'
+                });
+            });
+            return;
+        }
+
+        if (val === CREATE_ASSESSMENT) {
+            this.tabIndex = 2;
             setTimeout(() => {
                 Store.dispatch({
                     type: 'TRIGGER_RENDER'
@@ -394,15 +405,15 @@ class JPAssessment extends HTMLElement {
 
             <div class="assessment-container">
                     <div id="question-container" class="jp-container">
-                        <h1>${state.currentConcept && state.currentConcept.title}</h1>
-                        <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
+                        <h1 ?hidden=${this.assessmentId === CREATE_ASSESSMENT}>${state.currentConcept && state.currentConcept.title}</h1>
+                        <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.assessmentId === CREATE_ASSESSMENT}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
                         <vaadin-tabs .selected="${this.tabIndex}" ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>
-                            <vaadin-tab @click=${(e: any) => this.showExercise(e)}>Exercise</vaadin-tab>
-                            <vaadin-tab @click=${(e: any) => this.showSolution(e)}>Solution</vaadin-tab>
+                            <vaadin-tab ?disabled=${this.assessmentId === CREATE_ASSESSMENT} @click=${(e: any) => this.showExercise(e)}>Exercise</vaadin-tab>
+                            <vaadin-tab ?disabled=${this.assessmentId === CREATE_ASSESSMENT} @click=${(e: any) => this.showSolution(e)}>Solution</vaadin-tab>
                             <vaadin-tab @click=${(e: any) => this.showSourceCode(e)}>Source code</vaadin-tab>
                         </vaadin-tabs>
                         <h2 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Looks like there are no more exercises</h2>
-                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>?</h3>
+                        <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/create">create an exercise</a>?</h3>
                         <p ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>We are building this course together, so help shape it!</p>
                         <p ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>You might learn something new and help others learn from your unique point of view.</p>
                         <assess-item
@@ -411,7 +422,11 @@ class JPAssessment extends HTMLElement {
                             @question-response=${(e: any) => this.questionResponse(e)}
                             @question-changed=${() => this.questionChanged()}
                             @question-built=${() => this.questionBuilt()}
-                            ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex === 2}
+                            ?hidden=${
+                                this.assessmentId === NO_MORE_EXERCISES ||
+                                this.assessmentId === CREATE_ASSESSMENT ||
+                                this.tabIndex === 2
+                            }
                         >
                             Loading...
                         </assess-item>
@@ -430,7 +445,10 @@ class JPAssessment extends HTMLElement {
                             id="prev-button"
                             class="bottom-button"
                             @click=${() => this.previousAssessmentClick()}
-                            ?disabled=${(state.currentAssessment && state.currentAssessment.order === 0)}
+                            ?disabled=${
+                                (state.currentAssessment && state.currentAssessment.order === 0) ||
+                                this.assessmentId === CREATE_ASSESSMENT
+                            }
                         >
                             Prev
                         </button>
@@ -439,7 +457,11 @@ class JPAssessment extends HTMLElement {
                             id="submit-button"
                             class="bottom-button"
                             @click=${() => this.submitAnswer()}
-                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex === 1}
+                            ?disabled=${
+                                this.assessmentId === NO_MORE_EXERCISES ||
+                                this.assessmentId === CREATE_ASSESSMENT ||
+                                this.tabIndex === 1
+                            }
                         >
                             Submit
                         </button>
@@ -448,7 +470,10 @@ class JPAssessment extends HTMLElement {
                             id="next-button"
                             class="bottom-button"
                             @click=${() => this.nextAssessmentClick()}
-                            ?disabled=${this.assessmentId === NO_MORE_EXERCISES}
+                            ?disabled=${
+                                this.assessmentId === NO_MORE_EXERCISES ||
+                                this.assessmentId === CREATE_ASSESSMENT
+                            }
                         >
                             Next
                         </button>

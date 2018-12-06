@@ -78,3 +78,4 @@ export const jpContainerCSSClass = (state: any) => `
 `;
 
 export const NO_MORE_EXERCISES = 'NO_MORE_EXERCISES';
+export const CREATE_ASSESSMENT = 'CREATE_ASSESSMENT';

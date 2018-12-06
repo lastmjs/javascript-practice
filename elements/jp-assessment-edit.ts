@@ -5,11 +5,16 @@ import { jpContainerCSSClass } from '../services/constants';
 import page from 'page';
 import 'assess-elements/assess-item-editor.ts';
 import 'assess-elements/assess-item.ts';
+import { CREATE_ASSESSMENT } from '../services/constants';
 
 class JPAssessmentEdit extends HTMLElement {
     _assessmentId: string = '';
 
     set assessmentId(val: string) {
+        if (val === CREATE_ASSESSMENT) {
+            return;
+        }
+
         this._assessmentId = val;
         this.loadAssessment(val);
     }
@@ -117,13 +122,9 @@ class JPAssessmentEdit extends HTMLElement {
             alert('Question saved successfully');
 
             if (!this.assessmentId) {
-                page(`/assessment/${response.createAssessment.id}/edit`);
+                page(`/assessment/${response.createAssessment.id}/view`);
             }
         }
-    }
-
-    viewClick() {
-        page(`/assessment/${this.assessmentId}/view`);
     }
 
     assessMLChanged(e) {
@@ -215,7 +216,6 @@ class JPAssessmentEdit extends HTMLElement {
                 <br>
 
                 <div>
-                    <button ?hidden=${!this.assessmentId} @click=${(e: any) => this.viewClick()}>View</button>
                     <button @click=${(e: any) => this.save()}>Save</button>
                 </div>
             </div>
