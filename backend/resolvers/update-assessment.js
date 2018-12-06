@@ -89,7 +89,10 @@ async function ensureOrder(args) {
 }
 
 async function updateTheAssessment(user, args, info) {
-    if (user.email === 'jordan.michael.last@gmail.com') {
+    if (
+        user.email === 'jordan.michael.last@gmail.com' ||
+        user.email === 'gitcoin@javascriptpractice.com'
+    ) {
         return await prisma.mutation.updateAssessment(args, info);
     }
     else {
