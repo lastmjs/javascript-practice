@@ -7,6 +7,7 @@ import { loadUser } from '../services/init';
 import page from 'page';
 import { NO_MORE_EXERCISES } from '../services/constants';
 import '@vaadin/vaadin-tabs/vaadin-tabs.js';
+import './jp-assessment-edit';
 
 class JPAssessment extends HTMLElement {
     tabIndex: number = 0;
@@ -286,6 +287,76 @@ class JPAssessment extends HTMLElement {
         prendusViewQuestion.checkAnswer();
     }
 
+    async showSourceCode(e: any) {
+        e.stopPropagation();
+        
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+        
+        const viewSourceCodeResponse = await request(`
+            mutation($assessmentId: ID!) {
+                viewSourceCode(assessmentId: $assessmentId) {
+                    allowed
+                    tokenReward
+                }
+            }
+        `, {
+            assessmentId: Store.getState().currentAssessment.id
+        });
+        
+        if (!viewSourceCodeResponse) {
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+            
+            return;
+        }
+        
+        if (!viewSourceCodeResponse.viewSourceCode.allowed) {
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'You do not have enough tokens to view the source code'
+            });
+            
+            Store.dispatch({
+                type: 'HIDE_LOAD_INDICATOR'
+            });
+            
+            return;
+        }
+        
+        if (viewSourceCodeResponse.viewSourceCode.tokenReward < 0) {
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: `${viewSourceCodeResponse.viewSourceCode.tokenReward} ${viewSourceCodeResponse.viewSourceCode.tokenReward === -1 ? 'token' : 'tokens'}`
+            });
+        }
+        
+        const updateUserResponse = await request(`
+            query($userId: ID!) {
+                user(where: {
+                    id: $userId
+                }) {
+                    tokens
+                }
+            }
+        `, {
+            userId: Store.getState().user.id
+        });
+        
+        this.tabIndex = 2;
+
+        Store.dispatch({
+            type: 'SET_USER_TOKENS',
+            tokens: updateUserResponse.user.tokens
+        });
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -293,10 +364,6 @@ class JPAssessment extends HTMLElement {
                 span {
                     min-width: 100px !important;
                     background-color: white;
-                }
-
-                #question-container::-webkit-scrollbar {
-                    display: none;
                 }
 
                 ${jpContainerCSSClass(state)}                
@@ -332,6 +399,7 @@ class JPAssessment extends HTMLElement {
                         <vaadin-tabs .selected="${this.tabIndex}" ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>
                             <vaadin-tab @click=${(e: any) => this.showExercise(e)}>Exercise</vaadin-tab>
                             <vaadin-tab @click=${(e: any) => this.showSolution(e)}>Solution</vaadin-tab>
+                            <vaadin-tab @click=${(e: any) => this.showSourceCode(e)}>Source code</vaadin-tab>
                         </vaadin-tabs>
                         <h2 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Looks like there are no more exercises</h2>
                         <h3 ?hidden=${this.assessmentId !== NO_MORE_EXERCISES}>Why not <a href="assessment/submit">create an exercise</a>?</h3>
@@ -343,10 +411,18 @@ class JPAssessment extends HTMLElement {
                             @question-response=${(e: any) => this.questionResponse(e)}
                             @question-changed=${() => this.questionChanged()}
                             @question-built=${() => this.questionBuilt()}
-                            ?hidden=${this.assessmentId === NO_MORE_EXERCISES}
+                            ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex === 2}
                         >
                             Loading...
                         </assess-item>
+
+                        <div style="padding: 2%">
+                            <jp-assessment-edit
+                                .assessmentId=${this.assessmentId}
+                                ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.tabIndex !== 2}
+                            ></jp-assessment-edit>
+                        </div>
+                   
                     </div>
         
                     <div class="bottom-buttons-container">

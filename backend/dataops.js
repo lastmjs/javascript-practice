@@ -9,6 +9,7 @@ export const dataopsTypeDefs = `
         acceptNewTerms: AcceptNewTermsPayload!
         submitFeedback(text: String!): SubmitFeedbackPayload!
         submitAssessment(text: String!): SubmitAssessmentPayload!
+        viewSourceCode(assessmentId: ID!): ViewSourceCodePayload!
     }
     
     type AuthPayload {
@@ -41,5 +42,10 @@ export const dataopsTypeDefs = `
 
     type SubmitAssessmentPayload {
         success: Boolean!
+    }
+
+    type ViewSourceCodePayload {
+        tokenReward: Int
+        allowed: Boolean!
     }
 `;

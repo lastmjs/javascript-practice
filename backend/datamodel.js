@@ -65,6 +65,7 @@ type AssessmentInfo {
   assessment: Assessment! @visibility(type: OWNER)
   answeredCorrectly: Boolean! @visibility(type: OWNER)
   solutionViewed: Boolean! @visibility(type: OWNER)
+  sourceCodeViewed: Boolean! @visibility(type: OWNER)
 }
 
 type TokenReward {
@@ -107,6 +108,7 @@ enum TokenTransactionType {
   ANSWER_CORRECT
   ANSWER_INCORRECT
   VIEW_SOLUTION
+  VIEW_SOURCE_CODE
   ASSESSMENT_SUBMITTED
   FEEDBACK_SUBMITTED
   INITIAL_ENDOWMENT
