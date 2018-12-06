@@ -44,7 +44,7 @@ class JPRouter extends HTMLElement {
         const routes = {
             assessment: {
                 view: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`,
-                create: html`<jp-assessment-edit></jp-assessment-edit>`,
+                create: html`<jp-assessment .assessmentId=${'CREATE_ASSESSMENT'}></jp-assessment>`,
                 edit: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`,
                 submit: html`<jp-assessment-submit></jp-assessment-submit>`
             },
