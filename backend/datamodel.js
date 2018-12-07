@@ -45,6 +45,7 @@ type Assessment {
   assessML: String!
   javaScript: String!
   order: Int!
+  verified: Boolean!
 }
 
 type TokenTransaction {

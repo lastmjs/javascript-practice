@@ -56,6 +56,7 @@ class JPAssessment extends HTMLElement {
                     assessML
                     javaScript
                     order
+                    verified
                     concept {
                         id
                         title
@@ -405,8 +406,33 @@ class JPAssessment extends HTMLElement {
 
             <div class="assessment-container">
                     <div id="question-container" class="jp-container">
-                        <h1 ?hidden=${this.assessmentId === CREATE_ASSESSMENT}>${state.currentConcept && state.currentConcept.title}</h1>
-                        <h2 ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.assessmentId === CREATE_ASSESSMENT}>Exercise ${state.currentAssessment && state.currentAssessment.order + 1} / ${state.currentConcept && state.currentConcept.assessments.length} ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? html`- <span style="color: green; background: transparent">Completed</span>` : ''}</h2>
+                        <h1
+                            ?hidden=${this.assessmentId === CREATE_ASSESSMENT}
+                        >
+                            ${state.currentConcept && state.currentConcept.title}
+                        </h1>
+                        <h2
+                            ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.assessmentId === CREATE_ASSESSMENT}
+                        >
+                            Exercise
+                                ${state.currentAssessment && state.currentAssessment.order + 1} / 
+                                ${state.currentConcept && state.currentConcept.assessments.length}
+                                ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? 
+                                    html`- <span style="color: green; background: transparent">Completed</span>` : 
+                                ''
+                            }
+                        </h2>
+                        <h4
+                            ?hidden=${this.assessmentId === NO_MORE_EXERCISES || this.assessmentId === CREATE_ASSESSMENT}
+                            style="color: ${state.currentAssessment.verified ? 'green' : 'red'}"
+                            title="${
+                                state.currentAssessment.verified ? 
+                                'This exercise has been reviewed by the JavaScript Practice team and has been found to be of high quality.' : 
+                                'This exercise has not been reviewed by the JavaScript Practice team. Its quality is unknown.'
+                            }"
+                        >
+                            ${state.currentAssessment.verified ? 'Verified' : 'Unverified'}
+                        </h4>
                         <vaadin-tabs .selected="${this.tabIndex}" ?hidden=${this.assessmentId === NO_MORE_EXERCISES}>
                             <vaadin-tab ?disabled=${this.assessmentId === CREATE_ASSESSMENT} @click=${(e: any) => this.showExercise(e)}>Exercise</vaadin-tab>
                             <vaadin-tab ?disabled=${this.assessmentId === CREATE_ASSESSMENT} @click=${(e: any) => this.showSolution(e)}>Solution</vaadin-tab>

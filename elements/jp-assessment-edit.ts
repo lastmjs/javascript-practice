@@ -1,11 +1,11 @@
 import { html, render } from 'lit-html';
 import { Store } from '../services/store';
 import { request } from '../services/graphql';
-import { jpContainerCSSClass } from '../services/constants';
 import page from 'page';
 import 'assess-elements/assess-item-editor.ts';
 import 'assess-elements/assess-item.ts';
 import { CREATE_ASSESSMENT } from '../services/constants';
+import { loadUser } from '../services/init';
 
 class JPAssessmentEdit extends HTMLElement {
     _assessmentId: string = '';
@@ -68,6 +68,10 @@ class JPAssessmentEdit extends HTMLElement {
     }
 
     async save() {
+        Store.dispatch({
+            type: 'SHOW_LOAD_INDICATOR'
+        });
+
         const conceptSelect = this.querySelector(`#concept-select`);
         const orderInput = this.querySelector(`#order-input`);
         const assessItemEditor = this.querySelector('#assess-item-editor');
@@ -104,6 +108,7 @@ class JPAssessmentEdit extends HTMLElement {
                         order: $order
                         assessML: $assessML
                         javaScript: $javaScript
+                        verified: false
                     }) {
                         id
                     }
@@ -118,13 +123,38 @@ class JPAssessmentEdit extends HTMLElement {
         });
 
         if (response) {
-            //TODO use the notification system
-            alert('Question saved successfully');
+            Store.dispatch({
+                type: 'ADD_NOTIFICATION',
+                notification: 'Question saved successfully'
+            });
+
+            if (response.createAssessment) {
+                const tokenRewardResponse = await request(`
+                    query {
+                        tokenReward(where: {
+                            type: ASSESSMENT_SUBMITTED
+                        }) {
+                            amount
+                        }
+                    }
+                `);
+
+                Store.dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    notification: `+${tokenRewardResponse.tokenReward.amount} ${tokenRewardResponse.tokenReward.amount === 1 ? 'token' : 'tokens'}`
+                });
+
+                await loadUser();
+            }
 
             if (!this.assessmentId) {
                 page(`/assessment/${response.createAssessment.id}/view`);
             }
         }
+
+        Store.dispatch({
+            type: 'HIDE_LOAD_INDICATOR'
+        });
     }
 
     assessMLChanged(e) {
