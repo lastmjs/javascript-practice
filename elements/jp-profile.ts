@@ -171,7 +171,7 @@ class JPProfile extends HTMLElement {
                     ${this.tokenTransactions.map((tokenTransaction: any) => {
                         return html`
                             <br>
-                            <div>${tokenTransaction.amount > 0 ? '+ ' : ''}${tokenTransaction.amount} ${tokenTransaction.amount === 1 ? 'token' : 'tokens'}, ${unsafeHTML(tokenTransaction.description)}</div>
+                            <div>${tokenTransaction.amount > 0 ? '+ ' : ''}${tokenTransaction.amount} ${tokenTransaction.amount === 1 || tokenTransaction.amount === -1 ? 'token' : 'tokens'}, ${unsafeHTML(tokenTransaction.description)}</div>
                             <br>
                             <hr style="width: 75%">
                         `;

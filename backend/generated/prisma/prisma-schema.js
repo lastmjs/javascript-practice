@@ -7,10 +7,6 @@ type AggregateAssessmentInfo {
   count: Int!
 }
 
-type AggregateAssessmentSubmission {
-  count: Int!
-}
-
 type AggregateConcept {
   count: Int!
 }
@@ -294,154 +290,6 @@ type AssessmentPreviousValues {
   javaScript: String!
   order: Int!
   verified: Boolean!
-}
-
-type AssessmentSubmission {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  user: User!
-  text: String!
-  open: Boolean!
-  description: String!
-}
-
-type AssessmentSubmissionConnection {
-  pageInfo: PageInfo!
-  edges: [AssessmentSubmissionEdge]!
-  aggregate: AggregateAssessmentSubmission!
-}
-
-input AssessmentSubmissionCreateInput {
-  user: UserCreateOneInput!
-  text: String!
-  open: Boolean!
-  description: String!
-}
-
-type AssessmentSubmissionEdge {
-  node: AssessmentSubmission!
-  cursor: String!
-}
-
-enum AssessmentSubmissionOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  text_ASC
-  text_DESC
-  open_ASC
-  open_DESC
-  description_ASC
-  description_DESC
-}
-
-type AssessmentSubmissionPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  text: String!
-  open: Boolean!
-  description: String!
-}
-
-type AssessmentSubmissionSubscriptionPayload {
-  mutation: MutationType!
-  node: AssessmentSubmission
-  updatedFields: [String!]
-  previousValues: AssessmentSubmissionPreviousValues
-}
-
-input AssessmentSubmissionSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: AssessmentSubmissionWhereInput
-  AND: [AssessmentSubmissionSubscriptionWhereInput!]
-  OR: [AssessmentSubmissionSubscriptionWhereInput!]
-  NOT: [AssessmentSubmissionSubscriptionWhereInput!]
-}
-
-input AssessmentSubmissionUpdateInput {
-  user: UserUpdateOneRequiredInput
-  text: String
-  open: Boolean
-  description: String
-}
-
-input AssessmentSubmissionWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  user: UserWhereInput
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  open: Boolean
-  open_not: Boolean
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  AND: [AssessmentSubmissionWhereInput!]
-  OR: [AssessmentSubmissionWhereInput!]
-  NOT: [AssessmentSubmissionWhereInput!]
-}
-
-input AssessmentSubmissionWhereUniqueInput {
-  id: ID
 }
 
 type AssessmentSubscriptionPayload {
@@ -1298,12 +1146,6 @@ type Mutation {
   upsertAssessmentInfo(where: AssessmentInfoWhereUniqueInput!, create: AssessmentInfoCreateInput!, update: AssessmentInfoUpdateInput!): AssessmentInfo!
   deleteAssessmentInfo(where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
   deleteManyAssessmentInfoes(where: AssessmentInfoWhereInput): BatchPayload!
-  createAssessmentSubmission(data: AssessmentSubmissionCreateInput!): AssessmentSubmission!
-  updateAssessmentSubmission(data: AssessmentSubmissionUpdateInput!, where: AssessmentSubmissionWhereUniqueInput!): AssessmentSubmission
-  updateManyAssessmentSubmissions(data: AssessmentSubmissionUpdateInput!, where: AssessmentSubmissionWhereInput): BatchPayload!
-  upsertAssessmentSubmission(where: AssessmentSubmissionWhereUniqueInput!, create: AssessmentSubmissionCreateInput!, update: AssessmentSubmissionUpdateInput!): AssessmentSubmission!
-  deleteAssessmentSubmission(where: AssessmentSubmissionWhereUniqueInput!): AssessmentSubmission
-  deleteManyAssessmentSubmissions(where: AssessmentSubmissionWhereInput): BatchPayload!
   createConcept(data: ConceptCreateInput!): Concept!
   updateConcept(data: ConceptUpdateInput!, where: ConceptWhereUniqueInput!): Concept
   updateManyConcepts(data: ConceptUpdateInput!, where: ConceptWhereInput): BatchPayload!
@@ -1372,9 +1214,6 @@ type Query {
   assessmentInfo(where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
   assessmentInfoes(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentInfo]!
   assessmentInfoesConnection(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssessmentInfoConnection!
-  assessmentSubmission(where: AssessmentSubmissionWhereUniqueInput!): AssessmentSubmission
-  assessmentSubmissions(where: AssessmentSubmissionWhereInput, orderBy: AssessmentSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentSubmission]!
-  assessmentSubmissionsConnection(where: AssessmentSubmissionWhereInput, orderBy: AssessmentSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssessmentSubmissionConnection!
   concept(where: ConceptWhereUniqueInput!): Concept
   concepts(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Concept]!
   conceptsConnection(where: ConceptWhereInput, orderBy: ConceptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConceptConnection!
@@ -1402,7 +1241,6 @@ type Query {
 type Subscription {
   assessment(where: AssessmentSubscriptionWhereInput): AssessmentSubscriptionPayload
   assessmentInfo(where: AssessmentInfoSubscriptionWhereInput): AssessmentInfoSubscriptionPayload
-  assessmentSubmission(where: AssessmentSubmissionSubscriptionWhereInput): AssessmentSubmissionSubscriptionPayload
   concept(where: ConceptSubscriptionWhereInput): ConceptSubscriptionPayload
   constant(where: ConstantSubscriptionWhereInput): ConstantSubscriptionPayload
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
