@@ -5,7 +5,9 @@ import { prisma } from '../lambda.js';
 export async function createAssessment(parent, args, context, info) {
     const user = await authenticate(context);
     await ensureOrder(args);
-    return await createTheAssessment(user, args, info);
+    const newAssessment = await createTheAssessment(user, args, info);
+    await giveUserTokenReward(user);
+    return newAssessment;
 }
 
 async function authenticate(context) {
@@ -16,7 +18,9 @@ async function authenticate(context) {
         }
     }, `
         {
+            id
             email
+            tokens
         }
     `);
 
@@ -62,9 +66,49 @@ async function createTheAssessment(user, args, info) {
         user.email === 'jordan.michael.last@gmail.com' ||
         user.email === 'gitcoin@javascriptpractice.com'
     ) {
-        return await prisma.mutation.createAssessment(args, info);
+        return await prisma.mutation.createAssessment({
+            ...args,
+            data: {
+                ...args.data,
+                verified: false
+            }
+        }, info);
     }
     else {
         throw new Error('Not authorized');
     }
+}
+
+async function giveUserTokenReward(user) {
+    const tokenReward = await prisma.query.tokenReward({
+        where: {
+            type: 'ASSESSMENT_SUBMITTED'
+        }
+    }, `
+        {
+            amount
+        }
+    `);
+
+    await prisma.mutation.createTokenTransaction({
+        data: {
+            user: {
+                connect: {
+                    id: user.id
+                }
+            },
+            amount: tokenReward.amount,
+            type: 'ASSESSMENT_SUBMITTED',
+            description: 'Assessment submitted'
+        }
+    });
+
+    await prisma.mutation.updateUser({
+        where: {
+            id: user.id
+        },
+        data: {
+            tokens: user.tokens + tokenReward.amount
+        }
+    });
 }

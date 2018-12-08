@@ -597,6 +597,34 @@ export type UserOrderByInput =
   | "termsAcceptedVersion_ASC"
   | "termsAcceptedVersion_DESC";
 
+export type AssessmentOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "assessML_ASC"
+  | "assessML_DESC"
+  | "javaScript_ASC"
+  | "javaScript_DESC"
+  | "order_ASC"
+  | "order_DESC"
+  | "verified_ASC"
+  | "verified_DESC";
+
+export type ConceptOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "order_ASC"
+  | "order_DESC";
+
 export type AssessmentSubmissionOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -610,32 +638,6 @@ export type AssessmentSubmissionOrderByInput =
   | "open_DESC"
   | "description_ASC"
   | "description_DESC";
-
-export type AssessmentOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "assessML_ASC"
-  | "assessML_DESC"
-  | "javaScript_ASC"
-  | "javaScript_DESC"
-  | "order_ASC"
-  | "order_DESC";
-
-export type ConceptOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "order_ASC"
-  | "order_DESC";
 
 export type ConstantKey = "TERMS_AND_PRIVACY_VERSION" | "TOKEN_PRICE";
 
@@ -805,6 +807,7 @@ export interface AssessmentCreateWithoutConceptInput {
   assessML: String;
   javaScript: String;
   order: Int;
+  verified: Boolean;
 }
 
 export interface UserWhereInput {
@@ -1173,6 +1176,7 @@ export interface AssessmentCreateInput {
   assessML: String;
   javaScript: String;
   order: Int;
+  verified: Boolean;
 }
 
 export interface ConceptCreateManyWithoutCourseInput {
@@ -1277,6 +1281,7 @@ export interface AssessmentUpdateWithoutConceptDataInput {
   assessML?: String;
   javaScript?: String;
   order?: Int;
+  verified?: Boolean;
 }
 
 export interface AssessmentUpdateInput {
@@ -1284,6 +1289,7 @@ export interface AssessmentUpdateInput {
   assessML?: String;
   javaScript?: String;
   order?: Int;
+  verified?: Boolean;
 }
 
 export interface TokenTransactionSubscriptionWhereInput {
@@ -1441,6 +1447,8 @@ export interface AssessmentWhereInput {
   order_lte?: Int;
   order_gt?: Int;
   order_gte?: Int;
+  verified?: Boolean;
+  verified_not?: Boolean;
   AND?: AssessmentWhereInput[] | AssessmentWhereInput;
   OR?: AssessmentWhereInput[] | AssessmentWhereInput;
   NOT?: AssessmentWhereInput[] | AssessmentWhereInput;
@@ -1822,6 +1830,7 @@ export interface AssessmentUpdateDataInput {
   assessML?: String;
   javaScript?: String;
   order?: Int;
+  verified?: Boolean;
 }
 
 export interface AssessmentUpdateOneRequiredInput {
@@ -1973,22 +1982,27 @@ export interface ConceptConnectionSubscription
   aggregate: <T = AggregateConceptSubscription>() => T;
 }
 
-export interface AssessmentEdgeNode {
-  cursor: String;
+export interface PageInfoNode {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface AssessmentEdge
-  extends Promise<AssessmentEdgeNode>,
-    Fragmentable {
-  node: <T = Assessment>() => T;
-  cursor: () => Promise<String>;
+export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
-export interface AssessmentEdgeSubscription
-  extends Promise<AsyncIterator<AssessmentEdgeNode>>,
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfoNode>>,
     Fragmentable {
-  node: <T = AssessmentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateAssessmentSubmissionNode {
@@ -2007,18 +2021,22 @@ export interface AggregateAssessmentSubmissionSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BatchPayloadNode {
-  count: Long;
+export interface AssessmentEdgeNode {
+  cursor: String;
 }
 
-export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayloadNode>>,
+export interface AssessmentEdge
+  extends Promise<AssessmentEdgeNode>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  node: <T = Assessment>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AssessmentEdgeSubscription
+  extends Promise<AsyncIterator<AssessmentEdgeNode>>,
+    Fragmentable {
+  node: <T = AssessmentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AssessmentSubmissionEdgeNode {
@@ -2039,20 +2057,18 @@ export interface AssessmentSubmissionEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUserNode {
-  count: Int;
+export interface BatchPayloadNode {
+  count: Long;
 }
 
-export interface AggregateUser
-  extends Promise<AggregateUserNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
+  count: () => Promise<Long>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUserNode>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayloadNode>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface AssessmentSubmissionConnectionNode {}
@@ -2075,6 +2091,56 @@ export interface AssessmentSubmissionConnectionSubscription
   aggregate: <T = AggregateAssessmentSubmissionSubscription>() => T;
 }
 
+export interface AggregateUserNode {
+  count: Int;
+}
+
+export interface AggregateUser
+  extends Promise<AggregateUserNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUserNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AssessmentNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  assessML: String;
+  javaScript: String;
+  order: Int;
+  verified: Boolean;
+}
+
+export interface Assessment extends Promise<AssessmentNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  concept: <T = Concept>() => T;
+  assessML: () => Promise<String>;
+  javaScript: () => Promise<String>;
+  order: () => Promise<Int>;
+  verified: () => Promise<Boolean>;
+}
+
+export interface AssessmentSubscription
+  extends Promise<AsyncIterator<AssessmentNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  concept: <T = ConceptSubscription>() => T;
+  assessML: () => Promise<AsyncIterator<String>>;
+  javaScript: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+  verified: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface UserConnectionNode {}
 
 export interface UserConnection
@@ -2091,53 +2157,6 @@ export interface UserConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
   aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface AssessmentNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  assessML: String;
-  javaScript: String;
-  order: Int;
-}
-
-export interface Assessment extends Promise<AssessmentNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  concept: <T = Concept>() => T;
-  assessML: () => Promise<String>;
-  javaScript: () => Promise<String>;
-  order: () => Promise<Int>;
-}
-
-export interface AssessmentSubscription
-  extends Promise<AsyncIterator<AssessmentNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  concept: <T = ConceptSubscription>() => T;
-  assessML: () => Promise<AsyncIterator<String>>;
-  javaScript: () => Promise<AsyncIterator<String>>;
-  order: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateTokenTransactionNode {
-  count: Int;
-}
-
-export interface AggregateTokenTransaction
-  extends Promise<AggregateTokenTransactionNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTokenTransactionSubscription
-  extends Promise<AsyncIterator<AggregateTokenTransactionNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AssessmentSubscriptionPayloadNode {
@@ -2163,6 +2182,56 @@ export interface AssessmentSubscriptionPayloadSubscription
   previousValues: <T = AssessmentPreviousValuesSubscription>() => T;
 }
 
+export interface AggregateTokenTransactionNode {
+  count: Int;
+}
+
+export interface AggregateTokenTransaction
+  extends Promise<AggregateTokenTransactionNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTokenTransactionSubscription
+  extends Promise<AsyncIterator<AggregateTokenTransactionNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AssessmentPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  assessML: String;
+  javaScript: String;
+  order: Int;
+  verified: Boolean;
+}
+
+export interface AssessmentPreviousValues
+  extends Promise<AssessmentPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  assessML: () => Promise<String>;
+  javaScript: () => Promise<String>;
+  order: () => Promise<Int>;
+  verified: () => Promise<Boolean>;
+}
+
+export interface AssessmentPreviousValuesSubscription
+  extends Promise<AsyncIterator<AssessmentPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  assessML: () => Promise<AsyncIterator<String>>;
+  javaScript: () => Promise<AsyncIterator<String>>;
+  order: () => Promise<AsyncIterator<Int>>;
+  verified: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface TokenTransactionConnectionNode {}
 
 export interface TokenTransactionConnection
@@ -2179,37 +2248,6 @@ export interface TokenTransactionConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<TokenTransactionEdgeSubscription>>>() => T;
   aggregate: <T = AggregateTokenTransactionSubscription>() => T;
-}
-
-export interface AssessmentPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  assessML: String;
-  javaScript: String;
-  order: Int;
-}
-
-export interface AssessmentPreviousValues
-  extends Promise<AssessmentPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  assessML: () => Promise<String>;
-  javaScript: () => Promise<String>;
-  order: () => Promise<Int>;
-}
-
-export interface AssessmentPreviousValuesSubscription
-  extends Promise<AsyncIterator<AssessmentPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  assessML: () => Promise<AsyncIterator<String>>;
-  javaScript: () => Promise<AsyncIterator<String>>;
-  order: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface TokenTransactionNode {
@@ -2243,24 +2281,6 @@ export interface TokenTransactionSubscription
   amount: () => Promise<AsyncIterator<Int>>;
   type: () => Promise<AsyncIterator<TokenTransactionType>>;
   description: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AssessmentConnectionNode {}
-
-export interface AssessmentConnection
-  extends Promise<AssessmentConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<AssessmentEdgeNode>>() => T;
-  aggregate: <T = AggregateAssessment>() => T;
-}
-
-export interface AssessmentConnectionSubscription
-  extends Promise<AsyncIterator<AssessmentConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AssessmentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAssessmentSubscription>() => T;
 }
 
 export interface TokenRewardEdgeNode {
@@ -3020,27 +3040,22 @@ export interface ConstantSubscription
   value: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PageInfoNode {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
+export interface AssessmentConnectionNode {}
 
-export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfoNode>>,
+export interface AssessmentConnection
+  extends Promise<AssessmentConnectionNode>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<AssessmentEdgeNode>>() => T;
+  aggregate: <T = AggregateAssessment>() => T;
+}
+
+export interface AssessmentConnectionSubscription
+  extends Promise<AsyncIterator<AssessmentConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AssessmentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAssessmentSubscription>() => T;
 }
 
 export interface TokenTransactionPreviousValuesNode {

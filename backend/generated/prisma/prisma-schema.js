@@ -47,6 +47,7 @@ type Assessment {
   assessML: String!
   javaScript: String!
   order: Int!
+  verified: Boolean!
 }
 
 type AssessmentConnection {
@@ -60,6 +61,7 @@ input AssessmentCreateInput {
   assessML: String!
   javaScript: String!
   order: Int!
+  verified: Boolean!
 }
 
 input AssessmentCreateManyWithoutConceptInput {
@@ -76,6 +78,7 @@ input AssessmentCreateWithoutConceptInput {
   assessML: String!
   javaScript: String!
   order: Int!
+  verified: Boolean!
 }
 
 type AssessmentEdge {
@@ -263,6 +266,8 @@ enum AssessmentOrderByInput {
   javaScript_DESC
   order_ASC
   order_DESC
+  verified_ASC
+  verified_DESC
 }
 
 type AssessmentPreviousValues {
@@ -272,6 +277,7 @@ type AssessmentPreviousValues {
   assessML: String!
   javaScript: String!
   order: Int!
+  verified: Boolean!
 }
 
 type AssessmentSubmission {
@@ -445,6 +451,7 @@ input AssessmentUpdateDataInput {
   assessML: String
   javaScript: String
   order: Int
+  verified: Boolean
 }
 
 input AssessmentUpdateInput {
@@ -452,6 +459,7 @@ input AssessmentUpdateInput {
   assessML: String
   javaScript: String
   order: Int
+  verified: Boolean
 }
 
 input AssessmentUpdateManyWithoutConceptInput {
@@ -474,6 +482,7 @@ input AssessmentUpdateWithoutConceptDataInput {
   assessML: String
   javaScript: String
   order: Int
+  verified: Boolean
 }
 
 input AssessmentUpdateWithWhereUniqueWithoutConceptInput {
@@ -560,6 +569,8 @@ input AssessmentWhereInput {
   order_lte: Int
   order_gt: Int
   order_gte: Int
+  verified: Boolean
+  verified_not: Boolean
   AND: [AssessmentWhereInput!]
   OR: [AssessmentWhereInput!]
   NOT: [AssessmentWhereInput!]
