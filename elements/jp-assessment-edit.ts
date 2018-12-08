@@ -82,7 +82,7 @@ class JPAssessmentEdit extends HTMLElement {
         const javaScript = assessItemEditor.javaScript;
 
         const response = await request(`
-            mutation(${this.assessmentId ? `$assessmentId: ID!, ` : ''}$conceptId: ID!, $order: Int!, $assessML: String!, $javaScript: String!) {
+            mutation(${this.assessmentId ? `$assessmentId: ID!, ` : ''}$conceptId: ID!, $order: Int!, $assessML: String!, $javaScript: String! ${this.assessmentId ? '' : ', $userId: ID!'}) {
                 ${this.assessmentId ? `
                     updateAssessment(data: {
                         concept: {
@@ -109,6 +109,11 @@ class JPAssessmentEdit extends HTMLElement {
                         assessML: $assessML
                         javaScript: $javaScript
                         verified: false
+                        author: {
+                            connect: {
+                                id: $userId
+                            }
+                        }
                     }) {
                         id
                     }
@@ -119,7 +124,8 @@ class JPAssessmentEdit extends HTMLElement {
             conceptId,
             order,
             assessML,
-            javaScript
+            javaScript,
+            userId: Store.getState().user ? Store.getState().user.id : ''
         });
 
         if (response) {

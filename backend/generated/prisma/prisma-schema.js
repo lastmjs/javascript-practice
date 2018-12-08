@@ -48,6 +48,7 @@ type Assessment {
   javaScript: String!
   order: Int!
   verified: Boolean!
+  author: User
 }
 
 type AssessmentConnection {
@@ -62,6 +63,12 @@ input AssessmentCreateInput {
   javaScript: String!
   order: Int!
   verified: Boolean!
+  author: UserCreateOneWithoutAssessmentsInput
+}
+
+input AssessmentCreateManyWithoutAuthorInput {
+  create: [AssessmentCreateWithoutAuthorInput!]
+  connect: [AssessmentWhereUniqueInput!]
 }
 
 input AssessmentCreateManyWithoutConceptInput {
@@ -74,11 +81,20 @@ input AssessmentCreateOneInput {
   connect: AssessmentWhereUniqueInput
 }
 
+input AssessmentCreateWithoutAuthorInput {
+  concept: ConceptCreateOneWithoutAssessmentsInput!
+  assessML: String!
+  javaScript: String!
+  order: Int!
+  verified: Boolean!
+}
+
 input AssessmentCreateWithoutConceptInput {
   assessML: String!
   javaScript: String!
   order: Int!
   verified: Boolean!
+  author: UserCreateOneWithoutAssessmentsInput
 }
 
 type AssessmentEdge {
@@ -452,6 +468,7 @@ input AssessmentUpdateDataInput {
   javaScript: String
   order: Int
   verified: Boolean
+  author: UserUpdateOneWithoutAssessmentsInput
 }
 
 input AssessmentUpdateInput {
@@ -460,6 +477,16 @@ input AssessmentUpdateInput {
   javaScript: String
   order: Int
   verified: Boolean
+  author: UserUpdateOneWithoutAssessmentsInput
+}
+
+input AssessmentUpdateManyWithoutAuthorInput {
+  create: [AssessmentCreateWithoutAuthorInput!]
+  delete: [AssessmentWhereUniqueInput!]
+  connect: [AssessmentWhereUniqueInput!]
+  disconnect: [AssessmentWhereUniqueInput!]
+  update: [AssessmentUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [AssessmentUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input AssessmentUpdateManyWithoutConceptInput {
@@ -478,11 +505,25 @@ input AssessmentUpdateOneRequiredInput {
   connect: AssessmentWhereUniqueInput
 }
 
+input AssessmentUpdateWithoutAuthorDataInput {
+  concept: ConceptUpdateOneRequiredWithoutAssessmentsInput
+  assessML: String
+  javaScript: String
+  order: Int
+  verified: Boolean
+}
+
 input AssessmentUpdateWithoutConceptDataInput {
   assessML: String
   javaScript: String
   order: Int
   verified: Boolean
+  author: UserUpdateOneWithoutAssessmentsInput
+}
+
+input AssessmentUpdateWithWhereUniqueWithoutAuthorInput {
+  where: AssessmentWhereUniqueInput!
+  data: AssessmentUpdateWithoutAuthorDataInput!
 }
 
 input AssessmentUpdateWithWhereUniqueWithoutConceptInput {
@@ -493,6 +534,12 @@ input AssessmentUpdateWithWhereUniqueWithoutConceptInput {
 input AssessmentUpsertNestedInput {
   update: AssessmentUpdateDataInput!
   create: AssessmentCreateInput!
+}
+
+input AssessmentUpsertWithWhereUniqueWithoutAuthorInput {
+  where: AssessmentWhereUniqueInput!
+  update: AssessmentUpdateWithoutAuthorDataInput!
+  create: AssessmentCreateWithoutAuthorInput!
 }
 
 input AssessmentUpsertWithWhereUniqueWithoutConceptInput {
@@ -571,6 +618,7 @@ input AssessmentWhereInput {
   order_gte: Int
   verified: Boolean
   verified_not: Boolean
+  author: UserWhereInput
   AND: [AssessmentWhereInput!]
   OR: [AssessmentWhereInput!]
   NOT: [AssessmentWhereInput!]
@@ -1650,6 +1698,7 @@ type User {
   assessmentInfos(where: AssessmentInfoWhereInput, orderBy: AssessmentInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AssessmentInfo!]
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
+  assessments(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assessment!]
 }
 
 type UserConnection {
@@ -1665,6 +1714,7 @@ input UserCreateInput {
   assessmentInfos: AssessmentInfoCreateManyWithoutUserInput
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
+  assessments: AssessmentCreateManyWithoutAuthorInput
 }
 
 input UserCreateOneInput {
@@ -1677,10 +1727,25 @@ input UserCreateOneWithoutAssessmentInfosInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutAssessmentsInput {
+  create: UserCreateWithoutAssessmentsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutAssessmentInfosInput {
   email: String!
   password: String!
   tokens: Int!
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
+  assessments: AssessmentCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutAssessmentsInput {
+  email: String!
+  password: String!
+  tokens: Int!
+  assessmentInfos: AssessmentInfoCreateManyWithoutUserInput
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
 }
@@ -1745,6 +1810,7 @@ input UserUpdateDataInput {
   assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
+  assessments: AssessmentUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateInput {
@@ -1754,6 +1820,7 @@ input UserUpdateInput {
   assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
+  assessments: AssessmentUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateOneRequiredInput {
@@ -1770,10 +1837,29 @@ input UserUpdateOneRequiredWithoutAssessmentInfosInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneWithoutAssessmentsInput {
+  create: UserCreateWithoutAssessmentsInput
+  update: UserUpdateWithoutAssessmentsDataInput
+  upsert: UserUpsertWithoutAssessmentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutAssessmentInfosDataInput {
   email: String
   password: String
   tokens: Int
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
+  assessments: AssessmentUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutAssessmentsDataInput {
+  email: String
+  password: String
+  tokens: Int
+  assessmentInfos: AssessmentInfoUpdateManyWithoutUserInput
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
 }
@@ -1786,6 +1872,11 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutAssessmentInfosInput {
   update: UserUpdateWithoutAssessmentInfosDataInput!
   create: UserCreateWithoutAssessmentInfosInput!
+}
+
+input UserUpsertWithoutAssessmentsInput {
+  update: UserUpdateWithoutAssessmentsDataInput!
+  create: UserCreateWithoutAssessmentsInput!
 }
 
 input UserWhereInput {
@@ -1880,6 +1971,9 @@ input UserWhereInput {
   termsAcceptedVersion_not_starts_with: String
   termsAcceptedVersion_ends_with: String
   termsAcceptedVersion_not_ends_with: String
+  assessments_every: AssessmentWhereInput
+  assessments_some: AssessmentWhereInput
+  assessments_none: AssessmentWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
