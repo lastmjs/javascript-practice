@@ -70,7 +70,12 @@ async function createTheAssessment(user, args, info) {
             ...args,
             data: {
                 ...args.data,
-                verified: false
+                verified: false,
+                author: {
+                    connect: {
+                        id: user.id
+                    }
+                }
             }
         }, info);
     }

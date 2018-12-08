@@ -13,6 +13,7 @@ type User  {
   assessmentInfos: [AssessmentInfo!]! @visibility(type: OWNER)
   termsAcceptedDate: DateTime @visibility(type: OWNER) #TODO there is an internal server error from prisma when I try to make this field required
   termsAcceptedVersion: String @visibility(type: OWNER) #TODO there is an internal server error from prisma when I try to make this field required
+  assessments: [Assessment!]! @visibility(type: OWNER)
 }
 
 type Course {
@@ -46,6 +47,7 @@ type Assessment {
   javaScript: String!
   order: Int!
   verified: Boolean!
+  author: User @visibility(type: OWNER)
 }
 
 type TokenTransaction {
