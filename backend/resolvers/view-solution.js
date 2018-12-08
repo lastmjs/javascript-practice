@@ -60,6 +60,15 @@ export async function viewSolution(parent, args, context, info) {
         const tokenReward = calculateTokenReward(assessmentInfo, viewSolutionTokenReward.amount);
 
         if (tokenReward !== 0) {
+            // I am grabbing the assessment from the database so that we read the id from the database
+            // We are passing the id to the user in the tokenTransaction description, and I want to mitigate
+            // any kind of malicious user input, since the href is being displayed to the user
+            const assessment = await prisma.query.assessment({
+                where: {
+                    id: args.assessmentId
+                }
+            });
+
             //TODO the following two calls must be made atomic
             await prisma.mutation.createTokenTransaction({
                 data: {
@@ -70,7 +79,7 @@ export async function viewSolution(parent, args, context, info) {
                     },
                     amount: tokenReward,
                     type: 'VIEW_SOLUTION',
-                    description: `Exercise ${args.assessmentId} solution viewed`
+                    description: `<a href="assessment/${assessment.id}/view">Exercise solution viewed</a>`
                 }
             });
 
