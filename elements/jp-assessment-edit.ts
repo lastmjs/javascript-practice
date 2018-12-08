@@ -82,7 +82,7 @@ class JPAssessmentEdit extends HTMLElement {
         const javaScript = assessItemEditor.javaScript;
 
         const response = await request(`
-            mutation(${this.assessmentId ? `$assessmentId: ID!, ` : ''}$conceptId: ID!, $order: Int!, $assessML: String!, $javaScript: String!, $userId: ID!) {
+            mutation(${this.assessmentId ? `$assessmentId: ID!, ` : ''}$conceptId: ID!, $order: Int!, $assessML: String!, $javaScript: String! ${this.assessmentId ? '' : ', $userId: ID!'}) {
                 ${this.assessmentId ? `
                     updateAssessment(data: {
                         concept: {
