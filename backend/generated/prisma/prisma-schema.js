@@ -48,7 +48,7 @@ type Assessment {
   javaScript: String!
   order: Int!
   verified: Boolean!
-  author: User
+  author: User!
 }
 
 type AssessmentConnection {
@@ -63,7 +63,7 @@ input AssessmentCreateInput {
   javaScript: String!
   order: Int!
   verified: Boolean!
-  author: UserCreateOneWithoutAssessmentsInput
+  author: UserCreateOneWithoutAssessmentsInput!
 }
 
 input AssessmentCreateManyWithoutAuthorInput {
@@ -94,7 +94,7 @@ input AssessmentCreateWithoutConceptInput {
   javaScript: String!
   order: Int!
   verified: Boolean!
-  author: UserCreateOneWithoutAssessmentsInput
+  author: UserCreateOneWithoutAssessmentsInput!
 }
 
 type AssessmentEdge {
@@ -468,7 +468,7 @@ input AssessmentUpdateDataInput {
   javaScript: String
   order: Int
   verified: Boolean
-  author: UserUpdateOneWithoutAssessmentsInput
+  author: UserUpdateOneRequiredWithoutAssessmentsInput
 }
 
 input AssessmentUpdateInput {
@@ -477,7 +477,7 @@ input AssessmentUpdateInput {
   javaScript: String
   order: Int
   verified: Boolean
-  author: UserUpdateOneWithoutAssessmentsInput
+  author: UserUpdateOneRequiredWithoutAssessmentsInput
 }
 
 input AssessmentUpdateManyWithoutAuthorInput {
@@ -518,7 +518,7 @@ input AssessmentUpdateWithoutConceptDataInput {
   javaScript: String
   order: Int
   verified: Boolean
-  author: UserUpdateOneWithoutAssessmentsInput
+  author: UserUpdateOneRequiredWithoutAssessmentsInput
 }
 
 input AssessmentUpdateWithWhereUniqueWithoutAuthorInput {
@@ -1837,12 +1837,10 @@ input UserUpdateOneRequiredWithoutAssessmentInfosInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutAssessmentsInput {
+input UserUpdateOneRequiredWithoutAssessmentsInput {
   create: UserCreateWithoutAssessmentsInput
   update: UserUpdateWithoutAssessmentsDataInput
   upsert: UserUpsertWithoutAssessmentsInput
-  delete: Boolean
-  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

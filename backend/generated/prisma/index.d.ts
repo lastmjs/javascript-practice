@@ -943,7 +943,7 @@ export interface AssessmentCreateWithoutConceptInput {
   javaScript: String;
   order: Int;
   verified: Boolean;
-  author?: UserCreateOneWithoutAssessmentsInput;
+  author: UserCreateOneWithoutAssessmentsInput;
 }
 
 export interface AssessmentUpdateOneRequiredInput {
@@ -1116,7 +1116,7 @@ export interface AssessmentCreateInput {
   javaScript: String;
   order: Int;
   verified: Boolean;
-  author?: UserCreateOneWithoutAssessmentsInput;
+  author: UserCreateOneWithoutAssessmentsInput;
 }
 
 export interface TokenRewardCreateInput {
@@ -1297,7 +1297,7 @@ export interface AssessmentUpdateInput {
   javaScript?: String;
   order?: Int;
   verified?: Boolean;
-  author?: UserUpdateOneWithoutAssessmentsInput;
+  author?: UserUpdateOneRequiredWithoutAssessmentsInput;
 }
 
 export interface AssessmentUpsertWithWhereUniqueWithoutConceptInput {
@@ -1454,12 +1454,10 @@ export interface AssessmentSubscriptionWhereInput {
   NOT?: AssessmentSubscriptionWhereInput[] | AssessmentSubscriptionWhereInput;
 }
 
-export interface UserUpdateOneWithoutAssessmentsInput {
+export interface UserUpdateOneRequiredWithoutAssessmentsInput {
   create?: UserCreateWithoutAssessmentsInput;
   update?: UserUpdateWithoutAssessmentsDataInput;
   upsert?: UserUpsertWithoutAssessmentsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
   connect?: UserWhereUniqueInput;
 }
 
@@ -1658,7 +1656,7 @@ export interface AssessmentUpdateDataInput {
   javaScript?: String;
   order?: Int;
   verified?: Boolean;
-  author?: UserUpdateOneWithoutAssessmentsInput;
+  author?: UserUpdateOneRequiredWithoutAssessmentsInput;
 }
 
 export interface TokenRewardWhereInput {
@@ -1935,7 +1933,7 @@ export interface AssessmentUpdateWithoutConceptDataInput {
   javaScript?: String;
   order?: Int;
   verified?: Boolean;
-  author?: UserUpdateOneWithoutAssessmentsInput;
+  author?: UserUpdateOneRequiredWithoutAssessmentsInput;
 }
 
 export interface UserCreateWithoutAssessmentInfosInput {
