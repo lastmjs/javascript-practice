@@ -47,7 +47,7 @@ type Assessment {
   javaScript: String!
   order: Int!
   verified: Boolean!
-  author: User @visibility(type: OWNER)
+  author: User! @visibility(type: OWNER)
 }
 
 type TokenTransaction {
