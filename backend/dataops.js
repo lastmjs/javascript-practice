@@ -8,7 +8,6 @@ export const dataopsTypeDefs = `
         buyTokens(stripeTokenId: String!, numTokens: Int!, pricePerToken: Int!): BuyTokensPayload!
         acceptNewTerms: AcceptNewTermsPayload!
         submitFeedback(text: String!): SubmitFeedbackPayload!
-        submitAssessment(text: String!): SubmitAssessmentPayload!
         viewSourceCode(assessmentId: ID!): ViewSourceCodePayload!
     }
     
@@ -37,10 +36,6 @@ export const dataopsTypeDefs = `
     }
 
     type SubmitFeedbackPayload {
-        success: Boolean!
-    }
-
-    type SubmitAssessmentPayload {
         success: Boolean!
     }
 
