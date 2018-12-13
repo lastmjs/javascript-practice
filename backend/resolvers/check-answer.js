@@ -61,9 +61,20 @@ export async function checkAnswer(parent, args, context, info) {
                     }
                 });
             }
+
+            await prisma.mutation.createAnswerAttempt({
+                data: {
+                    assessmentInfo: {
+                        connect: {
+                            id: assessmentInfo.id
+                        }
+                    },
+                    correct: args.correct
+                }
+            });
         }
         else {
-            await prisma.mutation.createAssessmentInfo({
+            const newAssessmentInfo = await prisma.mutation.createAssessmentInfo({
                 data: {
                     user: {
                         connect: {
@@ -78,6 +89,17 @@ export async function checkAnswer(parent, args, context, info) {
                     answeredCorrectly: args.correct,
                     solutionViewed: false,
                     sourceCodeViewed: false
+                }
+            });
+
+            await prisma.mutation.createAnswerAttempt({
+                data: {
+                    assessmentInfo: {
+                        connect: {
+                            id: newAssessmentInfo.id
+                        }
+                    },
+                    correct: args.correct
                 }
             });
         }

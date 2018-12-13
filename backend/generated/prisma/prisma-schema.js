@@ -1,5 +1,9 @@
 module.exports = {
-        typeDefs: /* GraphQL */ `type AggregateAssessment {
+        typeDefs: /* GraphQL */ `type AggregateAnswerAttempt {
+  count: Int!
+}
+
+type AggregateAssessment {
   count: Int!
 }
 
@@ -33,6 +37,147 @@ type AggregateTokenTransaction {
 
 type AggregateUser {
   count: Int!
+}
+
+type AnswerAttempt {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  assessmentInfo: AssessmentInfo!
+  correct: Boolean!
+}
+
+type AnswerAttemptConnection {
+  pageInfo: PageInfo!
+  edges: [AnswerAttemptEdge]!
+  aggregate: AggregateAnswerAttempt!
+}
+
+input AnswerAttemptCreateInput {
+  assessmentInfo: AssessmentInfoCreateOneWithoutAnswerAttemptsInput!
+  correct: Boolean!
+}
+
+input AnswerAttemptCreateManyWithoutAssessmentInfoInput {
+  create: [AnswerAttemptCreateWithoutAssessmentInfoInput!]
+  connect: [AnswerAttemptWhereUniqueInput!]
+}
+
+input AnswerAttemptCreateWithoutAssessmentInfoInput {
+  correct: Boolean!
+}
+
+type AnswerAttemptEdge {
+  node: AnswerAttempt!
+  cursor: String!
+}
+
+enum AnswerAttemptOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  correct_ASC
+  correct_DESC
+}
+
+type AnswerAttemptPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  correct: Boolean!
+}
+
+type AnswerAttemptSubscriptionPayload {
+  mutation: MutationType!
+  node: AnswerAttempt
+  updatedFields: [String!]
+  previousValues: AnswerAttemptPreviousValues
+}
+
+input AnswerAttemptSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AnswerAttemptWhereInput
+  AND: [AnswerAttemptSubscriptionWhereInput!]
+  OR: [AnswerAttemptSubscriptionWhereInput!]
+  NOT: [AnswerAttemptSubscriptionWhereInput!]
+}
+
+input AnswerAttemptUpdateInput {
+  assessmentInfo: AssessmentInfoUpdateOneRequiredWithoutAnswerAttemptsInput
+  correct: Boolean
+}
+
+input AnswerAttemptUpdateManyWithoutAssessmentInfoInput {
+  create: [AnswerAttemptCreateWithoutAssessmentInfoInput!]
+  delete: [AnswerAttemptWhereUniqueInput!]
+  connect: [AnswerAttemptWhereUniqueInput!]
+  disconnect: [AnswerAttemptWhereUniqueInput!]
+  update: [AnswerAttemptUpdateWithWhereUniqueWithoutAssessmentInfoInput!]
+  upsert: [AnswerAttemptUpsertWithWhereUniqueWithoutAssessmentInfoInput!]
+}
+
+input AnswerAttemptUpdateWithoutAssessmentInfoDataInput {
+  correct: Boolean
+}
+
+input AnswerAttemptUpdateWithWhereUniqueWithoutAssessmentInfoInput {
+  where: AnswerAttemptWhereUniqueInput!
+  data: AnswerAttemptUpdateWithoutAssessmentInfoDataInput!
+}
+
+input AnswerAttemptUpsertWithWhereUniqueWithoutAssessmentInfoInput {
+  where: AnswerAttemptWhereUniqueInput!
+  update: AnswerAttemptUpdateWithoutAssessmentInfoDataInput!
+  create: AnswerAttemptCreateWithoutAssessmentInfoInput!
+}
+
+input AnswerAttemptWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  assessmentInfo: AssessmentInfoWhereInput
+  correct: Boolean
+  correct_not: Boolean
+  AND: [AnswerAttemptWhereInput!]
+  OR: [AnswerAttemptWhereInput!]
+  NOT: [AnswerAttemptWhereInput!]
+}
+
+input AnswerAttemptWhereUniqueInput {
+  id: ID
 }
 
 type Assessment {
@@ -107,6 +252,7 @@ type AssessmentInfo {
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
   sourceCodeViewed: Boolean!
+  answerAttempts(where: AnswerAttemptWhereInput, orderBy: AnswerAttemptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerAttempt!]
 }
 
 type AssessmentInfoConnection {
@@ -121,6 +267,7 @@ input AssessmentInfoCreateInput {
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
   sourceCodeViewed: Boolean!
+  answerAttempts: AnswerAttemptCreateManyWithoutAssessmentInfoInput
 }
 
 input AssessmentInfoCreateManyWithoutUserInput {
@@ -128,11 +275,25 @@ input AssessmentInfoCreateManyWithoutUserInput {
   connect: [AssessmentInfoWhereUniqueInput!]
 }
 
+input AssessmentInfoCreateOneWithoutAnswerAttemptsInput {
+  create: AssessmentInfoCreateWithoutAnswerAttemptsInput
+  connect: AssessmentInfoWhereUniqueInput
+}
+
+input AssessmentInfoCreateWithoutAnswerAttemptsInput {
+  user: UserCreateOneWithoutAssessmentInfosInput!
+  assessment: AssessmentCreateOneInput!
+  answeredCorrectly: Boolean!
+  solutionViewed: Boolean!
+  sourceCodeViewed: Boolean!
+}
+
 input AssessmentInfoCreateWithoutUserInput {
   assessment: AssessmentCreateOneInput!
   answeredCorrectly: Boolean!
   solutionViewed: Boolean!
   sourceCodeViewed: Boolean!
+  answerAttempts: AnswerAttemptCreateManyWithoutAssessmentInfoInput
 }
 
 type AssessmentInfoEdge {
@@ -188,6 +349,7 @@ input AssessmentInfoUpdateInput {
   answeredCorrectly: Boolean
   solutionViewed: Boolean
   sourceCodeViewed: Boolean
+  answerAttempts: AnswerAttemptUpdateManyWithoutAssessmentInfoInput
 }
 
 input AssessmentInfoUpdateManyWithoutUserInput {
@@ -199,16 +361,37 @@ input AssessmentInfoUpdateManyWithoutUserInput {
   upsert: [AssessmentInfoUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input AssessmentInfoUpdateWithoutUserDataInput {
+input AssessmentInfoUpdateOneRequiredWithoutAnswerAttemptsInput {
+  create: AssessmentInfoCreateWithoutAnswerAttemptsInput
+  update: AssessmentInfoUpdateWithoutAnswerAttemptsDataInput
+  upsert: AssessmentInfoUpsertWithoutAnswerAttemptsInput
+  connect: AssessmentInfoWhereUniqueInput
+}
+
+input AssessmentInfoUpdateWithoutAnswerAttemptsDataInput {
+  user: UserUpdateOneRequiredWithoutAssessmentInfosInput
   assessment: AssessmentUpdateOneRequiredInput
   answeredCorrectly: Boolean
   solutionViewed: Boolean
   sourceCodeViewed: Boolean
 }
 
+input AssessmentInfoUpdateWithoutUserDataInput {
+  assessment: AssessmentUpdateOneRequiredInput
+  answeredCorrectly: Boolean
+  solutionViewed: Boolean
+  sourceCodeViewed: Boolean
+  answerAttempts: AnswerAttemptUpdateManyWithoutAssessmentInfoInput
+}
+
 input AssessmentInfoUpdateWithWhereUniqueWithoutUserInput {
   where: AssessmentInfoWhereUniqueInput!
   data: AssessmentInfoUpdateWithoutUserDataInput!
+}
+
+input AssessmentInfoUpsertWithoutAnswerAttemptsInput {
+  update: AssessmentInfoUpdateWithoutAnswerAttemptsDataInput!
+  create: AssessmentInfoCreateWithoutAnswerAttemptsInput!
 }
 
 input AssessmentInfoUpsertWithWhereUniqueWithoutUserInput {
@@ -256,6 +439,9 @@ input AssessmentInfoWhereInput {
   solutionViewed_not: Boolean
   sourceCodeViewed: Boolean
   sourceCodeViewed_not: Boolean
+  answerAttempts_every: AnswerAttemptWhereInput
+  answerAttempts_some: AnswerAttemptWhereInput
+  answerAttempts_none: AnswerAttemptWhereInput
   AND: [AssessmentInfoWhereInput!]
   OR: [AssessmentInfoWhereInput!]
   NOT: [AssessmentInfoWhereInput!]
@@ -1134,6 +1320,12 @@ input FeedbackSubmissionWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createAnswerAttempt(data: AnswerAttemptCreateInput!): AnswerAttempt!
+  updateAnswerAttempt(data: AnswerAttemptUpdateInput!, where: AnswerAttemptWhereUniqueInput!): AnswerAttempt
+  updateManyAnswerAttempts(data: AnswerAttemptUpdateInput!, where: AnswerAttemptWhereInput): BatchPayload!
+  upsertAnswerAttempt(where: AnswerAttemptWhereUniqueInput!, create: AnswerAttemptCreateInput!, update: AnswerAttemptUpdateInput!): AnswerAttempt!
+  deleteAnswerAttempt(where: AnswerAttemptWhereUniqueInput!): AnswerAttempt
+  deleteManyAnswerAttempts(where: AnswerAttemptWhereInput): BatchPayload!
   createAssessment(data: AssessmentCreateInput!): Assessment!
   updateAssessment(data: AssessmentUpdateInput!, where: AssessmentWhereUniqueInput!): Assessment
   updateManyAssessments(data: AssessmentUpdateInput!, where: AssessmentWhereInput): BatchPayload!
@@ -1208,6 +1400,9 @@ type PageInfo {
 }
 
 type Query {
+  answerAttempt(where: AnswerAttemptWhereUniqueInput!): AnswerAttempt
+  answerAttempts(where: AnswerAttemptWhereInput, orderBy: AnswerAttemptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerAttempt]!
+  answerAttemptsConnection(where: AnswerAttemptWhereInput, orderBy: AnswerAttemptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnswerAttemptConnection!
   assessment(where: AssessmentWhereUniqueInput!): Assessment
   assessments(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assessment]!
   assessmentsConnection(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssessmentConnection!
@@ -1239,6 +1434,7 @@ type Query {
 }
 
 type Subscription {
+  answerAttempt(where: AnswerAttemptSubscriptionWhereInput): AnswerAttemptSubscriptionPayload
   assessment(where: AssessmentSubscriptionWhereInput): AssessmentSubscriptionPayload
   assessmentInfo(where: AssessmentInfoSubscriptionWhereInput): AssessmentInfoSubscriptionPayload
   concept(where: ConceptSubscriptionWhereInput): ConceptSubscriptionPayload

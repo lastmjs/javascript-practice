@@ -68,6 +68,15 @@ type AssessmentInfo {
   answeredCorrectly: Boolean! @visibility(type: OWNER)
   solutionViewed: Boolean! @visibility(type: OWNER)
   sourceCodeViewed: Boolean! @visibility(type: OWNER)
+  answerAttempts: [AnswerAttempt!]! @visibility(type: OWNER)
+}
+
+type AnswerAttempt {
+  id: ID! @unique @visibility(type: OWNER)
+  createdAt: DateTime! @visibility(type: OWNER)
+  updatedAt: DateTime! @visibility(type: OWNER)
+  assessmentInfo: AssessmentInfo! @visibility(type: OWNER)
+  correct: Boolean! @visibility(type: OWNER)
 }
 
 type TokenReward {
