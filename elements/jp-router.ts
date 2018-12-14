@@ -1,18 +1,6 @@
-import {html, render} from 'lit-html';
-import {Store} from '../services/store';
+import { html, render } from 'lit-html';
+import { Store } from '../services/store';
 import page from 'page';
-import './jp-assessment';
-import './jp-assessment-edit';
-import './jp-login';
-import './jp-signup';
-import './jp-profile';
-import './jp-token-overview';
-import './jp-token-earn';
-import './jp-token-buy';
-import './jp-legal-terms-and-privacy';
-import './jp-legal-accept-new-terms';
-import './jp-feedback-submit';
-import './jp-content-vision';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -37,39 +25,106 @@ page();
 
 class JPRouter extends HTMLElement {
     connectedCallback() {
-        Store.subscribe(() => render(this.render(Store.getState()), this));
+        Store.subscribe(async () => render(await this.render(Store.getState()), this));
     }
 
-    render(state: any) {
+    async render(state: any) {
         const routes = {
             assessment: {
-                view: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`,
-                create: html`<jp-assessment .assessmentId=${'CREATE_ASSESSMENT'}></jp-assessment>`,
-                edit: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`
+                view: {
+                    template: html`<jp-assessment .assessmentId=${state.currentEntityId}></jp-assessment>`,
+                    loadModules: async () => {
+                        await import('./jp-assessment.ts');
+                    }
+                },
+                create: {
+                    template: html`<jp-assessment .assessmentId=${'CREATE_ASSESSMENT'}></jp-assessment>`,
+                    loadModules: async () => {
+                        await import('./jp-assessment.ts');
+                    }
+                },
+                edit: {
+                    template: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`,
+                    loadModules: async () => {
+                        await import('./jp-assessment-edit.ts');
+                    }
+                }
             },
             user: {
-                login: html`<jp-login></jp-login>`,
-                signup: html`<jp-signup></jp-signup>`,
-                profile: html`<jp-profile></jp-profile>`
+                login: {
+                    template: html`<jp-login></jp-login>`,
+                    loadModules: async () => {
+                        await import('./jp-login.ts');
+                    }
+                },
+                signup: {
+                    template: html`<jp-signup></jp-signup>`,
+                    loadModules: async () => {
+                        await import('./jp-signup.ts');
+                    }
+                },
+                profile: {
+                    template: html`<jp-profile></jp-profile>`,
+                    loadModules: async () => {
+                        await import('./jp-profile.ts');
+                    }
+                }
             },
             token: {
-                overview: html`<jp-token-overview></jp-token-overview>`,
-                buy: html`<jp-token-buy></jp-token-buy>`,
-                earn: html`<jp-token-earn></jp-token-earn>`
+                overview: {
+                    template: html`<jp-token-overview></jp-token-overview>`,
+                    loadModules: async () => {
+                        await import('./jp-token-overview.ts');
+                    }
+                },
+                buy: {
+                    template: html`<jp-token-buy></jp-token-buy>`,
+                    loadModules: async () => {
+                        await import('./jp-token-buy.ts');
+                    }
+                },
+                earn: {
+                    template: html`<jp-token-earn></jp-token-earn>`,
+                    loadModules: async () => {
+                        await import('./jp-token-earn.ts');
+                    }
+                }
             },
             legal: {
-                'terms-and-privacy': html`<jp-legal-terms-and-privacy></jp-legal-terms-and-privacy>`,
-                'accept-new-terms': html`<jp-legal-accept-new-terms></jp-legal-accept-new-terms>`
+                'terms-and-privacy': {
+                    template: html`<jp-legal-terms-and-privacy></jp-legal-terms-and-privacy>`,
+                    loadModules: async () => {
+                        await import('./jp-legal-terms-and-privacy.ts');
+                    }
+                },
+                'accept-new-terms': {
+                    template: html`<jp-legal-accept-new-terms></jp-legal-accept-new-terms>`,
+                    loadModules: async () => {
+                        await import('./jp-legal-accept-new-terms.ts');
+                    }
+                }
             },
             feedback: {
-                submit: html`<jp-feedback-submit></jp-feedback-submit>`
+                submit: {
+                    template: html`<jp-feedback-submit></jp-feedback-submit>`,
+                    loadModules: async () => {
+                        await import('./jp-feedback-submit.ts');
+                    }
+                }
             },
             content: {
-                vision: html`<jp-content-vision></jp-content-vision>`
+                vision: {
+                    template: html`<jp-content-vision></jp-content-vision>`,
+                    loadModules: async () => {
+                        await import('./jp-content-vision.ts');
+                    }
+                }
             }
         };
 
-        return routes[state.currentEntity][state.currentEntityBehavior];
+        const route = routes[state.currentEntity][state.currentEntityBehavior];
+        await route.loadModules();
+        return route.template;
     }
 }
 
