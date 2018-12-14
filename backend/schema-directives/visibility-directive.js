@@ -1,7 +1,7 @@
 import { SchemaDirectiveVisitor } from 'graphql-tools';
 import { defaultFieldResolver } from 'graphql';
 import { getUserId } from '../services/utilities.js';
-import { prisma } from '../lambda.js';
+import { prisma } from '../server.js';
 
 export class VisibilityDirective extends SchemaDirectiveVisitor {
     visitFieldDefinition(field, details) {

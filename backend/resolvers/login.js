@@ -1,6 +1,6 @@
 // Based on https://www.prisma.io/docs/maintain/graphcool-to-prisma/authentication-and-authorization-gcf3/
 
-import { prisma } from '../lambda.js';
+import { prisma } from '../server.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 

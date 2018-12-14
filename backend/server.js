@@ -1,4 +1,4 @@
-import { GraphQLServerLambda } from 'graphql-yoga';
+import { GraphQLServer } from 'graphql-yoga';
 import { Prisma } from 'prisma-binding';
 import { typeDefs } from './generated/prisma/prisma-schema.js';
 import { signup } from './resolvers/signup.js';
@@ -58,7 +58,7 @@ const ultimateTypeDefs = mergeTypes([
     all: true
 });
 
-const lambda = new GraphQLServerLambda({
+const server = new GraphQLServer({
     typeDefs: ultimateTypeDefs,
     resolvers,
     schemaDirectives,
@@ -68,7 +68,10 @@ const lambda = new GraphQLServerLambda({
     }
 });
 
-export const handler = lambda.handler;
+const port = process.env.PORT || 4000;
+server.start({
+   port 
+}, () => console.log(`Server is running on http://localhost:${port}`));
 
 function prepareTopLevelQueries(queryObject) {
     return Object.entries(queryObject).reduce((result, entry) => {

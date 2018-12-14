@@ -1,4 +1,4 @@
-import { prisma } from '../lambda.js';
+import { prisma } from '../server.js';
 import { getUserId } from '../services/utilities.js';
 
 export async function checkAnswer(parent, args, context, info) {

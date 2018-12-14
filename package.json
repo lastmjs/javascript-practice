@@ -33,7 +33,8 @@
     "prisma": "1.21",
     "prisma-binding": "2.1.6",
     "redux": "4.0.1",
-    "stripe": "6.12.1"
+    "stripe": "6.12.1",
+    "ts-node": "^7.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
@@ -42,7 +43,8 @@
     "zwitterion": "0.28.0"
   },
   "scripts": {
-    "start": "source ./.development-environment-variables && concurrently \"zwitterion\" \"npm run lambda-proxy\" \"npm run lambda-serve\"",
+    "start": "ts-node backend/server.js",
+    "start-local": "source ./.development-environment-variables && concurrently \"zwitterion\" \"npm run lambda-proxy\" \"npm run lambda-serve\"",
     "prisma-up": "cd backend && docker-compose up --build",
     "prisma-deploy-development": "source ./.development-environment-variables && cd backend && prisma deploy",
     "prisma-deploy-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma deploy",
