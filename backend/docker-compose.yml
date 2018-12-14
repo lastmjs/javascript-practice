@@ -1,7 +1,9 @@
+# This config file is for the local prisma server
+
 version: '3'
 services:
   prisma:
-    image: prismagraphql/prisma:1.17
+    image: prismagraphql/prisma:1.21
     restart: always
     ports:
     - "4466:4466"
