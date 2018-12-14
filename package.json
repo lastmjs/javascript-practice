@@ -55,7 +55,7 @@
     "lambda-proxy": "http-server --cors=Authorization --proxy http://localhost:9000",
     "lambda-build": "netlify-lambda build backend",
     "lambda-serve": "npm run lambda-build && netlify-lambda serve backend --static",
-    "build-static-assets": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin",
+    "build-static-assets": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval",
     "build": "npm run build-static-assets && npm run lambda-build"
   },
   "repository": {
