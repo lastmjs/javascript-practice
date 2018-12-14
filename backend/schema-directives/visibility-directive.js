@@ -109,6 +109,27 @@ export class VisibilityDirective extends SchemaDirectiveVisitor {
                         throw new Error('Not authorized');
                     }
                 }
+
+                //TODO this is essentially repeated
+                if (details.objectType.name === 'AnswerAttempt') {
+                    const answerAttempt = await prisma.query.answerAttempt({
+                        where: {
+                            id: parent.id
+                        }
+                    }, `
+                        {
+                            assessmentInfo {
+                                user {
+                                    id
+                                }
+                            }
+                        }
+                    `);
+
+                    if (answerAttempt.assessmentInfo.user.id !== getUserId(context, 'Not authorized')) {
+                        throw new Error('Not authorized');
+                    }
+                }
             }
 
             return await originalResolver(parent, args, context, info);
