@@ -8,20 +8,27 @@ import 'assess-elements/assess-item.ts';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
 enum tabSelected {
+    PERFORMANCE_TAB,
     ASSESSMENTS_TAB,
-    TOKENS_TAB
+    TOKENS_TAB,
 }
 
 class JPProfile extends HTMLElement {
-    tabSelected: tabSelected = tabSelected.ASSESSMENTS_TAB;
+    tabSelected: tabSelected = tabSelected.PERFORMANCE_TAB;
     assessments: any[] = [];
     assessmentSkipIndex = 0;
     tokenTransactions: any[] = [];
+    answerAttempts: any[] = [];
+    totalAnswerAttempts: number = 0;
+    totalCorrectAnswerAttempts: number = 0;
+    totalIncorrectAnswerAttempts: number = 0;
+    percentageCorrect: number = 0;
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this)); 
         
-        await this.loadAssessments();
+        await this.loadPerformance();
+        this.loadAssessments();
         this.loadTokenTransactions();
 
         setTimeout(() => {
@@ -33,6 +40,37 @@ class JPProfile extends HTMLElement {
                 type: 'HIDE_LOAD_INDICATOR'
             });
         });
+    }
+
+    async loadPerformance() {
+        const performanceResponse = await request(`
+            query($userId: ID!) {
+                answerAttempts(where: {
+                    assessmentInfo: {
+                        user: {
+                            id: $userId
+                        }
+                    }
+                }, orderBy: createdAt_DESC) {
+                    correct
+                    createdAt
+                    assessmentInfo {
+                        id
+                        assessment {
+                            id
+                        }
+                    }
+                }
+            }
+        `, {
+            userId: Store.getState().user.id
+        });
+
+        this.answerAttempts = performanceResponse.answerAttempts;
+        this.totalAnswerAttempts = performanceResponse.answerAttempts.length;
+        this.totalCorrectAnswerAttempts = performanceResponse.answerAttempts.filter((answerAttempt: any) => answerAttempt.correct).length;
+        this.totalIncorrectAnswerAttempts = performanceResponse.answerAttempts.filter((answerAttempt: any) => !answerAttempt.correct).length;
+        this.percentageCorrect = (this.totalCorrectAnswerAttempts / (this.totalCorrectAnswerAttempts + this.totalIncorrectAnswerAttempts)) * 100;
     }
 
     async loadTokenTransactions() {
@@ -108,6 +146,14 @@ class JPProfile extends HTMLElement {
         });
     }
 
+    performanceTabClicked() {
+        this.tabSelected = tabSelected.PERFORMANCE_TAB;
+
+        Store.dispatch({
+            type: 'TRIGGER_RENDER'
+        });
+    }
+
     exercisesTabClicked() {
         this.tabSelected = tabSelected.ASSESSMENTS_TAB;
 
@@ -138,9 +184,25 @@ class JPProfile extends HTMLElement {
                 <br>
 
                 <vaadin-tabs .selected=${this.tabSelected}>
-                    <vaadin-tab @click=${() => this.exercisesTabClicked()}>Exercises</vaadin-tab>
-                    <vaadin-tab @click=${() => this.tokensTabClicked()}>Token history</vaadin-tab>
+                    <vaadin-tab @click=${() => this.performanceTabClicked()}>My performance</vaadin-tab>
+                    <vaadin-tab @click=${() => this.exercisesTabClicked()}>My exercises</vaadin-tab>
+                    <vaadin-tab @click=${() => this.tokensTabClicked()}>My token history</vaadin-tab>
                 </vaadin-tabs>
+
+                <div ?hidden=${this.tabSelected !== tabSelected.PERFORMANCE_TAB}>
+                    <h2>Total answer attempts: ${this.totalAnswerAttempts}</h2>
+                    <h2>Total correct attempts: <span style="color: green">${this.totalCorrectAnswerAttempts}</span></h2>
+                    <h2>Total incorrect attempts: <span style="color: red">${this.totalIncorrectAnswerAttempts}</span></h2>
+                    <h2>Percentage correct: ${this.percentageCorrect}%</h2>
+                    ${this.answerAttempts.map((answerAttempt) => {
+                        return html`
+                            <br>
+                            <div><a href="assessment/${answerAttempt.assessmentInfo.assessment.id}/view" target="_blank">Answered ${answerAttempt.correct ? 'correctly' : 'incorrectly'}</a> on ${new Date(answerAttempt.createdAt)}</div>
+                            <br>
+                            <hr style="width: 75%">
+                        `;
+                    })}
+                </div>
 
                 <div ?hidden=${this.tabSelected !== tabSelected.ASSESSMENTS_TAB}>
                     <button ?hidden=${this.assessmentSkipIndex === 0} @click=${() => this.loadPreviousAssessments()}>Prev</button>
