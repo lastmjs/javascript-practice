@@ -9,11 +9,33 @@
         <link rel="icon" href="javascript-logo.png">
         <link rel="manifest" href="manifest.webmanifest">
 
+        <!--TODO testing preload-->
+        <link rel="preload" as="script" href="elements/jp-app.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-assessment-edit.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-assessment.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-button.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-concept-item.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-concept-map.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-content-vision.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-feedback-submit.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-global-load-indicator.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-hamburger.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-legal-accept-new-terms.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-load-indicator.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-login.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-notification.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-profile.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-router.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-signup.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-token-buy.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-token-earn.ts" crossorigin="anonymous">
+        <link rel="preload" as="script" href="elements/jp-token-overview.ts" crossorigin="anonymous">
+
         <!-- <script src="services/register-service-worker.ts"></script> -->
         <script src="process-polyfill.js"></script>
         <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script type="module" src="elements/jp-global-load-indicator.ts"></script>
-        <script type="module" src="elements/jp-app.ts"></script>
+        <script type="module" src="elements/jp-global-load-indicator.ts" crossorigin="anonymous"></script>
+        <script type="module" src="elements/jp-app.ts" crossorigin="anonymous"></script>
 
         <script src="https://checkout.stripe.com/checkout.js"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
