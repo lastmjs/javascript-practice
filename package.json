@@ -30,7 +30,7 @@
     "merge-graphql-schemas": "1.5.7",
     "netlify-lambda": "1.0.2",
     "page": "1.10.2",
-    "prisma": "1.18.1",
+    "prisma": "1.21",
     "prisma-binding": "2.1.6",
     "redux": "4.0.1",
     "stripe": "6.12.1"
