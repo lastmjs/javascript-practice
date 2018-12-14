@@ -48,6 +48,12 @@ class JPContentVision extends HTMLElement {
 
                 <p>We hope you'll help us build the greatest courses ever conceived.</p>
 
+                <br>
+
+                <hr style="width: 75%">
+
+                <br>
+
                 <h1>Roadmap</h1>
 
                 <h2>Q3 2018</h2>
