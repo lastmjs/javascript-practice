@@ -44,6 +44,7 @@ class JPRouter extends HTMLElement {
                     }
                 },
                 edit: {
+                    //TODO the edit view should take you to the live exercise, and open the source code tab automatically
                     template: html`<jp-assessment-edit .assessmentId=${state.currentEntityId}></jp-assessment-edit>`,
                     loadModules: async () => {
                         await import('./jp-assessment-edit.ts');
