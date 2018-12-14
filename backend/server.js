@@ -19,7 +19,7 @@ import { submitFeedback } from './resolvers/submit-feedback.js';
 
 export const prisma = new Prisma({
     typeDefs,
-    endpoint: process.env.AWS_REGION ? 'https://us1.prisma.sh/jordan-last/javascript-practice/dev' : 'http://localhost:4466',
+    endpoint: PRISMA_SERVER_ENDPOINT,
     secret: process.env.PRISMA_SERVER_SECRET
 });
 
