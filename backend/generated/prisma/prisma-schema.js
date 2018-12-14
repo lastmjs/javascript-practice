@@ -113,6 +113,10 @@ input AnswerAttemptUpdateInput {
   correct: Boolean
 }
 
+input AnswerAttemptUpdateManyMutationInput {
+  correct: Boolean
+}
+
 input AnswerAttemptUpdateManyWithoutAssessmentInfoInput {
   create: [AnswerAttemptCreateWithoutAssessmentInfoInput!]
   delete: [AnswerAttemptWhereUniqueInput!]
@@ -352,6 +356,12 @@ input AssessmentInfoUpdateInput {
   answerAttempts: AnswerAttemptUpdateManyWithoutAssessmentInfoInput
 }
 
+input AssessmentInfoUpdateManyMutationInput {
+  answeredCorrectly: Boolean
+  solutionViewed: Boolean
+  sourceCodeViewed: Boolean
+}
+
 input AssessmentInfoUpdateManyWithoutUserInput {
   create: [AssessmentInfoCreateWithoutUserInput!]
   delete: [AssessmentInfoWhereUniqueInput!]
@@ -512,6 +522,13 @@ input AssessmentUpdateInput {
   order: Int
   verified: Boolean
   author: UserUpdateOneRequiredWithoutAssessmentsInput
+}
+
+input AssessmentUpdateManyMutationInput {
+  assessML: String
+  javaScript: String
+  order: Int
+  verified: Boolean
 }
 
 input AssessmentUpdateManyWithoutAuthorInput {
@@ -762,6 +779,11 @@ input ConceptUpdateInput {
   order: Int
 }
 
+input ConceptUpdateManyMutationInput {
+  title: String
+  order: Int
+}
+
 input ConceptUpdateManyWithoutCourseInput {
   create: [ConceptCreateWithoutCourseInput!]
   delete: [ConceptWhereUniqueInput!]
@@ -945,6 +967,11 @@ input ConstantUpdateInput {
   value: String
 }
 
+input ConstantUpdateManyMutationInput {
+  key: ConstantKey
+  value: String
+}
+
 input ConstantWhereInput {
   id: ID
   id_not: ID
@@ -1082,6 +1109,11 @@ input CourseSubscriptionWhereInput {
 input CourseUpdateInput {
   title: String
   concepts: ConceptUpdateManyWithoutCourseInput
+  order: Int
+}
+
+input CourseUpdateManyMutationInput {
+  title: String
   order: Int
 }
 
@@ -1246,6 +1278,12 @@ input FeedbackSubmissionUpdateInput {
   description: String
 }
 
+input FeedbackSubmissionUpdateManyMutationInput {
+  text: String
+  open: Boolean
+  description: String
+}
+
 input FeedbackSubmissionWhereInput {
   id: ID
   id_not: ID
@@ -1322,61 +1360,61 @@ scalar Long
 type Mutation {
   createAnswerAttempt(data: AnswerAttemptCreateInput!): AnswerAttempt!
   updateAnswerAttempt(data: AnswerAttemptUpdateInput!, where: AnswerAttemptWhereUniqueInput!): AnswerAttempt
-  updateManyAnswerAttempts(data: AnswerAttemptUpdateInput!, where: AnswerAttemptWhereInput): BatchPayload!
+  updateManyAnswerAttempts(data: AnswerAttemptUpdateManyMutationInput!, where: AnswerAttemptWhereInput): BatchPayload!
   upsertAnswerAttempt(where: AnswerAttemptWhereUniqueInput!, create: AnswerAttemptCreateInput!, update: AnswerAttemptUpdateInput!): AnswerAttempt!
   deleteAnswerAttempt(where: AnswerAttemptWhereUniqueInput!): AnswerAttempt
   deleteManyAnswerAttempts(where: AnswerAttemptWhereInput): BatchPayload!
   createAssessment(data: AssessmentCreateInput!): Assessment!
   updateAssessment(data: AssessmentUpdateInput!, where: AssessmentWhereUniqueInput!): Assessment
-  updateManyAssessments(data: AssessmentUpdateInput!, where: AssessmentWhereInput): BatchPayload!
+  updateManyAssessments(data: AssessmentUpdateManyMutationInput!, where: AssessmentWhereInput): BatchPayload!
   upsertAssessment(where: AssessmentWhereUniqueInput!, create: AssessmentCreateInput!, update: AssessmentUpdateInput!): Assessment!
   deleteAssessment(where: AssessmentWhereUniqueInput!): Assessment
   deleteManyAssessments(where: AssessmentWhereInput): BatchPayload!
   createAssessmentInfo(data: AssessmentInfoCreateInput!): AssessmentInfo!
   updateAssessmentInfo(data: AssessmentInfoUpdateInput!, where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
-  updateManyAssessmentInfoes(data: AssessmentInfoUpdateInput!, where: AssessmentInfoWhereInput): BatchPayload!
+  updateManyAssessmentInfoes(data: AssessmentInfoUpdateManyMutationInput!, where: AssessmentInfoWhereInput): BatchPayload!
   upsertAssessmentInfo(where: AssessmentInfoWhereUniqueInput!, create: AssessmentInfoCreateInput!, update: AssessmentInfoUpdateInput!): AssessmentInfo!
   deleteAssessmentInfo(where: AssessmentInfoWhereUniqueInput!): AssessmentInfo
   deleteManyAssessmentInfoes(where: AssessmentInfoWhereInput): BatchPayload!
   createConcept(data: ConceptCreateInput!): Concept!
   updateConcept(data: ConceptUpdateInput!, where: ConceptWhereUniqueInput!): Concept
-  updateManyConcepts(data: ConceptUpdateInput!, where: ConceptWhereInput): BatchPayload!
+  updateManyConcepts(data: ConceptUpdateManyMutationInput!, where: ConceptWhereInput): BatchPayload!
   upsertConcept(where: ConceptWhereUniqueInput!, create: ConceptCreateInput!, update: ConceptUpdateInput!): Concept!
   deleteConcept(where: ConceptWhereUniqueInput!): Concept
   deleteManyConcepts(where: ConceptWhereInput): BatchPayload!
   createConstant(data: ConstantCreateInput!): Constant!
   updateConstant(data: ConstantUpdateInput!, where: ConstantWhereUniqueInput!): Constant
-  updateManyConstants(data: ConstantUpdateInput!, where: ConstantWhereInput): BatchPayload!
+  updateManyConstants(data: ConstantUpdateManyMutationInput!, where: ConstantWhereInput): BatchPayload!
   upsertConstant(where: ConstantWhereUniqueInput!, create: ConstantCreateInput!, update: ConstantUpdateInput!): Constant!
   deleteConstant(where: ConstantWhereUniqueInput!): Constant
   deleteManyConstants(where: ConstantWhereInput): BatchPayload!
   createCourse(data: CourseCreateInput!): Course!
   updateCourse(data: CourseUpdateInput!, where: CourseWhereUniqueInput!): Course
-  updateManyCourses(data: CourseUpdateInput!, where: CourseWhereInput): BatchPayload!
+  updateManyCourses(data: CourseUpdateManyMutationInput!, where: CourseWhereInput): BatchPayload!
   upsertCourse(where: CourseWhereUniqueInput!, create: CourseCreateInput!, update: CourseUpdateInput!): Course!
   deleteCourse(where: CourseWhereUniqueInput!): Course
   deleteManyCourses(where: CourseWhereInput): BatchPayload!
   createFeedbackSubmission(data: FeedbackSubmissionCreateInput!): FeedbackSubmission!
   updateFeedbackSubmission(data: FeedbackSubmissionUpdateInput!, where: FeedbackSubmissionWhereUniqueInput!): FeedbackSubmission
-  updateManyFeedbackSubmissions(data: FeedbackSubmissionUpdateInput!, where: FeedbackSubmissionWhereInput): BatchPayload!
+  updateManyFeedbackSubmissions(data: FeedbackSubmissionUpdateManyMutationInput!, where: FeedbackSubmissionWhereInput): BatchPayload!
   upsertFeedbackSubmission(where: FeedbackSubmissionWhereUniqueInput!, create: FeedbackSubmissionCreateInput!, update: FeedbackSubmissionUpdateInput!): FeedbackSubmission!
   deleteFeedbackSubmission(where: FeedbackSubmissionWhereUniqueInput!): FeedbackSubmission
   deleteManyFeedbackSubmissions(where: FeedbackSubmissionWhereInput): BatchPayload!
   createTokenReward(data: TokenRewardCreateInput!): TokenReward!
   updateTokenReward(data: TokenRewardUpdateInput!, where: TokenRewardWhereUniqueInput!): TokenReward
-  updateManyTokenRewards(data: TokenRewardUpdateInput!, where: TokenRewardWhereInput): BatchPayload!
+  updateManyTokenRewards(data: TokenRewardUpdateManyMutationInput!, where: TokenRewardWhereInput): BatchPayload!
   upsertTokenReward(where: TokenRewardWhereUniqueInput!, create: TokenRewardCreateInput!, update: TokenRewardUpdateInput!): TokenReward!
   deleteTokenReward(where: TokenRewardWhereUniqueInput!): TokenReward
   deleteManyTokenRewards(where: TokenRewardWhereInput): BatchPayload!
   createTokenTransaction(data: TokenTransactionCreateInput!): TokenTransaction!
   updateTokenTransaction(data: TokenTransactionUpdateInput!, where: TokenTransactionWhereUniqueInput!): TokenTransaction
-  updateManyTokenTransactions(data: TokenTransactionUpdateInput!, where: TokenTransactionWhereInput): BatchPayload!
+  updateManyTokenTransactions(data: TokenTransactionUpdateManyMutationInput!, where: TokenTransactionWhereInput): BatchPayload!
   upsertTokenTransaction(where: TokenTransactionWhereUniqueInput!, create: TokenTransactionCreateInput!, update: TokenTransactionUpdateInput!): TokenTransaction!
   deleteTokenTransaction(where: TokenTransactionWhereUniqueInput!): TokenTransaction
   deleteManyTokenTransactions(where: TokenTransactionWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -1510,6 +1548,11 @@ input TokenRewardSubscriptionWhereInput {
 }
 
 input TokenRewardUpdateInput {
+  type: TokenTransactionType
+  amount: Int
+}
+
+input TokenRewardUpdateManyMutationInput {
   type: TokenTransactionType
   amount: Int
 }
@@ -1650,6 +1693,12 @@ enum TokenTransactionType {
 
 input TokenTransactionUpdateInput {
   user: UserUpdateOneRequiredInput
+  amount: Int
+  type: TokenTransactionType
+  description: String
+}
+
+input TokenTransactionUpdateManyMutationInput {
   amount: Int
   type: TokenTransactionType
   description: String
@@ -1855,6 +1904,14 @@ input UserUpdateInput {
   termsAcceptedDate: DateTime
   termsAcceptedVersion: String
   assessments: AssessmentUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateManyMutationInput {
+  email: String
+  password: String
+  tokens: Int
+  termsAcceptedDate: DateTime
+  termsAcceptedVersion: String
 }
 
 input UserUpdateOneRequiredInput {
