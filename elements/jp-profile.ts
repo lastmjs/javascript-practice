@@ -22,7 +22,7 @@ class JPProfile extends HTMLElement {
     totalAnswerAttempts: number = 0;
     totalCorrectAnswerAttempts: number = 0;
     totalIncorrectAnswerAttempts: number = 0;
-    percentageCorrect: number = 0;
+    percentageCorrect: string = '';
 
     async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this)); 
@@ -70,7 +70,7 @@ class JPProfile extends HTMLElement {
         this.totalAnswerAttempts = performanceResponse.answerAttempts.length;
         this.totalCorrectAnswerAttempts = performanceResponse.answerAttempts.filter((answerAttempt: any) => answerAttempt.correct).length;
         this.totalIncorrectAnswerAttempts = performanceResponse.answerAttempts.filter((answerAttempt: any) => !answerAttempt.correct).length;
-        this.percentageCorrect = (this.totalCorrectAnswerAttempts / (this.totalCorrectAnswerAttempts + this.totalIncorrectAnswerAttempts)) * 100;
+        this.percentageCorrect = ((this.totalCorrectAnswerAttempts / (this.totalCorrectAnswerAttempts + this.totalIncorrectAnswerAttempts)) * 100).toFixed(2);
     }
 
     async loadTokenTransactions() {

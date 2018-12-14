@@ -12,6 +12,7 @@ import './jp-token-buy';
 import './jp-legal-terms-and-privacy';
 import './jp-legal-accept-new-terms';
 import './jp-feedback-submit';
+import './jp-content-vision';
 
 page('/:entity/:id/:behavior', (context: any) => {
     Store.dispatch({
@@ -62,6 +63,9 @@ class JPRouter extends HTMLElement {
             },
             feedback: {
                 submit: html`<jp-feedback-submit></jp-feedback-submit>`
+            },
+            content: {
+                vision: html`<jp-content-vision></jp-content-vision>`
             }
         };
 
