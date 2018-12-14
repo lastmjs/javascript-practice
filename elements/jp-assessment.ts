@@ -8,7 +8,6 @@ import page from 'page';
 import { NO_MORE_EXERCISES } from '../services/constants';
 import { CREATE_ASSESSMENT } from '../services/constants';
 import '@vaadin/vaadin-tabs/vaadin-tabs.js';
-import './jp-assessment-edit';
 
 class JPAssessment extends HTMLElement {
     tabIndex: number = 0;
@@ -27,6 +26,7 @@ class JPAssessment extends HTMLElement {
 
         if (val === CREATE_ASSESSMENT) {
             this.tabIndex = 2;
+            import('./jp-assessment-edit.ts');
             setTimeout(() => {
                 Store.dispatch({
                     type: 'TRIGGER_RENDER'
@@ -337,6 +337,8 @@ class JPAssessment extends HTMLElement {
             
             return;
         }
+
+        await import('./jp-assessment-edit.ts');
         
         if (viewSourceCodeResponse.viewSourceCode.tokenReward < 0) {
             Store.dispatch({
