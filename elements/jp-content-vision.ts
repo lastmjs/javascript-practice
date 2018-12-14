@@ -88,6 +88,7 @@ class JPContentVision extends HTMLElement {
 
                 <ul>
                     <li>Scale out with more courses</li>
+                    <li>Experiment with decentralization efforts (exercise verification and updates, concept map creation and updates)</li>
                 </ul>
             </div>
         `;
