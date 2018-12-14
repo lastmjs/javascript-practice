@@ -53,6 +53,10 @@ class JPConceptMap extends HTMLElement {
         page(`/assessment/${Store.getState().currentAssessment.id}/view`);
     }
 
+    ourVisionClicked() {
+        page(`/content/vision`);
+    }
+
     render(state: any) {
         return html`
             <style>
@@ -102,6 +106,7 @@ class JPConceptMap extends HTMLElement {
             <div id="concepts-container" class="concepts-container${state.showMainMenu ? '' : ' concepts-container-hidden'}">                
                 <div class="menu-item-title" @click=${() => this.titleClicked()}>JS Practice Alpha</div>
                 <hr style="width: 90%">
+                <div class="menu-item" @click=${() => this.ourVisionClicked()}>Our vision</div>
                 <div class="menu-item" @click=${() => this.earnTokensClicked()}>Earn tokens</div>
                 <div class="menu-item" @click=${() => this.buyTokensClicked()}>Buy tokens</div>
                 <div class="menu-item" @click=${() => this.legalClicked()}>Legal</div>
