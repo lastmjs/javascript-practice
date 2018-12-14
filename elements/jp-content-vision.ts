@@ -26,15 +26,27 @@ class JPContentVision extends HTMLElement {
             <div class="jp-container">
                 <h1>Our vision</h1>
 
+                <br>
+
+
+                <p>JavaScript Practice is an open source, crowdsourced, comprehensive JavaScript course.</p>
+
+                <br>
+
+                <hr style="width: 75%">
+
+                <br>
+
+
                 <p>We are Demergence.</p>
 
                 <p>Our goal is to facilitate the creation of the most comprehensive, high quality, and useful programming courses in existence.</p>
             
                 <p>We believe that open source principles, crowdsourced content, and decentralization may be what gets us there.</p>
 
-                <p>JavaScript Practice is our first project. We are purposefully starting small, starting centralized, and working towards our decentralized vision. Eventually we imagine many more courses becoming available as network effects begin to take hold.</p>
+                <p>JavaScript Practice is our first project. We are purposefully starting small, starting centralized, and working towards our decentralized vision.</p>
 
-                <p>JavaScript Practice is an open source, crowdsourced, comprehensive JavaScript course.</p>
+                <p>Eventually we imagine many more courses becoming available as network effects begin to take hold. These network effects can be thought of as demergent properties, which are essentially emergent properties that arise in decentralized networks.</p>
 
                 <p>We hope you'll help us build the greatest courses ever conceived.</p>
             </div>
