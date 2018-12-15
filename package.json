@@ -55,8 +55,7 @@
     "prisma-import-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma import --data database.zip",
     "prisma-token-development": "source ./.development-environment-variables && cd backend && prisma token",
     "prisma-token-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma token",
-    "build-static-assets": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval",
-    "build": "npm run build-static-assets && npm run lambda-build"
+    "build": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval"
   },
   "repository": {
     "type": "git",
