@@ -37,7 +37,8 @@
     "prisma-binding": "2.1.6",
     "redux": "4.0.1",
     "stripe": "6.12.1",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
