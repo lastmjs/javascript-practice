@@ -62,26 +62,18 @@ async function ensureOrder(args) {
 }
 
 async function createTheAssessment(user, args, info) {
-    if (
-        user.email === 'jordan.michael.last@gmail.com' ||
-        user.email === 'gitcoin@javascriptpractice.com'
-    ) {
-        return await prisma.mutation.createAssessment({
-            ...args,
-            data: {
-                ...args.data,
-                verified: false,
-                author: {
-                    connect: {
-                        id: user.id
-                    }
+    return await prisma.mutation.createAssessment({
+        ...args,
+        data: {
+            ...args.data,
+            verified: false,
+            author: {
+                connect: {
+                    id: user.id
                 }
             }
-        }, info);
-    }
-    else {
-        throw new Error('Not authorized');
-    }
+        }
+    }, info);
 }
 
 async function giveUserTokenReward(user) {
