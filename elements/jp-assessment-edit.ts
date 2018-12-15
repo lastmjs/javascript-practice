@@ -11,7 +11,6 @@ class JPAssessmentEdit extends HTMLElement {
     _assessmentId: string = '';
 
     set assessmentId(val: string) {
-        console.log('assessmentId', val);
         if (val === CREATE_ASSESSMENT) {
             return;
         }
@@ -24,8 +23,18 @@ class JPAssessmentEdit extends HTMLElement {
         return this._assessmentId;
     }
 
-    connectedCallback() {
-        console.log('connected')
+    constructor() {
+        super();
+
+        // this is here in case the element is used in a template where its properties are set before its upgraded
+        // apparently before the upgrade properties will be set on the prototype of the element, thus when the upgrade occurs
+        // the property does not trigger the setter on the element itself
+        const assessmentId = this.assessmentId;
+        delete this.assessmentId;
+        this.assessmentId = assessmentId;
+    }
+
+    async connectedCallback() {
         Store.subscribe(() => render(this.render(Store.getState()), this));
 
         setTimeout(() => {

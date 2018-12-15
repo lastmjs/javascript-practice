@@ -8,7 +8,6 @@ import page from 'page';
 import { NO_MORE_EXERCISES } from '../services/constants';
 import { CREATE_ASSESSMENT } from '../services/constants';
 import '@vaadin/vaadin-tabs/vaadin-tabs.js';
-import './jp-assessment-edit';
 
 class JPAssessment extends HTMLElement {
     tabIndex: number = 0;
@@ -342,8 +341,6 @@ class JPAssessment extends HTMLElement {
             return;
         }
 
-        //TODO there is something very strange going on here, the assessment-edit element is not having
-        //TODO its assessmentId property set, I think this might be a lit-html issue
         await import('./jp-assessment-edit.ts');
         
         if (viewSourceCodeResponse.viewSourceCode.tokenReward < 0) {
@@ -378,8 +375,6 @@ class JPAssessment extends HTMLElement {
     }
 
     render(state: any) {
-        console.log(this.assessmentId)
-
         return html`
             <style>
                 /* This is just to hack the input boxes temporarily */
