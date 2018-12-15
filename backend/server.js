@@ -19,7 +19,7 @@ import { submitFeedback } from './resolvers/submit-feedback.js';
 
 export const prisma = new Prisma({
     typeDefs,
-    endpoint: PRISMA_SERVER_ENDPOINT,
+    endpoint: process.env.PRISMA_SERVER_ENDPOINT,
     secret: process.env.PRISMA_SERVER_SECRET
 });
 

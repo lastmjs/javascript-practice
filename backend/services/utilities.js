@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 export function getUserId(context, errorMessage) {
-    const token = context.event.headers['authorization'] ? context.event.headers['authorization'].replace('Bearer ', '') : 'NO_TOKEN_PRESENT';
+    const token = context.request.headers['authorization'] ? context.request.headers['authorization'].replace('Bearer ', '') : 'NO_TOKEN_PRESENT';
     const payload = getPayload(token, process.env.APPLICATION_SERVER_SECRET, errorMessage);
 
     return payload.userId;
