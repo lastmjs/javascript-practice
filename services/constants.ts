@@ -1,7 +1,7 @@
 export const GRAPHQL_HTTP_ENDPOINT = {
-    production: '/.netlify/functions/lambda',
-    staging: '/.netlify/functions/lambda',
-    development: 'http://localhost:8080/lambda'
+    production: 'https://graphql.javascriptpractice.com',
+    staging: 'https://graphql.javascriptpractice.com',
+    development: 'http://localhost:4000'
 }[window.process.env.NODE_ENV];
 
 export const STRIPE_PUBLIC_KEY = {
