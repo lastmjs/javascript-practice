@@ -1,6 +1,9 @@
 {
   "name": "javascript-practice",
   "version": "0.0.0",
+  "engines": {
+    "node": "10.7.0"
+  },
   "description": "",
   "dependencies": {
     "@kuscamara/code-sample": "3.0.2",
@@ -18,22 +21,21 @@
     "@polymer/paper-toast": "3.0.1",
     "@vaadin/vaadin-tabs": "2.1.1",
     "assess-elements": "git+https://github.com/lastmjs/assess-elements.git",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "bcryptjs": "2.4.3",
     "concurrently": "4.0.1",
     "graphql-request": "^1.8.2",
     "graphql-tools": "4.0.2",
     "graphql-yoga": "1.16.2",
-    "http-server": "0.11.1",
     "jsonwebtoken": "8.3.0",
     "lit-html": "0.11.4",
     "merge-graphql-schemas": "1.5.7",
-    "netlify-lambda": "1.0.2",
     "page": "1.10.2",
     "prisma": "1.21",
     "prisma-binding": "2.1.6",
     "redux": "4.0.1",
-    "stripe": "6.12.1"
+    "stripe": "6.12.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
@@ -42,7 +44,8 @@
     "zwitterion": "0.28.0"
   },
   "scripts": {
-    "start": "source ./.development-environment-variables && concurrently \"zwitterion\" \"npm run lambda-proxy\" \"npm run lambda-serve\"",
+    "start": "ts-node backend/server.js",
+    "start-local": "source ./.development-environment-variables && concurrently \"zwitterion\" \"npm start\" \"npm run prisma-up\"",
     "prisma-up": "cd backend && docker-compose up --build",
     "prisma-deploy-development": "source ./.development-environment-variables && cd backend && prisma deploy",
     "prisma-deploy-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma deploy",
@@ -52,11 +55,7 @@
     "prisma-import-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma import --data database.zip",
     "prisma-token-development": "source ./.development-environment-variables && cd backend && prisma token",
     "prisma-token-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma token",
-    "lambda-proxy": "http-server --cors=Authorization --proxy http://localhost:9000",
-    "lambda-build": "netlify-lambda build backend",
-    "lambda-serve": "npm run lambda-build && netlify-lambda serve backend --static",
-    "build-static-assets": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval",
-    "build": "npm run build-static-assets && npm run lambda-build"
+    "build": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval"
   },
   "repository": {
     "type": "git",

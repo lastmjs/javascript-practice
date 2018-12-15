@@ -1,5 +1,5 @@
 import { getUserId } from '../services/utilities.js';
-import { prisma } from '../lambda.js';
+import { prisma } from '../server.js';
 
 //TODO figure out how to use directive permissions for automatically generated mutations
 export async function acceptNewTerms(parent, args, context, info) {

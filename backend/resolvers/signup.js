@@ -1,8 +1,8 @@
 // Based on https://www.prisma.io/docs/maintain/graphcool-to-prisma/authentication-and-authorization-gcf3/
 
-import { prisma } from '../lambda.js';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { prisma } from '../server.js';
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 
 export async function signup(parent, args, context, info) {
     const password = await bcrypt.hash(args.password, 10);
@@ -80,7 +80,7 @@ export async function signup(parent, args, context, info) {
 
     const jwToken = jwt.sign({ userId: user.id }, process.env.APPLICATION_SERVER_SECRET);
 
-    context.event.headers['authorization'] = `Bearer ${jwToken}`;
+    context.request.headers['authorization'] = `Bearer ${jwToken}`;
 
     return {
         user,

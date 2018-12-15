@@ -63,11 +63,11 @@ class JPLegalTermsAndPrivacy extends HTMLElement {
 
                 <p>You may not use the system if you are a country, organization, entity, or person embargoed or blocked by any government, including those on sanctions lists identified by the United States Office of Foreign Asset Control (OFAC).</p>
 
-                <p>If there are issues with your purchase of tokens, contact jordan.michael.last@gmail.com. Incorrect charges will be refunded appropriately. There will be no other refunds of purchased tokens.</p>
+                <p>If there are issues with your purchase of tokens, contact jordanlast@demergence.org. Incorrect charges will be refunded appropriately. There will be no other refunds of purchased tokens.</p>
 
                 <p>Tokens are only to be used on javascriptpractice.com, and may be used for any legitimate activity on javascriptpractice.com that requires tokens.</p>
 
-                <p>You may delete your account and cancel your acceptance of this agreement by sending an email to jordan.michael.last@gmail.com.</p>
+                <p>You may delete your account and cancel your acceptance of this agreement by sending an email to jordanlast@demergence.org.</p>
 
                 <p>
                     THE SERVICES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL DEMERGENCE BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SERVICES OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -110,7 +110,7 @@ class JPLegalTermsAndPrivacy extends HTMLElement {
                     <br>
                     Logan, UT 84321
                     <br>
-                    jordan.michael.last@gmail.com
+                    jordanlast@demergence.org
                     <br>
                     801-709-1860
                 </p>

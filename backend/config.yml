@@ -8,7 +8,6 @@ databases:
     host: PRISMA_DATABASE_HOST
     port: 5432
     database: PRISMA_DATABASE_NAME
-    schema: public
     user: PRISMA_DATABASE_USERNAME
     password: PRISMA_DATABASE_PASSWORD
     migrations: true
