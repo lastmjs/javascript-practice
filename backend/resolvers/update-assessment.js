@@ -4,7 +4,8 @@ import { prisma } from '../server.js';
 //TODO figure out how to use directive permissions for automatically generated mutations
 export async function updateAssessment(parent, args, context, info) {
     const user = await authenticate(context);
-    await ensureOrder(args);
+    const currentAssessment = await authorize(args, user);
+    await ensureOrder(args, currentAssessment);
     return await updateTheAssessment(user, args, info);
 }
 
@@ -16,14 +17,14 @@ async function authenticate(context) {
         }
     }, `
         {
-            email
+            id
         }
     `);
 
     return user;
 }
 
-async function ensureOrder(args) {
+async function authorize(args, user) {
     const currentAssessment = await prisma.query.assessment({
         where: {
             id: args.where.id
@@ -31,9 +32,20 @@ async function ensureOrder(args) {
     }, `
         {
             order
+            author {
+                id
+            }
         }
     `);
 
+    if (currentAssessment.author.id !== user.id) {
+        throw new Error('You must be the author of this assessment to update it.');
+    }
+
+    return currentAssessment;
+}
+
+async function ensureOrder(args, currentAssessment) {
     const assessmentsGreaterThanCurrentOrder = await prisma.query.assessments({
         where: {
             order_gt: currentAssessment.order,
@@ -89,13 +101,5 @@ async function ensureOrder(args) {
 }
 
 async function updateTheAssessment(user, args, info) {
-    if (
-        user.email === 'jordan.michael.last@gmail.com' ||
-        user.email === 'gitcoin@javascriptpractice.com'
-    ) {
-        return await prisma.mutation.updateAssessment(args, info);
-    }
-    else {
-        throw new Error('Not authorized');
-    }
+    return await prisma.mutation.updateAssessment(args, info);
 }
