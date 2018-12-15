@@ -11,6 +11,7 @@ class JPAssessmentEdit extends HTMLElement {
     _assessmentId: string = '';
 
     set assessmentId(val: string) {
+        console.log('assessmentId', val);
         if (val === CREATE_ASSESSMENT) {
             return;
         }
@@ -24,6 +25,7 @@ class JPAssessmentEdit extends HTMLElement {
     }
 
     connectedCallback() {
+        console.log('connected')
         Store.subscribe(() => render(this.render(Store.getState()), this));
 
         setTimeout(() => {
