@@ -33,6 +33,8 @@ type Concept {
   course: Course!
   assessments: [Assessment!]!
   order: Int!
+  level: Int
+  parent: Concept
 }
 
 # TODO in the future we will need to lock down the assessML and JavaScript in some way to prevent cheating
@@ -69,6 +71,15 @@ type AssessmentInfo {
   answeredCorrectly: Boolean! @visibility(type: OWNER)
   solutionViewed: Boolean! @visibility(type: OWNER)
   sourceCodeViewed: Boolean! @visibility(type: OWNER)
+  answerAttempts: [AnswerAttempt!]! @visibility(type: OWNER)
+}
+
+type AnswerAttempt {
+  id: ID! @unique @visibility(type: OWNER)
+  createdAt: DateTime! @visibility(type: OWNER)
+  updatedAt: DateTime! @visibility(type: OWNER)
+  assessmentInfo: AssessmentInfo! @visibility(type: OWNER)
+  correct: Boolean! @visibility(type: OWNER)
 }
 
 type TokenReward {

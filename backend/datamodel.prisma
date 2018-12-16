@@ -32,6 +32,8 @@ type Concept {
   course: Course!
   assessments: [Assessment!]!
   order: Int!
+  level: Int
+  parent: Concept
 }
 
 # TODO in the future we will need to lock down the assessML and JavaScript in some way to prevent cheating

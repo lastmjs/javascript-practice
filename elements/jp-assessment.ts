@@ -60,9 +60,9 @@ class JPAssessment extends HTMLElement {
                     concept {
                         id
                         title
-                        assessments {
+                        parent {
                             id
-                            order
+                            title
                         }
                     }
                 }
@@ -421,7 +421,7 @@ class JPAssessment extends HTMLElement {
                         >
                             Exercise
                                 ${state.currentAssessment && state.currentAssessment.order + 1} / 
-                                ${state.currentConcept && state.currentConcept.assessments.length}
+                                ${state.currentConceptNumAssessments}
                                 ${this.assessmentInfo && this.assessmentInfo.answeredCorrectly ? 
                                     html`- <span style="color: green; background: transparent">Completed</span>` : 
                                 ''

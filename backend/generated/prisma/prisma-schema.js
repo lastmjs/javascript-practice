@@ -691,6 +691,8 @@ type Concept {
   course: Course!
   assessments(where: AssessmentWhereInput, orderBy: AssessmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assessment!]
   order: Int!
+  level: Int
+  parent: Concept
 }
 
 type ConceptConnection {
@@ -704,11 +706,18 @@ input ConceptCreateInput {
   course: CourseCreateOneWithoutConceptsInput!
   assessments: AssessmentCreateManyWithoutConceptInput
   order: Int!
+  level: Int
+  parent: ConceptCreateOneInput
 }
 
 input ConceptCreateManyWithoutCourseInput {
   create: [ConceptCreateWithoutCourseInput!]
   connect: [ConceptWhereUniqueInput!]
+}
+
+input ConceptCreateOneInput {
+  create: ConceptCreateInput
+  connect: ConceptWhereUniqueInput
 }
 
 input ConceptCreateOneWithoutAssessmentsInput {
@@ -720,12 +729,16 @@ input ConceptCreateWithoutAssessmentsInput {
   title: String!
   course: CourseCreateOneWithoutConceptsInput!
   order: Int!
+  level: Int
+  parent: ConceptCreateOneInput
 }
 
 input ConceptCreateWithoutCourseInput {
   title: String!
   assessments: AssessmentCreateManyWithoutConceptInput
   order: Int!
+  level: Int
+  parent: ConceptCreateOneInput
 }
 
 type ConceptEdge {
@@ -744,6 +757,8 @@ enum ConceptOrderByInput {
   title_DESC
   order_ASC
   order_DESC
+  level_ASC
+  level_DESC
 }
 
 type ConceptPreviousValues {
@@ -752,6 +767,7 @@ type ConceptPreviousValues {
   updatedAt: DateTime!
   title: String!
   order: Int!
+  level: Int
 }
 
 type ConceptSubscriptionPayload {
@@ -772,16 +788,28 @@ input ConceptSubscriptionWhereInput {
   NOT: [ConceptSubscriptionWhereInput!]
 }
 
+input ConceptUpdateDataInput {
+  title: String
+  course: CourseUpdateOneRequiredWithoutConceptsInput
+  assessments: AssessmentUpdateManyWithoutConceptInput
+  order: Int
+  level: Int
+  parent: ConceptUpdateOneInput
+}
+
 input ConceptUpdateInput {
   title: String
   course: CourseUpdateOneRequiredWithoutConceptsInput
   assessments: AssessmentUpdateManyWithoutConceptInput
   order: Int
+  level: Int
+  parent: ConceptUpdateOneInput
 }
 
 input ConceptUpdateManyMutationInput {
   title: String
   order: Int
+  level: Int
 }
 
 input ConceptUpdateManyWithoutCourseInput {
@@ -791,6 +819,15 @@ input ConceptUpdateManyWithoutCourseInput {
   disconnect: [ConceptWhereUniqueInput!]
   update: [ConceptUpdateWithWhereUniqueWithoutCourseInput!]
   upsert: [ConceptUpsertWithWhereUniqueWithoutCourseInput!]
+}
+
+input ConceptUpdateOneInput {
+  create: ConceptCreateInput
+  update: ConceptUpdateDataInput
+  upsert: ConceptUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ConceptWhereUniqueInput
 }
 
 input ConceptUpdateOneRequiredWithoutAssessmentsInput {
@@ -804,17 +841,26 @@ input ConceptUpdateWithoutAssessmentsDataInput {
   title: String
   course: CourseUpdateOneRequiredWithoutConceptsInput
   order: Int
+  level: Int
+  parent: ConceptUpdateOneInput
 }
 
 input ConceptUpdateWithoutCourseDataInput {
   title: String
   assessments: AssessmentUpdateManyWithoutConceptInput
   order: Int
+  level: Int
+  parent: ConceptUpdateOneInput
 }
 
 input ConceptUpdateWithWhereUniqueWithoutCourseInput {
   where: ConceptWhereUniqueInput!
   data: ConceptUpdateWithoutCourseDataInput!
+}
+
+input ConceptUpsertNestedInput {
+  update: ConceptUpdateDataInput!
+  create: ConceptCreateInput!
 }
 
 input ConceptUpsertWithoutAssessmentsInput {
@@ -885,6 +931,15 @@ input ConceptWhereInput {
   order_lte: Int
   order_gt: Int
   order_gte: Int
+  level: Int
+  level_not: Int
+  level_in: [Int!]
+  level_not_in: [Int!]
+  level_lt: Int
+  level_lte: Int
+  level_gt: Int
+  level_gte: Int
+  parent: ConceptWhereInput
   AND: [ConceptWhereInput!]
   OR: [ConceptWhereInput!]
   NOT: [ConceptWhereInput!]

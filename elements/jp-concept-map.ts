@@ -4,6 +4,7 @@ import { Store } from '../services/store';
 import { request } from '../services/graphql';
 import { backgroundColorCSSValue, zIndexLayer7, menuItemCSSProperties, highlightColorCSSValue } from '../services/constants';
 import page from 'page';
+import { configureParentConcept } from '../services/utilities';
 
 class JPConceptMap extends HTMLElement {
 
@@ -12,32 +13,30 @@ class JPConceptMap extends HTMLElement {
 
         const response = await request(`
             query {
-                concepts {
+                concepts(where: {
+                    AND: [
+                        {
+                            title: "JavaScript"
+                        },
+                        {
+                            level: 0
+                        }
+                    ]
+                }) {
                     id
-                    title
-                    order
-                    assessments {
-                        id
-                        order
-                    }
                 }
             }
         `);
 
-        Store.dispatch({
-            type: 'SET_CONCEPTS',
-            concepts: response.concepts
-        });
+        await configureParentConcept(response.concepts[0].id);
     }
 
-    conceptItemClicked(e: any) {
-        Store.dispatch({
-            type: 'SWITCH_SELECTED_CONCEPT',
-            concept: e.currentTarget.concept
-        });
+    async conceptItemClicked(e: any) {
+        await configureParentConcept(e.currentTarget.concept.id);
     }
 
     earnTokensClicked() {
+        //TODO all of these should somehow be put into Redux, so that when the path is officially changed, the side effect occurs in the subscriber function
         page('/token/earn');
     }
 
@@ -57,7 +56,13 @@ class JPConceptMap extends HTMLElement {
         page(`/content/vision`);
     }
 
+    async parentConceptClick() {
+        const grandparentConcept = Store.getState().currentConcept.parent.parent;
+        await configureParentConcept(grandparentConcept ? grandparentConcept.id : null);
+    }
+
     render(state: any) {
+        console.log(state);
         return html`
             <style>
                 /*TODO I know this is a vendor prefix and is non-standard.
@@ -80,6 +85,10 @@ class JPConceptMap extends HTMLElement {
                     ${state.mobileScreen ? 'position: absolute;' : ''}
                     ${state.mobileScreen ? 'width: 70%;' : ''}
                     ${state.mobileScreen ? `z-index: ${zIndexLayer7};` : ''}
+                }
+
+                .parent-concept-menu-item {
+                    ${menuItemCSSProperties}
                 }
 
                 .menu-item-title {
@@ -111,6 +120,7 @@ class JPConceptMap extends HTMLElement {
                 <div class="menu-item" @click=${() => this.buyTokensClicked()}>Buy tokens</div>
                 <div class="menu-item" @click=${() => this.legalClicked()}>Legal</div>
                 <hr style="width: 90%">
+                <div ?hidden=${state.currentConcept && !state.currentConcept.parent} class="parent-concept-menu-item" @click=${() => this.parentConceptClick()}><- ${state.currentConcept && state.currentConcept.parent && state.currentConcept.parent.title}</div>
                 ${state.concepts.map((concept: any) => {
                     return html`<jp-concept-item
                                     id=${concept.id}

@@ -28,7 +28,8 @@ const InitialState = persistedState ?  {
     bodyClickListenerLock: true,
     user: null,
     userJWT: null,
-    notifications: []
+    notifications: [],
+    currentConceptNumAssessments: null
 };
 
 const RootReducer = (state=InitialState, action: any) => {
@@ -130,6 +131,13 @@ const RootReducer = (state=InitialState, action: any) => {
         };
     }
 
+    if (action.type === 'SET_CURRENT_CONCEPT_NUM_ASSESSMENTS') {
+        return {
+            ...state,
+            currentConceptNumAssessments: action.currentConceptNumAssessments
+        }
+    }
+
     if (action.type === 'SET_ROUTE') {
         const currentEntity = action.entity;
         const currentEntityId = action.entityId;
@@ -159,23 +167,25 @@ const RootReducer = (state=InitialState, action: any) => {
         };
     }
     
-    if (action.type === 'SWITCH_SELECTED_CONCEPT') {
-        const currentConcept = action.concept;
-        const currentAssessment = currentConcept.assessments.find((assessment: any) => {
-            return assessment.order === 0;
-        });
+    // if (action.type === 'SWITCH_SELECTED_CONCEPT') {
+    //     const currentConcept = action.concept;
+    //     const currentAssessment = currentConcept.assessments.find((assessment: any) => {
+    //         return assessment.order === 0;
+    //     });
 
-        //TODO figure out how to handle side effects elegantly
-        setTimeout(() => {
-            page(`/assessment/${currentAssessment.id}/view`);
-        });
+    //     if (currentAssessment) {
+    //         //TODO figure out how to handle side effects elegantly
+    //         setTimeout(() => {
+    //             page(`/assessment/${currentAssessment.id}/view`);
+    //         });
+    //     }
 
-        return {
-            ...state,
-            currentConcept,
-            hideLoadIndicator: state.currentConcept.id === action.concept.id ? true : false
-        };
-    }
+    //     return {
+    //         ...state,
+    //         currentConcept,
+    //         hideLoadIndicator: state.currentConcept.id === action.concept.id ? true : false
+    //     };
+    // }
 
     if (action.type === 'NEXT_QUESTION') {
         const currentOrder = state.currentAssessment.order;

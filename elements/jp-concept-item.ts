@@ -20,7 +20,9 @@ class JPConceptItem extends HTMLElement {
     }
 
     render(state: any) {
-        const numTotalAssessments = state.concepts.find((concept: any) => concept.id === this.id).assessments.length;
+        //TODO fix this
+        // const numTotalAssessments = state.concepts.find((concept: any) => concept.id === this.id).assessments.length;
+        const numTotalAssessments = 10;
         const userAssessmentInfoesForConcept = state.user ? state.user.assessmentInfos.filter((assessmentInfo: any) => assessmentInfo.assessment.concept.id === this.id) : [];
         const numUserCompletedAssessments = userAssessmentInfoesForConcept.filter((assessmentInfo: any) => assessmentInfo.answeredCorrectly).length;
         const percentage = (numUserCompletedAssessments / numTotalAssessments) * 100;
