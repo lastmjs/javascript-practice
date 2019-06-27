@@ -7,7 +7,6 @@ import './jp-load-indicator';
 import './jp-hamburger';
 import '../services/listeners';
 import page from 'page';
-import '../services/init';
 import './jp-notifications';
 
 class JPApp extends HTMLElement {

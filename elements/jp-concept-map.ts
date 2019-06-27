@@ -1,32 +1,28 @@
 import { html, render } from 'lit-html';
 import './jp-concept-item';
 import { Store } from '../services/store';
-import { request } from '../services/graphql';
-import { backgroundColorCSSValue, zIndexLayer7, menuItemCSSProperties, highlightColorCSSValue } from '../services/constants';
+import { 
+    backgroundColorCSSValue,
+    zIndexLayer7,
+    menuItemCSSProperties,
+    highlightColorCSSValue
+} from '../services/constants';
 import page from 'page';
+import { concepts } from '../db';
 
 class JPConceptMap extends HTMLElement {
 
-    async connectedCallback() {
+    constructor() {
+        super();
         Store.subscribe(() => render(this.render(Store.getState()), this));
+    }
 
-        const response = await request(`
-            query {
-                concepts {
-                    id
-                    title
-                    order
-                    assessments {
-                        id
-                        order
-                    }
-                }
-            }
-        `);
-
-        Store.dispatch({
-            type: 'SET_CONCEPTS',
-            concepts: response.concepts
+    connectedCallback() {
+        setTimeout(() => {
+            Store.dispatch({
+                type: 'SET_CONCEPTS',
+                concepts: Object.keys(concepts)
+            });
         });
     }
 

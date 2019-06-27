@@ -2,7 +2,7 @@
   "name": "javascript-practice",
   "version": "0.0.0",
   "engines": {
-    "node": "10.7.0"
+    "node": "10.15.3"
   },
   "description": "",
   "dependencies": {
@@ -44,18 +44,8 @@
     "zwitterion": "0.28.0"
   },
   "scripts": {
-    "start": "ts-node backend/server.js",
-    "start-local": "source ./.development-environment-variables && concurrently \"zwitterion\" \"npm start\" \"npm run prisma-up\"",
-    "prisma-up": "cd backend && docker-compose up --build",
-    "prisma-deploy-development": "source ./.development-environment-variables && cd backend && prisma deploy",
-    "prisma-deploy-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma deploy",
-    "prisma-export-development": "source ./.development-environment-variables && cd backend && prisma export --path database.zip",
-    "prisma-export-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma export --path database.zip",
-    "prisma-import-development": "source ./.development-environment-variables && cd backend && prisma import --data database.zip",
-    "prisma-import-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma import --data database.zip",
-    "prisma-token-development": "source ./.development-environment-variables && cd backend && prisma token",
-    "prisma-token-production": "source /run/media/lastmjs/1A10-AD03/.production-environment-variables && cd backend && prisma token",
-    "build": "zwitterion --build-static --exclude node_modules,backend --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval"
+    "start": "zwitterion --port 8000",
+    "build": "zwitterion --build-static --exclude node_modules --include @polymer,assess-elements,assessml,prendus-shared,functional-element,wysiwyg-e,redux/es,@kuscamara,@vaadin,secure-eval"
   },
   "repository": {
     "type": "git",

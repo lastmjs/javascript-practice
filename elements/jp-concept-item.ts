@@ -8,10 +8,12 @@ import {
 } from '../services/constants';
 
 class JPConceptItem extends HTMLElement {
+    constructor() {
+        super();
+        Store.subscribe(() => render(this.render(Store.getState()), this));
+    }
 
     connectedCallback() {
-        Store.subscribe(() => render(this.render(Store.getState()), this));
-        
         setTimeout(() => {
             Store.dispatch({
                 type: 'TRIGGER_RENDER'

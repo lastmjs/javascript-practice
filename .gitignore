@@ -1,6 +1,2 @@
 /node_modules
 /dist
-/backend/database.zip
-/backend/dist
-/backend/.import
-.development-environment-variables
